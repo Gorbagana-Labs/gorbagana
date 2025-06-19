@@ -1,6 +1,6 @@
 //! The `recvmmsg` module provides recvmmsg() API implementation
 
-pub use solana_perf::packet::NUM_RCVMMSGS;
+pub use gorbagana_perf::packet::NUM_RCVMMSGS;
 #[cfg(target_os = "linux")]
 use {
     crate::msghdr::create_msghdr,
@@ -182,7 +182,7 @@ pub fn recv_mmsg(sock: &UdpSocket, packets: &mut [Packet]) -> io::Result</*num p
 mod tests {
     use {
         crate::{packet::PACKET_DATA_SIZE, recvmmsg::*},
-        solana_net_utils::{
+        gorbagana_net_utils::{
             bind_in_range_with_config, sockets::localhost_port_range_for_tests, SocketConfig,
         },
         std::{

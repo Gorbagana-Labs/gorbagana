@@ -17,7 +17,7 @@ const BITS_PER_WORD: usize = std::mem::size_of::<Word>() * 8;
 /// # Examples
 ///
 /// ```
-/// # use solana_ledger::bit_vec::BitVec;
+/// # use gorbagana_ledger::bit_vec::BitVec;
 /// let mut bit_vec = BitVec::<64>::default();
 /// bit_vec.insert(0);
 /// bit_vec.insert(1);
@@ -53,7 +53,7 @@ impl<const NUM_BITS: usize> BitVec<NUM_BITS> {
     /// # Examples
     ///
     /// ```
-    /// # use solana_ledger::bit_vec::BitVec;
+    /// # use gorbagana_ledger::bit_vec::BitVec;
     /// let (word_idx, bit_idx) = BitVec::<64>::location_of(63);
     /// assert_eq!(word_idx, 7);
     /// assert_eq!(bit_idx, 7);
@@ -83,7 +83,7 @@ impl<const NUM_BITS: usize> BitVec<NUM_BITS> {
     /// Panics if the index is out of bounds.
     ///
     /// ```should_panic
-    /// # use solana_ledger::bit_vec::BitVec;
+    /// # use gorbagana_ledger::bit_vec::BitVec;
     /// let mut bit_vec = BitVec::<64>::default();
     /// bit_vec.remove_unchecked(64);
     /// ```
@@ -91,7 +91,7 @@ impl<const NUM_BITS: usize> BitVec<NUM_BITS> {
     /// # Examples
     ///
     /// ```
-    /// # use solana_ledger::bit_vec::BitVec;
+    /// # use gorbagana_ledger::bit_vec::BitVec;
     /// let mut bit_vec = BitVec::<64>::default();
     /// assert!(bit_vec.insert_unchecked(63));
     /// assert!(bit_vec.remove_unchecked(63));
@@ -118,7 +118,7 @@ impl<const NUM_BITS: usize> BitVec<NUM_BITS> {
     /// Returns an error if the index is out of bounds.
     ///
     /// ```
-    /// # use solana_ledger::bit_vec::BitVec;
+    /// # use gorbagana_ledger::bit_vec::BitVec;
     /// let mut bit_vec = BitVec::<64>::default();
     /// assert!(bit_vec.remove(64).is_err());
     /// ```
@@ -126,7 +126,7 @@ impl<const NUM_BITS: usize> BitVec<NUM_BITS> {
     /// # Examples
     ///
     /// ```
-    /// # use solana_ledger::bit_vec::BitVec;
+    /// # use gorbagana_ledger::bit_vec::BitVec;
     /// let mut bit_vec = BitVec::<64>::default();
     /// assert!(bit_vec.insert_unchecked(63));
     /// assert!(bit_vec.remove(63).is_ok());
@@ -146,7 +146,7 @@ impl<const NUM_BITS: usize> BitVec<NUM_BITS> {
     /// Panics if the index is out of bounds.
     ///
     /// ```should_panic
-    /// # use solana_ledger::bit_vec::BitVec;
+    /// # use gorbagana_ledger::bit_vec::BitVec;
     /// let mut bit_vec = BitVec::<8>::default();
     /// bit_vec.insert_unchecked(64);
     /// ```
@@ -154,7 +154,7 @@ impl<const NUM_BITS: usize> BitVec<NUM_BITS> {
     /// # Examples
     ///
     /// ```
-    /// # use solana_ledger::bit_vec::BitVec;
+    /// # use gorbagana_ledger::bit_vec::BitVec;
     /// let mut bit_vec = BitVec::<64>::default();
     /// assert!(bit_vec.insert_unchecked(63));
     /// assert!(!bit_vec.insert_unchecked(63));
@@ -180,7 +180,7 @@ impl<const NUM_BITS: usize> BitVec<NUM_BITS> {
     /// Returns an error if the index is out of bounds.
     ///
     /// ```
-    /// # use solana_ledger::bit_vec::BitVec;
+    /// # use gorbagana_ledger::bit_vec::BitVec;
     /// let mut bit_vec = BitVec::<64>::default();
     /// assert!(bit_vec.insert(64).is_err());
     /// ```
@@ -188,7 +188,7 @@ impl<const NUM_BITS: usize> BitVec<NUM_BITS> {
     /// # Examples
     ///
     /// ```
-    /// # use solana_ledger::bit_vec::BitVec;
+    /// # use gorbagana_ledger::bit_vec::BitVec;
     /// let mut bit_vec = BitVec::<64>::default();
     /// assert!(bit_vec.insert(63).is_ok());
     /// assert!(!bit_vec.insert(63).unwrap());
@@ -203,7 +203,7 @@ impl<const NUM_BITS: usize> BitVec<NUM_BITS> {
     /// # Examples
     ///
     /// ```
-    /// # use solana_ledger::bit_vec::BitVec;
+    /// # use gorbagana_ledger::bit_vec::BitVec;
     /// let mut bit_vec = BitVec::<64>::default();
     /// bit_vec.insert(63);
     /// assert!(bit_vec.contains(63));
@@ -224,7 +224,7 @@ impl<const NUM_BITS: usize> BitVec<NUM_BITS> {
     /// # Examples
     ///
     /// ```
-    /// # use solana_ledger::bit_vec::BitVec;
+    /// # use gorbagana_ledger::bit_vec::BitVec;
     ///
     /// let mut bit_vec = BitVec::<64>::default();
     /// bit_vec.insert(0);
@@ -241,7 +241,7 @@ impl<const NUM_BITS: usize> BitVec<NUM_BITS> {
     /// # Examples
     ///
     /// ```
-    /// # use solana_ledger::bit_vec::BitVec;
+    /// # use gorbagana_ledger::bit_vec::BitVec;
     /// let mut bit_vec = BitVec::<64>::default();
     /// bit_vec.insert(0);
     /// bit_vec.insert(1);
@@ -256,7 +256,7 @@ impl<const NUM_BITS: usize> BitVec<NUM_BITS> {
     /// # Examples
     ///
     /// ```
-    /// # use solana_ledger::bit_vec::BitVec;
+    /// # use gorbagana_ledger::bit_vec::BitVec;
     /// let mut bit_vec = BitVec::<64>::default();
     /// bit_vec.insert(0);
     /// bit_vec.insert(1);
@@ -271,7 +271,7 @@ impl<const NUM_BITS: usize> BitVec<NUM_BITS> {
     /// # Examples
     ///
     /// ```
-    /// # use solana_ledger::bit_vec::BitVec;
+    /// # use gorbagana_ledger::bit_vec::BitVec;
     /// let mut bit_vec = BitVec::<64>::default();
     /// assert!(bit_vec.is_empty());
     /// ```
@@ -330,7 +330,7 @@ impl<'a, const NUM_BITS: usize> BitVecSlice<'a, NUM_BITS> {
     /// # Examples
     ///
     /// ```
-    /// # use solana_ledger::bit_vec::BitVec;
+    /// # use gorbagana_ledger::bit_vec::BitVec;
     ///
     /// let mut bit_vec = BitVec::<64>::default();
     /// bit_vec.insert(0);
@@ -352,7 +352,7 @@ impl<'a, const NUM_BITS: usize> BitVecSlice<'a, NUM_BITS> {
     /// # Examples
     ///
     /// ```
-    /// # use solana_ledger::bit_vec::BitVec;
+    /// # use gorbagana_ledger::bit_vec::BitVec;
     /// let mut bit_vec = BitVec::<64>::default();
     /// bit_vec.insert(0);
     /// bit_vec.insert(1);

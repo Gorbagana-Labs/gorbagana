@@ -23,14 +23,14 @@ use {
     itertools::{Either, Itertools},
     rayon::{prelude::*, ThreadPool},
     reed_solomon_erasure::Error::{InvalidIndex, TooFewParityShards},
-    solana_clock::Slot,
-    solana_hash::Hash,
-    solana_keypair::Keypair,
-    solana_perf::packet::deserialize_from_with_limit,
-    solana_pubkey::Pubkey,
-    solana_sha256_hasher::hashv,
-    solana_signature::Signature,
-    solana_signer::Signer,
+    gorbagana_clock::Slot,
+    gorbagana_hash::Hash,
+    gorbagana_keypair::Keypair,
+    gorbagana_perf::packet::deserialize_from_with_limit,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sha256_hasher::hashv,
+    gorbagana_signature::Signature,
+    gorbagana_signer::Signer,
     static_assertions::const_assert_eq,
     std::{
         cmp::Ordering,
@@ -513,7 +513,7 @@ impl<'a> ShredTrait<'a> for ShredData {
         Payload: From<T>,
     {
         let mut payload = Payload::from(payload);
-        // see: https://github.com/solana-labs/solana/pull/10109
+        // see: https://github.com/gorbagana-labs/gorbagana/pull/10109
         if payload.len() < Self::SIZE_OF_PAYLOAD {
             return Err(Error::InvalidPayloadSize(payload.len()));
         }
@@ -574,7 +574,7 @@ impl<'a> ShredTrait<'a> for ShredCode {
         if !matches!(common_header.shred_variant, ShredVariant::MerkleCode { .. }) {
             return Err(Error::InvalidShredVariant);
         }
-        // see: https://github.com/solana-labs/solana/pull/10109
+        // see: https://github.com/gorbagana-labs/gorbagana/pull/10109
         if payload.len() < Self::SIZE_OF_PAYLOAD {
             return Err(Error::InvalidPayloadSize(payload.len()));
         }
@@ -1317,9 +1317,9 @@ mod test {
         rand::{seq::SliceRandom, CryptoRng, Rng},
         rayon::ThreadPoolBuilder,
         reed_solomon_erasure::Error::TooFewShardsPresent,
-        solana_keypair::Keypair,
-        solana_packet::PACKET_DATA_SIZE,
-        solana_signer::Signer,
+        gorbagana_keypair::Keypair,
+        gorbagana_packet::PACKET_DATA_SIZE,
+        gorbagana_signer::Signer,
         std::{cmp::Ordering, collections::HashMap, iter::repeat_with},
         test_case::test_case,
     };

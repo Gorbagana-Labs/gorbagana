@@ -1,11 +1,11 @@
 use {
-    solana_client::nonblocking::tpu_client::{LeaderTpuService, TpuClient},
-    solana_clock::DEFAULT_MS_PER_SLOT,
-    solana_connection_cache::connection_cache::Protocol,
-    solana_pubkey::Pubkey,
-    solana_system_transaction as system_transaction,
-    solana_test_validator::TestValidatorGenesis,
-    solana_tpu_client::tpu_client::TpuClientConfig,
+    gorbagana_client::nonblocking::tpu_client::{LeaderTpuService, TpuClient},
+    gorbagana_clock::DEFAULT_MS_PER_SLOT,
+    gorbagana_connection_cache::connection_cache::Protocol,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_system_transaction as system_transaction,
+    gorbagana_test_validator::TestValidatorGenesis,
+    gorbagana_tpu_client::tpu_client::TpuClientConfig,
     std::sync::{
         atomic::{AtomicBool, Ordering},
         Arc,

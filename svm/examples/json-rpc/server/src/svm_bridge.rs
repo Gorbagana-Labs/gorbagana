@@ -1,34 +1,34 @@
 use {
     agave_feature_set::FeatureSet,
     log::*,
-    solana_account::{Account, AccountSharedData, ReadableAccount},
-    solana_bpf_loader_program::syscalls::{
+    gorbagana_account::{Account, AccountSharedData, ReadableAccount},
+    gorbagana_bpf_loader_program::syscalls::{
         SyscallAbort, SyscallGetClockSysvar, SyscallInvokeSignedRust, SyscallLog,
         SyscallLogBpfComputeUnits, SyscallLogPubkey, SyscallLogU64, SyscallMemcpy, SyscallMemset,
         SyscallSetReturnData,
     },
-    solana_clock::{Clock, Slot, UnixTimestamp},
-    solana_compute_budget::compute_budget::ComputeBudget,
-    solana_message::AccountKeys,
-    solana_program_runtime::{
+    gorbagana_clock::{Clock, Slot, UnixTimestamp},
+    gorbagana_compute_budget::compute_budget::ComputeBudget,
+    gorbagana_message::AccountKeys,
+    gorbagana_program_runtime::{
         invoke_context::InvokeContext,
         loaded_programs::{
             BlockRelation, ForkGraph, LoadProgramMetrics, ProgramCacheEntry,
             ProgramRuntimeEnvironments,
         },
-        solana_sbpf::{
+        gorbagana_sbpf::{
             program::{BuiltinProgram, SBPFVersion},
             vm::Config,
         },
     },
-    solana_pubkey::Pubkey,
-    solana_svm::{
+    gorbagana_pubkey::Pubkey,
+    gorbagana_svm::{
         transaction_processing_result::TransactionProcessingResult,
         transaction_processor::TransactionBatchProcessor,
     },
-    solana_svm_callback::{InvokeContextCallback, TransactionProcessingCallback},
-    solana_sysvar_id::SysvarId,
-    solana_transaction::sanitized::SanitizedTransaction,
+    gorbagana_svm_callback::{InvokeContextCallback, TransactionProcessingCallback},
+    gorbagana_sysvar_id::SysvarId,
+    gorbagana_transaction::sanitized::SanitizedTransaction,
     std::{
         collections::HashMap,
         sync::{Arc, RwLock},
@@ -37,7 +37,7 @@ use {
 };
 
 mod transaction {
-    pub use solana_transaction_error::TransactionResult as Result;
+    pub use gorbagana_transaction_error::TransactionResult as Result;
 }
 
 const DEPLOYMENT_SLOT: u64 = 0;
@@ -91,7 +91,7 @@ impl TransactionProcessingCallback for MockBankCallback {
         let account_data = AccountSharedData::from(Account {
             lamports: 5000,
             data: name.as_bytes().to_vec(),
-            owner: solana_sdk_ids::native_loader::id(),
+            owner: gorbagana_sdk_ids::native_loader::id(),
             executable: true,
             rent_epoch: 0,
         });
@@ -222,7 +222,7 @@ pub fn create_executable_environment(
     for key in account_keys.iter() {
         if let Some(account) = mock_bank.get_account_shared_data(key) {
             if account.executable()
-                && *account.owner() == solana_sdk_ids::bpf_loader_upgradeable::id()
+                && *account.owner() == gorbagana_sdk_ids::bpf_loader_upgradeable::id()
             {
                 let data = account.data();
                 let program_data_account_key = Pubkey::try_from(data[4..].to_vec()).unwrap();
@@ -238,7 +238,7 @@ pub fn create_executable_environment(
                     *key,
                     Arc::new(
                         ProgramCacheEntry::new(
-                            &solana_sdk_ids::bpf_loader_upgradeable::id(),
+                            &gorbagana_sdk_ids::bpf_loader_upgradeable::id(),
                             program_runtime_environment,
                             0,
                             0,

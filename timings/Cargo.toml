@@ -1,7 +1,7 @@
 [package]
-name = "solana-timings"
-description = "Solana Execution Timings"
-documentation = "https://docs.rs/solana-timings"
+name = "gorbagana-timings"
+description = "Gorbagana Execution Timings"
+documentation = "https://docs.rs/gorbagana-timings"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -15,4 +15,4 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 eager = { workspace = true }
 enum-iterator = { workspace = true }
-solana-pubkey = { workspace = true }
+gorbagana-pubkey = { workspace = true }

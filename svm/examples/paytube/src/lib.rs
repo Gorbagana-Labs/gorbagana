@@ -3,16 +3,16 @@
 //! PayTube is an SVM-based payment channel that allows two parties to exchange
 //! tokens off-chain. The channel is opened by invoking the PayTube "VM",
 //! running on some arbitrary server(s). When transacting has concluded, the
-//! channel is closed by submitting the final payment ledger to Solana.
+//! channel is closed by submitting the final payment ledger to Gorbagana.
 //!
 //! The final ledger tracks debits and credits to all registered token accounts
 //! or system accounts (native SOL) during the lifetime of a channel. It is
 //! then used to to craft a batch of transactions to submit to the settlement
-//! chain (Solana).
+//! chain (Gorbagana).
 //!
 //! Users opt-in to using a PayTube channel by "registering" their token
 //! accounts to the channel. This is done by delegating a token account to the
-//! PayTube on-chain program on Solana. This delegation is temporary, and
+//! PayTube on-chain program on Gorbagana. This delegation is temporary, and
 //! released immediately after channel settlement.
 //!
 //! Note: This opt-in solution is for demonstration purposes only.
@@ -35,17 +35,17 @@
 //!
 //!         ------                           ------
 //!        Alice: x                         Alice: x
-//!        Bob:   x                         Bob:   x    <--- Solana Transaction
+//!        Bob:   x                         Bob:   x    <--- Gorbagana Transaction
 //!                                         Will:  x         with final ledgers
 //!         ------                           ------
 //!
 //!           \\                               \\
 //!            x                                x
 //!
-//!         Solana                           Solana     <--- Settled to Solana
+//!         Gorbagana                           Gorbagana     <--- Settled to Gorbagana
 //! ```
 //!
-//! The Solana SVM's `TransactionBatchProcessor` requires projects to provide a
+//! The Gorbagana SVM's `TransactionBatchProcessor` requires projects to provide a
 //! "loader" plugin, which implements the `TransactionProcessingCallback`
 //! interface.
 //!
@@ -66,16 +66,16 @@ use {
     processor::{
         create_transaction_batch_processor, get_transaction_check_results, PayTubeForkGraph,
     },
-    solana_client::rpc_client::RpcClient,
-    solana_fee_structure::FeeStructure,
-    solana_hash::Hash,
-    solana_keypair::Keypair,
-    solana_program_runtime::execution_budget::SVMTransactionExecutionBudget,
-    solana_rent_collector::RentCollector,
-    solana_svm::transaction_processor::{
+    gorbagana_client::rpc_client::RpcClient,
+    gorbagana_fee_structure::FeeStructure,
+    gorbagana_hash::Hash,
+    gorbagana_keypair::Keypair,
+    gorbagana_program_runtime::execution_budget::SVMTransactionExecutionBudget,
+    gorbagana_rent_collector::RentCollector,
+    gorbagana_svm::transaction_processor::{
         TransactionProcessingConfig, TransactionProcessingEnvironment,
     },
-    solana_svm_feature_set::SVMFeatureSet,
+    gorbagana_svm_feature_set::SVMFeatureSet,
     std::sync::{Arc, RwLock},
     transaction::create_svm_transactions,
 };
@@ -101,11 +101,11 @@ impl PayTubeChannel {
     /// a more complex service that employs custom functionality, such as:
     ///
     /// * Increased throughput for individual P2P transfers.
-    /// * Custom Solana transaction ordering (e.g. MEV).
+    /// * Custom Gorbagana transaction ordering (e.g. MEV).
     ///
     /// The general scaffold of the PayTube API would remain the same.
     pub fn process_paytube_transfers(&self, transactions: &[PayTubeTransaction]) {
-        log::setup_solana_logging();
+        log::setup_gorbagana_logging();
         log::creating_paytube_channel();
 
         // PayTube default configs.
@@ -126,7 +126,7 @@ impl PayTubeChannel {
         // accounts.
         let account_loader = PayTubeAccountLoader::new(&self.rpc_client);
 
-        // Solana SVM transaction batch processor.
+        // Gorbagana SVM transaction batch processor.
         //
         // Creates an instance of `TransactionBatchProcessor`, which can be
         // used by PayTube to process transactions using the SVM.
@@ -134,7 +134,7 @@ impl PayTubeChannel {
         // This allows programs such as the System and Token programs to be
         // translated and executed within a provisioned virtual machine, as
         // well as offers many of the same functionality as the lower-level
-        // Solana runtime.
+        // Gorbagana runtime.
         let fork_graph = Arc::new(RwLock::new(PayTubeForkGraph {}));
         let processor = create_transaction_batch_processor(
             &account_loader,
@@ -154,7 +154,7 @@ impl PayTubeChannel {
             rent_collector: Some(&rent_collector),
         };
 
-        // The PayTube transaction processing config for Solana SVM.
+        // The PayTube transaction processing config for Gorbagana SVM.
         //
         // Extended configurations for even more customization of the SVM API.
         let processing_config = TransactionProcessingConfig::default();
@@ -179,7 +179,7 @@ impl PayTubeChannel {
 
         // Step 3: Convert the SVM API processor results into a final ledger
         // using `PayTubeSettler`, and settle the resulting balance differences
-        // to the Solana base chain.
+        // to the Gorbagana base chain.
         //
         // Here the settler is basically iterating over the transaction results
         // to track debits and credits, but only for those transactions which

@@ -9,8 +9,8 @@ use {
         snapshot_utils::SnapshotInterval,
     },
     log::*,
-    solana_clock::Slot,
-    solana_measure::measure::Measure,
+    gorbagana_clock::Slot,
+    gorbagana_measure::measure::Measure,
     std::{
         sync::{
             atomic::{AtomicU64, Ordering},

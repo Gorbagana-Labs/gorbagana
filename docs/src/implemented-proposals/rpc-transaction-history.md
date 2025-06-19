@@ -10,13 +10,13 @@ back to the external data store.
 
 The affected RPC endpoints are:
 
-- [getFirstAvailableBlock](https://solana.com/docs/rpc/http/getfirstavailableblock)
-- [getConfirmedBlock](https://solana.com/docs/rpc/deprecated/getconfirmedblock)
-- [getConfirmedBlocks](https://solana.com/docs/rpc/deprecated/getconfirmedblocks)
-- [getConfirmedSignaturesForAddress](https://solana.com/docs/rpc/http/getconfirmedsignaturesforaddress)
-- [getConfirmedTransaction](https://solana.com/docs/rpc/deprecated/getConfirmedTransaction)
-- [getSignatureStatuses](https://solana.com/docs/rpc/http/getsignaturestatuses)
-- [getBlockTime](https://solana.com/docs/rpc/http/getblocktime)
+- [getFirstAvailableBlock](https://gorbagana.com/docs/rpc/http/getfirstavailableblock)
+- [getConfirmedBlock](https://gorbagana.com/docs/rpc/deprecated/getconfirmedblock)
+- [getConfirmedBlocks](https://gorbagana.com/docs/rpc/deprecated/getconfirmedblocks)
+- [getConfirmedSignaturesForAddress](https://gorbagana.com/docs/rpc/http/getconfirmedsignaturesforaddress)
+- [getConfirmedTransaction](https://gorbagana.com/docs/rpc/deprecated/getConfirmedTransaction)
+- [getSignatureStatuses](https://gorbagana.com/docs/rpc/http/getsignaturestatuses)
+- [getBlockTime](https://gorbagana.com/docs/rpc/http/getblocktime)
 
 Some system design constraints:
 

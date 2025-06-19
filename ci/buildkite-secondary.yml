@@ -20,7 +20,7 @@ steps:
     timeout_in_minutes: 5
   - wait
   - name: "publish docker"
-    command: "docker-solana/build.sh"
+    command: "docker-gorbagana/build.sh"
     agents:
       queue: "release-build"
     timeout_in_minutes: 60

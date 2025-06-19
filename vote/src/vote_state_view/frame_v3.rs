@@ -6,8 +6,8 @@ use {
         },
         Field, Result, VoteStateViewError,
     },
-    solana_pubkey::Pubkey,
-    solana_vote_interface::state::BlockTimestamp,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_vote_interface::state::BlockTimestamp,
     std::io::BufRead,
 };
 
@@ -99,8 +99,8 @@ impl VoteStateFrameV3 {
 mod tests {
     use {
         super::*,
-        solana_clock::Clock,
-        solana_vote_interface::state::{
+        gorbagana_clock::Clock,
+        gorbagana_vote_interface::state::{
             LandedVote, Lockout, VoteInit, VoteState, VoteStateVersions,
         },
     };

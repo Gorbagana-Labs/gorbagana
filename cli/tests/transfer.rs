@@ -1,35 +1,35 @@
 #![allow(clippy::arithmetic_side_effects)]
 use {
-    solana_cli::{
+    gorbagana_cli::{
         check_balance,
         cli::{process_command, request_and_confirm_airdrop, CliCommand, CliConfig},
         spend_utils::SpendAmount,
         test_utils::check_ready,
     },
-    solana_cli_output::{parse_sign_only_reply_string, OutputFormat},
-    solana_commitment_config::CommitmentConfig,
-    solana_compute_budget_interface::ComputeBudgetInstruction,
-    solana_faucet::faucet::run_local_faucet,
-    solana_fee_structure::FeeStructure,
-    solana_keypair::{keypair_from_seed, Keypair},
-    solana_message::Message,
-    solana_native_token::sol_to_lamports,
-    solana_nonce::state::State as NonceState,
-    solana_pubkey::Pubkey,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_nonce_utils::blockhash_query::{self, BlockhashQuery},
-    solana_signer::{null_signer::NullSigner, Signer},
-    solana_stake_interface as stake,
-    solana_streamer::socket::SocketAddrSpace,
-    solana_system_interface::instruction as system_instruction,
-    solana_test_validator::TestValidator,
+    gorbagana_cli_output::{parse_sign_only_reply_string, OutputFormat},
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_compute_budget_interface::ComputeBudgetInstruction,
+    gorbagana_faucet::faucet::run_local_faucet,
+    gorbagana_fee_structure::FeeStructure,
+    gorbagana_keypair::{keypair_from_seed, Keypair},
+    gorbagana_message::Message,
+    gorbagana_native_token::sol_to_lamports,
+    gorbagana_nonce::state::State as NonceState,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_rpc_client_nonce_utils::blockhash_query::{self, BlockhashQuery},
+    gorbagana_signer::{null_signer::NullSigner, Signer},
+    gorbagana_stake_interface as stake,
+    gorbagana_streamer::socket::SocketAddrSpace,
+    gorbagana_system_interface::instruction as system_instruction,
+    gorbagana_test_validator::TestValidator,
     test_case::test_case,
 };
 
 #[test_case(true; "Skip Preflight")]
 #[test_case(false; "Don`t skip Preflight")]
 fn test_transfer(skip_preflight: bool) {
-    solana_logger::setup();
+    gorbagana_logger::setup();
     let fee_one_sig = FeeStructure::default().get_max_fee(1, 0);
     let fee_two_sig = FeeStructure::default().get_max_fee(2, 0);
     let mint_keypair = Keypair::new();
@@ -199,12 +199,12 @@ fn test_transfer(skip_preflight: bool) {
     );
 
     // Fetch nonce hash
-    let nonce_hash = solana_rpc_client_nonce_utils::get_account_with_commitment(
+    let nonce_hash = gorbagana_rpc_client_nonce_utils::get_account_with_commitment(
         &rpc_client,
         &nonce_account.pubkey(),
         CommitmentConfig::processed(),
     )
-    .and_then(|ref a| solana_rpc_client_nonce_utils::data_from_account(a))
+    .and_then(|ref a| gorbagana_rpc_client_nonce_utils::data_from_account(a))
     .unwrap()
     .blockhash();
 
@@ -237,12 +237,12 @@ fn test_transfer(skip_preflight: bool) {
         &sender_pubkey,
     );
     check_balance!(sol_to_lamports(2.5), &rpc_client, &recipient_pubkey);
-    let new_nonce_hash = solana_rpc_client_nonce_utils::get_account_with_commitment(
+    let new_nonce_hash = gorbagana_rpc_client_nonce_utils::get_account_with_commitment(
         &rpc_client,
         &nonce_account.pubkey(),
         CommitmentConfig::processed(),
     )
-    .and_then(|ref a| solana_rpc_client_nonce_utils::data_from_account(a))
+    .and_then(|ref a| gorbagana_rpc_client_nonce_utils::data_from_account(a))
     .unwrap()
     .blockhash();
     assert_ne!(nonce_hash, new_nonce_hash);
@@ -264,12 +264,12 @@ fn test_transfer(skip_preflight: bool) {
     );
 
     // Fetch nonce hash
-    let nonce_hash = solana_rpc_client_nonce_utils::get_account_with_commitment(
+    let nonce_hash = gorbagana_rpc_client_nonce_utils::get_account_with_commitment(
         &rpc_client,
         &nonce_account.pubkey(),
         CommitmentConfig::processed(),
     )
-    .and_then(|ref a| solana_rpc_client_nonce_utils::data_from_account(a))
+    .and_then(|ref a| gorbagana_rpc_client_nonce_utils::data_from_account(a))
     .unwrap()
     .blockhash();
 
@@ -328,7 +328,7 @@ fn test_transfer(skip_preflight: bool) {
 
 #[test]
 fn test_transfer_multisession_signing() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
     let fee_one_sig = FeeStructure::default().get_max_fee(1, 0);
     let fee_two_sig = FeeStructure::default().get_max_fee(2, 0);
     let mint_keypair = Keypair::new();
@@ -482,7 +482,7 @@ fn test_transfer_multisession_signing() {
 #[test_case(None; "default")]
 #[test_case(Some(100_000); "with_compute_unit_price")]
 fn test_transfer_all(compute_unit_price: Option<u64>) {
-    solana_logger::setup();
+    gorbagana_logger::setup();
     let lamports_per_signature = FeeStructure::default().get_max_fee(1, 0);
     let mint_keypair = Keypair::new();
     let mint_pubkey = mint_keypair.pubkey();
@@ -510,8 +510,8 @@ fn test_transfer_all(compute_unit_price: Option<u64>) {
             // This is brittle and will need to be updated if the compute unit
             // limit for the system program or compute budget program are changed,
             // or if they're converted to BPF.
-            // See `solana_system_program::system_processor::DEFAULT_COMPUTE_UNITS`
-            // and `solana_compute_budget_program::DEFAULT_COMPUTE_UNITS`
+            // See `gorbagana_system_program::system_processor::DEFAULT_COMPUTE_UNITS`
+            // and `gorbagana_compute_budget_program::DEFAULT_COMPUTE_UNITS`
             instructions.push(ComputeBudgetInstruction::set_compute_unit_limit(450));
             instructions.push(ComputeBudgetInstruction::set_compute_unit_price(
                 compute_unit_price,
@@ -560,7 +560,7 @@ fn test_transfer_all(compute_unit_price: Option<u64>) {
 
 #[test]
 fn test_transfer_unfunded_recipient() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
     let mint_keypair = Keypair::new();
     let mint_pubkey = mint_keypair.pubkey();
     let faucet_addr = run_local_faucet(mint_keypair, None);
@@ -615,7 +615,7 @@ fn test_transfer_unfunded_recipient() {
 
 #[test]
 fn test_transfer_with_seed() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
     let fee = FeeStructure::default().get_max_fee(1, 0);
     let mint_keypair = Keypair::new();
     let mint_pubkey = mint_keypair.pubkey();

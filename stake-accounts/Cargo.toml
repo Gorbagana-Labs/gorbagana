@@ -1,7 +1,7 @@
 [package]
-name = "solana-stake-accounts"
+name = "gorbagana-stake-accounts"
 description = "Blockchain, Rebuilt for Scale"
-documentation = "https://docs.rs/solana-stake-accounts"
+documentation = "https://docs.rs/gorbagana-stake-accounts"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -14,27 +14,27 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 clap = { workspace = true }
-solana-account = { workspace = true }
-solana-clap-utils = { workspace = true }
-solana-cli-config = { workspace = true }
-solana-clock = { workspace = true }
-solana-fee-calculator = { workspace = true }
-solana-genesis-config = { workspace = true }
-solana-instruction = { workspace = true }
-solana-keypair = { workspace = true }
-solana-message = { workspace = true }
-solana-native-token = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-remote-wallet = { workspace = true, features = ["default"] }
-solana-rpc-client = { workspace = true, features = ["default"] }
-solana-rpc-client-api = { workspace = true }
-solana-signature = { workspace = true }
-solana-signer = { workspace = true }
-solana-stake-interface = { workspace = true }
-solana-stake-program = { workspace = true }
-solana-transaction = { workspace = true }
-solana-version = { workspace = true }
+gorbagana-account = { workspace = true }
+gorbagana-clap-utils = { workspace = true }
+gorbagana-cli-config = { workspace = true }
+gorbagana-clock = { workspace = true }
+gorbagana-fee-calculator = { workspace = true }
+gorbagana-genesis-config = { workspace = true }
+gorbagana-instruction = { workspace = true }
+gorbagana-keypair = { workspace = true }
+gorbagana-message = { workspace = true }
+gorbagana-native-token = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-remote-wallet = { workspace = true, features = ["default"] }
+gorbagana-rpc-client = { workspace = true, features = ["default"] }
+gorbagana-rpc-client-api = { workspace = true }
+gorbagana-signature = { workspace = true }
+gorbagana-signer = { workspace = true }
+gorbagana-stake-interface = { workspace = true }
+gorbagana-stake-program = { workspace = true }
+gorbagana-transaction = { workspace = true }
+gorbagana-version = { workspace = true }
 
 [dev-dependencies]
-solana-client-traits = { workspace = true }
-solana-runtime = { workspace = true, features = ["dev-context-only-utils"] }
+gorbagana-client-traits = { workspace = true }
+gorbagana-runtime = { workspace = true, features = ["dev-context-only-utils"] }

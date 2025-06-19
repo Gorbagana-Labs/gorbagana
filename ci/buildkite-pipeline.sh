@@ -154,7 +154,7 @@ command_step() {
     timeout_in_minutes: $3
     artifact_paths: "log-*.txt"
     agents:
-      queue: "${4:-solana}"
+      queue: "${4:-gorbagana}"
 EOF
 }
 
@@ -227,7 +227,7 @@ all_test_steps() {
     name: "stable-sbf"
     timeout_in_minutes: 35
     agents:
-      queue: "solana"
+      queue: "gorbagana"
 EOF
   else
     annotate --style info \
@@ -289,7 +289,7 @@ pull_or_push_steps() {
     # | cat is a no-op. If this pull request is a version bump then grep will output no lines and have an exit code of 1.
     # Piping the output to cat prevents that non-zero exit code from exiting this script
     diff_other_than_version_bump=$(git diff origin/"$BUILDKITE_PULL_REQUEST_BASE_BRANCH"..HEAD | \
-      grep -vE "^ |^@@ |^--- |^\+\+\+ |^index |^diff |^-( \")?solana.*$optional_old_version_number|^\+( \")?solana.*$new_version_number|^-version|^\+version"|cat)
+      grep -vE "^ |^@@ |^--- |^\+\+\+ |^index |^diff |^-( \")?gorbagana.*$optional_old_version_number|^\+( \")?gorbagana.*$new_version_number|^-version|^\+version"|cat)
     echo "diff_other_than_version_bump: ->$diff_other_than_version_bump<-"
 
     if [ -z "$diff_other_than_version_bump" ]; then

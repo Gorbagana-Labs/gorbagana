@@ -1,8 +1,8 @@
 use {
-    crate::vote_transaction::VoteTransaction, solana_bincode::limited_deserialize,
-    solana_hash::Hash, solana_pubkey::Pubkey, solana_signature::Signature,
-    solana_svm_transaction::svm_transaction::SVMTransaction, solana_transaction::Transaction,
-    solana_vote_interface::instruction::VoteInstruction,
+    crate::vote_transaction::VoteTransaction, gorbagana_bincode::limited_deserialize,
+    gorbagana_hash::Hash, gorbagana_pubkey::Pubkey, gorbagana_signature::Signature,
+    gorbagana_svm_transaction::svm_transaction::SVMTransaction, gorbagana_transaction::Transaction,
+    gorbagana_vote_interface::instruction::VoteInstruction,
 };
 
 pub type ParsedVote = (Pubkey, VoteTransaction, Option<Hash>, Signature);
@@ -11,7 +11,7 @@ pub type ParsedVote = (Pubkey, VoteTransaction, Option<Hash>, Signature);
 pub fn parse_sanitized_vote_transaction(tx: &impl SVMTransaction) -> Option<ParsedVote> {
     // Check first instruction for a vote
     let (program_id, first_instruction) = tx.program_instructions_iter().next()?;
-    if !solana_sdk_ids::vote::check_id(program_id) {
+    if !gorbagana_sdk_ids::vote::check_id(program_id) {
         return None;
     }
     let first_account = usize::from(*first_instruction.accounts.first()?);
@@ -28,7 +28,7 @@ pub fn parse_vote_transaction(tx: &Transaction) -> Option<ParsedVote> {
     let first_instruction = message.instructions.first()?;
     let program_id_index = usize::from(first_instruction.program_id_index);
     let program_id = message.account_keys.get(program_id_index)?;
-    if !solana_sdk_ids::vote::check_id(program_id) {
+    if !gorbagana_sdk_ids::vote::check_id(program_id) {
         return None;
     }
     let first_account = usize::from(*first_instruction.accounts.first()?);
@@ -43,7 +43,7 @@ fn parse_vote_instruction_data(
 ) -> Option<(VoteTransaction, Option<Hash>)> {
     match limited_deserialize(
         vote_instruction_data,
-        solana_packet::PACKET_DATA_SIZE as u64,
+        gorbagana_packet::PACKET_DATA_SIZE as u64,
     )
     .ok()?
     {
@@ -80,11 +80,11 @@ fn parse_vote_instruction_data(
 mod test {
     use {
         super::*,
-        solana_clock::Slot,
-        solana_keypair::Keypair,
-        solana_sha256_hasher::hash,
-        solana_signer::Signer,
-        solana_vote_interface::{instruction as vote_instruction, state::Vote},
+        gorbagana_clock::Slot,
+        gorbagana_keypair::Keypair,
+        gorbagana_sha256_hasher::hash,
+        gorbagana_signer::Signer,
+        gorbagana_vote_interface::{instruction as vote_instruction, state::Vote},
     };
 
     // Reimplemented locally from Vote program.

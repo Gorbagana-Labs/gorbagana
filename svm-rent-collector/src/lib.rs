@@ -1,4 +1,4 @@
-//! Solana SVM Rent Collector.
+//! Gorbagana SVM Rent Collector.
 //!
 //! Rent management for SVM.
 

@@ -116,8 +116,8 @@ EOF
 
 # trigger_secondary_step() {
 #   cat  >> "$output_file" <<"EOF"
-#   - name: "Trigger Build on solana-secondary"
-#     trigger: "solana-secondary"
+#   - name: "Trigger Build on gorbagana-secondary"
+#     trigger: "gorbagana-secondary"
 #     branches: "!pull/*"
 #     async: true
 #     build:
@@ -219,7 +219,7 @@ pull_or_push_steps() {
 #   start_pipeline "Tag pipeline for $BUILDKITE_TAG"
 
 #   annotate --style info --context release-tag \
-#     "https://github.com/solana-labs/solana/releases/$BUILDKITE_TAG"
+#     "https://github.com/gorbagana-labs/gorbagana/releases/$BUILDKITE_TAG"
 
 #   # Jump directly to the secondary build to publish release artifacts quickly
 #   trigger_secondary_step

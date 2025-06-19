@@ -6,10 +6,10 @@ use {
         transaction_version::TransactionVersion,
     },
     core::fmt::{Debug, Formatter},
-    solana_hash::Hash,
-    solana_pubkey::Pubkey,
-    solana_signature::Signature,
-    solana_svm_transaction::instruction::SVMInstruction,
+    gorbagana_hash::Hash,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signature::Signature,
+    gorbagana_svm_transaction::instruction::SVMInstruction,
 };
 
 // alias for convenience
@@ -248,11 +248,11 @@ impl<const SANITIZED: bool, D: TransactionData> Debug for TransactionView<SANITI
 mod tests {
     use {
         super::*,
-        solana_message::{Message, VersionedMessage},
-        solana_pubkey::Pubkey,
-        solana_signature::Signature,
-        solana_system_interface::instruction as system_instruction,
-        solana_transaction::versioned::VersionedTransaction,
+        gorbagana_message::{Message, VersionedMessage},
+        gorbagana_pubkey::Pubkey,
+        gorbagana_signature::Signature,
+        gorbagana_system_interface::instruction as system_instruction,
+        gorbagana_transaction::versioned::VersionedTransaction,
     };
 
     fn verify_transaction_view_frame(tx: &VersionedTransaction) {

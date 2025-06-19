@@ -5,9 +5,9 @@ use {
     },
     bincode::deserialize,
     serde_json::Value,
-    solana_config_program_client::{get_config_data, ConfigKeys},
-    solana_pubkey::Pubkey,
-    solana_stake_interface::config::{
+    gorbagana_config_program_client::{get_config_data, ConfigKeys},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_stake_interface::config::{
         Config as StakeConfig, {self as stake_config},
     },
 };
@@ -68,7 +68,7 @@ pub struct UiConfigKey {
 
 #[deprecated(
     since = "1.16.7",
-    note = "Please use `solana_stake_interface::state::warmup_cooldown_rate()` instead"
+    note = "Please use `gorbagana_stake_interface::state::warmup_cooldown_rate()` instead"
 )]
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
@@ -100,8 +100,8 @@ mod test {
         crate::validator_info::ValidatorInfo,
         bincode::serialize,
         serde_json::json,
-        solana_account::{Account, AccountSharedData, ReadableAccount},
-        solana_config_program_client::ConfigKeys,
+        gorbagana_account::{Account, AccountSharedData, ReadableAccount},
+        gorbagana_config_program_client::ConfigKeys,
     };
 
     fn create_config_account<T: serde::Serialize>(
@@ -114,7 +114,7 @@ mod test {
         AccountSharedData::from(Account {
             lamports,
             data,
-            owner: solana_sdk_ids::config::id(),
+            owner: gorbagana_sdk_ids::config::id(),
             ..Account::default()
         })
     }
@@ -136,11 +136,11 @@ mod test {
 
         let validator_info = ValidatorInfo {
             info: serde_json::to_string(&json!({
-                "name": "Solana",
+                "name": "Gorbagana",
             }))
             .unwrap(),
         };
-        let info_pubkey = solana_pubkey::new_rand();
+        let info_pubkey = gorbagana_pubkey::new_rand();
         let validator_info_config_account = create_config_account(
             vec![(validator_info::id(), false), (info_pubkey, true)],
             &validator_info,
@@ -159,7 +159,7 @@ mod test {
                         signer: true,
                     }
                 ],
-                config_data: serde_json::from_str(r#"{"name":"Solana"}"#).unwrap(),
+                config_data: serde_json::from_str(r#"{"name":"Gorbagana"}"#).unwrap(),
             }),
         );
 

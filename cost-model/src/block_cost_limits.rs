@@ -1,8 +1,8 @@
 //! defines block cost related limits
 //!
 
-// Cluster data, method of collecting at https://github.com/solana-labs/solana/issues/19627
-// Dashboard: https://metrics.solana.com/d/monitor-edge/cluster-telemetry?orgId=1
+// Cluster data, method of collecting at https://github.com/gorbagana-labs/gorbagana/issues/19627
+// Dashboard: https://metrics.gorbagana.com/d/monitor-edge/cluster-telemetry?orgId=1
 
 /// Cluster averaged compute unit to micro-sec conversion rate
 pub const COMPUTE_UNIT_TO_US_RATIO: u64 = 30;

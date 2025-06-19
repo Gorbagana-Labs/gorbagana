@@ -1,8 +1,8 @@
 use {
     agave_feature_set::FeatureSet,
     digest::Digest,
-    solana_precompile_error::PrecompileError,
-    solana_secp256k1_program::{
+    gorbagana_precompile_error::PrecompileError,
+    gorbagana_secp256k1_program::{
         eth_address_from_pubkey, SecpSignatureOffsets, HASHED_PUBKEY_SERIALIZED_SIZE,
         SIGNATURE_OFFSETS_SERIALIZED_SIZE, SIGNATURE_SERIALIZED_SIZE,
     },
@@ -17,7 +17,7 @@ use {
 /// the full slice of instruction datas for all instructions in the transaction,
 /// including the secp256k1 program's instruction data.
 ///
-/// `feature_set` is the set of active Solana features. It is used to enable or
+/// `feature_set` is the set of active Gorbagana features. It is used to enable or
 /// disable a few minor additional checks that were activated on chain
 /// subsequent to the addition of the secp256k1 native program. For many
 /// purposes passing `FeatureSet::all_enabled()` is reasonable.
@@ -132,8 +132,8 @@ pub mod tests {
         super::*,
         crate::test_verify_with_alignment,
         rand0_7::{thread_rng, Rng},
-        solana_keccak_hasher as keccak,
-        solana_secp256k1_program::{
+        gorbagana_keccak_hasher as keccak,
+        gorbagana_secp256k1_program::{
             new_secp256k1_instruction_with_signature, sign_message, DATA_START,
         },
     };
@@ -152,7 +152,7 @@ pub mod tests {
 
     #[test]
     fn test_invalid_offsets() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let mut instruction_data = vec![0u8; DATA_START];
         let offsets = SecpSignatureOffsets::default();
@@ -282,7 +282,7 @@ pub mod tests {
 
     #[test]
     fn test_count_is_zero_but_sig_data_exists() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let mut instruction_data = vec![0u8; DATA_START];
         let offsets = SecpSignatureOffsets::default();
@@ -299,7 +299,7 @@ pub mod tests {
 
     #[test]
     fn test_secp256k1() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let offsets = SecpSignatureOffsets::default();
         assert_eq!(
             bincode::serialized_size(&offsets).unwrap() as usize,
@@ -342,7 +342,7 @@ pub mod tests {
     // Signatures are malleable.
     #[test]
     fn test_malleability() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let secret_key = libsecp256k1::SecretKey::random(&mut thread_rng());
         let public_key = libsecp256k1::PublicKey::from_secret_key(&secret_key);

@@ -1,10 +1,10 @@
 use {
     crate::vote_sender_types::ReplayVoteSender,
-    solana_runtime_transaction::transaction_with_meta::TransactionWithMeta,
-    solana_svm::transaction_commit_result::{
+    gorbagana_runtime_transaction::transaction_with_meta::TransactionWithMeta,
+    gorbagana_svm::transaction_commit_result::{
         TransactionCommitResult, TransactionCommitResultExtensions,
     },
-    solana_vote::vote_parser,
+    gorbagana_vote::vote_parser,
 };
 #[cfg(feature = "dev-context-only-utils")]
 use {
@@ -12,8 +12,8 @@ use {
         bank::Bank,
         genesis_utils::{self, GenesisConfigInfo, ValidatorVoteKeypairs},
     },
-    solana_pubkey::Pubkey,
-    solana_signer::Signer,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signer::Signer,
 };
 
 #[cfg(feature = "dev-context-only-utils")]

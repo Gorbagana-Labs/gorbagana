@@ -6,7 +6,7 @@ export default function HomeCtaLinks() {
     <div className="container">
       <div className="row cards__container">
         <Card
-          to="https://solana.com/developers"
+          to="https://gorbagana.com/developers"
           header={{
             label: "Developers",
             translateId: "cta-developers",

@@ -1,19 +1,19 @@
 use {
-    solana_cli::{
+    gorbagana_cli::{
         address_lookup_table::{
             AddressLookupTableCliCommand, DEACTIVATE_LOOKUP_TABLE_WARNING,
             FREEZE_LOOKUP_TABLE_WARNING,
         },
         cli::{process_command, CliCommand, CliConfig},
     },
-    solana_cli_output::{CliAddressLookupTable, CliAddressLookupTableCreated, OutputFormat},
-    solana_faucet::faucet::run_local_faucet,
-    solana_keypair::Keypair,
-    solana_native_token::LAMPORTS_PER_SOL,
-    solana_pubkey::Pubkey,
-    solana_signer::Signer,
-    solana_streamer::socket::SocketAddrSpace,
-    solana_test_validator::TestValidator,
+    gorbagana_cli_output::{CliAddressLookupTable, CliAddressLookupTableCreated, OutputFormat},
+    gorbagana_faucet::faucet::run_local_faucet,
+    gorbagana_keypair::Keypair,
+    gorbagana_native_token::LAMPORTS_PER_SOL,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signer::Signer,
+    gorbagana_streamer::socket::SocketAddrSpace,
+    gorbagana_test_validator::TestValidator,
     std::str::FromStr,
 };
 

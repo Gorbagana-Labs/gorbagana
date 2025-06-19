@@ -2,15 +2,15 @@ use {
     crate::invoke_context::{BuiltinFunctionWithContext, InvokeContext},
     log::{debug, error, log_enabled, trace},
     percentage::PercentageInteger,
-    solana_clock::{Epoch, Slot},
-    solana_pubkey::Pubkey,
-    solana_sbpf::{
+    gorbagana_clock::{Epoch, Slot},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sbpf::{
         elf::Executable, program::BuiltinProgram, verifier::RequisiteVerifier, vm::Config,
     },
-    solana_sdk_ids::{
+    gorbagana_sdk_ids::{
         bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable, loader_v4, native_loader,
     },
-    solana_type_overrides::{
+    gorbagana_type_overrides::{
         rand::{thread_rng, Rng},
         sync::{
             atomic::{AtomicU64, Ordering},
@@ -25,7 +25,7 @@ use {
     },
 };
 #[cfg(feature = "metrics")]
-use {solana_measure::measure::Measure, solana_timings::ExecuteDetailsTimings};
+use {gorbagana_measure::measure::Measure, gorbagana_timings::ExecuteDetailsTimings};
 
 pub type ProgramRuntimeEnvironment = Arc<BuiltinProgram<InvokeContext<'static>>>;
 pub const MAX_LOADED_ENTRY_COUNT: usize = 512;
@@ -1353,7 +1353,7 @@ impl<FG: ForkGraph> ProgramCache<FG> {
 }
 
 #[cfg(feature = "frozen-abi")]
-impl solana_frozen_abi::abi_example::AbiExample for ProgramCacheEntry {
+impl gorbagana_frozen_abi::abi_example::AbiExample for ProgramCacheEntry {
     fn example() -> Self {
         // ProgramCacheEntry isn't serializable by definition.
         Self::default()
@@ -1361,7 +1361,7 @@ impl solana_frozen_abi::abi_example::AbiExample for ProgramCacheEntry {
 }
 
 #[cfg(feature = "frozen-abi")]
-impl<FG: ForkGraph> solana_frozen_abi::abi_example::AbiExample for ProgramCache<FG> {
+impl<FG: ForkGraph> gorbagana_frozen_abi::abi_example::AbiExample for ProgramCache<FG> {
     fn example() -> Self {
         // ProgramCache isn't serializable by definition.
         Self::new(Slot::default(), Epoch::default())
@@ -1378,9 +1378,9 @@ mod tests {
         },
         assert_matches::assert_matches,
         percentage::Percentage,
-        solana_clock::Slot,
-        solana_pubkey::Pubkey,
-        solana_sbpf::{elf::Executable, program::BuiltinProgram},
+        gorbagana_clock::Slot,
+        gorbagana_pubkey::Pubkey,
+        gorbagana_sbpf::{elf::Executable, program::BuiltinProgram},
         std::{
             fs::File,
             io::Read,

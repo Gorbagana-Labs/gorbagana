@@ -6,10 +6,10 @@ use {
     },
     itertools::Itertools,
     log::*,
-    solana_clock::{Epoch, Slot},
-    solana_epoch_schedule::EpochSchedule,
-    solana_pubkey::Pubkey,
-    solana_runtime::bank::Bank,
+    gorbagana_clock::{Epoch, Slot},
+    gorbagana_epoch_schedule::EpochSchedule,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_runtime::bank::Bank,
     std::{
         collections::{hash_map::Entry, HashMap, VecDeque},
         sync::{Arc, RwLock},
@@ -255,13 +255,13 @@ mod tests {
             staking_utils::tests::setup_vote_and_stake_accounts,
         },
         crossbeam_channel::unbounded,
-        solana_clock::{DEFAULT_SLOTS_PER_EPOCH, NUM_CONSECUTIVE_LEADER_SLOTS},
-        solana_epoch_schedule::{
+        gorbagana_clock::{DEFAULT_SLOTS_PER_EPOCH, NUM_CONSECUTIVE_LEADER_SLOTS},
+        gorbagana_epoch_schedule::{
             EpochSchedule, DEFAULT_LEADER_SCHEDULE_SLOT_OFFSET, MINIMUM_SLOTS_PER_EPOCH,
         },
-        solana_keypair::Keypair,
-        solana_runtime::bank::Bank,
-        solana_signer::Signer,
+        gorbagana_keypair::Keypair,
+        gorbagana_runtime::bank::Bank,
+        gorbagana_signer::Signer,
         std::{sync::Arc, thread::Builder},
     };
 
@@ -371,7 +371,7 @@ mod tests {
 
     #[test]
     fn test_next_leader_slot() {
-        let pubkey = solana_pubkey::new_rand();
+        let pubkey = gorbagana_pubkey::new_rand();
         let mut genesis_config =
             create_genesis_config_with_leader(42, &pubkey, bootstrap_validator_stake_lamports())
                 .genesis_config;
@@ -409,7 +409,7 @@ mod tests {
 
         assert_eq!(
             cache.next_leader_slot(
-                &solana_pubkey::new_rand(), // not in leader_schedule
+                &gorbagana_pubkey::new_rand(), // not in leader_schedule
                 0,
                 &bank,
                 None,
@@ -421,7 +421,7 @@ mod tests {
 
     #[test]
     fn test_next_leader_slot_blockstore() {
-        let pubkey = solana_pubkey::new_rand();
+        let pubkey = gorbagana_pubkey::new_rand();
         let mut genesis_config =
             create_genesis_config_with_leader(42, &pubkey, bootstrap_validator_stake_lamports())
                 .genesis_config;
@@ -486,7 +486,7 @@ mod tests {
 
         assert_eq!(
             cache.next_leader_slot(
-                &solana_pubkey::new_rand(), // not in leader_schedule
+                &gorbagana_pubkey::new_rand(), // not in leader_schedule
                 0,
                 &bank,
                 Some(&blockstore),
@@ -517,7 +517,7 @@ mod tests {
             &vote_account,
             &validator_identity,
             bootstrap_validator_stake_lamports()
-                + solana_stake_program::get_minimum_delegation(
+                + gorbagana_stake_program::get_minimum_delegation(
                     bank.feature_set.is_active(
                         &agave_feature_set::stake_raise_minimum_delegation_to_1_sol::id(),
                     ),
@@ -597,7 +597,7 @@ mod tests {
         assert_eq!(bank.get_epoch_and_slot_index(96).0, 2);
         assert!(cache.slot_leader_at(96, Some(&bank)).is_none());
 
-        let bank2 = Bank::new_from_parent(bank, &solana_pubkey::new_rand(), 95);
+        let bank2 = Bank::new_from_parent(bank, &gorbagana_pubkey::new_rand(), 95);
         assert!(bank2.epoch_vote_accounts(2).is_some());
 
         // Set root for a slot in epoch 1, so that epoch 2 is now confirmed

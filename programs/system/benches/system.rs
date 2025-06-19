@@ -1,22 +1,22 @@
 #[allow(deprecated)]
 use {
     criterion::{criterion_group, criterion_main, Criterion},
-    solana_account::{self as account, AccountSharedData, WritableAccount},
-    solana_hash::Hash,
-    solana_instruction::AccountMeta,
-    solana_nonce::{
+    gorbagana_account::{self as account, AccountSharedData, WritableAccount},
+    gorbagana_hash::Hash,
+    gorbagana_instruction::AccountMeta,
+    gorbagana_nonce::{
         state::{DurableNonce, State},
         versions::Versions,
     },
-    solana_program_runtime::invoke_context::mock_process_instruction,
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
-    solana_sdk_ids::{
+    gorbagana_program_runtime::invoke_context::mock_process_instruction,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent::Rent,
+    gorbagana_sdk_ids::{
         system_program,
         sysvar::{recent_blockhashes, rent},
     },
-    solana_system_interface::instruction::SystemInstruction,
-    solana_sysvar::recent_blockhashes::{IterItem, RecentBlockhashes, MAX_ENTRIES},
+    gorbagana_system_interface::instruction::SystemInstruction,
+    gorbagana_sysvar::recent_blockhashes::{IterItem, RecentBlockhashes, MAX_ENTRIES},
 };
 
 const SEED: &str = "bench test";
@@ -459,13 +459,13 @@ impl TestSetup {
 
     fn run(&self) {
         mock_process_instruction(
-            &solana_system_program::id(),
+            &gorbagana_system_program::id(),
             Vec::new(),
             &self.instruction_data,
             self.transaction_accounts.clone(),
             self.instruction_accounts.clone(),
             Ok(()), //expected_result,
-            solana_system_program::system_processor::Entrypoint::vm,
+            gorbagana_system_program::system_processor::Entrypoint::vm,
             |_invoke_context| {},
             |_invoke_context| {},
         );

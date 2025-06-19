@@ -105,16 +105,16 @@ mod tests {
     use {
         super::*,
         crate::transaction_view::TransactionView,
-        solana_hash::Hash,
-        solana_message::{
+        gorbagana_hash::Hash,
+        gorbagana_message::{
             compiled_instruction::CompiledInstruction,
             v0::{self, MessageAddressTableLookup},
             Message, MessageHeader, VersionedMessage,
         },
-        solana_pubkey::Pubkey,
-        solana_signature::Signature,
-        solana_system_interface::instruction as system_instruction,
-        solana_transaction::versioned::VersionedTransaction,
+        gorbagana_pubkey::Pubkey,
+        gorbagana_signature::Signature,
+        gorbagana_system_interface::instruction as system_instruction,
+        gorbagana_transaction::versioned::VersionedTransaction,
     };
 
     fn create_legacy_transaction(

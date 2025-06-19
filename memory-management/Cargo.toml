@@ -1,6 +1,6 @@
 [package]
-name = "solana-memory-management"
-description = "Solana memory management"
+name = "gorbagana-memory-management"
+description = "Gorbagana memory management"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }

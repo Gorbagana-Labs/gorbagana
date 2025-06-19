@@ -160,7 +160,7 @@ pub(in crate::parse_token) fn parse_transfer_fee_instruction(
 #[cfg(test)]
 mod test {
     use {
-        super::*, solana_message::Message, solana_pubkey::Pubkey,
+        super::*, gorbagana_message::Message, gorbagana_pubkey::Pubkey,
         spl_token_2022::extension::transfer_fee::instruction::*,
     };
 

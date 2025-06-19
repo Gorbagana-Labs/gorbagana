@@ -1,5 +1,5 @@
 use {
-    solana_fee_structure::FeeDetails, solana_program_entrypoint::HEAP_LENGTH, std::num::NonZeroU32,
+    gorbagana_fee_structure::FeeDetails, gorbagana_program_entrypoint::HEAP_LENGTH, std::num::NonZeroU32,
 };
 
 /// Max instruction stack depth. This is the maximum nesting of instructions that can happen during
@@ -50,7 +50,7 @@ pub struct SVMTransactionExecutionBudget {
     pub stack_frame_size: usize,
     /// Maximum cross-program invocation instruction size
     pub max_cpi_instruction_size: usize,
-    /// program heap region size, default: solana_program_entrypoint::HEAP_LENGTH
+    /// program heap region size, default: gorbagana_program_entrypoint::HEAP_LENGTH
     pub heap_size: u32,
 }
 
@@ -64,7 +64,7 @@ impl Default for SVMTransactionExecutionBudget {
             max_call_depth: MAX_CALL_DEPTH,
             stack_frame_size: STACK_FRAME_SIZE,
             max_cpi_instruction_size: 1280, // IPv6 Min MTU size
-            heap_size: u32::try_from(solana_program_entrypoint::HEAP_LENGTH).unwrap(),
+            heap_size: u32::try_from(gorbagana_program_entrypoint::HEAP_LENGTH).unwrap(),
         }
     }
 }

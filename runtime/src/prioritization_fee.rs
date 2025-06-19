@@ -1,7 +1,7 @@
 use {
-    solana_clock::Slot,
-    solana_measure::measure_us,
-    solana_pubkey::Pubkey,
+    gorbagana_clock::Slot,
+    gorbagana_measure::measure_us,
+    gorbagana_pubkey::Pubkey,
     std::{collections::HashMap, num::Saturating},
 };
 
@@ -266,11 +266,11 @@ impl PrioritizationFee {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, solana_pubkey::Pubkey};
+    use {super::*, gorbagana_pubkey::Pubkey};
 
     #[test]
     fn test_update_prioritization_fee() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let write_account_a = Pubkey::new_unique();
         let write_account_b = Pubkey::new_unique();
         let write_account_c = Pubkey::new_unique();

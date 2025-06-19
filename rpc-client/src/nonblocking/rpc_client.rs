@@ -1,14 +1,14 @@
-//! Communication with a Solana node over RPC asynchronously .
+//! Communication with a Gorbagana node over RPC asynchronously .
 //!
-//! Software that interacts with the Solana blockchain, whether querying its
-//! state or submitting transactions, communicates with a Solana node over
+//! Software that interacts with the Gorbagana blockchain, whether querying its
+//! state or submitting transactions, communicates with a Gorbagana node over
 //! [JSON-RPC], using the [`RpcClient`] type.
 //!
 //! [JSON-RPC]: https://www.jsonrpc.org/specification
 
 pub use crate::mock_sender::Mocks;
 #[cfg(feature = "spinner")]
-use {crate::spinner, solana_clock::MAX_HASH_AGE_IN_SECONDS, std::cmp::min};
+use {crate::spinner, gorbagana_clock::MAX_HASH_AGE_IN_SECONDS, std::cmp::min};
 use {
     crate::{
         http_sender::HttpSender,
@@ -24,18 +24,18 @@ use {
     futures::join,
     log::*,
     serde_json::{json, Value},
-    solana_account::Account,
-    solana_account_decoder_client_types::{
+    gorbagana_account::Account,
+    gorbagana_account_decoder_client_types::{
         token::{TokenAccountType, UiTokenAccount, UiTokenAmount},
         UiAccount, UiAccountData, UiAccountEncoding,
     },
-    solana_clock::{Epoch, Slot, UnixTimestamp, DEFAULT_MS_PER_SLOT},
-    solana_commitment_config::CommitmentConfig,
-    solana_epoch_info::EpochInfo,
-    solana_epoch_schedule::EpochSchedule,
-    solana_hash::Hash,
-    solana_pubkey::Pubkey,
-    solana_rpc_client_api::{
+    gorbagana_clock::{Epoch, Slot, UnixTimestamp, DEFAULT_MS_PER_SLOT},
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_epoch_info::EpochInfo,
+    gorbagana_epoch_schedule::EpochSchedule,
+    gorbagana_hash::Hash,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rpc_client_api::{
         client_error::{
             Error as ClientError, ErrorKind as ClientErrorKind, Result as ClientResult,
         },
@@ -43,13 +43,13 @@ use {
         request::{RpcError, RpcRequest, RpcResponseErrorData, TokenAccountsFilter},
         response::*,
     },
-    solana_signature::Signature,
-    solana_transaction_error::TransactionResult,
-    solana_transaction_status_client_types::{
+    gorbagana_signature::Signature,
+    gorbagana_transaction_error::TransactionResult,
+    gorbagana_transaction_status_client_types::{
         EncodedConfirmedBlock, EncodedConfirmedTransactionWithStatusMeta, TransactionStatus,
         UiConfirmedBlock, UiTransactionEncoding,
     },
-    solana_vote_interface::state::MAX_LOCKOUT_HISTORY,
+    gorbagana_vote_interface::state::MAX_LOCKOUT_HISTORY,
     std::{
         net::SocketAddr,
         str::FromStr,
@@ -58,10 +58,10 @@ use {
     tokio::time::sleep,
 };
 
-/// A client of a remote Solana node.
+/// A client of a remote Gorbagana node.
 ///
-/// `RpcClient` communicates with a Solana node over [JSON-RPC], with the
-/// [Solana JSON-RPC protocol][jsonprot]. It is the primary Rust interface for
+/// `RpcClient` communicates with a Gorbagana node over [JSON-RPC], with the
+/// [Gorbagana JSON-RPC protocol][jsonprot]. It is the primary Rust interface for
 /// querying and transacting with the network from external programs.
 ///
 /// This type builds on the underlying RPC protocol, adding extra features such
@@ -96,33 +96,33 @@ use {
 ///
 /// [`Finalized`]: CommitmentLevel::Finalized
 /// [`Processed`]: CommitmentLevel::Processed
-/// [jsonprot]: https://solana.com/docs/rpc
+/// [jsonprot]: https://gorbagana.com/docs/rpc
 /// [JSON-RPC]: https://www.jsonrpc.org/specification
-/// [slots]: https://solana.com/docs/terminology#slot
-/// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+/// [slots]: https://gorbagana.com/docs/terminology#slot
+/// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
 ///
 /// # Errors
 ///
 /// Methods on `RpcClient` return
-/// [`client_error::Result`][solana_rpc_client_api::client_error::Result], and many of them
-/// return the [`RpcResult`][solana_rpc_client_api::response::RpcResult] typedef, which
-/// contains [`Response<T>`][solana_rpc_client_api::response::Response] on `Ok`. Both
+/// [`client_error::Result`][gorbagana_rpc_client_api::client_error::Result], and many of them
+/// return the [`RpcResult`][gorbagana_rpc_client_api::response::RpcResult] typedef, which
+/// contains [`Response<T>`][gorbagana_rpc_client_api::response::Response] on `Ok`. Both
 /// `client_error::Result` and [`RpcResult`] contain `ClientError` on error. In
 /// the case of `RpcResult`, the actual return value is in the
-/// [`value`][solana_rpc_client_api::response::Response::value] field, with RPC contextual
-/// information in the [`context`][solana_rpc_client_api::response::Response::context]
+/// [`value`][gorbagana_rpc_client_api::response::Response::value] field, with RPC contextual
+/// information in the [`context`][gorbagana_rpc_client_api::response::Response::context]
 /// field, so it is common for the value to be accessed with `?.value`, as in
 ///
 /// ```
-/// # use solana_hash::Hash;
-/// # use solana_system_transaction as system_transaction;
-/// # use solana_rpc_client_api::client_error::Error;
-/// # use solana_rpc_client::rpc_client::RpcClient;
-/// # use solana_keypair::Keypair;
-/// # use solana_signer::Signer;
+/// # use gorbagana_hash::Hash;
+/// # use gorbagana_system_transaction as system_transaction;
+/// # use gorbagana_rpc_client_api::client_error::Error;
+/// # use gorbagana_rpc_client::rpc_client::RpcClient;
+/// # use gorbagana_keypair::Keypair;
+/// # use gorbagana_signer::Signer;
 /// # let rpc_client = RpcClient::new_mock("succeeds".to_string());
 /// # let key = Keypair::new();
-/// # let to = solana_pubkey::new_rand();
+/// # let to = gorbagana_pubkey::new_rand();
 /// # let lamports = 50;
 /// # let latest_blockhash = Hash::default();
 /// # let tx = system_transaction::transfer(&key, &to, lamports, latest_blockhash);
@@ -133,8 +133,8 @@ use {
 ///
 /// Requests may timeout, in which case they return a [`ClientError`] where the
 /// [`ClientErrorKind`] is [`ClientErrorKind::Reqwest`], and where the interior
-/// [`reqwest::Error`](solana_rpc_client_api::client_error::reqwest::Error)s
-/// [`is_timeout`](solana_rpc_client_api::client_error::reqwest::Error::is_timeout) method
+/// [`reqwest::Error`](gorbagana_rpc_client_api::client_error::reqwest::Error)s
+/// [`is_timeout`](gorbagana_rpc_client_api::client_error::reqwest::Error::is_timeout) method
 /// returns `true`. The default timeout is 30 seconds, and may be changed by
 /// calling an appropriate constructor with a `timeout` parameter.
 pub struct RpcClient {
@@ -167,12 +167,12 @@ impl RpcClient {
     /// The client has a default timeout of 30 seconds, and a default [commitment
     /// level][cl] of [`Finalized`](CommitmentLevel::Finalized).
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// let url = "http://localhost:8899".to_string();
     /// let client = RpcClient::new(url);
     /// ```
@@ -182,7 +182,7 @@ impl RpcClient {
 
     /// Create an HTTP `RpcClient` with specified [commitment level][cl].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// The URL is an HTTP URL, usually for port 8899, as in
     /// "http://localhost:8899".
@@ -193,8 +193,8 @@ impl RpcClient {
     /// # Examples
     ///
     /// ```
-    /// # use solana_commitment_config::CommitmentConfig;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// let url = "http://localhost:8899".to_string();
     /// let commitment_config = CommitmentConfig::processed();
     /// let client = RpcClient::new_with_commitment(url, commitment_config);
@@ -214,13 +214,13 @@ impl RpcClient {
     /// The client has and a default [commitment level][cl] of
     /// [`Finalized`](CommitmentLevel::Finalized).
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// # Examples
     ///
     /// ```
     /// # use std::time::Duration;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// let url = "http://localhost::8899".to_string();
     /// let timeout = Duration::from_secs(1);
     /// let client = RpcClient::new_with_timeout(url, timeout);
@@ -234,7 +234,7 @@ impl RpcClient {
 
     /// Create an HTTP `RpcClient` with specified timeout and [commitment level][cl].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// The URL is an HTTP URL, usually for port 8899, as in
     /// "http://localhost:8899".
@@ -243,8 +243,8 @@ impl RpcClient {
     ///
     /// ```
     /// # use std::time::Duration;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
     /// let url = "http://localhost::8899".to_string();
     /// let timeout = Duration::from_secs(1);
     /// let commitment_config = CommitmentConfig::processed();
@@ -267,7 +267,7 @@ impl RpcClient {
 
     /// Create an HTTP `RpcClient` with specified timeout and [commitment level][cl].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// The URL is an HTTP URL, usually for port 8899, as in
     /// "http://localhost:8899".
@@ -284,8 +284,8 @@ impl RpcClient {
     ///
     /// ```
     /// # use std::time::Duration;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
     /// let url = "http://localhost::8899".to_string();
     /// let timeout = Duration::from_secs(1);
     /// let commitment_config = CommitmentConfig::processed();
@@ -319,7 +319,7 @@ impl RpcClient {
     /// tests.
     ///
     /// It is primarily for internal use, with limited customizability, and
-    /// behaviors determined by internal Solana test cases. New users should
+    /// behaviors determined by internal Gorbagana test cases. New users should
     /// consider implementing `RpcSender` themselves and constructing
     /// `RpcClient` with [`RpcClient::new_sender`] to get mock behavior.
     ///
@@ -346,14 +346,14 @@ impl RpcClient {
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// // Create an `RpcClient` that always succeeds
     /// let url = "succeeds".to_string();
     /// let successful_client = RpcClient::new_mock(url);
     /// ```
     ///
     /// ```
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// // Create an `RpcClient` that always fails
     /// let url = "fails".to_string();
     /// let successful_client = RpcClient::new_mock(url);
@@ -372,7 +372,7 @@ impl RpcClient {
     /// tests.
     ///
     /// It is primarily for internal use, with limited customizability, and
-    /// behaviors determined by internal Solana test cases. New users should
+    /// behaviors determined by internal Gorbagana test cases. New users should
     /// consider implementing `RpcSender` themselves and constructing
     /// `RpcClient` with [`RpcClient::new_sender`] to get mock behavior.
     ///
@@ -408,11 +408,11 @@ impl RpcClient {
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::{
+    /// # use gorbagana_rpc_client_api::{
     /// #     request::RpcRequest,
     /// #     response::{Response, RpcResponseContext},
     /// # };
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # use std::collections::HashMap;
     /// # use serde_json::json;
     /// // Create a mock with a custom response to the `GetBalance` request
@@ -440,7 +440,7 @@ impl RpcClient {
     /// tests.
     ///
     /// It is primarily for internal use, with limited customizability, and
-    /// behaviors determined by internal Solana test cases. New users should
+    /// behaviors determined by internal Gorbagana test cases. New users should
     /// consider implementing `RpcSender` themselves and constructing
     /// `RpcClient` with [`RpcClient::new_sender`] to get mock behavior.
     ///
@@ -475,11 +475,11 @@ impl RpcClient {
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::{
+    /// # use gorbagana_rpc_client_api::{
     /// #     request::RpcRequest,
     /// #     response::{Response, RpcResponseContext},
     /// # };
-    /// # use solana_rpc_client::{rpc_client::RpcClient, mock_sender::MocksMap};
+    /// # use gorbagana_rpc_client::{rpc_client::RpcClient, mock_sender::MocksMap};
     /// # use serde_json::json;
     /// // Create a mock with a custom response to the `GetBalance` request
     /// let account_balance_x = 50;
@@ -534,13 +534,13 @@ impl RpcClient {
     /// The client has a default timeout of 30 seconds, and a default [commitment
     /// level][cl] of [`Finalized`](CommitmentLevel::Finalized).
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// # Examples
     ///
     /// ```
     /// # use std::net::{Ipv4Addr, SocketAddr};
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// let addr = SocketAddr::from((Ipv4Addr::LOCALHOST, 8899));
     /// let client = RpcClient::new_socket(addr);
     /// ```
@@ -550,7 +550,7 @@ impl RpcClient {
 
     /// Create an HTTP `RpcClient` from a [`SocketAddr`] with specified [commitment level][cl].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// The client has a default timeout of 30 seconds, and a user-specified
     /// [`CommitmentLevel`] via [`CommitmentConfig`].
@@ -559,8 +559,8 @@ impl RpcClient {
     ///
     /// ```
     /// # use std::net::{Ipv4Addr, SocketAddr};
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
     /// let addr = SocketAddr::from((Ipv4Addr::LOCALHOST, 8899));
     /// let commitment_config = CommitmentConfig::processed();
     /// let client = RpcClient::new_socket_with_commitment(
@@ -579,14 +579,14 @@ impl RpcClient {
     ///
     /// The client has a default [commitment level][cl] of [`Finalized`](CommitmentLevel::Finalized).
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// # Examples
     ///
     /// ```
     /// # use std::net::{Ipv4Addr, SocketAddr};
     /// # use std::time::Duration;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// let addr = SocketAddr::from((Ipv4Addr::LOCALHOST, 8899));
     /// let timeout = Duration::from_secs(1);
     /// let client = RpcClient::new_socket_with_timeout(addr, timeout);
@@ -608,7 +608,7 @@ impl RpcClient {
 
     /// Get the configured default [commitment level][cl].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// The commitment config may be specified during construction, and
     /// determines how thoroughly committed a transaction must be when waiting
@@ -628,7 +628,7 @@ impl RpcClient {
     /// Once this function returns successfully, the given transaction is
     /// guaranteed to be processed with the configured [commitment level][cl].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// After sending the transaction, this method polls in a loop for the
     /// status of the transaction until it has ben confirmed.
@@ -649,27 +649,27 @@ impl RpcClient {
     /// [`JSON_RPC_SERVER_ERROR_NODE_UNHEALTHY`].
     ///
     /// [`RpcResponseError`]: RpcError::RpcResponseError
-    /// [`JSON_RPC_SERVER_ERROR_TRANSACTION_SIGNATURE_VERIFICATION_FAILURE`]: solana_rpc_client_api::custom_error::JSON_RPC_SERVER_ERROR_TRANSACTION_SIGNATURE_VERIFICATION_FAILURE
-    /// [`JSON_RPC_SERVER_ERROR_SEND_TRANSACTION_PREFLIGHT_FAILURE`]: solana_rpc_client_api::custom_error::JSON_RPC_SERVER_ERROR_SEND_TRANSACTION_PREFLIGHT_FAILURE
-    /// [`JSON_RPC_SERVER_ERROR_NODE_UNHEALTHY`]: solana_rpc_client_api::custom_error::JSON_RPC_SERVER_ERROR_NODE_UNHEALTHY
+    /// [`JSON_RPC_SERVER_ERROR_TRANSACTION_SIGNATURE_VERIFICATION_FAILURE`]: gorbagana_rpc_client_api::custom_error::JSON_RPC_SERVER_ERROR_TRANSACTION_SIGNATURE_VERIFICATION_FAILURE
+    /// [`JSON_RPC_SERVER_ERROR_SEND_TRANSACTION_PREFLIGHT_FAILURE`]: gorbagana_rpc_client_api::custom_error::JSON_RPC_SERVER_ERROR_SEND_TRANSACTION_PREFLIGHT_FAILURE
+    /// [`JSON_RPC_SERVER_ERROR_NODE_UNHEALTHY`]: gorbagana_rpc_client_api::custom_error::JSON_RPC_SERVER_ERROR_NODE_UNHEALTHY
     ///
     /// # RPC Reference
     ///
     /// This method is built on the [`sendTransaction`] RPC method, and the
     /// [`getLatestBlockhash`] RPC method.
     ///
-    /// [`sendTransaction`]: https://solana.com/docs/rpc/http/sendtransaction
-    /// [`getLatestBlockhash`]: https://solana.com/docs/rpc/http/getlatestblockhash
+    /// [`sendTransaction`]: https://gorbagana.com/docs/rpc/http/sendtransaction
+    /// [`getLatestBlockhash`]: https://gorbagana.com/docs/rpc/http/getlatestblockhash
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_system_transaction as system_transaction;
-    /// # use solana_signature::Signature;
-    /// # use solana_signer::Signer;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_system_transaction as system_transaction;
+    /// # use gorbagana_signature::Signature;
+    /// # use gorbagana_signer::Signer;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let alice = Keypair::new();
@@ -813,8 +813,8 @@ impl RpcClient {
     /// method.
     ///
     /// [`send_transaction_with_config`]: RpcClient::send_transaction_with_config
-    /// [`skip_preflight`]: solana_rpc_client_api::config::RpcSendTransactionConfig::skip_preflight
-    /// [`RpcSendTransactionConfig`]: solana_rpc_client_api::config::RpcSendTransactionConfig
+    /// [`skip_preflight`]: gorbagana_rpc_client_api::config::RpcSendTransactionConfig::skip_preflight
+    /// [`RpcSendTransactionConfig`]: gorbagana_rpc_client_api::config::RpcSendTransactionConfig
     /// [`send_and_confirm_transaction`]: RpcClient::send_and_confirm_transaction
     ///
     /// # Errors
@@ -833,26 +833,26 @@ impl RpcClient {
     /// [`JSON_RPC_SERVER_ERROR_NODE_UNHEALTHY`].
     ///
     /// [`RpcResponseError`]: RpcError::RpcResponseError
-    /// [`JSON_RPC_SERVER_ERROR_TRANSACTION_SIGNATURE_VERIFICATION_FAILURE`]: solana_rpc_client_api::custom_error::JSON_RPC_SERVER_ERROR_TRANSACTION_SIGNATURE_VERIFICATION_FAILURE
-    /// [`JSON_RPC_SERVER_ERROR_SEND_TRANSACTION_PREFLIGHT_FAILURE`]: solana_rpc_client_api::custom_error::JSON_RPC_SERVER_ERROR_SEND_TRANSACTION_PREFLIGHT_FAILURE
-    /// [`JSON_RPC_SERVER_ERROR_NODE_UNHEALTHY`]: solana_rpc_client_api::custom_error::JSON_RPC_SERVER_ERROR_NODE_UNHEALTHY
+    /// [`JSON_RPC_SERVER_ERROR_TRANSACTION_SIGNATURE_VERIFICATION_FAILURE`]: gorbagana_rpc_client_api::custom_error::JSON_RPC_SERVER_ERROR_TRANSACTION_SIGNATURE_VERIFICATION_FAILURE
+    /// [`JSON_RPC_SERVER_ERROR_SEND_TRANSACTION_PREFLIGHT_FAILURE`]: gorbagana_rpc_client_api::custom_error::JSON_RPC_SERVER_ERROR_SEND_TRANSACTION_PREFLIGHT_FAILURE
+    /// [`JSON_RPC_SERVER_ERROR_NODE_UNHEALTHY`]: gorbagana_rpc_client_api::custom_error::JSON_RPC_SERVER_ERROR_NODE_UNHEALTHY
     ///
     /// # RPC Reference
     ///
     /// This method is built on the [`sendTransaction`] RPC method.
     ///
-    /// [`sendTransaction`]: https://solana.com/docs/rpc/http/sendtransaction
+    /// [`sendTransaction`]: https://gorbagana.com/docs/rpc/http/sendtransaction
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_hash::Hash;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_system_transaction as system_transaction;
-    /// # use solana_signature::Signature;
-    /// # use solana_signer::Signer;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_hash::Hash;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_system_transaction as system_transaction;
+    /// # use gorbagana_signature::Signature;
+    /// # use gorbagana_signer::Signer;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// // Transfer lamports from Alice to Bob
@@ -894,8 +894,8 @@ impl RpcClient {
     /// method.
     ///
     /// [`send_transaction_with_config`]: RpcClient::send_transaction_with_config
-    /// [`skip_preflight`]: solana_rpc_client_api::config::RpcSendTransactionConfig::skip_preflight
-    /// [`RpcSendTransactionConfig`]: solana_rpc_client_api::config::RpcSendTransactionConfig
+    /// [`skip_preflight`]: gorbagana_rpc_client_api::config::RpcSendTransactionConfig::skip_preflight
+    /// [`RpcSendTransactionConfig`]: gorbagana_rpc_client_api::config::RpcSendTransactionConfig
     /// [`send_and_confirm_transaction`]: RpcClient::send_and_confirm_transaction
     ///
     /// # Errors
@@ -916,29 +916,29 @@ impl RpcClient {
     /// [`JSON_RPC_SERVER_ERROR_NODE_UNHEALTHY`].
     ///
     /// [`RpcResponseError`]: RpcError::RpcResponseError
-    /// [`JSON_RPC_SERVER_ERROR_TRANSACTION_SIGNATURE_VERIFICATION_FAILURE`]: solana_rpc_client_api::custom_error::JSON_RPC_SERVER_ERROR_TRANSACTION_SIGNATURE_VERIFICATION_FAILURE
-    /// [`JSON_RPC_SERVER_ERROR_SEND_TRANSACTION_PREFLIGHT_FAILURE`]: solana_rpc_client_api::custom_error::JSON_RPC_SERVER_ERROR_SEND_TRANSACTION_PREFLIGHT_FAILURE
-    /// [`JSON_RPC_SERVER_ERROR_NODE_UNHEALTHY`]: solana_rpc_client_api::custom_error::JSON_RPC_SERVER_ERROR_NODE_UNHEALTHY
+    /// [`JSON_RPC_SERVER_ERROR_TRANSACTION_SIGNATURE_VERIFICATION_FAILURE`]: gorbagana_rpc_client_api::custom_error::JSON_RPC_SERVER_ERROR_TRANSACTION_SIGNATURE_VERIFICATION_FAILURE
+    /// [`JSON_RPC_SERVER_ERROR_SEND_TRANSACTION_PREFLIGHT_FAILURE`]: gorbagana_rpc_client_api::custom_error::JSON_RPC_SERVER_ERROR_SEND_TRANSACTION_PREFLIGHT_FAILURE
+    /// [`JSON_RPC_SERVER_ERROR_NODE_UNHEALTHY`]: gorbagana_rpc_client_api::custom_error::JSON_RPC_SERVER_ERROR_NODE_UNHEALTHY
     ///
     /// # RPC Reference
     ///
     /// This method is built on the [`sendTransaction`] RPC method.
     ///
-    /// [`sendTransaction`]: https://solana.com/docs/rpc/http/sendtransaction
+    /// [`sendTransaction`]: https://gorbagana.com/docs/rpc/http/sendtransaction
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::{
+    /// # use gorbagana_rpc_client_api::{
     /// #     client_error::Error,
     /// #     config::RpcSendTransactionConfig,
     /// # };
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_hash::Hash;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_system_transaction as system_transaction;
-    /// # use solana_signature::Signature;
-    /// # use solana_signer::Signer;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_hash::Hash;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_system_transaction as system_transaction;
+    /// # use gorbagana_signature::Signature;
+    /// # use gorbagana_signer::Signer;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// // Transfer lamports from Alice to Bob
@@ -1031,7 +1031,7 @@ impl RpcClient {
     /// with the configured [commitment level][cl], which can be retrieved with
     /// the [`commitment`](RpcClient::commitment) method.
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// Note that this method does not wait for a transaction to be confirmed
     /// &mdash; it only checks whether a transaction has been confirmed. To
@@ -1045,17 +1045,17 @@ impl RpcClient {
     ///
     /// This method is built on the [`getSignatureStatuses`] RPC method.
     ///
-    /// [`getSignatureStatuses`]: https://solana.com/docs/rpc/http/getsignaturestatuses
+    /// [`getSignatureStatuses`]: https://gorbagana.com/docs/rpc/http/getsignaturestatuses
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_system_transaction as system_transaction;
-    /// # use solana_signature::Signature;
-    /// # use solana_signer::Signer;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_system_transaction as system_transaction;
+    /// # use gorbagana_signature::Signature;
+    /// # use gorbagana_signer::Signer;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// // Transfer lamports from Alice to Bob and wait for confirmation
@@ -1088,7 +1088,7 @@ impl RpcClient {
     /// Returns an [`RpcResult`] with value `true` if the given transaction
     /// succeeded and has been committed with the given [commitment level][cl].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// Note that this method does not wait for a transaction to be confirmed
     /// &mdash; it only checks whether a transaction has been confirmed. To
@@ -1102,18 +1102,18 @@ impl RpcClient {
     ///
     /// This method is built on the [`getSignatureStatuses`] RPC method.
     ///
-    /// [`getSignatureStatuses`]: https://solana.com/docs/rpc/http/getsignaturestatuses
+    /// [`getSignatureStatuses`]: https://gorbagana.com/docs/rpc/http/getsignaturestatuses
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_commitment_config::CommitmentConfig;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_signature::Signature;
-    /// # use solana_signer::Signer;
-    /// # use solana_system_transaction as system_transaction;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_signature::Signature;
+    /// # use gorbagana_signer::Signer;
+    /// # use gorbagana_system_transaction as system_transaction;
     /// # use std::time::Duration;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
@@ -1252,13 +1252,13 @@ impl RpcClient {
     /// [`RpcSimulateTransactionResult`] will be `Some`. Any logs emitted from
     /// the transaction are returned in the [`logs`] field.
     ///
-    /// [`err`]: solana_rpc_client_api::response::RpcSimulateTransactionResult::err
-    /// [`logs`]: solana_rpc_client_api::response::RpcSimulateTransactionResult::logs
+    /// [`err`]: gorbagana_rpc_client_api::response::RpcSimulateTransactionResult::err
+    /// [`logs`]: gorbagana_rpc_client_api::response::RpcSimulateTransactionResult::logs
     ///
     /// Simulating a transaction is similar to the ["preflight check"] that is
     /// run by default when sending a transaction.
     ///
-    /// ["preflight check"]: https://solana.com/docs/rpc/http/sendtransaction
+    /// ["preflight check"]: https://gorbagana.com/docs/rpc/http/sendtransaction
     ///
     /// By default, signatures are not verified during simulation. To verify
     /// signatures, call the [`simulate_transaction_with_config`] method, with
@@ -1266,27 +1266,27 @@ impl RpcClient {
     /// `true`.
     ///
     /// [`simulate_transaction_with_config`]: RpcClient::simulate_transaction_with_config
-    /// [`sig_verify`]: solana_rpc_client_api::config::RpcSimulateTransactionConfig::sig_verify
+    /// [`sig_verify`]: gorbagana_rpc_client_api::config::RpcSimulateTransactionConfig::sig_verify
     ///
     /// # RPC Reference
     ///
     /// This method is built on the [`simulateTransaction`] RPC method.
     ///
-    /// [`simulateTransaction`]: https://solana.com/docs/rpc/http/simulatetransaction
+    /// [`simulateTransaction`]: https://gorbagana.com/docs/rpc/http/simulatetransaction
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::{
+    /// # use gorbagana_rpc_client_api::{
     /// #     client_error::Error,
     /// #     response::RpcSimulateTransactionResult,
     /// # };
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_hash::Hash;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_system_transaction as system_transaction;
-    /// # use solana_signature::Signature;
-    /// # use solana_signer::Signer;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_hash::Hash;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_system_transaction as system_transaction;
+    /// # use gorbagana_signature::Signature;
+    /// # use gorbagana_signer::Signer;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// // Transfer lamports from Alice to Bob
@@ -1321,13 +1321,13 @@ impl RpcClient {
     /// [`RpcSimulateTransactionResult`] will be `Some`. Any logs emitted from
     /// the transaction are returned in the [`logs`] field.
     ///
-    /// [`err`]: solana_rpc_client_api::response::RpcSimulateTransactionResult::err
-    /// [`logs`]: solana_rpc_client_api::response::RpcSimulateTransactionResult::logs
+    /// [`err`]: gorbagana_rpc_client_api::response::RpcSimulateTransactionResult::err
+    /// [`logs`]: gorbagana_rpc_client_api::response::RpcSimulateTransactionResult::logs
     ///
     /// Simulating a transaction is similar to the ["preflight check"] that is
     /// run by default when sending a transaction.
     ///
-    /// ["preflight check"]: https://solana.com/docs/rpc/http/sendtransaction
+    /// ["preflight check"]: https://gorbagana.com/docs/rpc/http/sendtransaction
     ///
     /// By default, signatures are not verified during simulation. To verify
     /// signatures, call the [`simulate_transaction_with_config`] method, with
@@ -1335,7 +1335,7 @@ impl RpcClient {
     /// `true`.
     ///
     /// [`simulate_transaction_with_config`]: RpcClient::simulate_transaction_with_config
-    /// [`sig_verify`]: solana_rpc_client_api::config::RpcSimulateTransactionConfig::sig_verify
+    /// [`sig_verify`]: gorbagana_rpc_client_api::config::RpcSimulateTransactionConfig::sig_verify
     ///
     /// This method can additionally query information about accounts by
     /// including them in the [`accounts`] field of the
@@ -1343,28 +1343,28 @@ impl RpcClient {
     /// are reported in the [`accounts`][accounts2] field of the returned
     /// [`RpcSimulateTransactionResult`].
     ///
-    /// [`accounts`]: solana_rpc_client_api::config::RpcSimulateTransactionConfig::accounts
-    /// [accounts2]: solana_rpc_client_api::response::RpcSimulateTransactionResult::accounts
+    /// [`accounts`]: gorbagana_rpc_client_api::config::RpcSimulateTransactionConfig::accounts
+    /// [accounts2]: gorbagana_rpc_client_api::response::RpcSimulateTransactionResult::accounts
     ///
     /// # RPC Reference
     ///
     /// This method is built on the [`simulateTransaction`] RPC method.
     ///
-    /// [`simulateTransaction`]: https://solana.com/docs/rpc/http/simulatetransaction
+    /// [`simulateTransaction`]: https://gorbagana.com/docs/rpc/http/simulatetransaction
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_hash::Hash;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_rpc_client_api::{
+    /// # use gorbagana_hash::Hash;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_rpc_client_api::{
     /// #     client_error::Error,
     /// #     config::RpcSimulateTransactionConfig,
     /// #     response::RpcSimulateTransactionResult,
     /// # };
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_signer::Signer;
-    /// # use solana_system_transaction as system_transaction;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_signer::Signer;
+    /// # use gorbagana_system_transaction as system_transaction;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// // Transfer lamports from Alice to Bob
@@ -1415,13 +1415,13 @@ impl RpcClient {
     ///
     /// This method corresponds directly to the [`getHighestSnapshotSlot`] RPC method.
     ///
-    /// [`getHighestSnapshotSlot`]: https://solana.com/docs/rpc/http/gethighestsnapshotslot
+    /// [`getHighestSnapshotSlot`]: https://gorbagana.com/docs/rpc/http/gethighestsnapshotslot
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let snapshot_slot_info = rpc_client.get_highest_snapshot_slot().await?;
@@ -1436,7 +1436,7 @@ impl RpcClient {
 
     /// Check if a transaction has been processed with the default [commitment level][cl].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// If the transaction has been processed with the default commitment level,
     /// then this method returns `Ok` of `Some`. If the transaction has not yet
@@ -1449,11 +1449,11 @@ impl RpcClient {
     /// and the transaction failed, this method returns `Ok(Some(Err(_)))`,
     /// where the interior error is type [`TransactionError`].
     ///
-    /// [`TransactionError`]: solana_transaction_error::TransactionError
+    /// [`TransactionError`]: gorbagana_transaction_error::TransactionError
     ///
     /// This function only searches a node's recent history, including all
     /// recent slots, plus up to
-    /// [`MAX_RECENT_BLOCKHASHES`][solana_clock::MAX_RECENT_BLOCKHASHES]
+    /// [`MAX_RECENT_BLOCKHASHES`][gorbagana_clock::MAX_RECENT_BLOCKHASHES]
     /// rooted slots. To search the full transaction history use the
     /// [`get_signature_status_with_commitment_and_history`][RpcClient::get_signature_status_with_commitment_and_history]
     /// method.
@@ -1462,18 +1462,18 @@ impl RpcClient {
     ///
     /// This method is built on the [`getSignatureStatuses`] RPC method.
     ///
-    /// [`getSignatureStatuses`]: https://solana.com/docs/rpc/http/getsignaturestatuses
+    /// [`getSignatureStatuses`]: https://gorbagana.com/docs/rpc/http/getsignaturestatuses
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_hash::Hash;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_system_transaction as system_transaction;
-    /// # use solana_signature::Signature;
-    /// # use solana_signer::Signer;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_hash::Hash;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_system_transaction as system_transaction;
+    /// # use gorbagana_signature::Signature;
+    /// # use gorbagana_signer::Signer;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let alice = Keypair::new();
@@ -1514,7 +1514,7 @@ impl RpcClient {
     ///
     /// This function only searches a node's recent history, including all
     /// recent slots, plus up to
-    /// [`MAX_RECENT_BLOCKHASHES`][solana_clock::MAX_RECENT_BLOCKHASHES]
+    /// [`MAX_RECENT_BLOCKHASHES`][gorbagana_clock::MAX_RECENT_BLOCKHASHES]
     /// rooted slots. To search the full transaction history use the
     /// [`get_signature_statuses_with_history`][RpcClient::get_signature_statuses_with_history]
     /// method.
@@ -1529,18 +1529,18 @@ impl RpcClient {
     ///
     /// This method corresponds directly to the [`getSignatureStatuses`] RPC method.
     ///
-    /// [`getSignatureStatuses`]: https://solana.com/docs/rpc/http/getsignaturestatuses
+    /// [`getSignatureStatuses`]: https://gorbagana.com/docs/rpc/http/getsignaturestatuses
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_hash::Hash;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_system_transaction as system_transaction;
-    /// # use solana_signature::Signature;
-    /// # use solana_signer::Signer;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_hash::Hash;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_system_transaction as system_transaction;
+    /// # use gorbagana_signature::Signature;
+    /// # use gorbagana_signer::Signer;
     /// # use std::time::Duration;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
@@ -1607,18 +1607,18 @@ impl RpcClient {
     /// method, with the `searchTransactionHistory` configuration option set to
     /// `true`.
     ///
-    /// [`getSignatureStatuses`]: https://solana.com/docs/rpc/http/getsignaturestatuses
+    /// [`getSignatureStatuses`]: https://gorbagana.com/docs/rpc/http/getsignaturestatuses
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_hash::Hash;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_system_transaction as system_transaction;
-    /// # use solana_signature::Signature;
-    /// # use solana_signer::Signer;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_hash::Hash;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_system_transaction as system_transaction;
+    /// # use gorbagana_signature::Signature;
+    /// # use gorbagana_signer::Signer;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let alice = Keypair::new();
@@ -1650,7 +1650,7 @@ impl RpcClient {
 
     /// Check if a transaction has been processed with the given [commitment level][cl].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// If the transaction has been processed with the given commitment level,
     /// then this method returns `Ok` of `Some`. If the transaction has not yet
@@ -1663,11 +1663,11 @@ impl RpcClient {
     /// and the transaction failed, this method returns `Ok(Some(Err(_)))`,
     /// where the interior error is type [`TransactionError`].
     ///
-    /// [`TransactionError`]: solana_transaction_error::TransactionError
+    /// [`TransactionError`]: gorbagana_transaction_error::TransactionError
     ///
     /// This function only searches a node's recent history, including all
     /// recent slots, plus up to
-    /// [`MAX_RECENT_BLOCKHASHES`][solana_clock::MAX_RECENT_BLOCKHASHES]
+    /// [`MAX_RECENT_BLOCKHASHES`][gorbagana_clock::MAX_RECENT_BLOCKHASHES]
     /// rooted slots. To search the full transaction history use the
     /// [`get_signature_status_with_commitment_and_history`][RpcClient::get_signature_status_with_commitment_and_history]
     /// method.
@@ -1676,18 +1676,18 @@ impl RpcClient {
     ///
     /// This method is built on the [`getSignatureStatuses`] RPC method.
     ///
-    /// [`getSignatureStatuses`]: https://solana.com/docs/rpc/http/getsignaturestatuses
+    /// [`getSignatureStatuses`]: https://gorbagana.com/docs/rpc/http/getsignaturestatuses
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_commitment_config::CommitmentConfig;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_signature::Signature;
-    /// # use solana_signer::Signer;
-    /// # use solana_system_transaction as system_transaction;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_signature::Signature;
+    /// # use gorbagana_signer::Signer;
+    /// # use gorbagana_system_transaction as system_transaction;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let alice = Keypair::new();
@@ -1724,7 +1724,7 @@ impl RpcClient {
 
     /// Check if a transaction has been processed with the given [commitment level][cl].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// If the transaction has been processed with the given commitment level,
     /// then this method returns `Ok` of `Some`. If the transaction has not yet
@@ -1737,7 +1737,7 @@ impl RpcClient {
     /// and the transaction failed, this method returns `Ok(Some(Err(_)))`,
     /// where the interior error is type [`TransactionError`].
     ///
-    /// [`TransactionError`]: solana_transaction_error::TransactionError
+    /// [`TransactionError`]: gorbagana_transaction_error::TransactionError
     ///
     /// This method optionally searches a node's full ledger history and (if
     /// implemented) long-term storage.
@@ -1746,18 +1746,18 @@ impl RpcClient {
     ///
     /// This method is built on the [`getSignatureStatuses`] RPC method.
     ///
-    /// [`getSignatureStatuses`]: https://solana.com/docs/rpc/http/getsignaturestatuses
+    /// [`getSignatureStatuses`]: https://gorbagana.com/docs/rpc/http/getsignaturestatuses
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_commitment_config::CommitmentConfig;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_signature::Signature;
-    /// # use solana_signer::Signer;
-    /// # use solana_system_transaction as system_transaction;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_signature::Signature;
+    /// # use gorbagana_signer::Signer;
+    /// # use gorbagana_system_transaction as system_transaction;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let alice = Keypair::new();
@@ -1799,19 +1799,19 @@ impl RpcClient {
 
     /// Returns the slot that has reached the configured [commitment level][cl].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// # RPC Reference
     ///
     /// This method corresponds directly to the [`getSlot`] RPC method.
     ///
-    /// [`getSlot`]: https://solana.com/docs/rpc/http/getslot
+    /// [`getSlot`]: https://gorbagana.com/docs/rpc/http/getslot
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let slot = rpc_client.get_slot().await?;
@@ -1825,20 +1825,20 @@ impl RpcClient {
 
     /// Returns the slot that has reached the given [commitment level][cl].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// # RPC Reference
     ///
     /// This method corresponds directly to the [`getSlot`] RPC method.
     ///
-    /// [`getSlot`]: https://solana.com/docs/rpc/http/getslot
+    /// [`getSlot`]: https://gorbagana.com/docs/rpc/http/getslot
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let commitment_config = CommitmentConfig::processed();
@@ -1857,19 +1857,19 @@ impl RpcClient {
 
     /// Returns the block height that has reached the configured [commitment level][cl].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// # RPC Reference
     ///
     /// This method is corresponds directly to the [`getBlockHeight`] RPC method.
     ///
-    /// [`getBlockHeight`]: https://solana.com/docs/rpc/http/getblockheight
+    /// [`getBlockHeight`]: https://gorbagana.com/docs/rpc/http/getblockheight
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let block_height = rpc_client.get_block_height().await?;
@@ -1884,20 +1884,20 @@ impl RpcClient {
 
     /// Returns the block height that has reached the given [commitment level][cl].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// # RPC Reference
     ///
     /// This method is corresponds directly to the [`getBlockHeight`] RPC method.
     ///
-    /// [`getBlockHeight`]: https://solana.com/docs/rpc/http/getblockheight
+    /// [`getBlockHeight`]: https://gorbagana.com/docs/rpc/http/getblockheight
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let commitment_config = CommitmentConfig::processed();
@@ -1922,14 +1922,14 @@ impl RpcClient {
     ///
     /// This method corresponds directly to the [`getSlotLeaders`] RPC method.
     ///
-    /// [`getSlotLeaders`]: https://solana.com/docs/rpc/http/getslotleaders
+    /// [`getSlotLeaders`]: https://gorbagana.com/docs/rpc/http/getslotleaders
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_clock::Slot;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_clock::Slot;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let start_slot = 1;
@@ -1965,13 +1965,13 @@ impl RpcClient {
     ///
     /// This method corresponds directly to the [`getBlockProduction`] RPC method.
     ///
-    /// [`getBlockProduction`]: https://solana.com/docs/rpc/http/getblockproduction
+    /// [`getBlockProduction`]: https://gorbagana.com/docs/rpc/http/getblockproduction
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let production = rpc_client.get_block_production().await?;
@@ -1989,20 +1989,20 @@ impl RpcClient {
     ///
     /// This method corresponds directly to the [`getBlockProduction`] RPC method.
     ///
-    /// [`getBlockProduction`]: https://solana.com/docs/rpc/http/getblockproduction
+    /// [`getBlockProduction`]: https://gorbagana.com/docs/rpc/http/getblockproduction
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::{
+    /// # use gorbagana_rpc_client_api::{
     /// #     client_error::Error,
     /// #     config::RpcBlockProductionConfig,
     /// #     config::RpcBlockProductionConfigRange,
     /// # };
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_commitment_config::CommitmentConfig;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_signer::Signer;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_signer::Signer;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let start_slot = 1;
@@ -2037,19 +2037,19 @@ impl RpcClient {
     ///
     /// This method uses the configured [commitment level][cl].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// # RPC Reference
     ///
     /// This method corresponds directly to the [`getSupply`] RPC method.
     ///
-    /// [`getSupply`]: https://solana.com/docs/rpc/http/getsupply
+    /// [`getSupply`]: https://gorbagana.com/docs/rpc/http/getsupply
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let supply = rpc_client.supply().await?;
@@ -2067,14 +2067,14 @@ impl RpcClient {
     ///
     /// This method corresponds directly to the [`getSupply`] RPC method.
     ///
-    /// [`getSupply`]: https://solana.com/docs/rpc/http/getsupply
+    /// [`getSupply`]: https://gorbagana.com/docs/rpc/http/getsupply
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let commitment_config = CommitmentConfig::processed();
@@ -2100,18 +2100,18 @@ impl RpcClient {
     /// This method corresponds directly to the [`getLargestAccounts`] RPC
     /// method.
     ///
-    /// [`getLargestAccounts`]: https://solana.com/docs/rpc/http/getlargestaccounts
+    /// [`getLargestAccounts`]: https://gorbagana.com/docs/rpc/http/getlargestaccounts
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::{
+    /// # use gorbagana_rpc_client_api::{
     /// #     client_error::Error,
     /// #     config::RpcLargestAccountsConfig,
     /// #     config::RpcLargestAccountsFilter,
     /// # };
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let commitment_config = CommitmentConfig::processed();
@@ -2143,20 +2143,20 @@ impl RpcClient {
     /// Returns the account info and associated stake for all the voting accounts
     /// that have reached the configured [commitment level][cl].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// # RPC Reference
     ///
     /// This method corresponds directly to the [`getVoteAccounts`]
     /// RPC method.
     ///
-    /// [`getVoteAccounts`]: https://solana.com/docs/rpc/http/getvoteaccounts
+    /// [`getVoteAccounts`]: https://gorbagana.com/docs/rpc/http/getvoteaccounts
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let accounts = rpc_client.get_vote_accounts().await?;
@@ -2172,20 +2172,20 @@ impl RpcClient {
     /// Returns the account info and associated stake for all the voting accounts
     /// that have reached the given [commitment level][cl].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// # RPC Reference
     ///
     /// This method corresponds directly to the [`getVoteAccounts`] RPC method.
     ///
-    /// [`getVoteAccounts`]: https://solana.com/docs/rpc/http/getvoteaccounts
+    /// [`getVoteAccounts`]: https://gorbagana.com/docs/rpc/http/getvoteaccounts
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_commitment_config::CommitmentConfig;
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let commitment_config = CommitmentConfig::processed();
@@ -2210,25 +2210,25 @@ impl RpcClient {
     /// Returns the account info and associated stake for all the voting accounts
     /// that have reached the given [commitment level][cl].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// # RPC Reference
     ///
     /// This method corresponds directly to the [`getVoteAccounts`] RPC method.
     ///
-    /// [`getVoteAccounts`]: https://solana.com/docs/rpc/http/getvoteaccounts
+    /// [`getVoteAccounts`]: https://gorbagana.com/docs/rpc/http/getvoteaccounts
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::{
+    /// # use gorbagana_rpc_client_api::{
     /// #     client_error::Error,
     /// #     config::RpcGetVoteAccountsConfig,
     /// # };
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_commitment_config::CommitmentConfig;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_signer::Signer;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_signer::Signer;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let vote_keypair = Keypair::new();
@@ -2331,13 +2331,13 @@ impl RpcClient {
     /// This method corresponds directly to the [`getClusterNodes`]
     /// RPC method.
     ///
-    /// [`getClusterNodes`]: https://solana.com/docs/rpc/http/getclusternodes
+    /// [`getClusterNodes`]: https://gorbagana.com/docs/rpc/http/getclusternodes
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let cluster_nodes = rpc_client.get_cluster_nodes().await?;
@@ -2363,13 +2363,13 @@ impl RpcClient {
     /// This method corresponds directly to the [`getBlock`] RPC
     /// method.
     ///
-    /// [`getBlock`]: https://solana.com/docs/rpc/http/getblock
+    /// [`getBlock`]: https://gorbagana.com/docs/rpc/http/getblock
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let slot = rpc_client.get_slot().await?;
@@ -2389,14 +2389,14 @@ impl RpcClient {
     ///
     /// This method corresponds directly to the [`getBlock`] RPC method.
     ///
-    /// [`getBlock`]: https://solana.com/docs/rpc/http/getblock
+    /// [`getBlock`]: https://gorbagana.com/docs/rpc/http/getblock
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_transaction_status_client_types::UiTransactionEncoding;
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_transaction_status_client_types::UiTransactionEncoding;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let slot = rpc_client.get_slot().await?;
@@ -2424,20 +2424,20 @@ impl RpcClient {
     ///
     /// This method corresponds directly to the [`getBlock`] RPC method.
     ///
-    /// [`getBlock`]: https://solana.com/docs/rpc/http/getblock
+    /// [`getBlock`]: https://gorbagana.com/docs/rpc/http/getblock
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_transaction_status_client_types::{
+    /// # use gorbagana_transaction_status_client_types::{
     /// #     TransactionDetails,
     /// #     UiTransactionEncoding,
     /// # };
-    /// # use solana_rpc_client_api::{
+    /// # use gorbagana_rpc_client_api::{
     /// #     config::RpcBlockConfig,
     /// #     client_error::Error,
     /// # };
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let slot = rpc_client.get_slot().await?;
@@ -2480,7 +2480,7 @@ impl RpcClient {
     ///
     /// [`Finalized`]: CommitmentLevel::Finalized
     /// [`get_blocks_with_limit`]: RpcClient::get_blocks_with_limit.
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// # Errors
     ///
@@ -2490,13 +2490,13 @@ impl RpcClient {
     ///
     /// This method corresponds directly to the [`getBlocks`] RPC method.
     ///
-    /// [`getBlocks`]: https://solana.com/docs/rpc/http/getblocks
+    /// [`getBlocks`]: https://gorbagana.com/docs/rpc/http/getblocks
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// // Get up to the first 10 blocks
@@ -2524,7 +2524,7 @@ impl RpcClient {
     /// If `end_slot` is not provided, then the end slot is for the latest
     /// block with the given [commitment level][cl].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// This method may not return blocks for the full range of slots if some
     /// slots do not have corresponding blocks. To simply get a specific number
@@ -2546,14 +2546,14 @@ impl RpcClient {
     ///
     /// This method corresponds directly to the [`getBlocks`] RPC method.
     ///
-    /// [`getBlocks`]: https://solana.com/docs/rpc/http/getblocks
+    /// [`getBlocks`]: https://gorbagana.com/docs/rpc/http/getblocks
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_commitment_config::CommitmentConfig;
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// // Get up to the first 10 blocks
@@ -2589,7 +2589,7 @@ impl RpcClient {
     /// This method uses the [`Finalized`] [commitment level][cl].
     ///
     /// [`Finalized`]: CommitmentLevel::Finalized.
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// # Errors
     ///
@@ -2600,13 +2600,13 @@ impl RpcClient {
     /// This method corresponds directly to the [`getBlocksWithLimit`] RPC
     /// method.
     ///
-    /// [`getBlocksWithLimit`]: https://solana.com/docs/rpc/http/getblockswithlimit
+    /// [`getBlocksWithLimit`]: https://gorbagana.com/docs/rpc/http/getblockswithlimit
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// // Get the first 10 blocks
@@ -2635,7 +2635,7 @@ impl RpcClient {
     /// This method returns an error if the given [commitment level][cl] is below
     /// [`Confirmed`].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     /// [`Confirmed`]: CommitmentLevel::Confirmed
     ///
     /// # RPC Reference
@@ -2643,14 +2643,14 @@ impl RpcClient {
     /// This method corresponds directly to the [`getBlocksWithLimit`] RPC
     /// method.
     ///
-    /// [`getBlocksWithLimit`]: https://solana.com/docs/rpc/http/getblockswithlimit
+    /// [`getBlocksWithLimit`]: https://gorbagana.com/docs/rpc/http/getblockswithlimit
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_commitment_config::CommitmentConfig;
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// // Get the first 10 blocks
@@ -2686,23 +2686,23 @@ impl RpcClient {
     /// This method uses the [`Finalized`] [commitment level][cl].
     ///
     /// [`Finalized`]: CommitmentLevel::Finalized.
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// # RPC Reference
     ///
     /// This method corresponds directly to the [`getSignaturesForAddress`] RPC
     /// method.
     ///
-    /// [`getSignaturesForAddress`]: https://solana.com/docs/rpc/http/getsignaturesforaddress
+    /// [`getSignaturesForAddress`]: https://gorbagana.com/docs/rpc/http/getsignaturesforaddress
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_system_transaction as system_transaction;
-    /// # use solana_signer::Signer;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_system_transaction as system_transaction;
+    /// # use gorbagana_signer::Signer;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let alice = Keypair::new();
@@ -2731,7 +2731,7 @@ impl RpcClient {
     /// This method returns an error if the given [commitment level][cl] is below
     /// [`Confirmed`].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     /// [`Confirmed`]: CommitmentLevel::Confirmed
     ///
     /// # RPC Reference
@@ -2739,20 +2739,20 @@ impl RpcClient {
     /// This method corresponds directly to the [`getSignaturesForAddress`] RPC
     /// method.
     ///
-    /// [`getSignaturesForAddress`]: https://solana.com/docs/rpc/http/getsignaturesforaddress
+    /// [`getSignaturesForAddress`]: https://gorbagana.com/docs/rpc/http/getsignaturesforaddress
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::{
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::{
     /// #     nonblocking::rpc_client::RpcClient,
     /// #     rpc_client::GetConfirmedSignaturesForAddress2Config,
     /// # };
-    /// # use solana_commitment_config::CommitmentConfig;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_system_transaction as system_transaction;
-    /// # use solana_signer::Signer;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_system_transaction as system_transaction;
+    /// # use gorbagana_signer::Signer;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let alice = Keypair::new();
@@ -2803,24 +2803,24 @@ impl RpcClient {
     /// This method uses the [`Finalized`] [commitment level][cl].
     ///
     /// [`Finalized`]: CommitmentLevel::Finalized
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// # RPC Reference
     ///
     /// This method corresponds directly to the [`getTransaction`] RPC method.
     ///
-    /// [`getTransaction`]: https://solana.com/docs/rpc/http/gettransaction
+    /// [`getTransaction`]: https://gorbagana.com/docs/rpc/http/gettransaction
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_system_transaction as system_transaction;
-    /// # use solana_signature::Signature;
-    /// # use solana_signer::Signer;
-    /// # use solana_transaction_status_client_types::UiTransactionEncoding;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_system_transaction as system_transaction;
+    /// # use gorbagana_signature::Signature;
+    /// # use gorbagana_signer::Signer;
+    /// # use gorbagana_transaction_status_client_types::UiTransactionEncoding;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let alice = Keypair::new();
@@ -2856,29 +2856,29 @@ impl RpcClient {
     /// This method returns an error if the given [commitment level][cl] is below
     /// [`Confirmed`].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     /// [`Confirmed`]: CommitmentLevel::Confirmed
     ///
     /// # RPC Reference
     ///
     /// This method corresponds directly to the [`getTransaction`] RPC method.
     ///
-    /// [`getTransaction`]: https://solana.com/docs/rpc/http/gettransaction
+    /// [`getTransaction`]: https://gorbagana.com/docs/rpc/http/gettransaction
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::{
+    /// # use gorbagana_rpc_client_api::{
     /// #     client_error::Error,
     /// #     config::RpcTransactionConfig,
     /// # };
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_commitment_config::CommitmentConfig;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_system_transaction as system_transaction;
-    /// # use solana_signature::Signature;
-    /// # use solana_signer::Signer;
-    /// # use solana_transaction_status_client_types::UiTransactionEncoding;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_system_transaction as system_transaction;
+    /// # use gorbagana_signature::Signature;
+    /// # use gorbagana_signer::Signer;
+    /// # use gorbagana_transaction_status_client_types::UiTransactionEncoding;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let alice = Keypair::new();
@@ -2918,13 +2918,13 @@ impl RpcClient {
     ///
     /// This method corresponds directly to the [`getBlockTime`] RPC method.
     ///
-    /// [`getBlockTime`]: https://solana.com/docs/rpc/http/getblocktime
+    /// [`getBlockTime`]: https://gorbagana.com/docs/rpc/http/getblocktime
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// // Get the time of the most recent finalized block
@@ -2955,19 +2955,19 @@ impl RpcClient {
     ///
     /// This method uses the configured default [commitment level][cl].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// # RPC Reference
     ///
     /// This method corresponds directly to the [`getEpochInfo`] RPC method.
     ///
-    /// [`getEpochInfo`]: https://solana.com/docs/rpc/http/getepochinfo
+    /// [`getEpochInfo`]: https://gorbagana.com/docs/rpc/http/getepochinfo
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let epoch_info = rpc_client.get_epoch_info().await?;
@@ -2985,14 +2985,14 @@ impl RpcClient {
     ///
     /// This method corresponds directly to the [`getEpochInfo`] RPC method.
     ///
-    /// [`getEpochInfo`]: https://solana.com/docs/rpc/http/getepochinfo
+    /// [`getEpochInfo`]: https://gorbagana.com/docs/rpc/http/getepochinfo
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let commitment_config = CommitmentConfig::confirmed();
@@ -3015,20 +3015,20 @@ impl RpcClient {
     ///
     /// This method uses the configured default [commitment level][cl].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// # RPC Reference
     ///
     /// This method corresponds directly to the [`getLeaderSchedule`] RPC method.
     ///
-    /// [`getLeaderSchedule`]: https://solana.com/docs/rpc/http/getleaderschedule
+    /// [`getLeaderSchedule`]: https://gorbagana.com/docs/rpc/http/getleaderschedule
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let slot = rpc_client.get_slot().await?;
@@ -3053,14 +3053,14 @@ impl RpcClient {
     ///
     /// This method corresponds directly to the [`getLeaderSchedule`] RPC method.
     ///
-    /// [`getLeaderSchedule`]: https://solana.com/docs/rpc/http/getleaderschedule
+    /// [`getLeaderSchedule`]: https://gorbagana.com/docs/rpc/http/getleaderschedule
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let slot = rpc_client.get_slot().await?;
@@ -3094,17 +3094,17 @@ impl RpcClient {
     ///
     /// This method corresponds directly to the [`getLeaderSchedule`] RPC method.
     ///
-    /// [`getLeaderSchedule`]: https://solana.com/docs/rpc/http/getleaderschedule
+    /// [`getLeaderSchedule`]: https://gorbagana.com/docs/rpc/http/getleaderschedule
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::{
+    /// # use gorbagana_rpc_client_api::{
     /// #     client_error::Error,
     /// #     config::RpcLeaderScheduleConfig,
     /// # };
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let slot = rpc_client.get_slot().await?;
@@ -3136,13 +3136,13 @@ impl RpcClient {
     ///
     /// This method corresponds directly to the [`getEpochSchedule`] RPC method.
     ///
-    /// [`getEpochSchedule`]: https://solana.com/docs/rpc/http/getepochschedule
+    /// [`getEpochSchedule`]: https://gorbagana.com/docs/rpc/http/getepochschedule
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let epoch_schedule = rpc_client.get_epoch_schedule().await?;
@@ -3163,13 +3163,13 @@ impl RpcClient {
     ///
     /// This method corresponds directly to the [`getRecentPerformanceSamples`] RPC method.
     ///
-    /// [`getRecentPerformanceSamples`]: https://solana.com/docs/rpc/http/getrecentperformancesamples
+    /// [`getRecentPerformanceSamples`]: https://gorbagana.com/docs/rpc/http/getrecentperformancesamples
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let limit = 10;
@@ -3199,15 +3199,15 @@ impl RpcClient {
     ///
     /// This method corresponds directly to the [`getRecentPrioritizationFees`] RPC method.
     ///
-    /// [`getRecentPrioritizationFees`]: https://solana.com/docs/rpc/http/getrecentprioritizationfees
+    /// [`getRecentPrioritizationFees`]: https://gorbagana.com/docs/rpc/http/getrecentprioritizationfees
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_signer::Signer;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_signer::Signer;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let alice = Keypair::new();
@@ -3238,13 +3238,13 @@ impl RpcClient {
     ///
     /// This method corresponds directly to the [`getIdentity`] RPC method.
     ///
-    /// [`getIdentity`]: https://solana.com/docs/rpc/http/getidentity
+    /// [`getIdentity`]: https://gorbagana.com/docs/rpc/http/getidentity
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let identity = rpc_client.get_identity().await?;
@@ -3268,20 +3268,20 @@ impl RpcClient {
     /// This method uses the [`Finalized`] [commitment level][cl].
     ///
     /// [`Finalized`]: CommitmentLevel::Finalized
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// # RPC Reference
     ///
     /// This method corresponds directly to the [`getInflationGovernor`] RPC
     /// method.
     ///
-    /// [`getInflationGovernor`]: https://solana.com/docs/rpc/http/getinflationgovernor
+    /// [`getInflationGovernor`]: https://gorbagana.com/docs/rpc/http/getinflationgovernor
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let inflation_governor = rpc_client.get_inflation_governor().await?;
@@ -3300,13 +3300,13 @@ impl RpcClient {
     ///
     /// This method corresponds directly to the [`getInflationRate`] RPC method.
     ///
-    /// [`getInflationRate`]: https://solana.com/docs/rpc/http/getinflationrate
+    /// [`getInflationRate`]: https://gorbagana.com/docs/rpc/http/getinflationrate
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let inflation_rate = rpc_client.get_inflation_rate().await?;
@@ -3322,21 +3322,21 @@ impl RpcClient {
     ///
     /// This method uses the configured [commitment level][cl].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// # RPC Reference
     ///
     /// This method corresponds directly to the [`getInflationReward`] RPC method.
     ///
-    /// [`getInflationReward`]: https://solana.com/docs/rpc/http/getinflationreward
+    /// [`getInflationReward`]: https://gorbagana.com/docs/rpc/http/getinflationreward
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_signer::Signer;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_signer::Signer;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let epoch_info = rpc_client.get_epoch_info().await?;
@@ -3375,26 +3375,26 @@ impl RpcClient {
         .await
     }
 
-    /// Returns the current solana version running on the node.
+    /// Returns the current gorbagana version running on the node.
     ///
     /// # RPC Reference
     ///
     /// This method corresponds directly to the [`getVersion`] RPC method.
     ///
-    /// [`getVersion`]: https://solana.com/docs/rpc/http/getversion
+    /// [`getVersion`]: https://gorbagana.com/docs/rpc/http/getversion
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_signer::Signer;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_signer::Signer;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let expected_version = semver::Version::new(1, 7, 0);
     /// let version = rpc_client.get_version().await?;
-    /// let version = semver::Version::parse(&version.solana_core)?;
+    /// let version = semver::Version::parse(&version.gorbagana_core)?;
     /// assert!(version >= expected_version);
     /// #     Ok::<(), Box<dyn std::error::Error>>(())
     /// # })?;
@@ -3414,13 +3414,13 @@ impl RpcClient {
     /// This method corresponds directly to the [`minimumLedgerSlot`] RPC
     /// method.
     ///
-    /// [`minimumLedgerSlot`]: https://solana.com/docs/rpc/http/minimumledgerslot
+    /// [`minimumLedgerSlot`]: https://gorbagana.com/docs/rpc/http/minimumledgerslot
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let slot = rpc_client.minimum_ledger_slot().await?;
@@ -3436,7 +3436,7 @@ impl RpcClient {
     ///
     /// This method uses the configured [commitment level][cl].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// To get multiple accounts at once, use the [`get_multiple_accounts`] method.
     ///
@@ -3454,16 +3454,16 @@ impl RpcClient {
     ///
     /// This method is built on the [`getAccountInfo`] RPC method.
     ///
-    /// [`getAccountInfo`]: https://solana.com/docs/rpc/http/getaccountinfo
+    /// [`getAccountInfo`]: https://gorbagana.com/docs/rpc/http/getaccountinfo
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::{self, RpcClient};
-    /// # use solana_keypair::Keypair;
-    /// # use solana_pubkey::Pubkey;
-    /// # use solana_signer::Signer;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::{self, RpcClient};
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_pubkey::Pubkey;
+    /// # use gorbagana_signer::Signer;
     /// # use std::str::FromStr;
     /// # futures::executor::block_on(async {
     /// #     let mocks = rpc_client::create_rpc_client_mocks();
@@ -3493,17 +3493,17 @@ impl RpcClient {
     ///
     /// This method is built on the [`getAccountInfo`] RPC method.
     ///
-    /// [`getAccountInfo`]: https://solana.com/docs/rpc/http/getaccountinfo
+    /// [`getAccountInfo`]: https://gorbagana.com/docs/rpc/http/getaccountinfo
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::{self, RpcClient};
-    /// # use solana_commitment_config::CommitmentConfig;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_signer::Signer;
-    /// # use solana_pubkey::Pubkey;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::{self, RpcClient};
+    /// # use gorbagana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_signer::Signer;
+    /// # use gorbagana_pubkey::Pubkey;
     /// # use std::str::FromStr;
     /// # futures::executor::block_on(async {
     /// #     let mocks = rpc_client::create_rpc_client_mocks();
@@ -3546,21 +3546,21 @@ impl RpcClient {
     ///
     /// This method is built on the [`getAccountInfo`] RPC method.
     ///
-    /// [`getAccountInfo`]: https://solana.com/docs/rpc/http/getaccountinfo
+    /// [`getAccountInfo`]: https://gorbagana.com/docs/rpc/http/getaccountinfo
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::{
+    /// # use gorbagana_rpc_client_api::{
     /// #     config::RpcAccountInfoConfig,
     /// #     client_error::Error,
     /// # };
-    /// # use solana_rpc_client::nonblocking::rpc_client::{self, RpcClient};
-    /// # use solana_commitment_config::CommitmentConfig;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_signer::Signer;
-    /// # use solana_pubkey::Pubkey;
-    /// # use solana_account_decoder_client_types::UiAccountEncoding;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::{self, RpcClient};
+    /// # use gorbagana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_signer::Signer;
+    /// # use gorbagana_pubkey::Pubkey;
+    /// # use gorbagana_account_decoder_client_types::UiAccountEncoding;
     /// # use std::str::FromStr;
     /// # futures::executor::block_on(async {
     /// #     let mocks = rpc_client::create_rpc_client_mocks();
@@ -3626,13 +3626,13 @@ impl RpcClient {
     /// This method corresponds directly to the [`getMaxRetransmitSlot`] RPC
     /// method.
     ///
-    /// [`getMaxRetransmitSlot`]: https://solana.com/docs/rpc/http/getmaxretransmitslot
+    /// [`getMaxRetransmitSlot`]: https://gorbagana.com/docs/rpc/http/getmaxretransmitslot
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let slot = rpc_client.get_max_retransmit_slot().await?;
@@ -3644,20 +3644,20 @@ impl RpcClient {
             .await
     }
 
-    /// Get the max slot seen from after [shred](https://solana.com/docs/terminology#shred) insert.
+    /// Get the max slot seen from after [shred](https://gorbagana.com/docs/terminology#shred) insert.
     ///
     /// # RPC Reference
     ///
     /// This method corresponds directly to the
     /// [`getMaxShredInsertSlot`] RPC method.
     ///
-    /// [`getMaxShredInsertSlot`]: https://solana.com/docs/rpc/http/getmaxshredinsertslot
+    /// [`getMaxShredInsertSlot`]: https://gorbagana.com/docs/rpc/http/getmaxshredinsertslot
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let slot = rpc_client.get_max_shred_insert_slot().await?;
@@ -3673,21 +3673,21 @@ impl RpcClient {
     ///
     /// This method uses the configured [commitment level][cl].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// # RPC Reference
     ///
     /// This method is built on the [`getMultipleAccounts`] RPC method.
     ///
-    /// [`getMultipleAccounts`]: https://solana.com/docs/rpc/http/getmultipleaccounts
+    /// [`getMultipleAccounts`]: https://gorbagana.com/docs/rpc/http/getmultipleaccounts
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_signer::Signer;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_signer::Signer;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let alice = Keypair::new();
@@ -3714,16 +3714,16 @@ impl RpcClient {
     ///
     /// This method is built on the [`getMultipleAccounts`] RPC method.
     ///
-    /// [`getMultipleAccounts`]: https://solana.com/docs/rpc/http/getmultipleaccounts
+    /// [`getMultipleAccounts`]: https://gorbagana.com/docs/rpc/http/getmultipleaccounts
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_commitment_config::CommitmentConfig;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_signer::Signer;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_signer::Signer;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let alice = Keypair::new();
@@ -3761,20 +3761,20 @@ impl RpcClient {
     ///
     /// This method is built on the [`getMultipleAccounts`] RPC method.
     ///
-    /// [`getMultipleAccounts`]: https://solana.com/docs/rpc/http/getmultipleaccounts
+    /// [`getMultipleAccounts`]: https://gorbagana.com/docs/rpc/http/getmultipleaccounts
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::{
+    /// # use gorbagana_rpc_client_api::{
     /// #     config::RpcAccountInfoConfig,
     /// #     client_error::Error,
     /// # };
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_commitment_config::CommitmentConfig;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_signer::Signer;
-    /// # use solana_account_decoder_client_types::UiAccountEncoding;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_signer::Signer;
+    /// # use gorbagana_account_decoder_client_types::UiAccountEncoding;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let alice = Keypair::new();
@@ -3833,16 +3833,16 @@ impl RpcClient {
     ///
     /// This method is built on the [`getAccountInfo`] RPC method.
     ///
-    /// [`getAccountInfo`]: https://solana.com/docs/rpc/http/getaccountinfo
+    /// [`getAccountInfo`]: https://gorbagana.com/docs/rpc/http/getaccountinfo
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::{self, RpcClient};
-    /// # use solana_keypair::Keypair;
-    /// # use solana_pubkey::Pubkey;
-    /// # use solana_signer::Signer;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::{self, RpcClient};
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_pubkey::Pubkey;
+    /// # use gorbagana_signer::Signer;
     /// # use std::str::FromStr;
     /// # futures::executor::block_on(async {
     /// #     let mocks = rpc_client::create_rpc_client_mocks();
@@ -3864,13 +3864,13 @@ impl RpcClient {
     /// This method corresponds directly to the
     /// [`getMinimumBalanceForRentExemption`] RPC method.
     ///
-    /// [`getMinimumBalanceForRentExemption`]: https://solana.com/docs/rpc/http/getminimumbalanceforrentexemption
+    /// [`getMinimumBalanceForRentExemption`]: https://gorbagana.com/docs/rpc/http/getminimumbalanceforrentexemption
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let data_len = 300;
@@ -3903,21 +3903,21 @@ impl RpcClient {
     ///
     /// This method uses the configured [commitment level][cl].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// # RPC Reference
     ///
     /// This method corresponds directly to the [`getBalance`] RPC method.
     ///
-    /// [`getBalance`]: https://solana.com/docs/rpc/http/getbalance
+    /// [`getBalance`]: https://gorbagana.com/docs/rpc/http/getbalance
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_signer::Signer;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_signer::Signer;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let alice = Keypair::new();
@@ -3939,16 +3939,16 @@ impl RpcClient {
     ///
     /// This method corresponds directly to the [`getBalance`] RPC method.
     ///
-    /// [`getBalance`]: https://solana.com/docs/rpc/http/getbalance
+    /// [`getBalance`]: https://gorbagana.com/docs/rpc/http/getbalance
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_commitment_config::CommitmentConfig;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_signer::Signer;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_signer::Signer;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let alice = Keypair::new();
@@ -3977,22 +3977,22 @@ impl RpcClient {
     ///
     /// This method uses the configured [commitment level][cl].
     ///
-    /// [cl]: https://solana.com/docs/rpc#configuring-state-commitment
+    /// [cl]: https://gorbagana.com/docs/rpc#configuring-state-commitment
     ///
     /// # RPC Reference
     ///
     /// This method corresponds directly to the [`getProgramAccounts`] RPC
     /// method.
     ///
-    /// [`getProgramAccounts`]: https://solana.com/docs/rpc/http/getprogramaccounts
+    /// [`getProgramAccounts`]: https://gorbagana.com/docs/rpc/http/getprogramaccounts
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_signer::Signer;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_signer::Signer;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let alice = Keypair::new();
@@ -4024,21 +4024,21 @@ impl RpcClient {
     ///
     /// This method is built on the [`getProgramAccounts`] RPC method.
     ///
-    /// [`getProgramAccounts`]: https://solana.com/docs/rpc/http/getprogramaccounts
+    /// [`getProgramAccounts`]: https://gorbagana.com/docs/rpc/http/getprogramaccounts
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::{
+    /// # use gorbagana_rpc_client_api::{
     /// #     client_error::Error,
     /// #     config::{RpcAccountInfoConfig, RpcProgramAccountsConfig},
     /// #     filter::{MemcmpEncodedBytes, RpcFilterType, Memcmp},
     /// # };
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_commitment_config::CommitmentConfig;
-    /// # use solana_keypair::Keypair;
-    /// # use solana_signer::Signer;
-    /// # use solana_account_decoder_client_types::{UiDataSliceConfig, UiAccountEncoding};
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_keypair::Keypair;
+    /// # use gorbagana_signer::Signer;
+    /// # use gorbagana_account_decoder_client_types::{UiDataSliceConfig, UiAccountEncoding};
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// #     let alice = Keypair::new();
@@ -4102,13 +4102,13 @@ impl RpcClient {
     ///
     /// This method corresponds directly to the [`getStakeMinimumDelegation`] RPC method.
     ///
-    /// [`getStakeMinimumDelegation`]: https://solana.com/docs/rpc/http/getstakeminimumdelegation
+    /// [`getStakeMinimumDelegation`]: https://gorbagana.com/docs/rpc/http/getstakeminimumdelegation
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let stake_minimum_delegation = rpc_client.get_stake_minimum_delegation().await?;
@@ -4127,14 +4127,14 @@ impl RpcClient {
     ///
     /// This method corresponds directly to the [`getStakeMinimumDelegation`] RPC method.
     ///
-    /// [`getStakeMinimumDelegation`]: https://solana.com/docs/rpc/http/getstakeminimumdelegation
+    /// [`getStakeMinimumDelegation`]: https://gorbagana.com/docs/rpc/http/getstakeminimumdelegation
     ///
     /// # Examples
     ///
     /// ```
-    /// # use solana_rpc_client_api::client_error::Error;
-    /// # use solana_rpc_client::nonblocking::rpc_client::RpcClient;
-    /// # use solana_commitment_config::CommitmentConfig;
+    /// # use gorbagana_rpc_client_api::client_error::Error;
+    /// # use gorbagana_rpc_client::nonblocking::rpc_client::RpcClient;
+    /// # use gorbagana_commitment_config::CommitmentConfig;
     /// # futures::executor::block_on(async {
     /// #     let rpc_client = RpcClient::new_mock("succeeds".to_string());
     /// let stake_minimum_delegation = rpc_client.get_stake_minimum_delegation_with_commitment(CommitmentConfig::confirmed()).await?;

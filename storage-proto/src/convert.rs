@@ -1,20 +1,20 @@
 use {
     crate::{StoredExtendedRewards, StoredTransactionError, StoredTransactionStatusMeta},
-    solana_account_decoder::parse_token::{real_number_string_trimmed, UiTokenAmount},
-    solana_hash::{Hash, HASH_BYTES},
-    solana_instruction::error::InstructionError,
-    solana_message::{
+    gorbagana_account_decoder::parse_token::{real_number_string_trimmed, UiTokenAmount},
+    gorbagana_hash::{Hash, HASH_BYTES},
+    gorbagana_instruction::error::InstructionError,
+    gorbagana_message::{
         compiled_instruction::CompiledInstruction,
         legacy::Message as LegacyMessage,
         v0::{self, LoadedAddresses, MessageAddressTableLookup},
         MessageHeader, VersionedMessage,
     },
-    solana_pubkey::Pubkey,
-    solana_signature::Signature,
-    solana_transaction::{versioned::VersionedTransaction, Transaction},
-    solana_transaction_context::TransactionReturnData,
-    solana_transaction_error::TransactionError,
-    solana_transaction_status::{
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signature::Signature,
+    gorbagana_transaction::{versioned::VersionedTransaction, Transaction},
+    gorbagana_transaction_context::TransactionReturnData,
+    gorbagana_transaction_error::TransactionError,
+    gorbagana_transaction_status::{
         ConfirmedBlock, EntrySummary, InnerInstruction, InnerInstructions, Reward, RewardType,
         RewardsAndNumPartitions, TransactionByAddrInfo, TransactionStatusMeta,
         TransactionTokenBalance, TransactionWithStatusMeta, VersionedConfirmedBlock,
@@ -29,19 +29,19 @@ use {
 pub mod generated {
     include!(concat!(
         env!("OUT_DIR"),
-        "/solana.storage.confirmed_block.rs"
+        "/gorbagana.storage.confirmed_block.rs"
     ));
 }
 
 pub mod tx_by_addr {
     include!(concat!(
         env!("OUT_DIR"),
-        "/solana.storage.transaction_by_addr.rs"
+        "/gorbagana.storage.transaction_by_addr.rs"
     ));
 }
 
 pub mod entries {
-    include!(concat!(env!("OUT_DIR"), "/solana.storage.entries.rs"));
+    include!(concat!(env!("OUT_DIR"), "/gorbagana.storage.entries.rs"));
 }
 
 impl From<Vec<Reward>> for generated::Rewards {

@@ -1,8 +1,8 @@
 //! Example Rust-based SBF realloc test program
 
 use {
-    solana_instruction::{AccountMeta, Instruction},
-    solana_pubkey::Pubkey,
+    gorbagana_instruction::{AccountMeta, Instruction},
+    gorbagana_pubkey::Pubkey,
 };
 
 pub const REALLOC: u8 = 1;

@@ -1,6 +1,6 @@
 use {
     super::*, crate::translate_mut,
-    solana_program_runtime::execution_budget::SVMTransactionExecutionCost,
+    gorbagana_program_runtime::execution_budget::SVMTransactionExecutionCost,
 };
 
 fn get_sysvar<T: std::fmt::Debug + Sysvar + SysvarId + Clone>(

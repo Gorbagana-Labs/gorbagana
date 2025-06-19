@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 Please follow the [guidance](#adding-to-this-changelog) at the bottom of this file when making changes
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
-and follows a [Backwards Compatibility Policy](https://docs.solanalabs.com/backwards-compatibility)
+and follows a [Backwards Compatibility Policy](https://docs.gorbaganalabs.com/backwards-compatibility)
 
 Release channels have their own copy of this changelog:
 * [edge - v3.0](#edge-channel)
@@ -57,16 +57,16 @@ Release channels have their own copy of this changelog:
 * `cargo-build-sbf` now supports the `--optimize-size` argument, which reduces program size, potentially at the cost of increased CU usage.
 
 #### Breaking
-* Although the solana rust toolchain still supports the `sbf-solana-solana` target, the new `cargo-build-sbf` version target defaults to `sbpf-solana-solana`. The generated programs will be available on `target/deploy` and `target/sbpf-solana-solana/release`.
-* If the `sbf-solana-solana` target folder is still necessary, use `cargo +solana build --triple sbf-solana-solana --release`.
-* The target triple changes as well for the new SBPF versions. Triples will be `sbpfv1-solana-solana` for version `v1`, `sbpfv2-solana-solana` for `v2`, and `sbpfv3-solana-solana` for `v3`. Generated programs are available on both the `target/deploy` folder and the `target/<triple>/release` folder. The binary in `target/deploy` has smaller size, since we strip unnecessary sections from the one available in `target/<triple>/release`.
-* `cargo-build-sbf` no longer automatically enables the `program` feature to the `solana-sdk` dependency. This feature allowed `solana-sdk` to work in on-chain programs. Users must enable the `program` feature explicitly or use `solana-program` instead. This new behavior only breaks programs using `solana-sdk` v1.3 and earlier.
+* Although the gorbagana rust toolchain still supports the `sbf-gorbagana-gorbagana` target, the new `cargo-build-sbf` version target defaults to `sbpf-gorbagana-gorbagana`. The generated programs will be available on `target/deploy` and `target/sbpf-gorbagana-gorbagana/release`.
+* If the `sbf-gorbagana-gorbagana` target folder is still necessary, use `cargo +gorbagana build --triple sbf-gorbagana-gorbagana --release`.
+* The target triple changes as well for the new SBPF versions. Triples will be `sbpfv1-gorbagana-gorbagana` for version `v1`, `sbpfv2-gorbagana-gorbagana` for `v2`, and `sbpfv3-gorbagana-gorbagana` for `v3`. Generated programs are available on both the `target/deploy` folder and the `target/<triple>/release` folder. The binary in `target/deploy` has smaller size, since we strip unnecessary sections from the one available in `target/<triple>/release`.
+* `cargo-build-sbf` no longer automatically enables the `program` feature to the `gorbagana-sdk` dependency. This feature allowed `gorbagana-sdk` to work in on-chain programs. Users must enable the `program` feature explicitly or use `gorbagana-program` instead. This new behavior only breaks programs using `gorbagana-sdk` v1.3 and earlier.
 
 ### CLI
 
 #### Changes
 * `withdraw-stake` now accepts the `AVAILABLE` keyword for the amount, allowing withdrawal of unstaked lamports (#4483)
-* `solana-test-validator` will now bind to localhost (127.0.0.1) by default rather than all interfaces to improve security. Provide `--bind-address 0.0.0.0` to bind to all interfaces to restore the previous default behavior.
+* `gorbagana-test-validator` will now bind to localhost (127.0.0.1) by default rather than all interfaces to improve security. Provide `--bind-address 0.0.0.0` to bind to all interfaces to restore the previous default behavior.
 
 ### RPC
 
@@ -79,7 +79,7 @@ Release channels have their own copy of this changelog:
 
 #### Changes
 * Add global `--skip-preflight` option for skipping preflight checks on all transactions sent through RPC. This flag, along with `--use-rpc`, can improve success rate with program deployments using the public RPC nodes.
-* Add new command `solana feature revoke` for revoking pending feature activations. When a feature is activated, `solana feature revoke <feature-keypair> <cluster>` can be used to deallocate and reassign the account to the System program, undoing the operation. This can only be done before the feature becomes active.
+* Add new command `gorbagana feature revoke` for revoking pending feature activations. When a feature is activated, `gorbagana feature revoke <feature-keypair> <cluster>` can be used to deallocate and reassign the account to the System program, undoing the operation. This can only be done before the feature becomes active.
 
 ### Validator
 
@@ -108,7 +108,7 @@ Release channels have their own copy of this changelog:
   * SDK:
     * `cargo-build-bpf` and `cargo-test-bpf` have been deprecated for two years and have now been definitely removed.
        Use `cargo-build-sbf` and `cargo-test-sbf` instead.
-    * dependency: `curve25519-dalek` upgraded to new major version 4 (#1693). This causes breakage when mixing v2.0 and v2.1 Solana crates, so be sure to use all of one or the other. Please use only crates compatible with v2.1.
+    * dependency: `curve25519-dalek` upgraded to new major version 4 (#1693). This causes breakage when mixing v2.0 and v2.1 Gorbagana crates, so be sure to use all of one or the other. Please use only crates compatible with v2.1.
   * Stake:
     * removed the unreleased `redelegate` instruction processor and CLI commands (#2213)
   * Banks-client:
@@ -121,31 +121,31 @@ Release channels have their own copy of this changelog:
     * add `entrypoint_no_alloc!`, a more performant program entrypoint that avoids allocations, saving 20-30 CUs per unique account
     * `cargo-build-sbf`: a workspace or package-level Cargo.toml may specify `tools-version` for overriding the default platform tools version when building on-chain programs. For example:
 ```toml
-[package.metadata.solana]
+[package.metadata.gorbagana]
 tools-version = "1.43"
 ```
 or
 ```toml
-[workspace.metadata.solana]
+[workspace.metadata.gorbagana]
 tools-version = "1.43"
 ```
 The order of precedence for the chosen tools version goes: `--tools-version` argument, package version, workspace version, and finally default version.
-  * `package-metadata`: specify a program's id in Cargo.toml for easy consumption by downstream users and tools using `solana-package-metadata` (#1806). For example:
+  * `package-metadata`: specify a program's id in Cargo.toml for easy consumption by downstream users and tools using `gorbagana-package-metadata` (#1806). For example:
 ```toml
-[package.metadata.solana]
+[package.metadata.gorbagana]
 program-id = "MyProgram1111111111111111111111111111111111"
 ```
 Can be consumed in the program crate:
 ```rust
-solana_package_metadata::declare_id_with_package_metadata!("solana.program-id");
+gorbagana_package_metadata::declare_id_with_package_metadata!("gorbagana.program-id");
 ```
 This is equivalent to writing:
 ```rust
-solana_pubkey::declare_id!("MyProgram1111111111111111111111111111111111");
+gorbagana_pubkey::declare_id!("MyProgram1111111111111111111111111111111111");
 ```
   * `agave-validator`: Update PoH speed check to compare against current hash rate from a Bank (#2447)
-  * `solana-test-validator`: Add `--clone-feature-set` flag to mimic features from a target cluster (#2480)
-  * `solana-genesis`: the `--cluster-type` parameter now clones the feature set from the target cluster (#2587)
+  * `gorbagana-test-validator`: Add `--clone-feature-set` flag to mimic features from a target cluster (#2480)
+  * `gorbagana-genesis`: the `--cluster-type` parameter now clones the feature set from the target cluster (#2587)
   * `unified-scheduler` as default option for `--block-verification-method` (#2653)
   * warn that `thread-local-multi-iterator` option for `--block-production-method` is deprecated (#3113)
 
@@ -153,16 +153,16 @@ solana_pubkey::declare_id!("MyProgram1111111111111111111111111111111111");
 * Breaking
   * SDK:
     * Support for Borsh v0.9 removed, please use v1 or v0.10 (#1440)
-    * `Copy` is no longer derived on `Rent` and `EpochSchedule`, please switch to using `clone()` (solana-labs#32767)
-    * `solana-sdk`: deprecated symbols removed
-    * `solana-program`: deprecated symbols removed
+    * `Copy` is no longer derived on `Rent` and `EpochSchedule`, please switch to using `clone()` (gorbagana-labs#32767)
+    * `gorbagana-sdk`: deprecated symbols removed
+    * `gorbagana-program`: deprecated symbols removed
   * RPC: obsolete and deprecated v1 endpoints are removed. These endpoints are:
     confirmTransaction, getSignatureStatus, getSignatureConfirmation, getTotalSupply,
     getConfirmedSignaturesForAddress, getConfirmedBlock, getConfirmedBlocks, getConfirmedBlocksWithLimit,
     getConfirmedTransaction, getConfirmedSignaturesForAddress2, getRecentBlockhash, getFees,
     getFeeCalculatorForBlockhash, getFeeRateGovernor, getSnapshotSlot getStakeActivation
   * Deprecated methods are removed from `RpcClient` and `RpcClient::nonblocking`
-  * `solana-client`: deprecated re-exports removed; please import `solana-connection-cache`, `solana-quic-client`, or `solana-udp-client` directly
+  * `gorbagana-client`: deprecated re-exports removed; please import `gorbagana-connection-cache`, `gorbagana-quic-client`, or `gorbagana-udp-client` directly
   * Deprecated arguments removed from `agave-validator`:
     * `--enable-rpc-obsolete_v1_7` (#1886)
     * `--accounts-db-caching-enabled` (#2063)
@@ -172,7 +172,7 @@ solana_pubkey::declare_id!("MyProgram1111111111111111111111111111111111");
     * `--halt-on-known-validators-accounts-hash-mismatch` (#2157)
 * Changes
   * `central-scheduler` as default option for `--block-production-method` (#34891)
-  * `solana-rpc-client-api`: `RpcFilterError` depends on `base64` version 0.22, so users may need to upgrade to `base64` version 0.22
+  * `gorbagana-rpc-client-api`: `RpcFilterError` depends on `base64` version 0.22, so users may need to upgrade to `base64` version 0.22
   * Changed default value for `--health-check-slot-distance` from 150 to 128
   * CLI: Can specify `--with-compute-unit-price`, `--max-sign-attempts`, and `--use-rpc` during program deployment
   * RPC's `simulateTransaction` now returns an extra `replacementBlockhash` field in the response
@@ -180,7 +180,7 @@ solana_pubkey::declare_id!("MyProgram1111111111111111111111111111111111");
   * SDK: `cargo test-sbf` accepts `--tools-version`, just like `build-sbf` (#1359)
   * CLI: Can specify `--full-snapshot-archive-path` (#1631)
   * transaction-status: The SPL Token `amountToUiAmount` instruction parses the amount into a string instead of a number (#1737)
-  * Implemented partitioned epoch rewards as per [SIMD-0118](https://github.com/solana-foundation/solana-improvement-documents/blob/fae25d5a950f43bd787f1f5d75897ef1fdd425a7/proposals/0118-partitioned-epoch-reward-distribution.md). Feature gate: #426. Specific changes include:
+  * Implemented partitioned epoch rewards as per [SIMD-0118](https://github.com/gorbagana-foundation/gorbagana-improvement-documents/blob/fae25d5a950f43bd787f1f5d75897ef1fdd425a7/proposals/0118-partitioned-epoch-reward-distribution.md). Feature gate: #426. Specific changes include:
     * EpochRewards sysvar expanded and made persistent (#428, #572)
     * Stake Program credits now allowed during distribution (#631)
     * Updated type in Bank::epoch_rewards_status (#1277)
@@ -194,7 +194,7 @@ solana_pubkey::declare_id!("MyProgram1111111111111111111111111111111111");
 * Changes
   * Added a github check to support `changelog` label
   * The default for `--use-snapshot-archives-at-startup` is now `when-newest` (#33883)
-    * The default for `solana-ledger-tool`, however, remains `always` (#34228)
+    * The default for `gorbagana-ledger-tool`, however, remains `always` (#34228)
   * Added `central-scheduler` option for `--block-production-method` (#33890)
   * Updated to Borsh v1
   * Added allow_commission_decrease_at_any_time feature which will allow commission on a vote account to be
@@ -207,12 +207,12 @@ solana_pubkey::declare_id!("MyProgram1111111111111111111111111111111111");
     new `entries` table
   * Forbid multiple values for the `--signer` CLI flag, forcing users to specify multiple occurrences of `--signer`, one for each signature
   * New program deployments default to the exact size of a program, instead of
-    double the size. Program accounts must be extended with `solana program extend`
+    double the size. Program accounts must be extended with `gorbagana program extend`
     before an upgrade if they need to accommodate larger programs.
   * Interface for `gossip_service::get_client()` has changed. `gossip_service::get_multi_client()` has been removed.
   * CLI: Can specify `--with-compute-unit-price`, `--max-sign-attempts`, and `--use-rpc` during program deployment
 * Upgrade Notes
-  * `solana-program` and `solana-sdk` default to support for Borsh v1, with
+  * `gorbagana-program` and `gorbagana-sdk` default to support for Borsh v1, with
 limited backward compatibility for v0.10 and v0.9. Please upgrade to Borsh v1.
   * Operators running their own bigtable instances need to create the `entries`
     table before upgrading their warehouse nodes

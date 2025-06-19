@@ -1,6 +1,6 @@
 [package]
-name = "solana-lattice-hash"
-description = "Solana Lattice Hash"
+name = "gorbagana-lattice-hash"
+description = "Gorbagana Lattice Hash"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }

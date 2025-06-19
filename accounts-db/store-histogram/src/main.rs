@@ -255,7 +255,7 @@ fn normal_ancient(offset: i64) -> Vec<usize> {
 fn main() {
     let matches = App::new(crate_name!())
         .about(crate_description!())
-        .version(solana_version::version!())
+        .version(gorbagana_version::version!())
         .arg(
             Arg::with_name("ledger")
                 .index(1)

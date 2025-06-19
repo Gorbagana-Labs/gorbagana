@@ -24,14 +24,14 @@ use {
         iter::{IntoParallelRefIterator, ParallelIterator},
         ThreadPool,
     },
-    solana_account::ReadableAccount,
-    solana_clock::{Epoch, Slot},
-    solana_measure::measure_us,
-    solana_pubkey::Pubkey,
-    solana_stake_interface::state::Delegation,
-    solana_sysvar::epoch_rewards::EpochRewards,
-    solana_vote::vote_account::VoteAccount,
-    solana_vote_program::vote_state::VoteStateVersions,
+    gorbagana_account::ReadableAccount,
+    gorbagana_clock::{Epoch, Slot},
+    gorbagana_measure::measure_us,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_stake_interface::state::Delegation,
+    gorbagana_sysvar::epoch_rewards::EpochRewards,
+    gorbagana_vote::vote_account::VoteAccount,
+    gorbagana_vote_program::vote_state::VoteStateVersions,
     std::sync::{
         atomic::{AtomicU64, Ordering::Relaxed},
         Arc,
@@ -455,7 +455,7 @@ impl Bank {
             cached_vote_accounts,
         } = reward_calculate_params;
 
-        let solana_vote_program: Pubkey = solana_vote_program::id();
+        let gorbagana_vote_program: Pubkey = gorbagana_vote_program::id();
         let new_warmup_cooldown_rate_epoch = self.new_warmup_cooldown_rate_epoch();
         let (points, measure_us) = measure_us!(thread_pool.install(|| {
             stake_delegations
@@ -466,7 +466,7 @@ impl Bank {
                     let Some(vote_account) = cached_vote_accounts.get(&vote_pubkey) else {
                         return 0;
                     };
-                    if vote_account.owner() != &solana_vote_program {
+                    if vote_account.owner() != &gorbagana_vote_program {
                         return 0;
                     }
 
@@ -577,11 +577,11 @@ mod tests {
             stakes::Stakes,
         },
         rayon::ThreadPoolBuilder,
-        solana_account::{accounts_equal, state_traits::StateMut, ReadableAccount},
-        solana_native_token::{sol_to_lamports, LAMPORTS_PER_SOL},
-        solana_reward_info::RewardType,
-        solana_stake_interface::state::{Delegation, StakeStateV2},
-        solana_vote_interface::state::VoteState,
+        gorbagana_account::{accounts_equal, state_traits::StateMut, ReadableAccount},
+        gorbagana_native_token::{sol_to_lamports, LAMPORTS_PER_SOL},
+        gorbagana_reward_info::RewardType,
+        gorbagana_stake_interface::state::{Delegation, StakeStateV2},
+        gorbagana_vote_interface::state::VoteState,
         std::sync::{Arc, RwLockReadGuard},
     };
 
@@ -661,7 +661,7 @@ mod tests {
     #[test]
     /// Test rewards computation and partitioned rewards distribution at the epoch boundary
     fn test_rewards_computation() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let expected_num_delegations = 100;
         let bank = create_default_reward_bank(expected_num_delegations, SLOTS_PER_EPOCH)
@@ -705,7 +705,7 @@ mod tests {
 
     #[test]
     fn test_rewards_point_calculation() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let expected_num_delegations = 100;
         let RewardBank { bank, .. } =
@@ -732,7 +732,7 @@ mod tests {
 
     #[test]
     fn test_rewards_point_calculation_empty() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         // bank with no rewards to distribute
         let (genesis_config, _mint_keypair) = create_genesis_config(sol_to_lamports(1.0));
@@ -756,7 +756,7 @@ mod tests {
 
     #[test]
     fn test_calculate_stake_vote_rewards() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let expected_num_delegations = 1;
         let RewardBank {

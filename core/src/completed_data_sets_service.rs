@@ -6,10 +6,10 @@
 
 use {
     crossbeam_channel::{Receiver, RecvTimeoutError, Sender},
-    solana_entry::entry::Entry,
-    solana_ledger::blockstore::{Blockstore, CompletedDataSetInfo},
-    solana_rpc::{max_slots::MaxSlots, rpc_subscriptions::RpcSubscriptions},
-    solana_signature::Signature,
+    gorbagana_entry::entry::Entry,
+    gorbagana_ledger::blockstore::{Blockstore, CompletedDataSetInfo},
+    gorbagana_rpc::{max_slots::MaxSlots, rpc_subscriptions::RpcSubscriptions},
+    gorbagana_signature::Signature,
     std::{
         sync::{
             atomic::{AtomicBool, Ordering},
@@ -109,8 +109,8 @@ impl CompletedDataSetsService {
 #[cfg(test)]
 pub mod test {
     use {
-        super::*, solana_hash::Hash, solana_keypair::Keypair, solana_signer::Signer,
-        solana_transaction::Transaction,
+        super::*, gorbagana_hash::Hash, gorbagana_keypair::Keypair, gorbagana_signer::Signer,
+        gorbagana_transaction::Transaction,
     };
 
     #[test]

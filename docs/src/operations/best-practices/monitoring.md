@@ -6,13 +6,13 @@ pagination_label: "Best Practices: Validator Monitoring"
 
 It is essential that you have monitoring in place on your validator. In the event that your validator is delinquent (behind the rest of the network) you want to respond immediately to fix the issue. One very useful tool to monitor your validator is [`agave-watchtower`](#agave-watchtower).
 
-## Solana Watchtower
+## Gorbagana Watchtower
 
-Solana Watchtower is an extremely useful monitoring tool that will regularly monitor the health of your validator. It can monitor your validator for delinquency then notify you on your application of choice: Slack, Discord, Telegram or Twilio. Additionally, `agave-watchtower` has the ability to monitor the health of the entire cluster so that you can be aware of any cluster wide problems.
+Gorbagana Watchtower is an extremely useful monitoring tool that will regularly monitor the health of your validator. It can monitor your validator for delinquency then notify you on your application of choice: Slack, Discord, Telegram or Twilio. Additionally, `agave-watchtower` has the ability to monitor the health of the entire cluster so that you can be aware of any cluster wide problems.
 
 ### Getting Started
 
-To get started with Solana Watchtower, run `agave-watchtower --help`. From the help menu, you can see the optional flags and an explanation of the command.
+To get started with Gorbagana Watchtower, run `agave-watchtower --help`. From the help menu, you can see the optional flags and an explanation of the command.
 
 Here is a sample command that will monitor a validator node with an identity public key of `2uTk98rqqwENevkPH2AHHzGHXgeGc1h6ku8hQUqWeXZp`:
 
@@ -67,7 +67,7 @@ First, recall the chat message that you got from _@BotFather_. In the message, t
 export TELEGRAM_BOT_TOKEN=<HTTP API Token>
 ```
 
-Next, you need the chat id for your group so that `solana-watcher` knows where to send the message. First, send a message to your bot in the chat group that you created. Something like `@newvalidatorbot hello`.
+Next, you need the chat id for your group so that `gorbagana-watcher` knows where to send the message. First, send a message to your bot in the chat group that you created. Something like `@newvalidatorbot hello`.
 
 Next, in your browser, go to `https://api.telegram.org/bot<HTTP API Token>/getUpdates`. Make sure to replace `<HTTP API TOKEN>` with your API token that you got in the _@BotFather_ message. Also make sure that you include the word `bot` in the URL before the API token. Make the request in the browser.
 
@@ -89,8 +89,8 @@ To test that your Telegram configuration is working properly, you could stop you
 
 It is important to collect metrics: it helps diagnose existing problems and allows to anticipate future ones.
 
-### metrics.solana.com
+### metrics.gorbagana.com
 
-There are several public dashboards available, one of them is hosted at [metrics.solana.com](https://metrics.solana.com). Reporting to the solana.com public dashboard is even required if you participate in the [Solana Foundation Delegation Program](https://solana.org/delegation-program). Using it is done by simply setting the `$SOLANA_METRICS_CONFIG` variable in your validator's environment (e.g. at the beginning of your `validator.sh` script).
+There are several public dashboards available, one of them is hosted at [metrics.gorbagana.com](https://metrics.gorbagana.com). Reporting to the gorbagana.com public dashboard is even required if you participate in the [Gorbagana Foundation Delegation Program](https://gorbagana.org/delegation-program). Using it is done by simply setting the `$SOLANA_METRICS_CONFIG` variable in your validator's environment (e.g. at the beginning of your `validator.sh` script).
 
-Refer to the [available Solana clusters documentation](../../clusters/available.md) to get the appropriate value of `$SOLANA_METRICS_CONFIG` for your validator.
+Refer to the [available Gorbagana clusters documentation](../../clusters/available.md) to get the appropriate value of `$SOLANA_METRICS_CONFIG` for your validator.

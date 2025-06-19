@@ -1,11 +1,11 @@
 use {
     serde_derive::{Deserialize, Serialize},
-    solana_clock::{Slot, UnixTimestamp},
-    solana_hash::Hash,
-    solana_keypair::Keypair,
-    solana_signer::Signer,
-    solana_transaction::Transaction,
-    solana_vote_interface::{self as vote, state::*},
+    gorbagana_clock::{Slot, UnixTimestamp},
+    gorbagana_hash::Hash,
+    gorbagana_keypair::Keypair,
+    gorbagana_signer::Signer,
+    gorbagana_transaction::Transaction,
+    gorbagana_vote_interface::{self as vote, state::*},
 };
 
 #[cfg_attr(

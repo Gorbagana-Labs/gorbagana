@@ -1,23 +1,23 @@
 use {
     clap::{crate_description, crate_name, value_t_or_exit, App, Arg, ArgMatches},
-    solana_clap_utils::{
+    gorbagana_clap_utils::{
         hidden_unless_forced,
         input_validators::{is_keypair, is_url, is_url_or_moniker, is_within_range},
     },
-    solana_cli_config::{ConfigInput, CONFIG_FILE},
-    solana_commitment_config::CommitmentConfig,
-    solana_fee_calculator::FeeRateGovernor,
-    solana_keypair::{read_keypair_file, Keypair},
-    solana_pubkey::Pubkey,
-    solana_streamer::quic::DEFAULT_MAX_CONNECTIONS_PER_IPADDR_PER_MINUTE,
-    solana_tpu_client::tpu_client::{DEFAULT_TPU_CONNECTION_POOL_SIZE, DEFAULT_TPU_USE_QUIC},
+    gorbagana_cli_config::{ConfigInput, CONFIG_FILE},
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_fee_calculator::FeeRateGovernor,
+    gorbagana_keypair::{read_keypair_file, Keypair},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_streamer::quic::DEFAULT_MAX_CONNECTIONS_PER_IPADDR_PER_MINUTE,
+    gorbagana_tpu_client::tpu_client::{DEFAULT_TPU_CONNECTION_POOL_SIZE, DEFAULT_TPU_USE_QUIC},
     std::{
         net::{IpAddr, Ipv4Addr},
         time::Duration,
     },
 };
 
-const NUM_LAMPORTS_PER_ACCOUNT_DEFAULT: u64 = solana_native_token::LAMPORTS_PER_SOL;
+const NUM_LAMPORTS_PER_ACCOUNT_DEFAULT: u64 = gorbagana_native_token::LAMPORTS_PER_SOL;
 
 #[derive(Eq, PartialEq, Debug)]
 pub enum ExternalClientType {
@@ -146,7 +146,7 @@ pub fn build_args<'a>(version: &'_ str) -> App<'a, '_> {
                 .global(true)
                 .validator(is_url_or_moniker)
                 .help(
-                    "URL for Solana's JSON RPC or moniker (or their first letter): \
+                    "URL for Gorbagana's JSON RPC or moniker (or their first letter): \
                        [mainnet-beta, testnet, devnet, localhost]",
                 ),
         )
@@ -157,7 +157,7 @@ pub fn build_args<'a>(version: &'_ str) -> App<'a, '_> {
                 .takes_value(true)
                 .global(true)
                 .validator(is_url)
-                .help("WebSocket URL for the solana cluster"),
+                .help("WebSocket URL for the gorbagana cluster"),
         )
         .arg(
             Arg::with_name("rpc_addr")
@@ -414,7 +414,7 @@ pub fn build_args<'a>(version: &'_ str) -> App<'a, '_> {
                 .long("bind-address")
                 .value_name("HOST")
                 .takes_value(true)
-                .validator(solana_net_utils::is_host)
+                .validator(gorbagana_net_utils::is_host)
                 .requires("client_node_id")
                 .help("IP address to use with connection cache"),
         )
@@ -459,9 +459,9 @@ pub fn parse_args(matches: &ArgMatches) -> Result<Config, &'static str> {
     let mut args = Config::default();
 
     let config = if let Some(config_file) = matches.value_of("config_file") {
-        solana_cli_config::Config::load(config_file).unwrap_or_default()
+        gorbagana_cli_config::Config::load(config_file).unwrap_or_default()
     } else {
-        solana_cli_config::Config::default()
+        gorbagana_cli_config::Config::default()
     };
     let (_, json_rpc_url) = ConfigInput::compute_json_rpc_url_setting(
         matches.value_of("json_rpc_url").unwrap_or(""),
@@ -617,7 +617,7 @@ pub fn parse_args(matches: &ArgMatches) -> Result<Config, &'static str> {
 
     if let Some(addr) = matches.value_of("bind_address") {
         args.bind_address =
-            solana_net_utils::parse_host(addr).map_err(|_| "Failed to parse bind-address")?;
+            gorbagana_net_utils::parse_host(addr).map_err(|_| "Failed to parse bind-address")?;
     }
 
     if let Some(client_node_id_filename) = matches.value_of("client_node_id") {
@@ -639,8 +639,8 @@ pub fn parse_args(matches: &ArgMatches) -> Result<Config, &'static str> {
 mod tests {
     use {
         super::*,
-        solana_keypair::{read_keypair_file, write_keypair_file, Keypair},
-        solana_signer::Signer,
+        gorbagana_keypair::{read_keypair_file, write_keypair_file, Keypair},
+        gorbagana_signer::Signer,
         std::{
             net::{IpAddr, Ipv4Addr},
             time::Duration,
@@ -670,7 +670,7 @@ mod tests {
         // parse provided rpc address, check that default ws address is correct
         // always specify authority in these tests because otherwise a random one will be used
         let matches = build_args("1.0.0").get_matches_from(vec![
-            "solana-bench-tps",
+            "gorbagana-bench-tps",
             "--authority",
             &keypair_file_name,
             "-u",
@@ -690,7 +690,7 @@ mod tests {
         // check if --identity is working
         let keypair = read_keypair_file(&keypair_file_name).unwrap();
         let matches = build_args("1.0.0").get_matches_from(vec![
-            "solana-bench-tps",
+            "gorbagana-bench-tps",
             "--identity",
             &keypair_file_name,
             "-u",
@@ -710,7 +710,7 @@ mod tests {
         // parse cli args typical for private cluster tests
         let keypair = read_keypair_file(&keypair_file_name).unwrap();
         let matches = build_args("1.0.0").get_matches_from(vec![
-            "solana-bench-tps",
+            "gorbagana-bench-tps",
             "--authority",
             &keypair_file_name,
             "-u",
@@ -742,7 +742,7 @@ mod tests {
         // select different client type and CommitmentConfig
         let keypair = read_keypair_file(&keypair_file_name).unwrap();
         let matches = build_args("1.0.0").get_matches_from(vec![
-            "solana-bench-tps",
+            "gorbagana-bench-tps",
             "--authority",
             &keypair_file_name,
             "-u",
@@ -768,7 +768,7 @@ mod tests {
         let keypair = read_keypair_file(&keypair_file_name).unwrap();
         let (client_id, client_id_file_name) = write_tmp_keypair(&out_dir);
         let matches = build_args("1.0.0").get_matches_from(vec![
-            "solana-bench-tps",
+            "gorbagana-bench-tps",
             "--authority",
             &keypair_file_name,
             "-u",

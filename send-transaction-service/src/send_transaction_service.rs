@@ -15,12 +15,12 @@ use {
     crossbeam_channel::{Receiver, RecvTimeoutError},
     itertools::Itertools,
     log::*,
-    solana_client::connection_cache::ConnectionCache,
-    solana_hash::Hash,
-    solana_nonce_account as nonce_account,
-    solana_pubkey::Pubkey,
-    solana_runtime::{bank::Bank, bank_forks::BankForks},
-    solana_signature::Signature,
+    gorbagana_client::connection_cache::ConnectionCache,
+    gorbagana_hash::Hash,
+    gorbagana_nonce_account as nonce_account,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_runtime::{bank::Bank, bank_forks::BankForks},
+    gorbagana_signature::Signature,
     std::{
         collections::hash_map::{Entry, HashMap},
         net::SocketAddr,
@@ -589,13 +589,13 @@ mod test {
             transaction_client::TpuClientNextClient,
         },
         crossbeam_channel::{bounded, unbounded},
-        solana_account::AccountSharedData,
-        solana_genesis_config::create_genesis_config,
-        solana_nonce::{self as nonce, state::DurableNonce},
-        solana_pubkey::Pubkey,
-        solana_signer::Signer,
-        solana_system_interface::program as system_program,
-        solana_system_transaction as system_transaction,
+        gorbagana_account::AccountSharedData,
+        gorbagana_genesis_config::create_genesis_config,
+        gorbagana_nonce::{self as nonce, state::DurableNonce},
+        gorbagana_pubkey::Pubkey,
+        gorbagana_signer::Signer,
+        gorbagana_system_interface::program as system_program,
+        gorbagana_system_transaction as system_transaction,
         std::ops::Sub,
         tokio::runtime::Handle,
     };
@@ -687,10 +687,10 @@ mod test {
     }
 
     fn process_transactions<C: ClientWithCreator>(maybe_runtime: Option<Handle>) {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let (mut genesis_config, mint_keypair) = create_genesis_config(4);
-        genesis_config.fee_rate_governor = solana_fee_calculator::FeeRateGovernor::new(0, 0);
+        genesis_config.fee_rate_governor = gorbagana_fee_calculator::FeeRateGovernor::new(0, 0);
         let (_, bank_forks) = Bank::new_with_bank_forks_for_tests(&genesis_config);
 
         let leader_forward_count = 1;
@@ -979,10 +979,10 @@ mod test {
     }
 
     fn retry_durable_nonce_transactions<C: ClientWithCreator>(maybe_runtime: Option<Handle>) {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let (mut genesis_config, mint_keypair) = create_genesis_config(4);
-        genesis_config.fee_rate_governor = solana_fee_calculator::FeeRateGovernor::new(0, 0);
+        genesis_config.fee_rate_governor = gorbagana_fee_calculator::FeeRateGovernor::new(0, 0);
         let (_, bank_forks) = Bank::new_with_bank_forks_for_tests(&genesis_config);
         let leader_forward_count = 1;
         let config = Config::default();

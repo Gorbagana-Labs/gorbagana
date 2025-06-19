@@ -6,15 +6,15 @@ use {
         stake,
     },
     clap::ArgMatches,
-    solana_clap_utils::{
+    gorbagana_clap_utils::{
         compute_budget::ComputeUnitLimit, input_parsers::lamports_of_sol, offline::SIGN_ONLY_ARG,
     },
-    solana_commitment_config::CommitmentConfig,
-    solana_hash::Hash,
-    solana_message::Message,
-    solana_native_token::lamports_to_sol,
-    solana_pubkey::Pubkey,
-    solana_rpc_client::rpc_client::RpcClient,
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_hash::Hash,
+    gorbagana_message::Message,
+    gorbagana_native_token::lamports_to_sol,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rpc_client::rpc_client::RpcClient,
 };
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
@@ -125,7 +125,7 @@ where
             } else {
                 0
             };
-        if amount == SpendAmount::Available && account.owner == solana_sdk_ids::stake::id() {
+        if amount == SpendAmount::Available && account.owner == gorbagana_sdk_ids::stake::id() {
             let state = stake::get_account_stake_state(
                 rpc_client,
                 from_pubkey,

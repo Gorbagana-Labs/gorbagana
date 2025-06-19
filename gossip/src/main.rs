@@ -6,14 +6,14 @@ use {
         SubCommand,
     },
     log::{error, info, warn},
-    solana_clap_utils::{
+    gorbagana_clap_utils::{
         hidden_unless_forced,
         input_parsers::{keypair_of, pubkeys_of},
         input_validators::{is_keypair_or_ask_keyword, is_port, is_pubkey},
     },
-    solana_gossip::{contact_info::ContactInfo, gossip_service::discover},
-    solana_pubkey::Pubkey,
-    solana_streamer::socket::SocketAddrSpace,
+    gorbagana_gossip::{contact_info::ContactInfo, gossip_service::discover},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_streamer::socket::SocketAddrSpace,
     std::{
         error,
         net::{IpAddr, Ipv4Addr, SocketAddr},
@@ -41,19 +41,19 @@ fn parse_matches() -> ArgMatches<'static> {
         .long("gossip-host")
         .value_name("HOST")
         .takes_value(true)
-        .validator(solana_net_utils::is_host)
+        .validator(gorbagana_net_utils::is_host)
         .help("DEPRECATED: --gossip-host is no longer supported. Use --bind-address instead.");
 
     let bind_address_arg = clap::Arg::with_name("bind_address")
         .long("bind-address")
         .value_name("HOST")
         .takes_value(true)
-        .validator(solana_net_utils::is_host)
+        .validator(gorbagana_net_utils::is_host)
         .help("IP address to bind the node to for gossip (replaces --gossip-host)");
 
     App::new(crate_name!())
         .about(crate_description!())
-        .version(solana_version::version!())
+        .version(gorbagana_version::version!())
         .setting(AppSettings::SubcommandRequiredElseHelp)
         .arg(
             Arg::with_name("allow_private_addr")
@@ -72,7 +72,7 @@ fn parse_matches() -> ArgMatches<'static> {
                         .value_name("HOST:PORT")
                         .takes_value(true)
                         .required(true)
-                        .validator(solana_net_utils::is_host_port)
+                        .validator(gorbagana_net_utils::is_host_port)
                         .help("Rendezvous with the cluster at this entry point"),
                 )
                 .arg(
@@ -112,7 +112,7 @@ fn parse_matches() -> ArgMatches<'static> {
                         .long("entrypoint")
                         .value_name("HOST:PORT")
                         .takes_value(true)
-                        .validator(solana_net_utils::is_host_port)
+                        .validator(gorbagana_net_utils::is_host_port)
                         .help("Rendezvous with the cluster at this entrypoint"),
                 )
                 .arg(
@@ -168,18 +168,18 @@ fn parse_matches() -> ArgMatches<'static> {
 
 fn parse_bind_address(matches: &ArgMatches, entrypoint_addr: Option<SocketAddr>) -> IpAddr {
     if let Some(bind_address) = matches.value_of("bind_address") {
-        solana_net_utils::parse_host(bind_address).unwrap_or_else(|e| {
+        gorbagana_net_utils::parse_host(bind_address).unwrap_or_else(|e| {
             eprintln!("failed to parse bind-address: {e}");
             exit(1);
         })
     } else if let Some(gossip_host) = matches.value_of("gossip_host") {
         warn!("--gossip-host is deprecated. Use --bind-address instead.");
-        solana_net_utils::parse_host(gossip_host).unwrap_or_else(|e| {
+        gorbagana_net_utils::parse_host(gossip_host).unwrap_or_else(|e| {
             eprintln!("failed to parse gossip-host: {e}");
             exit(1);
         })
     } else if let Some(entrypoint_addr) = entrypoint_addr {
-        solana_net_utils::get_public_ip_addr_with_binding(
+        gorbagana_net_utils::get_public_ip_addr_with_binding(
             &entrypoint_addr,
             IpAddr::V4(Ipv4Addr::UNSPECIFIED),
         )
@@ -233,7 +233,7 @@ fn get_entrypoint_shred_version(entrypoint: &Option<SocketAddr>) -> Option<u16> 
         error!("cannot obtain shred-version without an entrypoint");
         return None;
     };
-    match solana_net_utils::get_cluster_shred_version(entrypoint) {
+    match gorbagana_net_utils::get_cluster_shred_version(entrypoint) {
         Err(err) => {
             error!("get_cluster_shred_version failed: {entrypoint}, {err}");
             None
@@ -297,7 +297,7 @@ fn process_spy(matches: &ArgMatches, socket_addr_space: SocketAddrSpace) -> std:
 
 fn parse_entrypoint(matches: &ArgMatches) -> Option<SocketAddr> {
     matches.value_of("entrypoint").map(|entrypoint| {
-        solana_net_utils::parse_host_port(entrypoint).unwrap_or_else(|e| {
+        gorbagana_net_utils::parse_host_port(entrypoint).unwrap_or_else(|e| {
             eprintln!("failed to parse entrypoint address: {e}");
             exit(1);
         })
@@ -365,7 +365,7 @@ fn get_gossip_address(matches: &ArgMatches, entrypoint_addr: Option<SocketAddr>)
     SocketAddr::new(
         bind_address,
         value_t!(matches, "gossip_port", u16).unwrap_or_else(|_| {
-            solana_net_utils::find_available_port_in_range(
+            gorbagana_net_utils::find_available_port_in_range(
                 IpAddr::V4(Ipv4Addr::UNSPECIFIED),
                 (0, 1),
             )
@@ -375,7 +375,7 @@ fn get_gossip_address(matches: &ArgMatches, entrypoint_addr: Option<SocketAddr>)
 }
 
 fn main() -> Result<(), Box<dyn error::Error>> {
-    solana_logger::setup_with_default_filter();
+    gorbagana_logger::setup_with_default_filter();
 
     let matches = parse_matches();
     let socket_addr_space = SocketAddrSpace::new(matches.is_present("allow_private_addr"));

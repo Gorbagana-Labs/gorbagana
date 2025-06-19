@@ -7,36 +7,36 @@ use {
     log::*,
     num_traits::FromPrimitive,
     serde_json::{self, Value},
-    solana_clap_utils::{self, input_parsers::*, keypair::*},
-    solana_cli_config::ConfigInput,
-    solana_cli_output::{
+    gorbagana_clap_utils::{self, input_parsers::*, keypair::*},
+    gorbagana_cli_config::ConfigInput,
+    gorbagana_cli_output::{
         display::println_name_value, CliSignature, CliValidatorsSortOrder, OutputFormat,
     },
-    solana_client::connection_cache::ConnectionCache,
-    solana_clock::{Epoch, Slot},
-    solana_commitment_config::CommitmentConfig,
-    solana_hash::Hash,
-    solana_instruction::error::InstructionError,
-    solana_keypair::{read_keypair_file, Keypair},
-    solana_offchain_message::OffchainMessage,
-    solana_pubkey::Pubkey,
-    solana_remote_wallet::remote_wallet::RemoteWalletManager,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_api::{
+    gorbagana_client::connection_cache::ConnectionCache,
+    gorbagana_clock::{Epoch, Slot},
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_hash::Hash,
+    gorbagana_instruction::error::InstructionError,
+    gorbagana_keypair::{read_keypair_file, Keypair},
+    gorbagana_offchain_message::OffchainMessage,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_remote_wallet::remote_wallet::RemoteWalletManager,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_rpc_client_api::{
         client_error::{Error as ClientError, Result as ClientResult},
         config::{RpcLargestAccountsFilter, RpcSendTransactionConfig, RpcTransactionLogsFilter},
     },
-    solana_rpc_client_nonce_utils::blockhash_query::BlockhashQuery,
-    solana_signature::Signature,
-    solana_signer::{Signer, SignerError},
-    solana_stake_interface::{instruction::LockupArgs, state::Lockup},
-    solana_tps_client::{utils::create_connection_cache, TpsClient},
-    solana_tpu_client::tpu_client::{
+    gorbagana_rpc_client_nonce_utils::blockhash_query::BlockhashQuery,
+    gorbagana_signature::Signature,
+    gorbagana_signer::{Signer, SignerError},
+    gorbagana_stake_interface::{instruction::LockupArgs, state::Lockup},
+    gorbagana_tps_client::{utils::create_connection_cache, TpsClient},
+    gorbagana_tpu_client::tpu_client::{
         TpuClient, TpuClientConfig, DEFAULT_TPU_CONNECTION_POOL_SIZE, DEFAULT_TPU_ENABLE_UDP,
     },
-    solana_transaction::versioned::VersionedTransaction,
-    solana_transaction_error::TransactionError,
-    solana_vote_program::vote_state::VoteAuthorize,
+    gorbagana_transaction::versioned::VersionedTransaction,
+    gorbagana_transaction_error::TransactionError,
+    gorbagana_vote_program::vote_state::VoteAuthorize,
     std::{
         collections::HashMap, error, io::stdout, process::exit, rc::Rc, str::FromStr, sync::Arc,
         time::Duration,
@@ -494,7 +494,7 @@ pub enum CliError {
     #[error("Account {2} has insufficient funds for spend ({0} SOL) + fee ({1} SOL)")]
     InsufficientFundsForSpendAndFee(f64, f64, Pubkey),
     #[error(transparent)]
-    InvalidNonce(solana_rpc_client_nonce_utils::Error),
+    InvalidNonce(gorbagana_rpc_client_nonce_utils::Error),
     #[error("Dynamic program error: {0}")]
     DynamicProgramError(String),
     #[error("RPC request error: {0}")]
@@ -511,10 +511,10 @@ impl From<Box<dyn error::Error>> for CliError {
     }
 }
 
-impl From<solana_rpc_client_nonce_utils::Error> for CliError {
-    fn from(error: solana_rpc_client_nonce_utils::Error) -> Self {
+impl From<gorbagana_rpc_client_nonce_utils::Error> for CliError {
+    fn from(error: gorbagana_rpc_client_nonce_utils::Error) -> Self {
         match error {
-            solana_rpc_client_nonce_utils::Error::Client(client_error) => {
+            gorbagana_rpc_client_nonce_utils::Error::Client(client_error) => {
                 Self::RpcRequestError(client_error)
             }
             _ => Self::InvalidNonce(error),
@@ -612,9 +612,9 @@ pub fn parse_command(
             get_clap_app(
                 crate_name!(),
                 crate_description!(),
-                solana_version::version!(),
+                gorbagana_version::version!(),
             )
-            .gen_completions_to("solana", shell_choice, &mut stdout());
+            .gen_completions_to("gorbagana", shell_choice, &mut stdout());
             std::process::exit(0);
         }
         // Cluster Query Commands
@@ -689,7 +689,7 @@ pub fn parse_command(
         ("upgrade-nonce-account", Some(matches)) => parse_upgrade_nonce_account(matches),
         // Program Deployment
         ("deploy", Some(_matches)) => clap::Error::with_description(
-            "`solana deploy` has been replaced with `solana program deploy`",
+            "`gorbagana deploy` has been replaced with `gorbagana program deploy`",
             clap::ErrorKind::UnrecognizedSubcommand,
         )
         .exit(),
@@ -881,7 +881,7 @@ pub fn process_command(config: &CliConfig) -> ProcessResult {
         // Cluster Query Commands
         // Get address of this client
         CliCommand::Address => Ok(format!("{}", config.pubkey()?)),
-        // Return software version of solana-cli and cluster entrypoint node
+        // Return software version of gorbagana-cli and cluster entrypoint node
         CliCommand::Catchup {
             node_pubkey,
             node_json_rpc_url,
@@ -1641,7 +1641,7 @@ pub fn process_command(config: &CliConfig) -> ProcessResult {
 
         // Wallet Commands
 
-        // Request an airdrop from Solana Faucet;
+        // Request an airdrop from Gorbagana Faucet;
         CliCommand::Airdrop { pubkey, lamports } => {
             process_airdrop(&rpc_client, config, pubkey, *lamports)
         }
@@ -1787,18 +1787,18 @@ mod tests {
     use {
         super::*,
         serde_json::json,
-        solana_keypair::{keypair_from_seed, read_keypair_file, write_keypair_file, Keypair},
-        solana_presigner::Presigner,
-        solana_pubkey::Pubkey,
-        solana_rpc_client::mock_sender_for_cli::SIGNATURE,
-        solana_rpc_client_api::{
+        gorbagana_keypair::{keypair_from_seed, read_keypair_file, write_keypair_file, Keypair},
+        gorbagana_presigner::Presigner,
+        gorbagana_pubkey::Pubkey,
+        gorbagana_rpc_client::mock_sender_for_cli::SIGNATURE,
+        gorbagana_rpc_client_api::{
             request::RpcRequest,
             response::{Response, RpcResponseContext},
         },
-        solana_rpc_client_nonce_utils::blockhash_query,
-        solana_sdk_ids::{stake, system_program},
-        solana_transaction_error::TransactionError,
-        solana_transaction_status::TransactionConfirmationStatus,
+        gorbagana_rpc_client_nonce_utils::blockhash_query,
+        gorbagana_sdk_ids::{stake, system_program},
+        gorbagana_transaction_error::TransactionError,
+        gorbagana_transaction_status::TransactionConfirmationStatus,
     };
 
     fn make_tmp_path(name: &str) -> String {
@@ -1835,7 +1835,7 @@ mod tests {
             .unwrap();
         assert_eq!(signer_info.signers.len(), 1);
         assert_eq!(signer_info.index_of(None), Some(0));
-        assert_eq!(signer_info.index_of(Some(solana_pubkey::new_rand())), None);
+        assert_eq!(signer_info.index_of(Some(gorbagana_pubkey::new_rand())), None);
 
         let keypair0 = keypair_from_seed(&[1u8; 32]).unwrap();
         let keypair0_pubkey = keypair0.pubkey();
@@ -1896,7 +1896,7 @@ mod tests {
     fn test_cli_parse_command() {
         let test_commands = get_clap_app("test", "desc", "version");
 
-        let pubkey = solana_pubkey::new_rand();
+        let pubkey = gorbagana_pubkey::new_rand();
         let pubkey_string = format!("{pubkey}");
 
         let default_keypair = Keypair::new();
@@ -1975,11 +1975,11 @@ mod tests {
         assert!(parse_command(&test_bad_signature, &default_signer, &mut None).is_err());
 
         // Test CreateAddressWithSeed
-        let from_pubkey = solana_pubkey::new_rand();
+        let from_pubkey = gorbagana_pubkey::new_rand();
         let from_str = from_pubkey.to_string();
         for (name, program_id) in &[
             ("STAKE", stake::id()),
-            ("VOTE", solana_sdk_ids::vote::id()),
+            ("VOTE", gorbagana_sdk_ids::vote::id()),
             ("NONCE", system_program::id()),
         ] {
             let test_create_address_with_seed = test_commands.clone().get_matches_from(vec![
@@ -2178,7 +2178,7 @@ mod tests {
             ..CliConfig::default()
         };
         let current_authority = keypair_from_seed(&[5; 32]).unwrap();
-        let new_authorized_pubkey = solana_pubkey::new_rand();
+        let new_authorized_pubkey = gorbagana_pubkey::new_rand();
         vote_config.signers = vec![&current_authority];
         vote_config.command = CliCommand::VoteAuthorize {
             vote_account_pubkey: bob_pubkey,
@@ -2218,7 +2218,7 @@ mod tests {
 
         let bob_keypair = Keypair::new();
         let bob_pubkey = bob_keypair.pubkey();
-        let custodian = solana_pubkey::new_rand();
+        let custodian = gorbagana_pubkey::new_rand();
         let vote_account_info_response = json!(Response {
             context: RpcResponseContext {
                 slot: 1,
@@ -2265,8 +2265,8 @@ mod tests {
         let result = process_command(&config);
         assert!(result.is_ok());
 
-        let stake_account_pubkey = solana_pubkey::new_rand();
-        let to_pubkey = solana_pubkey::new_rand();
+        let stake_account_pubkey = gorbagana_pubkey::new_rand();
+        let to_pubkey = gorbagana_pubkey::new_rand();
         config.command = CliCommand::WithdrawStake {
             stake_account_pubkey,
             destination_account_pubkey: to_pubkey,
@@ -2287,7 +2287,7 @@ mod tests {
         let result = process_command(&config);
         assert!(result.is_ok());
 
-        let stake_account_pubkey = solana_pubkey::new_rand();
+        let stake_account_pubkey = gorbagana_pubkey::new_rand();
         config.command = CliCommand::DeactivateStake {
             stake_account_pubkey,
             stake_authority: 0,
@@ -2305,7 +2305,7 @@ mod tests {
         let result = process_command(&config);
         assert!(result.is_ok());
 
-        let stake_account_pubkey = solana_pubkey::new_rand();
+        let stake_account_pubkey = gorbagana_pubkey::new_rand();
         let split_stake_account = Keypair::new();
         config.command = CliCommand::SplitStake {
             stake_account_pubkey,
@@ -2327,8 +2327,8 @@ mod tests {
         let result = process_command(&config);
         assert!(result.is_ok());
 
-        let stake_account_pubkey = solana_pubkey::new_rand();
-        let source_stake_account_pubkey = solana_pubkey::new_rand();
+        let stake_account_pubkey = gorbagana_pubkey::new_rand();
+        let source_stake_account_pubkey = gorbagana_pubkey::new_rand();
         let merge_stake_account = Keypair::new();
         config.command = CliCommand::MergeStake {
             stake_account_pubkey,
@@ -2354,7 +2354,7 @@ mod tests {
         assert_eq!(process_command(&config).unwrap(), "1234");
 
         // CreateAddressWithSeed
-        let from_pubkey = solana_pubkey::new_rand();
+        let from_pubkey = gorbagana_pubkey::new_rand();
         config.signers = vec![];
         config.command = CliCommand::CreateAddressWithSeed {
             from_pubkey: Some(from_pubkey),
@@ -2367,7 +2367,7 @@ mod tests {
         assert_eq!(address.unwrap(), expected_address.to_string());
 
         // Need airdrop cases
-        let to = solana_pubkey::new_rand();
+        let to = gorbagana_pubkey::new_rand();
         config.signers = vec![&keypair];
         config.command = CliCommand::Airdrop {
             pubkey: Some(to),
@@ -2775,7 +2775,7 @@ mod tests {
         for shell in shells {
             let mut buf: Vec<u8> = vec![];
 
-            clap_app.gen_completions_to("solana", shell, &mut buf);
+            clap_app.gen_completions_to("gorbagana", shell, &mut buf);
 
             assert!(!buf.is_empty());
         }

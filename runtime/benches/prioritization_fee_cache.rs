@@ -3,18 +3,18 @@ extern crate test;
 
 use {
     rand::{thread_rng, Rng},
-    solana_compute_budget_interface::ComputeBudgetInstruction,
-    solana_message::Message,
-    solana_pubkey::Pubkey,
-    solana_runtime::{
+    gorbagana_compute_budget_interface::ComputeBudgetInstruction,
+    gorbagana_message::Message,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_runtime::{
         bank::Bank,
         bank_forks::BankForks,
         genesis_utils::{create_genesis_config, GenesisConfigInfo},
         prioritization_fee_cache::*,
     },
-    solana_runtime_transaction::runtime_transaction::RuntimeTransaction,
-    solana_system_interface::instruction as system_instruction,
-    solana_transaction::{sanitized::SanitizedTransaction, Transaction},
+    gorbagana_runtime_transaction::runtime_transaction::RuntimeTransaction,
+    gorbagana_system_interface::instruction as system_instruction,
+    gorbagana_transaction::{sanitized::SanitizedTransaction, Transaction},
     std::sync::Arc,
     test::Bencher,
 };
@@ -101,7 +101,7 @@ fn bench_process_transactions_multiple_slots(bencher: &mut Bencher) {
     let bank0 = Bank::new_for_benches(&genesis_config);
     let bank_forks = BankForks::new_rw_arc(bank0);
     let bank = bank_forks.read().unwrap().working_bank();
-    let collector = solana_pubkey::new_rand();
+    let collector = gorbagana_pubkey::new_rand();
     let banks = (1..=NUM_SLOTS)
         .map(|n| Arc::new(Bank::new_from_parent(bank.clone(), &collector, n as u64)))
         .collect::<Vec<_>>();

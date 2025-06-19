@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Fetches the latest Core BPF programs and produces the solana-genesis
+# Fetches the latest Core BPF programs and produces the gorbagana-genesis
 # command-line arguments needed to install them
 #
 
@@ -20,8 +20,8 @@ add_core_bpf_program_to_fetch() {
   declare address=$3
   declare loader=$4
 
-  so_name="solana_${name//-/_}_program.so"
-  declare download_url="https://github.com/solana-program/$name/releases/download/program%40$version/$so_name"
+  so_name="gorbagana_${name//-/_}_program.so"
+  declare download_url="https://github.com/gorbagana-program/$name/releases/download/program%40$version/$so_name"
 
   programs+=("$name $version $address $loader $download_url")
 }

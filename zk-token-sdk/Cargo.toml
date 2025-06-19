@@ -1,7 +1,7 @@
 [package]
-name = "solana-zk-token-sdk"
-description = "Solana Zk Token SDK"
-documentation = "https://docs.rs/solana-zk-token-sdk"
+name = "gorbagana-zk-token-sdk"
+description = "Gorbagana Zk Token SDK"
+documentation = "https://docs.rs/gorbagana-zk-token-sdk"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -18,13 +18,13 @@ bytemuck = { workspace = true }
 bytemuck_derive = { workspace = true }
 num-derive = { workspace = true }
 num-traits = { workspace = true }
-solana-curve25519 = { workspace = true }
-solana-instruction = { workspace = true, features = ["std"] }
-solana-pubkey = { workspace = true, features = ["bytemuck"] }
-solana-sdk-ids = { workspace = true }
+gorbagana-curve25519 = { workspace = true }
+gorbagana-instruction = { workspace = true, features = ["std"] }
+gorbagana-pubkey = { workspace = true, features = ["bytemuck"] }
+gorbagana-sdk-ids = { workspace = true }
 thiserror = { workspace = true }
 
-[target.'cfg(not(target_os = "solana"))'.dependencies]
+[target.'cfg(not(target_os = "gorbagana"))'.dependencies]
 aes-gcm-siv = { workspace = true }
 bincode = { workspace = true }
 curve25519-dalek = { workspace = true, features = ["serde"] }
@@ -35,16 +35,16 @@ serde = { workspace = true }
 serde_derive = { workspace = true }
 serde_json = { workspace = true }
 sha3 = { workspace = true }
-solana-derivation-path = { workspace = true }
-solana-seed-derivable = { workspace = true }
-solana-seed-phrase = { workspace = true }
-solana-signature = { workspace = true }
-solana-signer = { workspace = true }
+gorbagana-derivation-path = { workspace = true }
+gorbagana-seed-derivable = { workspace = true }
+gorbagana-seed-phrase = { workspace = true }
+gorbagana-signature = { workspace = true }
+gorbagana-signer = { workspace = true }
 subtle = { workspace = true }
 zeroize = { workspace = true, features = ["zeroize_derive"] }
 
 [dev-dependencies]
-solana-keypair = { workspace = true }
+gorbagana-keypair = { workspace = true }
 tiny-bip39 = { workspace = true }
 
 [lints]

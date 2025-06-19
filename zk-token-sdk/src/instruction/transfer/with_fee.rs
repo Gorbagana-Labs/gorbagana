@@ -2,7 +2,7 @@ use crate::{
     instruction::{ProofType, ZkProofData},
     zk_token_elgamal::pod,
 };
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use {
     crate::{
         encryption::{
@@ -34,29 +34,29 @@ use {
     subtle::{ConditionallySelectable, ConstantTimeGreater},
 };
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 const MAX_FEE_BASIS_POINTS: u64 = 10_000;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 const ONE_IN_BASIS_POINTS: u128 = MAX_FEE_BASIS_POINTS as u128;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 const MAX_DELTA_RANGE: u64 = MAX_FEE_BASIS_POINTS - 1;
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 const TRANSFER_SOURCE_AMOUNT_BITS: usize = 64;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 const TRANSFER_AMOUNT_LO_BITS: usize = 16;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 const TRANSFER_AMOUNT_LO_NEGATED_BITS: usize = 16;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 const TRANSFER_AMOUNT_HI_BITS: usize = 32;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 const TRANSFER_DELTA_BITS: usize = 16;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 const FEE_AMOUNT_LO_BITS: usize = 16;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 const FEE_AMOUNT_HI_BITS: usize = 32;
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 pub static COMMITMENT_MAX: std::sync::LazyLock<PedersenCommitment> =
     std::sync::LazyLock::new(|| Pedersen::encode((1_u64 << TRANSFER_AMOUNT_LO_NEGATED_BITS) - 1));
 pub static COMMITMENT_MAX_FEE_BASIS_POINTS: std::sync::LazyLock<PedersenCommitment> =
@@ -114,7 +114,7 @@ pub struct TransferWithFeePubkeys {
     pub withdraw_withheld_authority: pod::ElGamalPubkey,
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TransferWithFeeData {
     pub fn new(
         transfer_amount: u64,
@@ -386,7 +386,7 @@ impl ZkProofData<TransferWithFeeProofContext> for TransferWithFeeData {
         &self.context
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     fn verify_proof(&self) -> Result<(), ProofVerificationError> {
         let mut transcript = self.context.new_transcript();
 
@@ -428,7 +428,7 @@ impl ZkProofData<TransferWithFeeProofContext> for TransferWithFeeData {
 }
 
 #[allow(non_snake_case)]
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TransferWithFeeProofContext {
     fn new_transcript(&self) -> Transcript {
         let mut transcript = Transcript::new(b"transfer-with-fee-proof");
@@ -462,7 +462,7 @@ pub struct TransferWithFeeProof {
 }
 
 #[allow(non_snake_case)]
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TransferWithFeeProof {
     #[allow(clippy::too_many_arguments)]
     #[allow(clippy::many_single_char_names)]
@@ -769,7 +769,7 @@ impl TransferWithFeeProof {
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 fn calculate_fee(transfer_amount: u64, fee_rate_basis_points: u16) -> Option<(u64, u64)> {
     let numerator = (transfer_amount as u128).checked_mul(fee_rate_basis_points as u128)?;
 
@@ -789,7 +789,7 @@ fn calculate_fee(transfer_amount: u64, fee_rate_basis_points: u16) -> Option<(u6
     Some((fee as u64, delta_fee as u64))
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 fn compute_delta_commitment_and_opening(
     (combined_commitment, combined_opening): (&PedersenCommitment, &PedersenOpening),
     (combined_fee_commitment, combined_fee_opening): (&PedersenCommitment, &PedersenOpening),
@@ -804,7 +804,7 @@ fn compute_delta_commitment_and_opening(
     (delta_commitment, delta_opening)
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 fn compute_delta_commitment(
     combined_commitment: &PedersenCommitment,
     combined_fee_commitment: &PedersenCommitment,

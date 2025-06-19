@@ -1,5 +1,5 @@
 [package]
-name = "solana-dos"
+name = "gorbagana-dos"
 publish = false
 description = "Tool to send various requests to cluster in order to evaluate the effect on performance"
 version = { workspace = true }
@@ -23,36 +23,36 @@ itertools = { workspace = true }
 log = { workspace = true }
 rand = { workspace = true }
 serde = { workspace = true }
-solana-bench-tps = { workspace = true }
-solana-client = { workspace = true }
-solana-connection-cache = { workspace = true }
-solana-core = { workspace = true }
-solana-faucet = { workspace = true }
-solana-gossip = { workspace = true }
-solana-hash = { workspace = true }
-solana-instruction = { workspace = true }
-solana-keypair = { workspace = true }
-solana-logger = "=2.3.1"
-solana-measure = { workspace = true }
-solana-message = { workspace = true }
-solana-net-utils = { workspace = true }
-solana-perf = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-quic-client = { workspace = true }
-solana-rpc = { workspace = true }
-solana-rpc-client = { workspace = true }
-solana-signature = { workspace = true, features = ["rand"] }
-solana-signer = { workspace = true }
-solana-stake-interface = { workspace = true }
-solana-streamer = { workspace = true }
-solana-system-interface = { workspace = true }
-solana-time-utils = { workspace = true }
-solana-tps-client = { workspace = true }
-solana-tpu-client = { workspace = true }
-solana-transaction = { workspace = true }
-solana-version = { workspace = true }
+gorbagana-bench-tps = { workspace = true }
+gorbagana-client = { workspace = true }
+gorbagana-connection-cache = { workspace = true }
+gorbagana-core = { workspace = true }
+gorbagana-faucet = { workspace = true }
+gorbagana-gossip = { workspace = true }
+gorbagana-hash = { workspace = true }
+gorbagana-instruction = { workspace = true }
+gorbagana-keypair = { workspace = true }
+gorbagana-logger = "=2.3.1"
+gorbagana-measure = { workspace = true }
+gorbagana-message = { workspace = true }
+gorbagana-net-utils = { workspace = true }
+gorbagana-perf = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-quic-client = { workspace = true }
+gorbagana-rpc = { workspace = true }
+gorbagana-rpc-client = { workspace = true }
+gorbagana-signature = { workspace = true, features = ["rand"] }
+gorbagana-signer = { workspace = true }
+gorbagana-stake-interface = { workspace = true }
+gorbagana-streamer = { workspace = true }
+gorbagana-system-interface = { workspace = true }
+gorbagana-time-utils = { workspace = true }
+gorbagana-tps-client = { workspace = true }
+gorbagana-tpu-client = { workspace = true }
+gorbagana-transaction = { workspace = true }
+gorbagana-version = { workspace = true }
 
 [dev-dependencies]
-solana-core = { workspace = true, features = ["dev-context-only-utils"] }
-solana-local-cluster = { workspace = true }
-solana-runtime = { workspace = true, features = ["dev-context-only-utils"] }
+gorbagana-core = { workspace = true, features = ["dev-context-only-utils"] }
+gorbagana-local-cluster = { workspace = true }
+gorbagana-runtime = { workspace = true, features = ["dev-context-only-utils"] }

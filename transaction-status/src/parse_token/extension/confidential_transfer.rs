@@ -3,7 +3,7 @@ use {
     spl_token_2022::{
         extension::confidential_transfer::instruction::*,
         instruction::{decode_instruction_data, decode_instruction_type},
-        solana_zk_sdk::encryption::pod::elgamal::PodElGamalPubkey,
+        gorbagana_zk_sdk::encryption::pod::elgamal::PodElGamalPubkey,
     },
 };
 
@@ -597,14 +597,14 @@ mod test {
     use {
         super::*,
         bytemuck::Zeroable,
-        solana_instruction::{AccountMeta, Instruction},
-        solana_message::Message,
-        solana_pubkey::Pubkey,
+        gorbagana_instruction::{AccountMeta, Instruction},
+        gorbagana_message::Message,
+        gorbagana_pubkey::Pubkey,
         spl_token_2022::{
             extension::confidential_transfer::instruction::{
                 initialize_mint, inner_configure_account, inner_empty_account, update_mint,
             },
-            solana_zk_sdk::{
+            gorbagana_zk_sdk::{
                 encryption::pod::{
                     auth_encryption::PodAeCiphertext, elgamal::PodElGamalCiphertext,
                 },

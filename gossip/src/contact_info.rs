@@ -1,4 +1,4 @@
-pub use solana_client::connection_cache::Protocol;
+pub use gorbagana_client::connection_cache::Protocol;
 use {
     crate::{
         crds_data::MAX_WALLCLOCK,
@@ -8,11 +8,11 @@ use {
     },
     assert_matches::{assert_matches, debug_assert_matches},
     serde::{Deserialize, Deserializer, Serialize},
-    solana_pubkey::Pubkey,
-    solana_quic_definitions::QUIC_PORT_OFFSET,
-    solana_sanitize::{Sanitize, SanitizeError},
-    solana_serde_varint as serde_varint, solana_short_vec as short_vec,
-    solana_streamer::socket::SocketAddrSpace,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_quic_definitions::QUIC_PORT_OFFSET,
+    gorbagana_sanitize::{Sanitize, SanitizeError},
+    gorbagana_serde_varint as serde_varint, gorbagana_short_vec as short_vec,
+    gorbagana_streamer::socket::SocketAddrSpace,
     static_assertions::const_assert_eq,
     std::{
         cmp::Ordering,
@@ -88,7 +88,7 @@ pub struct ContactInfo {
     // Identifies duplicate running instances.
     outset: u64,
     shred_version: u16,
-    version: solana_version::Version,
+    version: gorbagana_version::Version,
     // All IP addresses are unique and referenced at least once in sockets.
     #[serde(with = "short_vec")]
     addrs: Vec<IpAddr>,
@@ -136,7 +136,7 @@ struct ContactInfoLite {
     wallclock: u64,
     outset: u64,
     shred_version: u16,
-    version: solana_version::Version,
+    version: gorbagana_version::Version,
     #[serde(with = "short_vec")]
     addrs: Vec<IpAddr>,
     #[serde(with = "short_vec")]
@@ -227,7 +227,7 @@ impl ContactInfo {
             wallclock,
             outset: get_node_outset(),
             shred_version,
-            version: solana_version::Version::default(),
+            version: gorbagana_version::Version::default(),
             addrs: Vec::<IpAddr>::default(),
             sockets: Vec::<SocketEntry>::default(),
             extensions: Vec::default(),
@@ -251,7 +251,7 @@ impl ContactInfo {
     }
 
     #[inline]
-    pub(crate) fn version(&self) -> &solana_version::Version {
+    pub(crate) fn version(&self) -> &gorbagana_version::Version {
         &self.version
     }
 
@@ -417,8 +417,8 @@ impl ContactInfo {
     /// New random ContactInfo for tests and simulations.
     pub fn new_rand<R: rand::Rng>(rng: &mut R, pubkey: Option<Pubkey>) -> Self {
         let delay = 10 * 60 * 1000; // 10 minutes
-        let now = solana_time_utils::timestamp() - delay + rng.gen_range(0..2 * delay);
-        let pubkey = pubkey.unwrap_or_else(solana_pubkey::new_rand);
+        let now = gorbagana_time_utils::timestamp() - delay + rng.gen_range(0..2 * delay);
+        let pubkey = pubkey.unwrap_or_else(gorbagana_pubkey::new_rand);
         let mut node = ContactInfo::new_localhost(&pubkey, now);
         let _ = node.set_gossip((Ipv4Addr::LOCALHOST, rng.gen_range(1024..u16::MAX)));
         node
@@ -428,7 +428,7 @@ impl ContactInfo {
     pub fn new_gossip_entry_point(gossip_addr: &SocketAddr) -> Self {
         let mut node = Self::new(
             Pubkey::default(),
-            solana_time_utils::timestamp(), // wallclock
+            gorbagana_time_utils::timestamp(), // wallclock
             0,                              // shred_version
         );
         if let Err(err) = node.set_gossip(*gossip_addr) {
@@ -466,7 +466,7 @@ impl ContactInfo {
         assert_matches!(sanitize_socket(socket), Ok(()));
         let mut node = Self::new(
             *pubkey,
-            solana_time_utils::timestamp(), // wallclock,
+            gorbagana_time_utils::timestamp(), // wallclock,
             0u16,                           // shred_version
         );
         let (addr, port) = (socket.ip(), socket.port());
@@ -678,14 +678,14 @@ fn get_quic_socket(socket: &SocketAddr) -> Result<SocketAddr, Error> {
 }
 
 #[cfg(all(test, feature = "frozen-abi"))]
-impl solana_frozen_abi::abi_example::AbiExample for ContactInfo {
+impl gorbagana_frozen_abi::abi_example::AbiExample for ContactInfo {
     fn example() -> Self {
         Self {
             pubkey: Pubkey::example(),
             wallclock: u64::example(),
             outset: u64::example(),
             shred_version: u16::example(),
-            version: solana_version::Version::example(),
+            version: gorbagana_version::Version::example(),
             addrs: Vec::<IpAddr>::example(),
             sockets: Vec::<SocketEntry>::example(),
             extensions: vec![],
@@ -699,8 +699,8 @@ mod tests {
     use {
         super::*,
         rand::{seq::SliceRandom, Rng},
-        solana_keypair::Keypair,
-        solana_signer::Signer,
+        gorbagana_keypair::Keypair,
+        gorbagana_signer::Signer,
         std::{
             collections::{HashMap, HashSet},
             iter::repeat_with,
@@ -852,7 +852,7 @@ mod tests {
             wallclock: rng.gen(),
             outset: rng.gen(),
             shred_version: rng.gen(),
-            version: solana_version::Version::default(),
+            version: gorbagana_version::Version::default(),
             addrs: Vec::default(),
             sockets: Vec::default(),
             extensions: Vec::default(),
@@ -1027,7 +1027,7 @@ mod tests {
     fn test_new_localhost() {
         let node = ContactInfo::new_localhost(
             &Keypair::new().pubkey(),
-            solana_time_utils::timestamp(), // wallclock
+            gorbagana_time_utils::timestamp(), // wallclock
         );
         cross_verify_with_legacy(&node);
     }

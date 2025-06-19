@@ -1,19 +1,19 @@
 use {
     agave_reserved_account_keys::ReservedAccountKeys,
-    solana_hash::Hash,
-    solana_instruction::AccountMeta,
-    solana_message::{
+    gorbagana_hash::Hash,
+    gorbagana_instruction::AccountMeta,
+    gorbagana_message::{
         compiled_instruction::CompiledInstruction,
         v0::{self, LoadedAddresses, MessageAddressTableLookup},
         AddressLoader, AddressLoaderError, Message, MessageHeader, VersionedMessage,
     },
-    solana_pubkey::Pubkey,
-    solana_signature::Signature,
-    solana_transaction::{
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signature::Signature,
+    gorbagana_transaction::{
         sanitized::SanitizedTransaction,
         versioned::{sanitized::SanitizedVersionedTransaction, VersionedTransaction},
     },
-    solana_transaction_error::TransactionError,
+    gorbagana_transaction_error::TransactionError,
     std::collections::{HashMap, HashSet},
 };
 

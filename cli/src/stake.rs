@@ -14,8 +14,8 @@ use {
         spend_utils::{resolve_spend_tx_and_check_account_balances, SpendAmount},
     },
     clap::{value_t, App, AppSettings, Arg, ArgGroup, ArgMatches, SubCommand},
-    solana_account::{from_account, state_traits::StateMut, Account},
-    solana_clap_utils::{
+    gorbagana_account::{from_account, state_traits::StateMut, Account},
+    gorbagana_clap_utils::{
         compute_budget::{compute_unit_price_arg, ComputeUnitLimit, COMPUTE_UNIT_PRICE_ARG},
         fee_payer::{fee_payer_arg, FEE_PAYER_ARG},
         hidden_unless_forced,
@@ -27,39 +27,39 @@ use {
         offline::*,
         ArgConstant,
     },
-    solana_cli_output::{
+    gorbagana_cli_output::{
         self, display::BuildBalanceMessageConfig, return_signers_with_config, CliBalance,
         CliEpochReward, CliStakeHistory, CliStakeHistoryEntry, CliStakeState, CliStakeType,
         OutputFormat, ReturnSignersConfig,
     },
-    solana_clock::{Clock, Epoch, UnixTimestamp, SECONDS_PER_DAY},
-    solana_commitment_config::CommitmentConfig,
-    solana_epoch_schedule::EpochSchedule,
-    solana_message::Message,
-    solana_native_token::Sol,
-    solana_pubkey::Pubkey,
-    solana_remote_wallet::remote_wallet::RemoteWalletManager,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_api::{
+    gorbagana_clock::{Clock, Epoch, UnixTimestamp, SECONDS_PER_DAY},
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_epoch_schedule::EpochSchedule,
+    gorbagana_message::Message,
+    gorbagana_native_token::Sol,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_remote_wallet::remote_wallet::RemoteWalletManager,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_rpc_client_api::{
         config::RpcGetVoteAccountsConfig,
         request::DELINQUENT_VALIDATOR_SLOT_DISTANCE,
         response::{RpcInflationReward, RpcVoteAccountStatus},
     },
-    solana_rpc_client_nonce_utils::blockhash_query::BlockhashQuery,
-    solana_sdk_ids::{
+    gorbagana_rpc_client_nonce_utils::blockhash_query::BlockhashQuery,
+    gorbagana_sdk_ids::{
         system_program,
         sysvar::{clock, stake_history},
     },
-    solana_stake_interface::{
+    gorbagana_stake_interface::{
         self as stake,
         error::StakeError,
         instruction::{self as stake_instruction, LockupArgs},
         state::{Authorized, Lockup, Meta, StakeActivationStatus, StakeAuthorize, StakeStateV2},
         tools::{acceptable_reference_epoch_credits, eligible_for_deactivate_delinquent},
     },
-    solana_system_interface::{error::SystemError, instruction as system_instruction},
-    solana_sysvar::stake_history::StakeHistory,
-    solana_transaction::Transaction,
+    gorbagana_system_interface::{error::SystemError, instruction as system_instruction},
+    gorbagana_sysvar::stake_history::StakeHistory,
+    gorbagana_transaction::Transaction,
     std::{ops::Deref, rc::Rc},
 };
 
@@ -1506,7 +1506,7 @@ pub fn process_create_stake_account(
         }
 
         if let Some(nonce_account) = &nonce_account {
-            let nonce_account = solana_rpc_client_nonce_utils::get_account_with_commitment(
+            let nonce_account = gorbagana_rpc_client_nonce_utils::get_account_with_commitment(
                 rpc_client,
                 nonce_account,
                 config.commitment,
@@ -1658,7 +1658,7 @@ pub fn process_stake_authorize(
     } else {
         tx.try_sign(&config.signers, recent_blockhash)?;
         if let Some(nonce_account) = &nonce_account {
-            let nonce_account = solana_rpc_client_nonce_utils::get_account_with_commitment(
+            let nonce_account = gorbagana_rpc_client_nonce_utils::get_account_with_commitment(
                 rpc_client,
                 nonce_account,
                 config.commitment,
@@ -1813,7 +1813,7 @@ pub fn process_deactivate_stake_account(
     } else {
         tx.try_sign(&config.signers, recent_blockhash)?;
         if let Some(nonce_account) = &nonce_account {
-            let nonce_account = solana_rpc_client_nonce_utils::get_account_with_commitment(
+            let nonce_account = gorbagana_rpc_client_nonce_utils::get_account_with_commitment(
                 rpc_client,
                 nonce_account,
                 config.commitment,
@@ -1924,7 +1924,7 @@ pub fn process_withdraw_stake(
     } else {
         tx.try_sign(&config.signers, recent_blockhash)?;
         if let Some(nonce_account) = &nonce_account {
-            let nonce_account = solana_rpc_client_nonce_utils::get_account_with_commitment(
+            let nonce_account = gorbagana_rpc_client_nonce_utils::get_account_with_commitment(
                 rpc_client,
                 nonce_account,
                 config.commitment,
@@ -2118,7 +2118,7 @@ pub fn process_split_stake(
     } else {
         tx.try_sign(&config.signers, recent_blockhash)?;
         if let Some(nonce_account) = &nonce_account {
-            let nonce_account = solana_rpc_client_nonce_utils::get_account_with_commitment(
+            let nonce_account = gorbagana_rpc_client_nonce_utils::get_account_with_commitment(
                 rpc_client,
                 nonce_account,
                 config.commitment,
@@ -2236,7 +2236,7 @@ pub fn process_merge_stake(
     } else {
         tx.try_sign(&config.signers, recent_blockhash)?;
         if let Some(nonce_account) = &nonce_account {
-            let nonce_account = solana_rpc_client_nonce_utils::get_account_with_commitment(
+            let nonce_account = gorbagana_rpc_client_nonce_utils::get_account_with_commitment(
                 rpc_client,
                 nonce_account,
                 config.commitment,
@@ -2339,7 +2339,7 @@ pub fn process_stake_set_lockup(
     } else {
         tx.try_sign(&config.signers, recent_blockhash)?;
         if let Some(nonce_account) = &nonce_account {
-            let nonce_account = solana_rpc_client_nonce_utils::get_account_with_commitment(
+            let nonce_account = gorbagana_rpc_client_nonce_utils::get_account_with_commitment(
                 rpc_client,
                 nonce_account,
                 config.commitment,
@@ -2637,7 +2637,7 @@ pub fn process_show_stake_account(
 pub fn get_account_stake_state(
     rpc_client: &RpcClient,
     stake_account_address: &Pubkey,
-    stake_account: solana_account::Account,
+    stake_account: gorbagana_account::Account,
     use_lamports_unit: bool,
     with_rewards: Option<usize>,
     use_csv: bool,
@@ -2848,7 +2848,7 @@ pub fn process_delegate_stake(
     } else {
         tx.try_sign(&config.signers, recent_blockhash)?;
         if let Some(nonce_account) = &nonce_account {
-            let nonce_account = solana_rpc_client_nonce_utils::get_account_with_commitment(
+            let nonce_account = gorbagana_rpc_client_nonce_utils::get_account_with_commitment(
                 rpc_client,
                 nonce_account,
                 config.commitment,
@@ -2897,11 +2897,11 @@ mod tests {
     use {
         super::*,
         crate::{clap_app::get_clap_app, cli::parse_command},
-        solana_hash::Hash,
-        solana_keypair::{keypair_from_seed, read_keypair_file, write_keypair, Keypair},
-        solana_presigner::Presigner,
-        solana_rpc_client_nonce_utils::blockhash_query,
-        solana_signer::Signer,
+        gorbagana_hash::Hash,
+        gorbagana_keypair::{keypair_from_seed, read_keypair_file, write_keypair, Keypair},
+        gorbagana_presigner::Presigner,
+        gorbagana_rpc_client_nonce_utils::blockhash_query,
+        gorbagana_signer::Signer,
         tempfile::NamedTempFile,
     };
 
@@ -3990,9 +3990,9 @@ mod tests {
         );
 
         // Test CreateStakeAccount SubCommand
-        let custodian = solana_pubkey::new_rand();
+        let custodian = gorbagana_pubkey::new_rand();
         let custodian_string = format!("{custodian}");
-        let authorized = solana_pubkey::new_rand();
+        let authorized = gorbagana_pubkey::new_rand();
         let authorized_string = format!("{authorized}");
         let test_create_stake_account = test_commands.clone().get_matches_from(vec![
             "test",
@@ -4195,7 +4195,7 @@ mod tests {
         );
 
         // Test DelegateStake Subcommand
-        let vote_account_pubkey = solana_pubkey::new_rand();
+        let vote_account_pubkey = gorbagana_pubkey::new_rand();
         let vote_account_string = vote_account_pubkey.to_string();
         let test_delegate_stake = test_commands.clone().get_matches_from(vec![
             "test",
@@ -4225,7 +4225,7 @@ mod tests {
         );
 
         // Test DelegateStake Subcommand w/ authority
-        let vote_account_pubkey = solana_pubkey::new_rand();
+        let vote_account_pubkey = gorbagana_pubkey::new_rand();
         let vote_account_string = vote_account_pubkey.to_string();
         let test_delegate_stake = test_commands.clone().get_matches_from(vec![
             "test",
@@ -4354,7 +4354,7 @@ mod tests {
         );
 
         // Test Delegate Subcommand w/ absent fee payer
-        let key1 = solana_pubkey::new_rand();
+        let key1 = gorbagana_pubkey::new_rand();
         let sig1 = Keypair::new().sign_message(&[0u8]);
         let signer1 = format!("{key1}={sig1}");
         let test_delegate_stake = test_commands.clone().get_matches_from(vec![
@@ -4397,7 +4397,7 @@ mod tests {
         );
 
         // Test Delegate Subcommand w/ absent fee payer and absent nonce authority
-        let key2 = solana_pubkey::new_rand();
+        let key2 = gorbagana_pubkey::new_rand();
         let sig2 = Keypair::new().sign_message(&[0u8]);
         let signer2 = format!("{key2}={sig2}");
         let test_delegate_stake = test_commands.clone().get_matches_from(vec![
@@ -4855,7 +4855,7 @@ mod tests {
         );
 
         // Test Deactivate Subcommand w/ absent fee payer
-        let key1 = solana_pubkey::new_rand();
+        let key1 = gorbagana_pubkey::new_rand();
         let sig1 = Keypair::new().sign_message(&[0u8]);
         let signer1 = format!("{key1}={sig1}");
         let test_deactivate_stake = test_commands.clone().get_matches_from(vec![
@@ -4897,7 +4897,7 @@ mod tests {
         );
 
         // Test Deactivate Subcommand w/ absent fee payer and nonce authority
-        let key2 = solana_pubkey::new_rand();
+        let key2 = gorbagana_pubkey::new_rand();
         let sig2 = Keypair::new().sign_message(&[0u8]);
         let signer2 = format!("{key2}={sig2}");
         let test_deactivate_stake = test_commands.clone().get_matches_from(vec![
@@ -5090,7 +5090,7 @@ mod tests {
         let stake_account_keypair = Keypair::new();
         write_keypair(&stake_account_keypair, tmp_file.as_file_mut()).unwrap();
 
-        let source_stake_account_pubkey = solana_pubkey::new_rand();
+        let source_stake_account_pubkey = gorbagana_pubkey::new_rand();
         let test_merge_stake_account = test_commands.clone().get_matches_from(vec![
             "test",
             "merge-stake",

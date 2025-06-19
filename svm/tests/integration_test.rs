@@ -8,23 +8,23 @@ use {
         EXECUTION_SLOT, WALLCLOCK_TIME,
     },
     agave_feature_set::{self as feature_set, FeatureSet},
-    solana_account::{AccountSharedData, ReadableAccount, WritableAccount, PROGRAM_OWNERS},
-    solana_clock::Slot,
-    solana_compute_budget_instruction::instructions_processor::process_compute_budget_instructions,
-    solana_compute_budget_interface::ComputeBudgetInstruction,
-    solana_fee_structure::FeeDetails,
-    solana_hash::Hash,
-    solana_instruction::{AccountMeta, Instruction},
-    solana_keypair::Keypair,
-    solana_loader_v3_interface as bpf_loader_upgradeable,
-    solana_native_token::LAMPORTS_PER_SOL,
-    solana_nonce::{self as nonce, state::DurableNonce},
-    solana_program_entrypoint::MAX_PERMITTED_DATA_INCREASE,
-    solana_program_runtime::execution_budget::SVMTransactionExecutionAndFeeBudgetLimits,
-    solana_pubkey::{pubkey, Pubkey},
-    solana_sdk_ids::native_loader,
-    solana_signer::Signer,
-    solana_svm::{
+    gorbagana_account::{AccountSharedData, ReadableAccount, WritableAccount, PROGRAM_OWNERS},
+    gorbagana_clock::Slot,
+    gorbagana_compute_budget_instruction::instructions_processor::process_compute_budget_instructions,
+    gorbagana_compute_budget_interface::ComputeBudgetInstruction,
+    gorbagana_fee_structure::FeeDetails,
+    gorbagana_hash::Hash,
+    gorbagana_instruction::{AccountMeta, Instruction},
+    gorbagana_keypair::Keypair,
+    gorbagana_loader_v3_interface as bpf_loader_upgradeable,
+    gorbagana_native_token::LAMPORTS_PER_SOL,
+    gorbagana_nonce::{self as nonce, state::DurableNonce},
+    gorbagana_program_entrypoint::MAX_PERMITTED_DATA_INCREASE,
+    gorbagana_program_runtime::execution_budget::SVMTransactionExecutionAndFeeBudgetLimits,
+    gorbagana_pubkey::{pubkey, Pubkey},
+    gorbagana_sdk_ids::native_loader,
+    gorbagana_signer::Signer,
+    gorbagana_svm::{
         account_loader::{CheckedTransactionDetails, TransactionCheckResult},
         nonce_info::NonceInfo,
         rollback_accounts::RollbackAccounts,
@@ -36,14 +36,14 @@ use {
             TransactionProcessingEnvironment,
         },
     },
-    solana_svm_transaction::svm_message::SVMMessage,
-    solana_system_interface::{instruction as system_instruction, program as system_program},
-    solana_system_transaction as system_transaction,
-    solana_sysvar::rent::Rent,
-    solana_transaction::{sanitized::SanitizedTransaction, Transaction},
-    solana_transaction_context::TransactionReturnData,
-    solana_transaction_error::TransactionError,
-    solana_type_overrides::sync::{Arc, RwLock},
+    gorbagana_svm_transaction::svm_message::SVMMessage,
+    gorbagana_system_interface::{instruction as system_instruction, program as system_program},
+    gorbagana_system_transaction as system_transaction,
+    gorbagana_sysvar::rent::Rent,
+    gorbagana_transaction::{sanitized::SanitizedTransaction, Transaction},
+    gorbagana_transaction_context::TransactionReturnData,
+    gorbagana_transaction_error::TransactionError,
+    gorbagana_type_overrides::sync::{Arc, RwLock},
     std::collections::HashMap,
     test_case::test_case,
 };
@@ -659,7 +659,7 @@ fn program_medley() -> Vec<SvmTestEntry> {
 
     // 0: A transaction that works without any account
     {
-        let program_name = "hello-solana";
+        let program_name = "hello-gorbagana";
         let program_id = program_address(program_name);
         test_entry.add_initial_program(program_name);
 
@@ -681,7 +681,7 @@ fn program_medley() -> Vec<SvmTestEntry> {
         test_entry.transaction_batch[0]
             .asserts
             .logs
-            .push("Program log: Hello, Solana!".to_string());
+            .push("Program log: Hello, Gorbagana!".to_string());
 
         test_entry.decrease_expected_lamports(&fee_payer, LAMPORTS_PER_SIGNATURE);
     }
@@ -956,7 +956,7 @@ fn simple_transfer() -> Vec<SvmTestEntry> {
 fn simple_nonce(fee_paying_nonce: bool) -> Vec<SvmTestEntry> {
     let mut test_entry = SvmTestEntry::default();
 
-    let program_name = "hello-solana";
+    let program_name = "hello-gorbagana";
     let real_program_id = program_address(program_name);
     test_entry.add_initial_program(program_name);
 
@@ -1420,7 +1420,7 @@ fn simd83_intrabatch_account_reuse() -> Vec<SvmTestEntry> {
 fn simd83_nonce_reuse(fee_paying_nonce: bool) -> Vec<SvmTestEntry> {
     let mut test_entries = vec![];
 
-    let program_name = "hello-solana";
+    let program_name = "hello-gorbagana";
     let program_id = program_address(program_name);
 
     let fee_payer_keypair = Keypair::new();
@@ -1940,7 +1940,7 @@ impl WriteProgramInstruction {
                 vec![2],
                 vec![
                     AccountMeta::new(target, false),
-                    AccountMeta::new(solana_sdk_ids::incinerator::id(), false),
+                    AccountMeta::new(gorbagana_sdk_ids::incinerator::id(), false),
                 ],
             ),
             Self::Realloc(new_size) => {
@@ -2049,7 +2049,7 @@ fn simd83_account_deallocate() -> Vec<SvmTestEntry> {
 fn simd83_fee_payer_deallocate() -> Vec<SvmTestEntry> {
     let mut test_entry = SvmTestEntry::default();
 
-    let program_name = "hello-solana";
+    let program_name = "hello-gorbagana";
     let real_program_id = program_address(program_name);
     test_entry.add_initial_program(program_name);
 
@@ -2298,7 +2298,7 @@ fn simd83_account_reallocate(formalize_loaded_transaction_data_size: bool) -> Ve
 fn program_cache_update_tombstone() -> Vec<SvmTestEntry> {
     let mut test_entry = SvmTestEntry::default();
 
-    let program_name = "hello-solana";
+    let program_name = "hello-gorbagana";
     let program_id = program_address(program_name);
 
     let fee_payer_keypair = Keypair::new();
@@ -2667,8 +2667,8 @@ mod balance_collector {
     use {
         super::*,
         rand0_7::prelude::*,
-        solana_program_pack::Pack,
-        solana_sdk_ids::bpf_loader,
+        gorbagana_program_pack::Pack,
+        gorbagana_sdk_ids::bpf_loader,
         spl_generic_token::token_2022,
         spl_token::state::{Account as TokenAccount, AccountState as TokenAccountState, Mint},
         test_case::test_case,

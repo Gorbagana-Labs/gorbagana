@@ -3,7 +3,7 @@ use {
         account_map_entry::AccountMapEntry, in_mem_accounts_index::InMemAccountsIndex,
         AccountsIndex, DiskIndexValue, IndexValue,
     },
-    solana_pubkey::Pubkey,
+    gorbagana_pubkey::Pubkey,
     std::{
         ops::{Bound, RangeBounds},
         sync::Arc,
@@ -101,7 +101,7 @@ mod tests {
             super::{secondary::AccountSecondaryIndexes, UpsertReclaim},
             *,
         },
-        solana_account::AccountSharedData,
+        gorbagana_account::AccountSharedData,
         std::ops::Range,
     };
 
@@ -164,7 +164,7 @@ mod tests {
         index.upsert(
             0,
             0,
-            &solana_pubkey::new_rand(),
+            &gorbagana_pubkey::new_rand(),
             &AccountSharedData::default(),
             &AccountSecondaryIndexes::default(),
             true,

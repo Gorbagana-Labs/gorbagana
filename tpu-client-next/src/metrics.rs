@@ -3,7 +3,7 @@
 //! sending statistics to InfluxDB.
 use {
     crate::SendTransactionStats,
-    solana_metrics::datapoint_info,
+    gorbagana_metrics::datapoint_info,
     std::{sync::Arc, time::Duration},
     tokio::{select, time::interval},
     tokio_util::sync::CancellationToken,

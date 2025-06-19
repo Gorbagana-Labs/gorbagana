@@ -5,9 +5,9 @@ use {
         account_loader::AccountLoader,
         transaction_processing_callback::TransactionProcessingCallback,
     },
-    solana_account::{AccountSharedData, ReadableAccount},
-    solana_pubkey::Pubkey,
-    solana_svm_transaction::svm_transaction::SVMTransaction,
+    gorbagana_account::{AccountSharedData, ReadableAccount},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_svm_transaction::svm_transaction::SVMTransaction,
     spl_generic_token::{generic_token, is_known_spl_token_id},
 };
 

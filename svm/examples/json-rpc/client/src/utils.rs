@@ -1,7 +1,7 @@
 use {
     borsh::{BorshDeserialize, BorshSerialize},
-    solana_keypair::{read_keypair_file, Keypair},
-    solana_pubkey::Pubkey,
+    gorbagana_keypair::{read_keypair_file, Keypair},
+    gorbagana_pubkey::Pubkey,
     thiserror::Error,
     yaml_rust::YamlLoader,
 };
@@ -9,18 +9,18 @@ use {
 #[allow(clippy::large_enum_variant)]
 #[derive(Error, Debug)]
 pub enum Error {
-    #[error("failed to read solana config file: ({0})")]
+    #[error("failed to read gorbagana config file: ({0})")]
     ConfigRead(std::io::Error),
-    #[error("failed to parse solana config file: ({0})")]
+    #[error("failed to parse gorbagana config file: ({0})")]
     ConfigParse(#[from] yaml_rust::ScanError),
     #[error("invalid config: ({0})")]
     InvalidConfig(String),
 
-    #[error("solana client error: ({0})")]
-    Client(#[from] solana_client::client_error::ClientError),
+    #[error("gorbagana client error: ({0})")]
+    Client(#[from] gorbagana_client::client_error::ClientError),
 
     #[error("error in public key derivation: ({0})")]
-    KeyDerivation(#[from] solana_pubkey::PubkeyError),
+    KeyDerivation(#[from] gorbagana_pubkey::PubkeyError),
 }
 
 pub type Result<T> = std::result::Result<T, Error>;
@@ -32,19 +32,19 @@ struct GreetingSchema {
     counter: u32,
 }
 
-/// Parses and returns the Solana yaml config on the system.
+/// Parses and returns the Gorbagana yaml config on the system.
 pub fn get_config(config: &Option<&str>) -> Result<yaml_rust::Yaml> {
     let path = match config {
         Some(path) => std::path::PathBuf::from(path),
         None => match home::home_dir() {
             Some(mut path) => {
-                path.push(".config/solana/cli/config.yml");
+                path.push(".config/gorbagana/cli/config.yml");
                 path
             }
             None => {
                 return Err(Error::ConfigRead(std::io::Error::new(
                     std::io::ErrorKind::NotFound,
-                    "failed to locate homedir and thus can not locate solana config",
+                    "failed to locate homedir and thus can not locate gorbagana config",
                 )));
             }
         },
@@ -72,7 +72,7 @@ pub fn get_rpc_url(config: &Option<&str>) -> Result<String> {
     }
 }
 
-/// Gets the "player" or local solana wallet that has been configured
+/// Gets the "player" or local gorbagana wallet that has been configured
 /// on the machine.
 pub fn get_player(config: &Option<&str>) -> Result<Keypair> {
     let config = get_config(config)?;

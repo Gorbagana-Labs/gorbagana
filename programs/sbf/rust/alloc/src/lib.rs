@@ -5,9 +5,9 @@
 #[macro_use]
 extern crate alloc;
 use {
-    solana_msg::msg,
-    solana_program::log::sol_log_64,
-    solana_program_entrypoint::{custom_heap_default, custom_panic_default, SUCCESS},
+    gorbagana_msg::msg,
+    gorbagana_program::log::sol_log_64,
+    gorbagana_program_entrypoint::{custom_heap_default, custom_panic_default, SUCCESS},
     std::{alloc::Layout, mem},
 };
 

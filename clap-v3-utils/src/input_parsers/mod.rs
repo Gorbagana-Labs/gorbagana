@@ -5,20 +5,20 @@ use {
     },
     chrono::DateTime,
     clap::ArgMatches,
-    solana_clock::UnixTimestamp,
-    solana_cluster_type::ClusterType,
-    solana_commitment_config::CommitmentConfig,
-    solana_keypair::{read_keypair_file, Keypair},
-    solana_native_token::sol_to_lamports,
-    solana_pubkey::{Pubkey, MAX_SEED_LEN},
-    solana_signer::Signer,
+    gorbagana_clock::UnixTimestamp,
+    gorbagana_cluster_type::ClusterType,
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_keypair::{read_keypair_file, Keypair},
+    gorbagana_native_token::sol_to_lamports,
+    gorbagana_pubkey::{Pubkey, MAX_SEED_LEN},
+    gorbagana_signer::Signer,
     std::str::FromStr,
 };
 
 pub mod signer;
 #[deprecated(
     since = "1.17.0",
-    note = "Please use the functions in `solana_clap_v3_utils::input_parsers::signer` directly instead"
+    note = "Please use the functions in `gorbagana_clap_v3_utils::input_parsers::signer` directly instead"
 )]
 #[allow(deprecated)]
 pub use signer::{
@@ -346,9 +346,9 @@ mod tests {
     use {
         super::*,
         clap::{Arg, ArgAction, Command},
-        solana_commitment_config::{CommitmentConfig, CommitmentLevel},
-        solana_hash::Hash,
-        solana_pubkey::Pubkey,
+        gorbagana_commitment_config::{CommitmentConfig, CommitmentLevel},
+        gorbagana_hash::Hash,
+        gorbagana_pubkey::Pubkey,
     };
 
     fn app<'ab>() -> Command<'ab> {
@@ -370,8 +370,8 @@ mod tests {
         assert_eq!(values_of(&matches, "multiple"), Some(vec![50, 39]));
         assert_eq!(values_of::<u64>(&matches, "single"), None);
 
-        let pubkey0 = solana_pubkey::new_rand();
-        let pubkey1 = solana_pubkey::new_rand();
+        let pubkey0 = gorbagana_pubkey::new_rand();
+        let pubkey1 = gorbagana_pubkey::new_rand();
         let matches = app().get_matches_from(vec![
             "test",
             "--multiple",
@@ -391,7 +391,7 @@ mod tests {
         assert_eq!(value_of(&matches, "single"), Some(50));
         assert_eq!(value_of::<u64>(&matches, "multiple"), None);
 
-        let pubkey = solana_pubkey::new_rand();
+        let pubkey = gorbagana_pubkey::new_rand();
         let matches = app().get_matches_from(vec!["test", "--single", &pubkey.to_string()]);
         assert_eq!(value_of(&matches, "single"), Some(pubkey));
     }

@@ -4,7 +4,7 @@ use {
         commands::{FromClapArgMatches, Result},
     },
     clap::{App, Arg, ArgMatches, SubCommand},
-    solana_cli_output::OutputFormat,
+    gorbagana_cli_output::OutputFormat,
     std::path::Path,
 };
 

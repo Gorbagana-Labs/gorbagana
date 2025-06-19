@@ -6,9 +6,9 @@ use {
         crypto::rustls::QuicClientConfig, default_runtime, ClientConfig, Connection, Endpoint,
         EndpointConfig, IdleTimeout, TransportConfig,
     },
-    solana_quic_definitions::{QUIC_KEEP_ALIVE, QUIC_MAX_TIMEOUT, QUIC_SEND_FAIRNESS},
-    solana_streamer::nonblocking::quic::ALPN_TPU_PROTOCOL_ID,
-    solana_tls_utils::tls_client_config_builder,
+    gorbagana_quic_definitions::{QUIC_KEEP_ALIVE, QUIC_MAX_TIMEOUT, QUIC_SEND_FAIRNESS},
+    gorbagana_streamer::nonblocking::quic::ALPN_TPU_PROTOCOL_ID,
+    gorbagana_tls_utils::tls_client_config_builder,
     std::sync::Arc,
 };
 
@@ -16,7 +16,7 @@ pub mod error;
 
 pub use {
     error::{IoErrorWithPartialEq, QuicError},
-    solana_tls_utils::QuicClientCertificate,
+    gorbagana_tls_utils::QuicClientCertificate,
 };
 
 pub(crate) fn create_client_config(client_certificate: &QuicClientCertificate) -> ClientConfig {

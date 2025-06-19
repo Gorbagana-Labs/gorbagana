@@ -11,12 +11,12 @@
 use {
     crate::rpc_subscriptions::RpcSubscriptions,
     crossbeam_channel::{Receiver, RecvTimeoutError, Sender},
-    solana_clock::Slot,
-    solana_rpc_client_api::response::{SlotTransactionStats, SlotUpdate},
-    solana_runtime::{
+    gorbagana_clock::Slot,
+    gorbagana_rpc_client_api::response::{SlotTransactionStats, SlotUpdate},
+    gorbagana_runtime::{
         bank::Bank, bank_forks::BankForks, prioritization_fee_cache::PrioritizationFeeCache,
     },
-    solana_time_utils::timestamp,
+    gorbagana_time_utils::timestamp,
     std::{
         collections::HashSet,
         sync::{
@@ -402,9 +402,9 @@ mod tests {
     use {
         super::*,
         crossbeam_channel::unbounded,
-        solana_ledger::genesis_utils::{create_genesis_config, GenesisConfigInfo},
-        solana_pubkey::Pubkey,
-        solana_runtime::commitment::BlockCommitmentCache,
+        gorbagana_ledger::genesis_utils::{create_genesis_config, GenesisConfigInfo},
+        gorbagana_pubkey::Pubkey,
+        gorbagana_runtime::commitment::BlockCommitmentCache,
         std::sync::atomic::AtomicU64,
     };
 

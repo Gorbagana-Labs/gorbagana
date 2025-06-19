@@ -1,8 +1,8 @@
 use {
     super::{stake_weighted_slot_leaders, LeaderScheduleVariant},
     itertools::Itertools,
-    solana_clock::Epoch,
-    solana_pubkey::Pubkey,
+    gorbagana_clock::Epoch,
+    gorbagana_pubkey::Pubkey,
     std::{collections::HashMap, ops::Index, sync::Arc},
 };
 
@@ -75,8 +75,8 @@ mod tests {
 
     #[test]
     fn test_leader_schedule_index() {
-        let pubkey0 = solana_pubkey::new_rand();
-        let pubkey1 = solana_pubkey::new_rand();
+        let pubkey0 = gorbagana_pubkey::new_rand();
+        let pubkey1 = gorbagana_pubkey::new_rand();
         let leader_schedule = LeaderSchedule::new_from_schedule(vec![pubkey0, pubkey1]);
         assert_eq!(leader_schedule[0], pubkey0);
         assert_eq!(leader_schedule[1], pubkey1);
@@ -87,7 +87,7 @@ mod tests {
     fn test_leader_schedule_basic() {
         let num_keys = 10;
         let stakes: HashMap<_, _> = (0..num_keys)
-            .map(|i| (solana_pubkey::new_rand(), i))
+            .map(|i| (gorbagana_pubkey::new_rand(), i))
             .collect();
 
         let epoch: Epoch = rand::random();
@@ -103,7 +103,7 @@ mod tests {
     fn test_repeated_leader_schedule() {
         let num_keys = 10;
         let stakes: HashMap<_, _> = (0..num_keys)
-            .map(|i| (solana_pubkey::new_rand(), i))
+            .map(|i| (gorbagana_pubkey::new_rand(), i))
             .collect();
 
         let epoch = rand::random::<Epoch>();
@@ -123,8 +123,8 @@ mod tests {
 
     #[test]
     fn test_repeated_leader_schedule_specific() {
-        let alice_pubkey = solana_pubkey::new_rand();
-        let bob_pubkey = solana_pubkey::new_rand();
+        let alice_pubkey = gorbagana_pubkey::new_rand();
+        let bob_pubkey = gorbagana_pubkey::new_rand();
         let stakes: HashMap<_, _> = [(alice_pubkey, 2), (bob_pubkey, 1)].into_iter().collect();
 
         let epoch = 0;

@@ -13,11 +13,11 @@ use {
         pki_types::{CertificateDer, PrivateKeyDer},
         CertificateError, KeyLogFile,
     },
-    solana_gossip::contact_info::Protocol,
-    solana_keypair::Keypair,
-    solana_pubkey::Pubkey,
-    solana_runtime::bank_forks::BankForks,
-    solana_tls_utils::{
+    gorbagana_gossip::contact_info::Protocol,
+    gorbagana_keypair::Keypair,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_runtime::bank_forks::BankForks,
+    gorbagana_tls_utils::{
         new_dummy_x509_certificate, tls_client_config_builder, tls_server_config_builder,
     },
     std::{
@@ -72,8 +72,8 @@ use {
 const CLIENT_CHANNEL_BUFFER: usize = 1 << 14;
 const ROUTER_CHANNEL_BUFFER: usize = 64;
 const CONNECTION_CACHE_CAPACITY: usize = 3072;
-const ALPN_REPAIR_PROTOCOL_ID: &[u8] = b"solana-repair";
-const CONNECT_SERVER_NAME: &str = "solana-repair";
+const ALPN_REPAIR_PROTOCOL_ID: &[u8] = b"gorbagana-repair";
+const CONNECT_SERVER_NAME: &str = "gorbagana-repair";
 
 // Transport config.
 const DATAGRAM_RECEIVE_BUFFER_SIZE: usize = 256 * 1024 * 1024;
@@ -693,7 +693,7 @@ where
 }
 
 fn get_remote_pubkey(connection: &Connection) -> Result<Pubkey, Error> {
-    match solana_streamer::nonblocking::quic::get_remote_pubkey(connection) {
+    match gorbagana_streamer::nonblocking::quic::get_remote_pubkey(connection) {
         Some(remote_pubkey) => Ok(remote_pubkey),
         None => {
             connection.close(
@@ -1017,10 +1017,10 @@ mod tests {
     use {
         super::*,
         itertools::{izip, multiunzip},
-        solana_ledger::genesis_utils::{create_genesis_config, GenesisConfigInfo},
-        solana_net_utils::bind_to_localhost,
-        solana_runtime::bank::Bank,
-        solana_signer::Signer,
+        gorbagana_ledger::genesis_utils::{create_genesis_config, GenesisConfigInfo},
+        gorbagana_net_utils::bind_to_localhost,
+        gorbagana_runtime::bank::Bank,
+        gorbagana_signer::Signer,
         std::{iter::repeat_with, time::Duration},
     };
 

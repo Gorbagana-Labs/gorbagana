@@ -1,5 +1,5 @@
 use {
-    crate::shred::Error, solana_hash::Hash, solana_sha256_hasher::hashv,
+    crate::shred::Error, gorbagana_hash::Hash, gorbagana_sha256_hasher::hashv,
     static_assertions::const_assert_eq, std::iter::successors,
 };
 

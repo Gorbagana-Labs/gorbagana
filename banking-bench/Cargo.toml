@@ -1,5 +1,5 @@
 [package]
-name = "solana-banking-bench"
+name = "gorbagana-banking-bench"
 publish = false
 version = { workspace = true }
 authors = { workspace = true }
@@ -22,26 +22,26 @@ crossbeam-channel = { workspace = true }
 log = { workspace = true }
 rand = { workspace = true }
 rayon = { workspace = true }
-solana-client = { workspace = true }
-solana-compute-budget-interface = { workspace = true }
-solana-core = { workspace = true, features = ["dev-context-only-utils"] }
-solana-gossip = { workspace = true }
-solana-hash = { workspace = true }
-solana-keypair = { workspace = true }
-solana-ledger = { workspace = true }
-solana-logger = { workspace = true }
-solana-measure = { workspace = true }
-solana-message = { workspace = true }
-solana-perf = { workspace = true }
-solana-poh = { workspace = true, features = ["dev-context-only-utils"] }
-solana-pubkey = { workspace = true }
-solana-runtime = { workspace = true, features = ["dev-context-only-utils"] }
-solana-signature = { workspace = true }
-solana-signer = { workspace = true }
-solana-streamer = { workspace = true }
-solana-system-interface = { workspace = true }
-solana-system-transaction = { workspace = true }
-solana-time-utils = { workspace = true }
-solana-tpu-client = { workspace = true }
-solana-transaction = { workspace = true }
-solana-version = { workspace = true }
+gorbagana-client = { workspace = true }
+gorbagana-compute-budget-interface = { workspace = true }
+gorbagana-core = { workspace = true, features = ["dev-context-only-utils"] }
+gorbagana-gossip = { workspace = true }
+gorbagana-hash = { workspace = true }
+gorbagana-keypair = { workspace = true }
+gorbagana-ledger = { workspace = true }
+gorbagana-logger = { workspace = true }
+gorbagana-measure = { workspace = true }
+gorbagana-message = { workspace = true }
+gorbagana-perf = { workspace = true }
+gorbagana-poh = { workspace = true, features = ["dev-context-only-utils"] }
+gorbagana-pubkey = { workspace = true }
+gorbagana-runtime = { workspace = true, features = ["dev-context-only-utils"] }
+gorbagana-signature = { workspace = true }
+gorbagana-signer = { workspace = true }
+gorbagana-streamer = { workspace = true }
+gorbagana-system-interface = { workspace = true }
+gorbagana-system-transaction = { workspace = true }
+gorbagana-time-utils = { workspace = true }
+gorbagana-tpu-client = { workspace = true }
+gorbagana-transaction = { workspace = true }
+gorbagana-version = { workspace = true }

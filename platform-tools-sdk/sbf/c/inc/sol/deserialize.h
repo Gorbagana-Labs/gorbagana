@@ -1,6 +1,6 @@
 #pragma once
 /**
- * @brief Solana SBF loader deserializer to be used when deploying
+ * @brief Gorbagana SBF loader deserializer to be used when deploying
  * a program with `SBFLoader2111111111111111111111111111111111` or
  * `SBFLoaderUpgradeab1e11111111111111111111111`
  */

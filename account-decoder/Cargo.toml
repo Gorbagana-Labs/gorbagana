@@ -1,7 +1,7 @@
 [package]
-name = "solana-account-decoder"
-description = "Solana account decoder"
-documentation = "https://docs.rs/solana-account-decoder"
+name = "gorbagana-account-decoder"
+description = "Gorbagana account decoder"
+documentation = "https://docs.rs/gorbagana-account-decoder"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -21,29 +21,29 @@ bv = { workspace = true }
 serde = { workspace = true }
 serde_derive = { workspace = true }
 serde_json = { workspace = true }
-solana-account = { workspace = true }
-solana-account-decoder-client-types = { workspace = true, features = ["zstd"] }
-solana-address-lookup-table-interface = { workspace = true, features = [
+gorbagana-account = { workspace = true }
+gorbagana-account-decoder-client-types = { workspace = true, features = ["zstd"] }
+gorbagana-address-lookup-table-interface = { workspace = true, features = [
     "bincode",
     "bytemuck",
 ] }
-solana-clock = { workspace = true }
-solana-config-program-client = { workspace = true, features = ["serde"] }
-solana-epoch-schedule = { workspace = true }
-solana-fee-calculator = { workspace = true }
-solana-instruction = { workspace = true }
-solana-loader-v3-interface = { workspace = true, features = ["serde"] }
-solana-nonce = { workspace = true, features = ["serde"] }
-solana-program-option = { workspace = true }
-solana-program-pack = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-rent = { workspace = true }
-solana-sdk-ids = { workspace = true }
-solana-slot-hashes = { workspace = true }
-solana-slot-history = { workspace = true }
-solana-stake-interface = { workspace = true }
-solana-sysvar = { workspace = true }
-solana-vote-interface = { workspace = true, features = ["bincode"] }
+gorbagana-clock = { workspace = true }
+gorbagana-config-program-client = { workspace = true, features = ["serde"] }
+gorbagana-epoch-schedule = { workspace = true }
+gorbagana-fee-calculator = { workspace = true }
+gorbagana-instruction = { workspace = true }
+gorbagana-loader-v3-interface = { workspace = true, features = ["serde"] }
+gorbagana-nonce = { workspace = true, features = ["serde"] }
+gorbagana-program-option = { workspace = true }
+gorbagana-program-pack = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-rent = { workspace = true }
+gorbagana-sdk-ids = { workspace = true }
+gorbagana-slot-hashes = { workspace = true }
+gorbagana-slot-history = { workspace = true }
+gorbagana-stake-interface = { workspace = true }
+gorbagana-sysvar = { workspace = true }
+gorbagana-vote-interface = { workspace = true, features = ["bincode"] }
 spl-generic-token = { workspace = true }
 spl-token = { workspace = true, features = ["no-entrypoint"] }
 spl-token-2022 = { workspace = true, features = ["no-entrypoint"] }
@@ -54,9 +54,9 @@ zstd = { workspace = true }
 
 [dev-dependencies]
 assert_matches = { workspace = true }
-solana-account = { workspace = true, features = ["bincode"] }
-solana-hash = { workspace = true }
-solana-pubkey = { workspace = true, features = ["rand"] }
+gorbagana-account = { workspace = true, features = ["bincode"] }
+gorbagana-hash = { workspace = true }
+gorbagana-pubkey = { workspace = true, features = ["rand"] }
 spl-pod = { workspace = true }
 
 [lints]

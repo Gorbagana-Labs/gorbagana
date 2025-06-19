@@ -2,10 +2,10 @@
 #![allow(clippy::arithmetic_side_effects)]
 #[deprecated(
     since = "1.8.0",
-    note = "Please use `solana_sdk_ids::sysvar::stake::id` instead"
+    note = "Please use `gorbagana_sdk_ids::sysvar::stake::id` instead"
 )]
-pub use solana_sdk_ids::stake::{check_id, id};
-use {solana_genesis_config::GenesisConfig, solana_native_token::LAMPORTS_PER_SOL};
+pub use gorbagana_sdk_ids::stake::{check_id, id};
+use {gorbagana_genesis_config::GenesisConfig, gorbagana_native_token::LAMPORTS_PER_SOL};
 
 pub mod config;
 pub mod epoch_rewards;

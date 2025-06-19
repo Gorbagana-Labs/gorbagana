@@ -1,5 +1,5 @@
 [package]
-name = "solana-accounts-bench"
+name = "gorbagana-accounts-bench"
 publish = false
 version = { workspace = true }
 authors = { workspace = true }
@@ -18,11 +18,11 @@ dev-context-only-utils = []
 clap = { workspace = true }
 log = { workspace = true }
 rayon = { workspace = true }
-solana-accounts-db = { workspace = true, features = ["dev-context-only-utils"] }
-solana-clock = { workspace = true }
-solana-epoch-schedule = { workspace = true }
-solana-logger = { workspace = true }
-solana-measure = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-rent-collector = { workspace = true }
-solana-version = { workspace = true }
+gorbagana-accounts-db = { workspace = true, features = ["dev-context-only-utils"] }
+gorbagana-clock = { workspace = true }
+gorbagana-epoch-schedule = { workspace = true }
+gorbagana-logger = { workspace = true }
+gorbagana-measure = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-rent-collector = { workspace = true }
+gorbagana-version = { workspace = true }

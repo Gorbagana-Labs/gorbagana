@@ -30,20 +30,20 @@ jobs:
         #
         test:
           - {
-              name: "solana-runtime",
-              commands: ["cargo +$rust_nightly bench -p solana-runtime"],
+              name: "gorbagana-runtime",
+              commands: ["cargo +$rust_nightly bench -p gorbagana-runtime"],
             }
           - {
-              name: "solana-gossip",
-              commands: ["cargo +$rust_nightly bench -p solana-gossip"],
+              name: "gorbagana-gossip",
+              commands: ["cargo +$rust_nightly bench -p gorbagana-gossip"],
             }
           - {
-              name: "solana-poh",
-              commands: ["cargo +$rust_nightly bench -p solana-poh"],
+              name: "gorbagana-poh",
+              commands: ["cargo +$rust_nightly bench -p gorbagana-poh"],
             }
           - {
-              name: "solana-core",
-              commands: ["cargo +$rust_nightly bench -p solana-core"],
+              name: "gorbagana-core",
+              commands: ["cargo +$rust_nightly bench -p gorbagana-core"],
             }
           - {
               name: "sbf",
@@ -53,17 +53,17 @@ jobs:
                   "cargo +$rust_nightly bench --manifest-path programs/sbf/Cargo.toml --features=sbf_c",
                 ],
             }
-          # spliting solana-accounts-db because it includes criterion bench
+          # spliting gorbagana-accounts-db because it includes criterion bench
           - {
-              name: "solana-accounts-db",
+              name: "gorbagana-accounts-db",
               commands:
                 [
-                  "cargo +$rust_nightly bench -p solana-accounts-db --bench accounts_index",
-                  "cargo +$rust_nightly bench -p solana-accounts-db --bench accounts",
-                  "cargo +$rust_nightly bench -p solana-accounts-db --bench append_vec",
-                  "cargo +$rust_nightly bench -p solana-accounts-db --bench bench_accounts_file -- --output-format bencher",
-                  "cargo +$rust_nightly bench -p solana-accounts-db --bench bench_hashing -- --output-format bencher",
-                  "cargo +$rust_nightly bench -p solana-accounts-db --bench bench_serde -- --output-format bencher",
+                  "cargo +$rust_nightly bench -p gorbagana-accounts-db --bench accounts_index",
+                  "cargo +$rust_nightly bench -p gorbagana-accounts-db --bench accounts",
+                  "cargo +$rust_nightly bench -p gorbagana-accounts-db --bench append_vec",
+                  "cargo +$rust_nightly bench -p gorbagana-accounts-db --bench bench_accounts_file -- --output-format bencher",
+                  "cargo +$rust_nightly bench -p gorbagana-accounts-db --bench bench_hashing -- --output-format bencher",
+                  "cargo +$rust_nightly bench -p gorbagana-accounts-db --bench bench_serde -- --output-format bencher",
                 ],
             }
 

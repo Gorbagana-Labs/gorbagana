@@ -1,7 +1,7 @@
 [package]
-name = "solana-fee"
-description = "Solana fee calculation"
-documentation = "https://docs.rs/solana-fee"
+name = "gorbagana-fee"
+description = "Gorbagana fee calculation"
+documentation = "https://docs.rs/gorbagana-fee"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -11,5 +11,5 @@ edition = { workspace = true }
 
 [dependencies]
 agave-feature-set = { workspace = true }
-solana-fee-structure = { workspace = true }
-solana-svm-transaction = { workspace = true }
+gorbagana-fee-structure = { workspace = true }
+gorbagana-svm-transaction = { workspace = true }

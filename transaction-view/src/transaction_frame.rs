@@ -9,9 +9,9 @@ use {
         static_account_keys_frame::StaticAccountKeysFrame,
         transaction_version::TransactionVersion,
     },
-    solana_hash::Hash,
-    solana_pubkey::Pubkey,
-    solana_signature::Signature,
+    gorbagana_hash::Hash,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signature::Signature,
 };
 
 #[derive(Debug)]
@@ -264,11 +264,11 @@ impl TransactionFrame {
 mod tests {
     use {
         super::*,
-        solana_message::{v0, AddressLookupTableAccount, Message, MessageHeader, VersionedMessage},
-        solana_pubkey::Pubkey,
-        solana_signature::Signature,
-        solana_system_interface::instruction::{self as system_instruction, SystemInstruction},
-        solana_transaction::versioned::VersionedTransaction,
+        gorbagana_message::{v0, AddressLookupTableAccount, Message, MessageHeader, VersionedMessage},
+        gorbagana_pubkey::Pubkey,
+        gorbagana_signature::Signature,
+        gorbagana_system_interface::instruction::{self as system_instruction, SystemInstruction},
+        gorbagana_transaction::versioned::VersionedTransaction,
     };
 
     fn verify_transaction_view_frame(tx: &VersionedTransaction) {

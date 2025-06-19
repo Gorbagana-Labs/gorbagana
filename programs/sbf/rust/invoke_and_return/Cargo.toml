@@ -1,5 +1,5 @@
 [package]
-name = "solana-sbf-rust-invoke-and-return"
+name = "gorbagana-sbf-rust-invoke-and-return"
 version = { workspace = true }
 description = { workspace = true }
 authors = { workspace = true }
@@ -12,12 +12,12 @@ edition = { workspace = true }
 crate-type = ["cdylib"]
 
 [dependencies]
-solana-account-info = { workspace = true }
-solana-instruction = { workspace = true }
-solana-program = { workspace = true }
-solana-program-entrypoint = { workspace = true }
-solana-program-error = { workspace = true }
-solana-pubkey = { workspace = true }
+gorbagana-account-info = { workspace = true }
+gorbagana-instruction = { workspace = true }
+gorbagana-program = { workspace = true }
+gorbagana-program-entrypoint = { workspace = true }
+gorbagana-program-error = { workspace = true }
+gorbagana-pubkey = { workspace = true }
 
 [lints]
 workspace = true

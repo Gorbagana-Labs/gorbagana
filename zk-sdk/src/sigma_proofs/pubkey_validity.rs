@@ -5,7 +5,7 @@
 
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use {
     crate::{
         encryption::{
@@ -46,7 +46,7 @@ pub struct PubkeyValidityProof {
 }
 
 #[allow(non_snake_case)]
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl PubkeyValidityProof {
     /// Creates a public key validity proof.
     ///
@@ -146,8 +146,8 @@ mod test {
         crate::{
             encryption::pod::elgamal::PodElGamalPubkey, sigma_proofs::pod::PodPubkeyValidityProof,
         },
-        solana_keypair::Keypair,
-        solana_pubkey::Pubkey,
+        gorbagana_keypair::Keypair,
+        gorbagana_pubkey::Pubkey,
         std::str::FromStr,
     };
 

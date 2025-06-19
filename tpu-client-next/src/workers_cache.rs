@@ -324,8 +324,8 @@ mod tests {
             SendTransactionStats,
         },
         quinn::Endpoint,
-        solana_net_utils::{bind_in_range, sockets::localhost_port_range_for_tests},
-        solana_tls_utils::QuicClientCertificate,
+        gorbagana_net_utils::{bind_in_range, sockets::localhost_port_range_for_tests},
+        gorbagana_tls_utils::QuicClientCertificate,
         std::{
             net::{IpAddr, Ipv4Addr, SocketAddr},
             sync::Arc,

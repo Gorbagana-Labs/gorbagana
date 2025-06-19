@@ -11,7 +11,7 @@ demonstrates everything you need to know about bootstrapping with this new API.
 PayTube is a state channel (more specifically a payment channel), designed to
 allow multiple parties to transact amongst each other in SOL or SPL tokens
 off-chain. When the channel is closed, the resulting changes in each user's
-balances are posted to the base chain (Solana).
+balances are posted to the base chain (Gorbagana).
 
 Although this project is for demonstration purposes, a payment channel similar
 to PayTube could be created that scales to handle massive bandwidth of

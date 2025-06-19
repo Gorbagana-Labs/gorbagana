@@ -13,7 +13,7 @@ use {
     bincode::{self, config::Options, Error},
     log::*,
     serde::{de::DeserializeOwned, Deserialize, Serialize},
-    solana_accounts_db::{
+    gorbagana_accounts_db::{
         accounts::Accounts,
         accounts_db::{
             AccountStorageEntry, AccountsDb, AccountsDbConfig, AccountsFileId,
@@ -26,19 +26,19 @@ use {
         blockhash_queue::BlockhashQueue,
         epoch_accounts_hash::EpochAccountsHash,
     },
-    solana_builtins::prototype::BuiltinPrototype,
-    solana_clock::{Epoch, Slot, UnixTimestamp},
-    solana_epoch_schedule::EpochSchedule,
-    solana_fee_calculator::{FeeCalculator, FeeRateGovernor},
-    solana_genesis_config::GenesisConfig,
-    solana_hard_forks::HardForks,
-    solana_hash::Hash,
-    solana_inflation::Inflation,
-    solana_measure::measure::Measure,
-    solana_pubkey::Pubkey,
-    solana_rent_collector::RentCollector,
-    solana_serde::default_on_eof,
-    solana_stake_interface::state::Delegation,
+    gorbagana_builtins::prototype::BuiltinPrototype,
+    gorbagana_clock::{Epoch, Slot, UnixTimestamp},
+    gorbagana_epoch_schedule::EpochSchedule,
+    gorbagana_fee_calculator::{FeeCalculator, FeeRateGovernor},
+    gorbagana_genesis_config::GenesisConfig,
+    gorbagana_hard_forks::HardForks,
+    gorbagana_hash::Hash,
+    gorbagana_inflation::Inflation,
+    gorbagana_measure::measure::Measure,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent_collector::RentCollector,
+    gorbagana_serde::default_on_eof,
+    gorbagana_stake_interface::state::Delegation,
     std::{
         cell::RefCell,
         collections::{HashMap, HashSet},
@@ -61,7 +61,7 @@ mod types;
 mod utils;
 
 pub(crate) use {
-    solana_accounts_db::accounts_hash::{
+    gorbagana_accounts_db::accounts_hash::{
         SerdeAccountsDeltaHash, SerdeAccountsHash, SerdeIncrementalAccountsHash,
     },
     storage::SerializedAccountsFileId,
@@ -283,7 +283,7 @@ impl From<BankFieldsToSerialize> for SerializableVersionedBank {
 }
 
 #[cfg(feature = "frozen-abi")]
-impl solana_frozen_abi::abi_example::TransparentAsHelper for SerializableVersionedBank {}
+impl gorbagana_frozen_abi::abi_example::TransparentAsHelper for SerializableVersionedBank {}
 
 /// Helper type to wrap BufReader streams when deserializing and reconstructing from either just a
 /// full snapshot, or both a full and incremental snapshot
@@ -832,7 +832,7 @@ impl Serialize for SerializableAccountsDb<'_> {
 }
 
 #[cfg(feature = "frozen-abi")]
-impl solana_frozen_abi::abi_example::TransparentAsHelper for SerializableAccountsDb<'_> {}
+impl gorbagana_frozen_abi::abi_example::TransparentAsHelper for SerializableAccountsDb<'_> {}
 
 /// This struct contains side-info while reconstructing the bank from fields
 #[derive(Debug)]

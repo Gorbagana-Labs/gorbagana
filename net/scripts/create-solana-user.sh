@@ -4,25 +4,25 @@ set -ex
 [[ $(uname) = Linux ]] || exit 1
 [[ $USER = root ]] || exit 1
 
-if grep -q solana /etc/passwd ; then
-  echo "User solana already exists"
+if grep -q gorbagana /etc/passwd ; then
+  echo "User gorbagana already exists"
 else
-  adduser solana --gecos "" --disabled-password --quiet
-  adduser solana sudo
-  adduser solana adm
-  echo "solana ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-  id solana
+  adduser gorbagana --gecos "" --disabled-password --quiet
+  adduser gorbagana sudo
+  adduser gorbagana adm
+  echo "gorbagana ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+  id gorbagana
 
-  [[ -r /solana-scratch/id_ecdsa ]] || exit 1
-  [[ -r /solana-scratch/id_ecdsa.pub ]] || exit 1
+  [[ -r /gorbagana-scratch/id_ecdsa ]] || exit 1
+  [[ -r /gorbagana-scratch/id_ecdsa.pub ]] || exit 1
 
-  sudo -u solana bash -c "
-    echo 'PATH=\"/home/solana/.cargo/bin:$PATH\"' > /home/solana/.profile
-    mkdir -p /home/solana/.ssh/
-    cd /home/solana/.ssh/
-    cp /solana-scratch/id_ecdsa.pub authorized_keys
+  sudo -u gorbagana bash -c "
+    echo 'PATH=\"/home/gorbagana/.cargo/bin:$PATH\"' > /home/gorbagana/.profile
+    mkdir -p /home/gorbagana/.ssh/
+    cd /home/gorbagana/.ssh/
+    cp /gorbagana-scratch/id_ecdsa.pub authorized_keys
     umask 377
-    cp /solana-scratch/id_ecdsa id_ecdsa
+    cp /gorbagana-scratch/id_ecdsa id_ecdsa
     echo \"
       Host *
       BatchMode yes

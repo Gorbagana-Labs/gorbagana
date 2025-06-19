@@ -6,13 +6,13 @@ mod tests {
     use {
         crate::protocol::Protocol,
         serde::Serialize,
-        solana_net_utils::tooling_for_tests::{hexdump, validate_packet_format},
-        solana_sanitize::Sanitize,
+        gorbagana_net_utils::tooling_for_tests::{hexdump, validate_packet_format},
+        gorbagana_sanitize::Sanitize,
         std::path::PathBuf,
     };
 
     fn parse_gossip(bytes: &[u8]) -> anyhow::Result<Protocol> {
-        let pkt: Protocol = solana_perf::packet::deserialize_from_with_limit(bytes)?;
+        let pkt: Protocol = gorbagana_perf::packet::deserialize_from_with_limit(bytes)?;
         pkt.sanitize()?;
         Ok(pkt)
     }
@@ -40,7 +40,7 @@ mod tests {
     /// Export the "GOSSIP_WIRE_FORMAT_PACKETS" variable to run this test
     #[test]
     fn test_gossip_wire_format() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let path_base = match std::env::var_os("GOSSIP_WIRE_FORMAT_PACKETS") {
             Some(p) => PathBuf::from(p),
             None => {

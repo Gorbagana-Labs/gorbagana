@@ -1,14 +1,14 @@
 use {
-    solana_account_info::AccountInfo,
-    solana_instruction::{AccountMeta, Instruction},
-    solana_msg::msg,
-    solana_program::program::invoke,
-    solana_program_error::ProgramResult,
-    solana_pubkey::Pubkey,
+    gorbagana_account_info::AccountInfo,
+    gorbagana_instruction::{AccountMeta, Instruction},
+    gorbagana_msg::msg,
+    gorbagana_program::program::invoke,
+    gorbagana_program_error::ProgramResult,
+    gorbagana_pubkey::Pubkey,
     std::convert::TryInto,
 };
 
-solana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
+gorbagana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
 fn process_instruction(
     program_id: &Pubkey,
     accounts: &[AccountInfo],

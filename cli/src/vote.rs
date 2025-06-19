@@ -14,8 +14,8 @@ use {
         stake::check_current_authority,
     },
     clap::{value_t_or_exit, App, Arg, ArgMatches, SubCommand},
-    solana_account::Account,
-    solana_clap_utils::{
+    gorbagana_account::Account,
+    gorbagana_clap_utils::{
         compute_budget::{compute_unit_price_arg, ComputeUnitLimit, COMPUTE_UNIT_PRICE_ARG},
         fee_payer::{fee_payer_arg, FEE_PAYER_ARG},
         input_parsers::*,
@@ -25,21 +25,21 @@ use {
         nonce::*,
         offline::*,
     },
-    solana_cli_output::{
+    gorbagana_cli_output::{
         return_signers_with_config, CliEpochVotingHistory, CliLandedVote, CliVoteAccount,
         ReturnSignersConfig,
     },
-    solana_commitment_config::CommitmentConfig,
-    solana_message::Message,
-    solana_native_token::lamports_to_sol,
-    solana_pubkey::Pubkey,
-    solana_remote_wallet::remote_wallet::RemoteWalletManager,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_api::config::RpcGetVoteAccountsConfig,
-    solana_rpc_client_nonce_utils::blockhash_query::BlockhashQuery,
-    solana_system_interface::error::SystemError,
-    solana_transaction::Transaction,
-    solana_vote_program::{
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_message::Message,
+    gorbagana_native_token::lamports_to_sol,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_remote_wallet::remote_wallet::RemoteWalletManager,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_rpc_client_api::config::RpcGetVoteAccountsConfig,
+    gorbagana_rpc_client_nonce_utils::blockhash_query::BlockhashQuery,
+    gorbagana_system_interface::error::SystemError,
+    gorbagana_transaction::Transaction,
+    gorbagana_vote_program::{
         vote_error::VoteError,
         vote_instruction::{self, withdraw, CreateVoteAccountConfig},
         vote_state::{
@@ -812,7 +812,7 @@ pub fn process_create_vote_account(
     let vote_account = config.signers[vote_account];
     let vote_account_pubkey = vote_account.pubkey();
     let vote_account_address = if let Some(seed) = seed {
-        Pubkey::create_with_seed(&vote_account_pubkey, seed, &solana_vote_program::id())?
+        Pubkey::create_with_seed(&vote_account_pubkey, seed, &gorbagana_vote_program::id())?
     } else {
         vote_account_pubkey
     };
@@ -903,7 +903,7 @@ pub fn process_create_vote_account(
             rpc_client.get_account_with_commitment(&vote_account_address, config.commitment)
         {
             if let Some(vote_account) = response.value {
-                let err_msg = if vote_account.owner == solana_vote_program::id() {
+                let err_msg = if vote_account.owner == gorbagana_vote_program::id() {
                     format!("Vote account {vote_account_address} already exists")
                 } else {
                     format!(
@@ -915,7 +915,7 @@ pub fn process_create_vote_account(
         }
 
         if let Some(nonce_account) = &nonce_account {
-            let nonce_account = solana_rpc_client_nonce_utils::get_account_with_commitment(
+            let nonce_account = gorbagana_rpc_client_nonce_utils::get_account_with_commitment(
                 rpc_client,
                 nonce_account,
                 config.commitment,
@@ -1066,7 +1066,7 @@ pub fn process_vote_authorize(
     } else {
         tx.try_sign(&config.signers, recent_blockhash)?;
         if let Some(nonce_account) = &nonce_account {
-            let nonce_account = solana_rpc_client_nonce_utils::get_account_with_commitment(
+            let nonce_account = gorbagana_rpc_client_nonce_utils::get_account_with_commitment(
                 rpc_client,
                 nonce_account,
                 config.commitment,
@@ -1154,7 +1154,7 @@ pub fn process_vote_update_validator(
     } else {
         tx.try_sign(&config.signers, recent_blockhash)?;
         if let Some(nonce_account) = &nonce_account {
-            let nonce_account = solana_rpc_client_nonce_utils::get_account_with_commitment(
+            let nonce_account = gorbagana_rpc_client_nonce_utils::get_account_with_commitment(
                 rpc_client,
                 nonce_account,
                 config.commitment,
@@ -1235,7 +1235,7 @@ pub fn process_vote_update_commission(
     } else {
         tx.try_sign(&config.signers, recent_blockhash)?;
         if let Some(nonce_account) = &nonce_account {
-            let nonce_account = solana_rpc_client_nonce_utils::get_account_with_commitment(
+            let nonce_account = gorbagana_rpc_client_nonce_utils::get_account_with_commitment(
                 rpc_client,
                 nonce_account,
                 config.commitment,
@@ -1269,7 +1269,7 @@ pub(crate) fn get_vote_account(
             CliError::RpcRequestError(format!("{vote_account_pubkey:?} account does not exist"))
         })?;
 
-    if vote_account.owner != solana_vote_program::id() {
+    if vote_account.owner != gorbagana_vote_program::id() {
         return Err(CliError::RpcRequestError(format!(
             "{vote_account_pubkey:?} is not a vote account"
         ))
@@ -1457,7 +1457,7 @@ pub fn process_withdraw_from_vote_account(
     } else {
         tx.try_sign(&config.signers, recent_blockhash)?;
         if let Some(nonce_account) = &nonce_account {
-            let nonce_account = solana_rpc_client_nonce_utils::get_account_with_commitment(
+            let nonce_account = gorbagana_rpc_client_nonce_utils::get_account_with_commitment(
                 rpc_client,
                 nonce_account,
                 config.commitment,
@@ -1551,11 +1551,11 @@ mod tests {
     use {
         super::*,
         crate::{clap_app::get_clap_app, cli::parse_command},
-        solana_hash::Hash,
-        solana_keypair::{read_keypair_file, write_keypair, Keypair},
-        solana_presigner::Presigner,
-        solana_rpc_client_nonce_utils::blockhash_query,
-        solana_signer::Signer,
+        gorbagana_hash::Hash,
+        gorbagana_keypair::{read_keypair_file, write_keypair, Keypair},
+        gorbagana_presigner::Presigner,
+        gorbagana_rpc_client_nonce_utils::blockhash_query,
+        gorbagana_signer::Signer,
         tempfile::NamedTempFile,
     };
 
@@ -1992,7 +1992,7 @@ mod tests {
         );
 
         // test init with an authed voter
-        let authed = solana_pubkey::new_rand();
+        let authed = gorbagana_pubkey::new_rand();
         let (keypair_file, mut tmp_file) = make_tmp_file();
         let keypair = Keypair::new();
         write_keypair(&keypair, tmp_file.as_file_mut()).unwrap();

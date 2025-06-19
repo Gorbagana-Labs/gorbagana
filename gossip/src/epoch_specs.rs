@@ -1,8 +1,8 @@
 use {
-    solana_clock::{Epoch, DEFAULT_MS_PER_SLOT},
-    solana_epoch_schedule::EpochSchedule,
-    solana_pubkey::Pubkey,
-    solana_runtime::{
+    gorbagana_clock::{Epoch, DEFAULT_MS_PER_SLOT},
+    gorbagana_epoch_schedule::EpochSchedule,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_runtime::{
         bank::Bank,
         bank_forks::{BankForks, ReadOnlyAtomicSlot},
     },
@@ -80,8 +80,8 @@ fn get_epoch_duration(bank: &Bank) -> Duration {
 mod tests {
     use {
         super::*,
-        solana_clock::Slot,
-        solana_runtime::genesis_utils::{create_genesis_config, GenesisConfigInfo},
+        gorbagana_clock::Slot,
+        gorbagana_runtime::genesis_utils::{create_genesis_config, GenesisConfigInfo},
     };
 
     #[test]

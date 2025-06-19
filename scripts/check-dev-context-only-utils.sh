@@ -152,7 +152,7 @@ fi
 export RUSTFLAGS="-D warnings -Z threads=8 $RUSTFLAGS"
 
 # As this environment value is used by the rather deep crate of our dep graph
-# (solana-varsion), this could invalidate significant portion of caches when
+# (gorbagana-varsion), this could invalidate significant portion of caches when
 # this changes just with a new tiny commit. Technically, it's possible for
 # CI_COMMIT to affect the outcome of compilation via build.rs, but it's
 # extremely unrealistic for such diverting compilation behaviors to be desired

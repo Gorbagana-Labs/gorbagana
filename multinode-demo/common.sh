@@ -25,29 +25,29 @@ if [[ $(uname) != Linux ]]; then
 fi
 
 if [[ -n $USE_INSTALL || ! -f "$SOLANA_ROOT"/Cargo.toml ]]; then
-  solana_program() {
+  gorbagana_program() {
     declare program="$1"
     if [[ -z $program ]]; then
-      printf "solana"
+      printf "gorbagana"
     else
       if [[ $program == "validator" || $program == "ledger-tool" || $program == "watchtower" || $program == "install" ]]; then
         printf "agave-%s" "$program"
       else
-        printf "solana-%s" "$program"
+        printf "gorbagana-%s" "$program"
       fi
     fi
   }
 else
-  solana_program() {
+  gorbagana_program() {
     declare program="$1"
     declare crate="$program"
     if [[ -z $program ]]; then
       crate="cli"
-      program="solana"
+      program="gorbagana"
     elif [[ $program == "validator" || $program == "ledger-tool" || $program == "watchtower" || $program == "install" ]]; then
       program="agave-$program"
     else
-      program="solana-$program"
+      program="gorbagana-$program"
     fi
 
     if [[ -n $CARGO_BUILD_PROFILE ]]; then
@@ -67,15 +67,15 @@ else
   }
 fi
 
-solana_bench_tps=$(solana_program bench-tps)
-solana_faucet=$(solana_program faucet)
-agave_validator=$(solana_program validator)
+gorbagana_bench_tps=$(gorbagana_program bench-tps)
+gorbagana_faucet=$(gorbagana_program faucet)
+agave_validator=$(gorbagana_program validator)
 agave_validator_cuda="$agave_validator --cuda"
-solana_genesis=$(solana_program genesis)
-solana_gossip=$(solana_program gossip)
-solana_keygen=$(solana_program keygen)
-solana_ledger_tool=$(solana_program ledger-tool)
-solana_cli=$(solana_program)
+gorbagana_genesis=$(gorbagana_program genesis)
+gorbagana_gossip=$(gorbagana_program gossip)
+gorbagana_keygen=$(gorbagana_program keygen)
+gorbagana_ledger_tool=$(gorbagana_program ledger-tool)
+gorbagana_cli=$(gorbagana_program)
 
 export RUST_BACKTRACE=1
 

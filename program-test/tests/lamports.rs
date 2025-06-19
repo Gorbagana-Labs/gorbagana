@@ -1,14 +1,14 @@
 use {
-    solana_account_info::{next_account_info, AccountInfo},
-    solana_instruction::{AccountMeta, Instruction},
-    solana_keypair::Keypair,
-    solana_msg::msg,
-    solana_program_error::ProgramResult,
-    solana_program_test::{processor, ProgramTest},
-    solana_pubkey::Pubkey,
-    solana_signer::Signer,
-    solana_system_interface::instruction as system_instruction,
-    solana_transaction::Transaction,
+    gorbagana_account_info::{next_account_info, AccountInfo},
+    gorbagana_instruction::{AccountMeta, Instruction},
+    gorbagana_keypair::Keypair,
+    gorbagana_msg::msg,
+    gorbagana_program_error::ProgramResult,
+    gorbagana_program_test::{processor, ProgramTest},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signer::Signer,
+    gorbagana_system_interface::instruction as system_instruction,
+    gorbagana_transaction::Transaction,
 };
 
 fn move_lamports_process_instruction(

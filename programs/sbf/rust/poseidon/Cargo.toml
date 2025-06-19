@@ -1,6 +1,6 @@
 [package]
-name = "solana-sbf-rust-poseidon"
-description = "Solana SBF test program written in Rust"
+name = "gorbagana-sbf-rust-poseidon"
+description = "Gorbagana SBF test program written in Rust"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -13,9 +13,9 @@ crate-type = ["cdylib"]
 
 [dependencies]
 array-bytes = { workspace = true }
-solana-msg = { workspace = true }
-solana-poseidon = { workspace = true }
-solana-program-entrypoint = { workspace = true }
+gorbagana-msg = { workspace = true }
+gorbagana-poseidon = { workspace = true }
+gorbagana-program-entrypoint = { workspace = true }
 
 [lints]
 workspace = true

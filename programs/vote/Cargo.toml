@@ -1,7 +1,7 @@
 [package]
-name = "solana-vote-program"
-description = "Solana Vote program"
-documentation = "https://docs.rs/solana-vote-program"
+name = "gorbagana-vote-program"
+description = "Gorbagana Vote program"
+documentation = "https://docs.rs/gorbagana-vote-program"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -14,17 +14,17 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [lib]
 crate-type = ["lib"]
-name = "solana_vote_program"
+name = "gorbagana_vote_program"
 
 [features]
 default = ["metrics"]
 frozen-abi = [
-    "dep:solana-frozen-abi",
-    "dep:solana-frozen-abi-macro",
-    "solana-program-runtime/frozen-abi",
-    "solana-vote-interface/frozen-abi",
+    "dep:gorbagana-frozen-abi",
+    "dep:gorbagana-frozen-abi-macro",
+    "gorbagana-program-runtime/frozen-abi",
+    "gorbagana-vote-interface/frozen-abi",
 ]
-metrics = ["dep:solana-metrics"]
+metrics = ["dep:gorbagana-metrics"]
 
 [dependencies]
 agave-feature-set = { workspace = true }
@@ -34,45 +34,45 @@ num-derive = { workspace = true }
 num-traits = { workspace = true }
 serde = { workspace = true }
 serde_derive = { workspace = true }
-solana-account = { workspace = true }
-solana-bincode = { workspace = true }
-solana-clock = { workspace = true }
-solana-epoch-schedule = { workspace = true }
-solana-frozen-abi = { workspace = true, optional = true, features = [
+gorbagana-account = { workspace = true }
+gorbagana-bincode = { workspace = true }
+gorbagana-clock = { workspace = true }
+gorbagana-epoch-schedule = { workspace = true }
+gorbagana-frozen-abi = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
-solana-frozen-abi-macro = { workspace = true, optional = true, features = [
+gorbagana-frozen-abi-macro = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
-solana-hash = { workspace = true }
-solana-instruction = { workspace = true }
-solana-keypair = { workspace = true }
-solana-metrics = { workspace = true, optional = true }
-solana-packet = { workspace = true }
-solana-program-runtime = { workspace = true }
-solana-pubkey = { workspace = true, features = ["curve25519"] }
-solana-rent = { workspace = true }
-solana-sdk-ids = { workspace = true }
-solana-signer = { workspace = true }
-solana-slot-hashes = { workspace = true }
-solana-transaction = { workspace = true, features = ["bincode"] }
-solana-transaction-context = { workspace = true, features = ["bincode"] }
-solana-vote-interface = { workspace = true, features = ["bincode"] }
+gorbagana-hash = { workspace = true }
+gorbagana-instruction = { workspace = true }
+gorbagana-keypair = { workspace = true }
+gorbagana-metrics = { workspace = true, optional = true }
+gorbagana-packet = { workspace = true }
+gorbagana-program-runtime = { workspace = true }
+gorbagana-pubkey = { workspace = true, features = ["curve25519"] }
+gorbagana-rent = { workspace = true }
+gorbagana-sdk-ids = { workspace = true }
+gorbagana-signer = { workspace = true }
+gorbagana-slot-hashes = { workspace = true }
+gorbagana-transaction = { workspace = true, features = ["bincode"] }
+gorbagana-transaction-context = { workspace = true, features = ["bincode"] }
+gorbagana-vote-interface = { workspace = true, features = ["bincode"] }
 thiserror = { workspace = true }
 
 [dev-dependencies]
 assert_matches = { workspace = true }
 criterion = { workspace = true }
-solana-account = { workspace = true }
-solana-clock = { workspace = true }
-solana-fee-calculator = { workspace = true }
-solana-instruction = { workspace = true }
-solana-logger = { workspace = true }
-solana-program-runtime = { workspace = true, features = ["dev-context-only-utils"] }
-solana-pubkey = { workspace = true, features = ["rand"] }
-solana-rent = { workspace = true }
-solana-sdk-ids = { workspace = true }
-solana-sha256-hasher = { workspace = true }
+gorbagana-account = { workspace = true }
+gorbagana-clock = { workspace = true }
+gorbagana-fee-calculator = { workspace = true }
+gorbagana-instruction = { workspace = true }
+gorbagana-logger = { workspace = true }
+gorbagana-program-runtime = { workspace = true, features = ["dev-context-only-utils"] }
+gorbagana-pubkey = { workspace = true, features = ["rand"] }
+gorbagana-rent = { workspace = true }
+gorbagana-sdk-ids = { workspace = true }
+gorbagana-sha256-hasher = { workspace = true }
 test-case = { workspace = true }
 
 [[bench]]

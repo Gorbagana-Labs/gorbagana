@@ -70,11 +70,11 @@ use {
         ThreadPoolBuilder,
     },
     serde::Serialize,
-    solana_account::{
+    gorbagana_account::{
         create_account_shared_data_with_fields as create_account, from_account, Account,
         AccountSharedData, InheritableAccountFields, ReadableAccount, WritableAccount,
     },
-    solana_accounts_db::{
+    gorbagana_accounts_db::{
         account_locks::validate_account_locks,
         accounts::{AccountAddressFilter, Accounts, PubkeyAccountSlot},
         accounts_db::{
@@ -94,51 +94,51 @@ use {
         sorted_storages::SortedStorages,
         storable_accounts::StorableAccounts,
     },
-    solana_bpf_loader_program::syscalls::{
+    gorbagana_bpf_loader_program::syscalls::{
         create_program_runtime_environment_v1, create_program_runtime_environment_v2,
     },
-    solana_builtins::{prototype::BuiltinPrototype, BUILTINS, STATELESS_BUILTINS},
-    solana_clock::{
+    gorbagana_builtins::{prototype::BuiltinPrototype, BUILTINS, STATELESS_BUILTINS},
+    gorbagana_clock::{
         BankId, Epoch, Slot, SlotCount, SlotIndex, UnixTimestamp, DEFAULT_TICKS_PER_SECOND,
         INITIAL_RENT_EPOCH, MAX_PROCESSING_AGE, MAX_TRANSACTION_FORWARDING_DELAY, SECONDS_PER_DAY,
     },
-    solana_compute_budget::compute_budget::ComputeBudget,
-    solana_compute_budget_instruction::instructions_processor::process_compute_budget_instructions,
-    solana_cost_model::{block_cost_limits::simd_0256_block_limits, cost_tracker::CostTracker},
-    solana_epoch_info::EpochInfo,
-    solana_epoch_schedule::EpochSchedule,
-    solana_feature_gate_interface as feature,
-    solana_fee::FeeFeatures,
-    solana_fee_calculator::FeeRateGovernor,
-    solana_fee_structure::{FeeBudgetLimits, FeeDetails, FeeStructure},
-    solana_genesis_config::{ClusterType, GenesisConfig},
-    solana_hard_forks::HardForks,
-    solana_hash::Hash,
-    solana_inflation::Inflation,
-    solana_keypair::Keypair,
-    solana_lattice_hash::lt_hash::LtHash,
-    solana_measure::{meas_dur, measure::Measure, measure_time, measure_us},
-    solana_message::{inner_instruction::InnerInstructions, AccountKeys, SanitizedMessage},
-    solana_native_token::LAMPORTS_PER_SOL,
-    solana_packet::PACKET_DATA_SIZE,
-    solana_precompile_error::PrecompileError,
-    solana_program_runtime::{
+    gorbagana_compute_budget::compute_budget::ComputeBudget,
+    gorbagana_compute_budget_instruction::instructions_processor::process_compute_budget_instructions,
+    gorbagana_cost_model::{block_cost_limits::simd_0256_block_limits, cost_tracker::CostTracker},
+    gorbagana_epoch_info::EpochInfo,
+    gorbagana_epoch_schedule::EpochSchedule,
+    gorbagana_feature_gate_interface as feature,
+    gorbagana_fee::FeeFeatures,
+    gorbagana_fee_calculator::FeeRateGovernor,
+    gorbagana_fee_structure::{FeeBudgetLimits, FeeDetails, FeeStructure},
+    gorbagana_genesis_config::{ClusterType, GenesisConfig},
+    gorbagana_hard_forks::HardForks,
+    gorbagana_hash::Hash,
+    gorbagana_inflation::Inflation,
+    gorbagana_keypair::Keypair,
+    gorbagana_lattice_hash::lt_hash::LtHash,
+    gorbagana_measure::{meas_dur, measure::Measure, measure_time, measure_us},
+    gorbagana_message::{inner_instruction::InnerInstructions, AccountKeys, SanitizedMessage},
+    gorbagana_native_token::LAMPORTS_PER_SOL,
+    gorbagana_packet::PACKET_DATA_SIZE,
+    gorbagana_precompile_error::PrecompileError,
+    gorbagana_program_runtime::{
         invoke_context::BuiltinFunctionWithContext, loaded_programs::ProgramCacheEntry,
     },
-    solana_pubkey::Pubkey,
-    solana_rent_collector::{CollectedInfo, RentCollector},
-    solana_rent_debits::RentDebits,
-    solana_reward_info::RewardInfo,
-    solana_runtime_transaction::{
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent_collector::{CollectedInfo, RentCollector},
+    gorbagana_rent_debits::RentDebits,
+    gorbagana_reward_info::RewardInfo,
+    gorbagana_runtime_transaction::{
         runtime_transaction::RuntimeTransaction, transaction_with_meta::TransactionWithMeta,
     },
-    solana_sdk_ids::{bpf_loader_upgradeable, incinerator, native_loader},
-    solana_sha256_hasher::{extend_and_hash, hashv},
-    solana_signature::Signature,
-    solana_slot_hashes::SlotHashes,
-    solana_slot_history::{Check, SlotHistory},
-    solana_stake_interface::state::Delegation,
-    solana_svm::{
+    gorbagana_sdk_ids::{bpf_loader_upgradeable, incinerator, native_loader},
+    gorbagana_sha256_hasher::{extend_and_hash, hashv},
+    gorbagana_signature::Signature,
+    gorbagana_slot_hashes::SlotHashes,
+    gorbagana_slot_history::{Check, SlotHistory},
+    gorbagana_stake_interface::state::Delegation,
+    gorbagana_svm::{
         account_loader::{collect_rent_from_account, LoadedTransaction},
         account_overrides::AccountOverrides,
         program_loader::load_program_with_pubkey,
@@ -157,21 +157,21 @@ use {
             TransactionProcessingConfig, TransactionProcessingEnvironment,
         },
     },
-    solana_svm_callback::{AccountState, InvokeContextCallback, TransactionProcessingCallback},
-    solana_svm_transaction::svm_message::SVMMessage,
-    solana_system_transaction as system_transaction,
-    solana_sysvar::{self as sysvar, last_restart_slot::LastRestartSlot, Sysvar},
-    solana_sysvar_id::SysvarId,
-    solana_time_utils::years_as_slots,
-    solana_timings::{ExecuteTimingType, ExecuteTimings},
-    solana_transaction::{
+    gorbagana_svm_callback::{AccountState, InvokeContextCallback, TransactionProcessingCallback},
+    gorbagana_svm_transaction::svm_message::SVMMessage,
+    gorbagana_system_transaction as system_transaction,
+    gorbagana_sysvar::{self as sysvar, last_restart_slot::LastRestartSlot, Sysvar},
+    gorbagana_sysvar_id::SysvarId,
+    gorbagana_time_utils::years_as_slots,
+    gorbagana_timings::{ExecuteTimingType, ExecuteTimings},
+    gorbagana_transaction::{
         sanitized::{MessageHash, SanitizedTransaction, MAX_TX_ACCOUNT_LOCKS},
         versioned::VersionedTransaction,
         Transaction, TransactionVerificationMode,
     },
-    solana_transaction_context::{TransactionAccount, TransactionReturnData},
-    solana_transaction_error::{TransactionError, TransactionResult as Result},
-    solana_vote::vote_account::{VoteAccount, VoteAccountsHashMap},
+    gorbagana_transaction_context::{TransactionAccount, TransactionReturnData},
+    gorbagana_transaction_error::{TransactionError, TransactionResult as Result},
+    gorbagana_vote::vote_account::{VoteAccount, VoteAccountsHashMap},
     std::{
         collections::{HashMap, HashSet},
         fmt,
@@ -189,15 +189,15 @@ use {
         time::{Duration, Instant},
     },
 };
-pub use {partitioned_epoch_rewards::KeyedRewardsAndNumPartitions, solana_reward_info::RewardType};
+pub use {partitioned_epoch_rewards::KeyedRewardsAndNumPartitions, gorbagana_reward_info::RewardType};
 #[cfg(feature = "dev-context-only-utils")]
 use {
-    solana_accounts_db::accounts_db::{
+    gorbagana_accounts_db::accounts_db::{
         ACCOUNTS_DB_CONFIG_FOR_BENCHMARKS, ACCOUNTS_DB_CONFIG_FOR_TESTING,
     },
-    solana_nonce as nonce,
-    solana_nonce_account::{get_system_account_kind, SystemAccountKind},
-    solana_program_runtime::{loaded_programs::ProgramCacheForTxBatch, sysvar_cache::SysvarCache},
+    gorbagana_nonce as nonce,
+    gorbagana_nonce_account::{get_system_account_kind, SystemAccountKind},
+    gorbagana_program_runtime::{loaded_programs::ProgramCacheForTxBatch, sysvar_cache::SysvarCache},
 };
 
 /// params to `verify_accounts_hash`
@@ -1535,7 +1535,7 @@ impl Bank {
 
         // Recompile loaded programs one at a time before the next epoch hits
         let slots_in_recompilation_phase =
-            (solana_program_runtime::loaded_programs::MAX_LOADED_ENTRY_COUNT as u64)
+            (gorbagana_program_runtime::loaded_programs::MAX_LOADED_ENTRY_COUNT as u64)
                 .min(slots_in_epoch)
                 .checked_div(2)
                 .unwrap();
@@ -2458,7 +2458,7 @@ impl Bank {
             .is_active(&feature_set::stake_minimum_delegation_for_rewards::id())
         {
             let num_stake_delegations = stakes.stake_delegations().len();
-            let min_stake_delegation = solana_stake_program::get_minimum_delegation(
+            let min_stake_delegation = gorbagana_stake_program::get_minimum_delegation(
                 self.feature_set
                     .is_active(&agave_feature_set::stake_raise_minimum_delegation_to_1_sol::id()),
             )
@@ -2975,7 +2975,7 @@ impl Bank {
             )
             .unwrap_or_default(),
         );
-        solana_fee::calculate_fee(
+        gorbagana_fee::calculate_fee(
             message,
             lamports_per_signature == 0,
             self.fee_structure().lamports_per_signature,
@@ -3082,7 +3082,7 @@ impl Bank {
     }
 
     // gating this under #[cfg(feature = "dev-context-only-utils")] isn't easy due to
-    // solana-program-test's usage...
+    // gorbagana-program-test's usage...
     pub fn register_unique_recent_blockhash_for_test(&self) {
         self.register_recent_blockhash(
             &Hash::new_unique(),
@@ -4354,7 +4354,7 @@ impl Bank {
             // divide the range into num_threads smaller ranges and process in parallel
             // Note that 'pubkey_range_from_partition' cannot easily be re-used here to break the range smaller.
             // It has special handling of 0..0 and partition_count changes affect all ranges unevenly.
-            let num_threads = solana_accounts_db::accounts_db::quarter_thread_count() as u64;
+            let num_threads = gorbagana_accounts_db::accounts_db::quarter_thread_count() as u64;
             let sz = std::mem::size_of::<u64>();
             let start_prefix = accounts_partition::prefix_from_pubkey(subrange_full.start());
             let end_prefix_inclusive = accounts_partition::prefix_from_pubkey(subrange_full.end());
@@ -4549,7 +4549,7 @@ impl Bank {
     fn use_multi_epoch_collection_cycle(&self, epoch: Epoch) -> bool {
         // Force normal behavior, disabling multi epoch collection cycle for manual local testing
         #[cfg(not(test))]
-        if self.slot_count_per_normal_epoch() == solana_epoch_schedule::MINIMUM_SLOTS_PER_EPOCH {
+        if self.slot_count_per_normal_epoch() == gorbagana_epoch_schedule::MINIMUM_SLOTS_PER_EPOCH {
             return false;
         }
 
@@ -4560,7 +4560,7 @@ impl Bank {
     pub(crate) fn use_fixed_collection_cycle(&self) -> bool {
         // Force normal behavior, disabling fixed collection cycle for manual local testing
         #[cfg(not(test))]
-        if self.slot_count_per_normal_epoch() == solana_epoch_schedule::MINIMUM_SLOTS_PER_EPOCH {
+        if self.slot_count_per_normal_epoch() == gorbagana_epoch_schedule::MINIMUM_SLOTS_PER_EPOCH {
             return false;
         }
 
@@ -6533,14 +6533,14 @@ impl Bank {
 
         if new_feature_activations.contains(&feature_set::pico_inflation::id()) {
             *self.inflation.write().unwrap() = Inflation::pico();
-            self.fee_rate_governor.burn_percent = solana_fee_calculator::DEFAULT_BURN_PERCENT; // 50% fee burn
+            self.fee_rate_governor.burn_percent = gorbagana_fee_calculator::DEFAULT_BURN_PERCENT; // 50% fee burn
             self.rent_collector.rent.burn_percent = 50; // 50% rent burn
         }
 
         if !new_feature_activations.is_disjoint(&self.feature_set.full_inflation_features_enabled())
         {
             *self.inflation.write().unwrap() = Inflation::full();
-            self.fee_rate_governor.burn_percent = solana_fee_calculator::DEFAULT_BURN_PERCENT; // 50% fee burn
+            self.fee_rate_governor.burn_percent = gorbagana_fee_calculator::DEFAULT_BURN_PERCENT; // 50% fee burn
             self.rent_collector.rent.burn_percent = 50; // 50% rent burn
         }
 
@@ -6993,7 +6993,7 @@ impl TransactionProcessingCallback for Bank {
         let account: AccountSharedData = AccountSharedData::from(Account {
             lamports,
             data: name.as_bytes().to_vec(),
-            owner: solana_sdk_ids::native_loader::id(),
+            owner: gorbagana_sdk_ids::native_loader::id(),
             executable: true,
             rent_epoch,
         });
@@ -7440,11 +7440,11 @@ pub mod test_utils {
     use {
         super::Bank,
         crate::installed_scheduler_pool::BankWithScheduler,
-        solana_account::{ReadableAccount, WritableAccount},
-        solana_instruction::error::LamportsError,
-        solana_pubkey::Pubkey,
-        solana_sha256_hasher::hashv,
-        solana_vote_program::vote_state::{self, BlockTimestamp, VoteStateVersions},
+        gorbagana_account::{ReadableAccount, WritableAccount},
+        gorbagana_instruction::error::LamportsError,
+        gorbagana_pubkey::Pubkey,
+        gorbagana_sha256_hasher::hashv,
+        gorbagana_vote_program::vote_state::{self, BlockTimestamp, VoteStateVersions},
         std::sync::Arc,
     };
     pub fn goto_end_of_slot(bank: Arc<Bank>) {

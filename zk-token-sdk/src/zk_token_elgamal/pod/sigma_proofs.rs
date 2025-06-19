@@ -1,6 +1,6 @@
 //! Plain Old Data types for sigma proofs.
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use crate::sigma_proofs::{
     batched_grouped_ciphertext_validity_proof::BatchedGroupedCiphertext2HandlesValidityProof as DecodedBatchedGroupedCiphertext2HandlesValidityProof,
     batched_grouped_ciphertext_validity_proof::BatchedGroupedCiphertext3HandlesValidityProof as DecodedBatchedGroupedCiphertext3HandlesValidityProof,
@@ -46,14 +46,14 @@ const PUBKEY_VALIDITY_PROOF_LEN: usize = 64;
 #[repr(transparent)]
 pub struct CiphertextCommitmentEqualityProof(pub [u8; CIPHERTEXT_COMMITMENT_EQUALITY_PROOF_LEN]);
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<DecodedCiphertextCommitmentEqualityProof> for CiphertextCommitmentEqualityProof {
     fn from(decoded_proof: DecodedCiphertextCommitmentEqualityProof) -> Self {
         Self(decoded_proof.to_bytes())
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TryFrom<CiphertextCommitmentEqualityProof> for DecodedCiphertextCommitmentEqualityProof {
     type Error = EqualityProofVerificationError;
 
@@ -67,14 +67,14 @@ impl TryFrom<CiphertextCommitmentEqualityProof> for DecodedCiphertextCommitmentE
 #[repr(transparent)]
 pub struct CiphertextCiphertextEqualityProof(pub [u8; CIPHERTEXT_CIPHERTEXT_EQUALITY_PROOF_LEN]);
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<DecodedCiphertextCiphertextEqualityProof> for CiphertextCiphertextEqualityProof {
     fn from(decoded_proof: DecodedCiphertextCiphertextEqualityProof) -> Self {
         Self(decoded_proof.to_bytes())
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TryFrom<CiphertextCiphertextEqualityProof> for DecodedCiphertextCiphertextEqualityProof {
     type Error = EqualityProofVerificationError;
 
@@ -90,7 +90,7 @@ pub struct GroupedCiphertext2HandlesValidityProof(
     pub [u8; GROUPED_CIPHERTEXT_2_HANDLES_VALIDITY_PROOF_LEN],
 );
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<DecodedGroupedCiphertext2HandlesValidityProof>
     for GroupedCiphertext2HandlesValidityProof
 {
@@ -99,7 +99,7 @@ impl From<DecodedGroupedCiphertext2HandlesValidityProof>
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TryFrom<GroupedCiphertext2HandlesValidityProof>
     for DecodedGroupedCiphertext2HandlesValidityProof
 {
@@ -117,7 +117,7 @@ pub struct GroupedCiphertext3HandlesValidityProof(
     pub [u8; GROUPED_CIPHERTEXT_3_HANDLES_VALIDITY_PROOF_LEN],
 );
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<DecodedGroupedCiphertext3HandlesValidityProof>
     for GroupedCiphertext3HandlesValidityProof
 {
@@ -126,7 +126,7 @@ impl From<DecodedGroupedCiphertext3HandlesValidityProof>
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TryFrom<GroupedCiphertext3HandlesValidityProof>
     for DecodedGroupedCiphertext3HandlesValidityProof
 {
@@ -144,7 +144,7 @@ pub struct BatchedGroupedCiphertext2HandlesValidityProof(
     pub [u8; BATCHED_GROUPED_CIPHERTEXT_2_HANDLES_VALIDITY_PROOF_LEN],
 );
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<DecodedBatchedGroupedCiphertext2HandlesValidityProof>
     for BatchedGroupedCiphertext2HandlesValidityProof
 {
@@ -153,7 +153,7 @@ impl From<DecodedBatchedGroupedCiphertext2HandlesValidityProof>
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TryFrom<BatchedGroupedCiphertext2HandlesValidityProof>
     for DecodedBatchedGroupedCiphertext2HandlesValidityProof
 {
@@ -173,7 +173,7 @@ pub struct BatchedGroupedCiphertext3HandlesValidityProof(
     pub [u8; BATCHED_GROUPED_CIPHERTEXT_3_HANDLES_VALIDITY_PROOF_LEN],
 );
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<DecodedBatchedGroupedCiphertext3HandlesValidityProof>
     for BatchedGroupedCiphertext3HandlesValidityProof
 {
@@ -182,7 +182,7 @@ impl From<DecodedBatchedGroupedCiphertext3HandlesValidityProof>
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TryFrom<BatchedGroupedCiphertext3HandlesValidityProof>
     for DecodedBatchedGroupedCiphertext3HandlesValidityProof
 {
@@ -200,14 +200,14 @@ impl TryFrom<BatchedGroupedCiphertext3HandlesValidityProof>
 #[repr(transparent)]
 pub struct ZeroBalanceProof(pub [u8; ZERO_BALANCE_PROOF_LEN]);
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<DecodedZeroBalanceProof> for ZeroBalanceProof {
     fn from(decoded_proof: DecodedZeroBalanceProof) -> Self {
         Self(decoded_proof.to_bytes())
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TryFrom<ZeroBalanceProof> for DecodedZeroBalanceProof {
     type Error = ZeroBalanceProofVerificationError;
 
@@ -221,14 +221,14 @@ impl TryFrom<ZeroBalanceProof> for DecodedZeroBalanceProof {
 #[repr(transparent)]
 pub struct FeeSigmaProof(pub [u8; FEE_SIGMA_PROOF_LEN]);
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<DecodedFeeSigmaProof> for FeeSigmaProof {
     fn from(decoded_proof: DecodedFeeSigmaProof) -> Self {
         Self(decoded_proof.to_bytes())
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TryFrom<FeeSigmaProof> for DecodedFeeSigmaProof {
     type Error = FeeSigmaProofVerificationError;
 
@@ -242,14 +242,14 @@ impl TryFrom<FeeSigmaProof> for DecodedFeeSigmaProof {
 #[repr(transparent)]
 pub struct PubkeyValidityProof(pub [u8; PUBKEY_VALIDITY_PROOF_LEN]);
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<DecodedPubkeyValidityProof> for PubkeyValidityProof {
     fn from(decoded_proof: DecodedPubkeyValidityProof) -> Self {
         Self(decoded_proof.to_bytes())
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TryFrom<PubkeyValidityProof> for DecodedPubkeyValidityProof {
     type Error = PubkeyValidityProofVerificationError;
 

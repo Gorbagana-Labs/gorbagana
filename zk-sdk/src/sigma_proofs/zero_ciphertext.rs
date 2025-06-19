@@ -5,7 +5,7 @@
 
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use {
     crate::{
         encryption::{
@@ -48,7 +48,7 @@ pub struct ZeroCiphertextProof {
 }
 
 #[allow(non_snake_case)]
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl ZeroCiphertextProof {
     /// Creates a zero-ciphertext proof.
     ///

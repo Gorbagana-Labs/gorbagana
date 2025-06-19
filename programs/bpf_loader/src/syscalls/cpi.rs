@@ -2,12 +2,12 @@ use {
     super::*,
     crate::{translate_inner, translate_slice_inner, translate_type_inner},
     scopeguard::defer,
-    solana_loader_v3_interface::instruction as bpf_loader_upgradeable,
-    solana_measure::measure::Measure,
-    solana_program_runtime::invoke_context::SerializedAccountMetadata,
-    solana_sbpf::{ebpf, memory_region::MemoryRegion},
-    solana_stable_layout::stable_instruction::StableInstruction,
-    solana_transaction_context::BorrowedAccount,
+    gorbagana_loader_v3_interface::instruction as bpf_loader_upgradeable,
+    gorbagana_measure::measure::Measure,
+    gorbagana_program_runtime::invoke_context::SerializedAccountMetadata,
+    gorbagana_sbpf::{ebpf, memory_region::MemoryRegion},
+    gorbagana_stable_layout::stable_instruction::StableInstruction,
+    gorbagana_transaction_context::BorrowedAccount,
     std::{mem, ptr},
 };
 
@@ -976,7 +976,7 @@ fn check_authorized_program(
     if native_loader::check_id(program_id)
         || bpf_loader::check_id(program_id)
         || bpf_loader_deprecated::check_id(program_id)
-        || (solana_sdk_ids::bpf_loader_upgradeable::check_id(program_id)
+        || (gorbagana_sdk_ids::bpf_loader_upgradeable::check_id(program_id)
             && !(bpf_loader_upgradeable::is_upgrade_instruction(instruction_data)
                 || bpf_loader_upgradeable::is_set_authority_instruction(instruction_data)
                 || (invoke_context
@@ -1572,17 +1572,17 @@ mod tests {
         super::*,
         crate::mock_create_vm,
         assert_matches::assert_matches,
-        solana_account::{Account, AccountSharedData, ReadableAccount},
-        solana_clock::Epoch,
-        solana_instruction::Instruction,
-        solana_program_runtime::{
+        gorbagana_account::{Account, AccountSharedData, ReadableAccount},
+        gorbagana_clock::Epoch,
+        gorbagana_instruction::Instruction,
+        gorbagana_program_runtime::{
             invoke_context::SerializedAccountMetadata, with_mock_invoke_context_with_feature_set,
         },
-        solana_sbpf::{
+        gorbagana_sbpf::{
             ebpf::MM_INPUT_START, memory_region::MemoryRegion, program::SBPFVersion, vm::Config,
         },
-        solana_sdk_ids::system_program,
-        solana_transaction_context::TransactionAccount,
+        gorbagana_sdk_ids::system_program,
+        gorbagana_transaction_context::TransactionAccount,
         std::{
             cell::{Cell, RefCell},
             mem, ptr,

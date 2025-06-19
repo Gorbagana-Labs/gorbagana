@@ -1,7 +1,7 @@
 [package]
-name = "solana-cli"
+name = "gorbagana-cli"
 description = "Blockchain, Rebuilt for Scale"
-documentation = "https://docs.rs/solana-cli"
+documentation = "https://docs.rs/gorbagana-cli"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -13,7 +13,7 @@ edition = { workspace = true }
 targets = ["x86_64-unknown-linux-gnu"]
 
 [[bin]]
-name = "solana"
+name = "gorbagana"
 path = "src/main.rs"
 
 [dependencies]
@@ -36,77 +36,77 @@ semver = { workspace = true }
 serde = { workspace = true }
 serde_derive = { workspace = true }
 serde_json = { workspace = true }
-solana-account = "=2.2.1"
-solana-account-decoder = { workspace = true }
-solana-address-lookup-table-interface = { workspace = true }
-solana-borsh = "=2.2.1"
-solana-bpf-loader-program = { workspace = true }
-solana-clap-utils = { workspace = true }
-solana-cli-config = { workspace = true }
-solana-cli-output = { workspace = true }
-solana-client = { workspace = true }
-solana-clock = "=2.2.2"
-solana-cluster-type = "=2.2.1"
-solana-commitment-config = "=2.2.1"
-solana-compute-budget-interface = { version = "=2.2.2", features = ["borsh"] }
-solana-config-interface = "=1.0.0"
-solana-config-program-client = { workspace = true, features = ["serde"] }
-solana-connection-cache = { workspace = true }
-solana-epoch-schedule = "=2.2.1"
-solana-feature-gate-client = "=0.0.2"
-solana-feature-gate-interface = "=2.2.2"
-solana-fee-calculator = "=2.2.1"
-solana-fee-structure = "=2.3.0"
-solana-hash = "=2.3.0"
-solana-instruction = "=2.3.0"
-solana-keypair = "=2.2.1"
-solana-loader-v3-interface = { version = "=5.0.0", features = ["bincode"] }
-solana-loader-v4-interface = "=2.2.1"
-solana-loader-v4-program = { workspace = true }
-solana-logger = "=2.3.1"
-solana-message = "=2.4.0"
-solana-native-token = "=2.2.2"
-solana-nonce = "=2.2.1"
-solana-offchain-message = { version = "=2.2.1", features = ["verify"] }
-solana-packet = "=2.2.1"
-solana-program-runtime = { workspace = true }
-solana-pubkey = { version = "=2.4.0", default-features = false }
-solana-pubsub-client = { workspace = true }
-solana-quic-client = { workspace = true }
-solana-remote-wallet = { workspace = true, features = ["default"] }
-solana-rent = "=2.2.1"
-solana-rpc-client = { workspace = true, features = ["default"] }
-solana-rpc-client-api = { workspace = true }
-solana-rpc-client-nonce-utils = { workspace = true, features = ["clap"] }
-solana-sbpf = { workspace = true }
-solana-sdk-ids = "=2.2.1"
-solana-signature = { version = "=2.3.0", default-features = false }
-solana-signer = "=2.2.1"
-solana-slot-history = "=2.2.1"
-solana-stake-interface = "=1.2.1"
-solana-streamer = { workspace = true }
-solana-system-interface = { version = "=1.0", features = ["bincode"] }
-solana-sysvar = "=2.2.2"
-solana-tps-client = { workspace = true }
-solana-tpu-client = { workspace = true, features = ["default"] }
-solana-transaction = "=2.2.3"
-solana-transaction-error = "=2.2.1"
-solana-transaction-status = { workspace = true }
-solana-udp-client = { workspace = true }
-solana-version = { workspace = true }
-solana-vote-program = { workspace = true }
+gorbagana-account = "=2.2.1"
+gorbagana-account-decoder = { workspace = true }
+gorbagana-address-lookup-table-interface = { workspace = true }
+gorbagana-borsh = "=2.2.1"
+gorbagana-bpf-loader-program = { workspace = true }
+gorbagana-clap-utils = { workspace = true }
+gorbagana-cli-config = { workspace = true }
+gorbagana-cli-output = { workspace = true }
+gorbagana-client = { workspace = true }
+gorbagana-clock = "=2.2.2"
+gorbagana-cluster-type = "=2.2.1"
+gorbagana-commitment-config = "=2.2.1"
+gorbagana-compute-budget-interface = { version = "=2.2.2", features = ["borsh"] }
+gorbagana-config-interface = "=1.0.0"
+gorbagana-config-program-client = { workspace = true, features = ["serde"] }
+gorbagana-connection-cache = { workspace = true }
+gorbagana-epoch-schedule = "=2.2.1"
+gorbagana-feature-gate-client = "=0.0.2"
+gorbagana-feature-gate-interface = "=2.2.2"
+gorbagana-fee-calculator = "=2.2.1"
+gorbagana-fee-structure = "=2.3.0"
+gorbagana-hash = "=2.3.0"
+gorbagana-instruction = "=2.3.0"
+gorbagana-keypair = "=2.2.1"
+gorbagana-loader-v3-interface = { version = "=5.0.0", features = ["bincode"] }
+gorbagana-loader-v4-interface = "=2.2.1"
+gorbagana-loader-v4-program = { workspace = true }
+gorbagana-logger = "=2.3.1"
+gorbagana-message = "=2.4.0"
+gorbagana-native-token = "=2.2.2"
+gorbagana-nonce = "=2.2.1"
+gorbagana-offchain-message = { version = "=2.2.1", features = ["verify"] }
+gorbagana-packet = "=2.2.1"
+gorbagana-program-runtime = { workspace = true }
+gorbagana-pubkey = { version = "=2.4.0", default-features = false }
+gorbagana-pubsub-client = { workspace = true }
+gorbagana-quic-client = { workspace = true }
+gorbagana-remote-wallet = { workspace = true, features = ["default"] }
+gorbagana-rent = "=2.2.1"
+gorbagana-rpc-client = { workspace = true, features = ["default"] }
+gorbagana-rpc-client-api = { workspace = true }
+gorbagana-rpc-client-nonce-utils = { workspace = true, features = ["clap"] }
+gorbagana-sbpf = { workspace = true }
+gorbagana-sdk-ids = "=2.2.1"
+gorbagana-signature = { version = "=2.3.0", default-features = false }
+gorbagana-signer = "=2.2.1"
+gorbagana-slot-history = "=2.2.1"
+gorbagana-stake-interface = "=1.2.1"
+gorbagana-streamer = { workspace = true }
+gorbagana-system-interface = { version = "=1.0", features = ["bincode"] }
+gorbagana-sysvar = "=2.2.2"
+gorbagana-tps-client = { workspace = true }
+gorbagana-tpu-client = { workspace = true, features = ["default"] }
+gorbagana-transaction = "=2.2.3"
+gorbagana-transaction-error = "=2.2.1"
+gorbagana-transaction-status = { workspace = true }
+gorbagana-udp-client = { workspace = true }
+gorbagana-version = { workspace = true }
+gorbagana-vote-program = { workspace = true }
 spl-memo = { version = "=6.0.0", features = ["no-entrypoint"] }
 thiserror = { workspace = true }
 tiny-bip39 = { workspace = true }
 
 [dev-dependencies]
 assert_matches = { workspace = true }
-solana-faucet = { workspace = true }
-solana-nonce-account = { workspace = true }
-solana-presigner = { workspace = true }
-solana-rpc = { workspace = true }
-solana-sha256-hasher = { workspace = true }
-solana-streamer = { workspace = true }
-solana-test-validator = { workspace = true }
+gorbagana-faucet = { workspace = true }
+gorbagana-nonce-account = { workspace = true }
+gorbagana-presigner = { workspace = true }
+gorbagana-rpc = { workspace = true }
+gorbagana-sha256-hasher = { workspace = true }
+gorbagana-streamer = { workspace = true }
+gorbagana-test-validator = { workspace = true }
 tempfile = { workspace = true }
 test-case = { workspace = true }

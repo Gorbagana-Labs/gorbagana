@@ -1,7 +1,7 @@
 [package]
-name = "solana-udp-client"
-description = "Solana UDP Client"
-documentation = "https://docs.rs/solana-udp-client"
+name = "gorbagana-udp-client"
+description = "Gorbagana UDP Client"
+documentation = "https://docs.rs/gorbagana-udp-client"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -11,14 +11,14 @@ edition = { workspace = true }
 
 [dependencies]
 async-trait = { workspace = true }
-solana-connection-cache = { workspace = true }
-solana-keypair = { workspace = true }
-solana-net-utils = { workspace = true }
-solana-streamer = { workspace = true }
-solana-transaction-error = { workspace = true }
+gorbagana-connection-cache = { workspace = true }
+gorbagana-keypair = { workspace = true }
+gorbagana-net-utils = { workspace = true }
+gorbagana-streamer = { workspace = true }
+gorbagana-transaction-error = { workspace = true }
 thiserror = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 
 [dev-dependencies]
-solana-net-utils = { workspace = true, features = ["dev-context-only-utils"] }
-solana-packet = { workspace = true }
+gorbagana-net-utils = { workspace = true, features = ["dev-context-only-utils"] }
+gorbagana-packet = { workspace = true }

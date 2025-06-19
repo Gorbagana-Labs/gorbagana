@@ -1,9 +1,9 @@
 use {
-    solana_clock::{Slot, NUM_CONSECUTIVE_LEADER_SLOTS},
-    solana_gossip::{cluster_info::ClusterInfo, contact_info::Protocol},
-    solana_poh::poh_recorder::PohRecorder,
-    solana_pubkey::Pubkey,
-    solana_send_transaction_service::tpu_info::TpuInfo,
+    gorbagana_clock::{Slot, NUM_CONSECUTIVE_LEADER_SLOTS},
+    gorbagana_gossip::{cluster_info::ClusterInfo, contact_info::Protocol},
+    gorbagana_poh::poh_recorder::PohRecorder,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_send_transaction_service::tpu_info::TpuInfo,
     std::{
         collections::HashMap,
         iter::once,
@@ -122,23 +122,23 @@ impl TpuInfo for ClusterTpuInfo {
 mod test {
     use {
         super::*,
-        solana_gossip::contact_info::ContactInfo,
-        solana_keypair::Keypair,
-        solana_ledger::{
+        gorbagana_gossip::contact_info::ContactInfo,
+        gorbagana_keypair::Keypair,
+        gorbagana_ledger::{
             blockstore::Blockstore, get_tmp_ledger_path_auto_delete,
             leader_schedule_cache::LeaderScheduleCache,
         },
-        solana_poh_config::PohConfig,
-        solana_quic_definitions::QUIC_PORT_OFFSET,
-        solana_runtime::{
+        gorbagana_poh_config::PohConfig,
+        gorbagana_quic_definitions::QUIC_PORT_OFFSET,
+        gorbagana_runtime::{
             bank::Bank,
             genesis_utils::{
                 create_genesis_config_with_vote_accounts, GenesisConfigInfo, ValidatorVoteKeypairs,
             },
         },
-        solana_signer::Signer,
-        solana_streamer::socket::SocketAddrSpace,
-        solana_time_utils::timestamp,
+        gorbagana_signer::Signer,
+        gorbagana_streamer::socket::SocketAddrSpace,
+        gorbagana_time_utils::timestamp,
         std::{net::Ipv4Addr, sync::atomic::AtomicBool},
     };
 
@@ -286,7 +286,7 @@ mod test {
 
         let slot = bank.slot();
         let first_leader =
-            solana_ledger::leader_schedule_utils::slot_leader_at(slot, &bank).unwrap();
+            gorbagana_ledger::leader_schedule_utils::slot_leader_at(slot, &bank).unwrap();
         assert_eq!(
             leader_info.get_leader_tpus(1, Protocol::UDP),
             vec![&recent_peers.get(&first_leader).unwrap().0]
@@ -296,7 +296,7 @@ mod test {
             vec![&recent_peers.get(&first_leader).unwrap().0]
         );
 
-        let second_leader = solana_ledger::leader_schedule_utils::slot_leader_at(
+        let second_leader = gorbagana_ledger::leader_schedule_utils::slot_leader_at(
             slot + NUM_CONSECUTIVE_LEADER_SLOTS,
             &bank,
         )
@@ -315,7 +315,7 @@ mod test {
             expected_leader_sockets
         );
 
-        let third_leader = solana_ledger::leader_schedule_utils::slot_leader_at(
+        let third_leader = gorbagana_ledger::leader_schedule_utils::slot_leader_at(
             slot + (2 * NUM_CONSECUTIVE_LEADER_SLOTS),
             &bank,
         )

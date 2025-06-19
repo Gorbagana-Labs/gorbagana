@@ -1,5 +1,5 @@
 ---
-title: Solana Runtime on a Solana Validator
+title: Gorbagana Runtime on a Gorbagana Validator
 sidebar_position: 6
 sidebar_label: Runtime
 pagination_label: Validator Runtime
@@ -67,4 +67,4 @@ To pass messages between programs, the receiving program must accept the message
 
 ## Future Work
 
-- [Continuations and Signals for long running Transactions](https://github.com/solana-labs/solana/issues/1485)
+- [Continuations and Signals for long running Transactions](https://github.com/gorbagana-labs/gorbagana/issues/1485)

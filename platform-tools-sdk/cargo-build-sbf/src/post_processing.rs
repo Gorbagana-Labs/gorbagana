@@ -2,7 +2,7 @@ use {
     crate::{spawn, utils::rust_target_triple, Config},
     log::{debug, error, info, warn},
     regex::Regex,
-    solana_keypair::{write_keypair_file, Keypair},
+    gorbagana_keypair::{write_keypair_file, Keypair},
     std::{
         collections::{HashMap, HashSet},
         fs::{self, File},
@@ -140,7 +140,7 @@ pub(crate) fn post_process(config: &Config, target_directory: &Path, program_nam
         }
 
         info!("To deploy this program:");
-        info!("  $ solana program deploy {}", program_so.display());
+        info!("  $ gorbagana program deploy {}", program_so.display());
         info!("The program address will default to this keypair (override with --program-id):");
         info!("  {}", program_keypair.display());
     } else if config.dump {

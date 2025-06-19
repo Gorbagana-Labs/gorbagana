@@ -8,11 +8,11 @@
 #   $ ./script/coverage.sh
 #
 # Run for specific packages
-#   $ ./script/coverage.sh -p solana-account-decoder
-#   $ ./script/coverage.sh -p solana-account-decoder -p solana-accounts-db [-p ...]
+#   $ ./script/coverage.sh -p gorbagana-account-decoder
+#   $ ./script/coverage.sh -p gorbagana-account-decoder -p gorbagana-accounts-db [-p ...]
 #
 # Custom folder name. (default: $(git rev-parse --short=9 HEAD))
-#   $ COMMIT_HASH=xxx ./script/coverage.sh -p solana-account-decoder
+#   $ COMMIT_HASH=xxx ./script/coverage.sh -p gorbagana-account-decoder
 #
 
 set -e
@@ -49,7 +49,7 @@ export RUSTFLAGS="-C instrument-coverage $RUSTFLAGS"
 export LLVM_PROFILE_FILE="$here/../target/cov/${COMMIT_HASH}/profraw/default-%p-%m.profraw"
 
 if [[ -z $1 ]]; then
-  PACKAGES=(--lib --all --exclude solana-local-cluster)
+  PACKAGES=(--lib --all --exclude gorbagana-local-cluster)
 else
   PACKAGES=("$@")
 fi
@@ -60,11 +60,11 @@ TEST_ARGS=(
   --skip shred::merkle::test::test_recover_merkle_shreds::
 )
 
-# Most verbose log level (trace) is enabled for all solana code to make log!
+# Most verbose log level (trace) is enabled for all gorbagana code to make log!
 # macro code green always. Also, forcibly discard the vast amount of log by
 # redirecting the stderr altogether on CI, where all tests are run unlike
 # developing.
-RUST_LOG="solana=trace,agave=trace,$RUST_LOG" INTERCEPT_OUTPUT=/dev/null "$here/../ci/intercept.sh" \
+RUST_LOG="gorbagana=trace,agave=trace,$RUST_LOG" INTERCEPT_OUTPUT=/dev/null "$here/../ci/intercept.sh" \
   cargo +"$rust_nightly" test --features frozen-abi --target-dir "$here/../target/cov" "${PACKAGES[@]}" -- "${TEST_ARGS[@]}"
 
 # Generate test reports

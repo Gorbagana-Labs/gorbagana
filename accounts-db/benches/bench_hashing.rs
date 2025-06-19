@@ -1,13 +1,13 @@
 use {
     criterion::{criterion_group, criterion_main, BatchSize, BenchmarkId, Criterion, Throughput},
     rand::seq::SliceRandom,
-    solana_account::AccountSharedData,
-    solana_accounts_db::{
+    gorbagana_account::AccountSharedData,
+    gorbagana_accounts_db::{
         accounts_db::AccountsDb,
         accounts_hash::{AccountHash, AccountsHasher},
     },
-    solana_hash::Hash,
-    solana_pubkey::Pubkey,
+    gorbagana_hash::Hash,
+    gorbagana_pubkey::Pubkey,
 };
 
 const KB: usize = 1024;

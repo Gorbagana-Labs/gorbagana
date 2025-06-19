@@ -5,7 +5,7 @@ use {
     console::Emoji,
     dialoguer::{theme::ColorfulTheme, Select},
     semver::Version as FirmwareVersion,
-    solana_derivation_path::DerivationPath,
+    gorbagana_derivation_path::DerivationPath,
     std::{fmt, rc::Rc},
 };
 #[cfg(feature = "hidapi")]
@@ -13,8 +13,8 @@ use {
     crate::{ledger_error::LedgerError, locator::Manufacturer},
     log::*,
     num_traits::FromPrimitive,
-    solana_pubkey::Pubkey,
-    solana_signature::Signature,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signature::Signature,
     std::{cmp::min, convert::TryFrom},
 };
 
@@ -440,7 +440,7 @@ impl RemoteWallet<hidapi::DeviceInfo> for LedgerWallet {
         data: &[u8],
     ) -> Result<Signature, RemoteWalletError> {
         // If the first byte of the data is 0xff then it is an off-chain message
-        // because it starts with the Domain Specifier b"\xffsolana offchain".
+        // because it starts with the Domain Specifier b"\xffgorbagana offchain".
         // On-chain messages, in contrast, start with either 0x80 (MESSAGE_VERSION_PREFIX)
         // or the number of signatures (0x00 - 0x13).
         if !data.is_empty() && data[0] == 0xff {
@@ -537,8 +537,8 @@ impl RemoteWallet<hidapi::DeviceInfo> for LedgerWallet {
         message: &[u8],
     ) -> Result<Signature, RemoteWalletError> {
         if message.len()
-            > solana_offchain_message::v0::OffchainMessage::MAX_LEN_LEDGER
-                + solana_offchain_message::v0::OffchainMessage::HEADER_LEN
+            > gorbagana_offchain_message::v0::OffchainMessage::MAX_LEN_LEDGER
+                + gorbagana_offchain_message::v0::OffchainMessage::HEADER_LEN
         {
             return Err(RemoteWalletError::InvalidInput(
                 "Off-chain message to sign is too long".to_string(),

@@ -1,19 +1,19 @@
 ---
-title: Install the Solana CLI
-pagination_label: Install the Solana CLI
+title: Install the Gorbagana CLI
+pagination_label: Install the Gorbagana CLI
 sidebar_label: Installation
 sidebar_position: 1
 ---
 
-There are multiple ways to install the Solana tools on your computer depending
+There are multiple ways to install the Gorbagana tools on your computer depending
 on your preferred workflow:
 
-- [Use the Solana Install Tool (Simplest option)](#use-solanas-install-tool)
+- [Use the Gorbagana Install Tool (Simplest option)](#use-gorbaganas-install-tool)
 - [Download Prebuilt Binaries](#download-prebuilt-binaries)
 - [Build from Source](#build-from-source)
 - [Use Homebrew](#use-homebrew)
 
-## Use The Solana Install Tool
+## Use The Gorbagana Install Tool
 
 ### MacOS & Linux
 
@@ -35,29 +35,29 @@ sh -c "$(curl -sSfL https://release.anza.xyz/LATEST_AGAVE_RELEASE_VERSION/instal
 
 ```text
 downloading LATEST_AGAVE_RELEASE_VERSION installer
-Configuration: /home/solana/.config/solana/install/config.yml
-Active release directory: /home/solana/.local/share/solana/install/active_release
+Configuration: /home/gorbagana/.config/gorbagana/install/config.yml
+Active release directory: /home/gorbagana/.local/share/gorbagana/install/active_release
 * Release version: LATEST_AGAVE_RELEASE_VERSION
-* Release URL: https://github.com/anza-xyz/agave/releases/download/LATEST_AGAVE_RELEASE_VERSION/solana-release-x86_64-unknown-linux-gnu.tar.bz2
+* Release URL: https://github.com/anza-xyz/agave/releases/download/LATEST_AGAVE_RELEASE_VERSION/gorbagana-release-x86_64-unknown-linux-gnu.tar.bz2
 Update successful
 ```
 
 - Depending on your system, the end of the installer messaging may prompt you to
 
 ```bash
-Please update your PATH environment variable to include the solana programs:
+Please update your PATH environment variable to include the gorbagana programs:
 ```
 
 - If you get the above message, copy and paste the recommended command below it
   to update `PATH`
-- Confirm you have the desired version of `solana` installed by running:
+- Confirm you have the desired version of `gorbagana` installed by running:
 
 ```bash
-solana --version
+gorbagana --version
 ```
 
 - After a successful install, `agave-install update` may be used to easily
-  update the Solana software to a newer version at any time.
+  update the Gorbagana software to a newer version at any time.
 
 ---
 
@@ -70,7 +70,7 @@ solana --version
     prompted by a pop-up window asking “Do you want to allow this app to make
     changes to your device?”, click Yes.
 
-- Copy and paste the following command, then press Enter to download the Solana
+- Copy and paste the following command, then press Enter to download the Gorbagana
   installer into a temporary directory:
 
 ```bash
@@ -78,7 +78,7 @@ cmd /c "curl https://release.anza.xyz/LATEST_AGAVE_RELEASE_VERSION/agave-install
 ```
 
 - Copy and paste the following command, then press Enter to install the latest
-  version of Solana. If you see a security pop-up by your system, please select
+  version of Gorbagana. If you see a security pop-up by your system, please select
   to allow the program to run.
 
 ```bash
@@ -91,14 +91,14 @@ C:\agave-install-tmp\agave-install-init.exe LATEST_AGAVE_RELEASE_VERSION
   normal user
   - Search for "Command Prompt" in the search bar, then left click on the
     Command Prompt app icon, no need to run as Administrator)
-- Confirm you have the desired version of `solana` installed by entering:
+- Confirm you have the desired version of `gorbagana` installed by entering:
 
 ```bash
-solana --version
+gorbagana --version
 ```
 
 - After a successful install, `agave-install update` may be used to easily
-  update the Solana software to a newer version at any time.
+  update the Gorbagana software to a newer version at any time.
 
 ## Download Prebuilt Binaries
 
@@ -109,12 +109,12 @@ manually download and install the binaries.
 
 Download the binaries by navigating to
 [https://github.com/anza-xyz/agave/releases/latest](https://github.com/anza-xyz/agave/releases/latest),
-download **solana-release-x86_64-unknown-linux-gnu.tar.bz2**, then extract the
+download **gorbagana-release-x86_64-unknown-linux-gnu.tar.bz2**, then extract the
 archive:
 
 ```bash
-tar jxf solana-release-x86_64-unknown-linux-gnu.tar.bz2
-cd solana-release/
+tar jxf gorbagana-release-x86_64-unknown-linux-gnu.tar.bz2
+cd gorbagana-release/
 export PATH=$PWD/bin:$PATH
 ```
 
@@ -122,12 +122,12 @@ export PATH=$PWD/bin:$PATH
 
 Download the binaries by navigating to
 [https://github.com/anza-xyz/agave/releases/latest](https://github.com/anza-xyz/agave/releases/latest),
-download **solana-release-x86_64-apple-darwin.tar.bz2**, then extract the
+download **gorbagana-release-x86_64-apple-darwin.tar.bz2**, then extract the
 archive:
 
 ```bash
-tar jxf solana-release-x86_64-apple-darwin.tar.bz2
-cd solana-release/
+tar jxf gorbagana-release-x86_64-apple-darwin.tar.bz2
+cd gorbagana-release/
 export PATH=$PWD/bin:$PATH
 ```
 
@@ -135,14 +135,14 @@ export PATH=$PWD/bin:$PATH
 
 - Download the binaries by navigating to
   [https://github.com/anza-xyz/agave/releases/latest](https://github.com/anza-xyz/agave/releases/latest),
-  download **solana-release-x86_64-pc-windows-msvc.tar.bz2**, then extract the
+  download **gorbagana-release-x86_64-pc-windows-msvc.tar.bz2**, then extract the
   archive using WinZip or similar.
 
 - Open a Command Prompt and navigate to the directory into which you extracted
   the binaries and run:
 
 ```bash
-cd solana-release/
+cd gorbagana-release/
 set PATH=%cd%/bin;%PATH%
 ```
 
@@ -216,7 +216,7 @@ Users on Windows 10 or 11 may need to install
 [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install)
 (WSL) in order to be able to build from source. WSL provides a Linux environment
 that runs inside your existing Windows installation. You can then run regular
-Linux software, including the Linux versions of Solana CLI.
+Linux software, including the Linux versions of Gorbagana CLI.
 
 After installed, run `wsl` from your Windows terminal, then continue through the
 [Debian and Other Linux Distributions](#for-debian-and-other-linux-distributions)
@@ -226,9 +226,9 @@ above.
 
 ### Building from Source
 
-After installing the prerequisites, proceed with building Solana from source,
+After installing the prerequisites, proceed with building Gorbagana from source,
 navigate to
-[Solana's GitHub releases page](https://github.com/anza-xyz/agave/releases/latest),
+[Gorbagana's GitHub releases page](https://github.com/anza-xyz/agave/releases/latest),
 and download the **Source Code** archive. Extract the code and build the
 binaries with:
 
@@ -251,14 +251,14 @@ your MacOS or Linux machine.
 
 ### MacOS & Linux
 
-- Follow instructions at: https://formulae.brew.sh/formula/solana
+- Follow instructions at: https://formulae.brew.sh/formula/gorbagana
 
-[Homebrew formulae](https://github.com/Homebrew/homebrew-core/blob/HEAD/Formula/solana.rb)
-is updated after each `solana` release, however it is possible that the Homebrew
+[Homebrew formulae](https://github.com/Homebrew/homebrew-core/blob/HEAD/Formula/gorbagana.rb)
+is updated after each `gorbagana` release, however it is possible that the Homebrew
 version is outdated.
 
-- Confirm you have the desired version of `solana` installed by entering:
+- Confirm you have the desired version of `gorbagana` installed by entering:
 
 ```bash
-solana --version
+gorbagana --version
 ```

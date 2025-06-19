@@ -8,8 +8,8 @@ use {
     bv::BitVec,
     modular_bitfield::prelude::*,
     num_enum::FromPrimitive,
-    solana_clock::Slot,
-    solana_pubkey::Pubkey,
+    gorbagana_clock::Slot,
+    gorbagana_pubkey::Pubkey,
     std::{fmt::Debug, marker::PhantomData},
 };
 

@@ -9,7 +9,7 @@ After you have successfully setup and started a
 of your choice), you will want to become familiar with how to operate your
 validator on a day-to-day basis. During daily operations, you will be
 [monitoring your server](./monitoring.md), updating software regularly (both the
-Solana validator software and operating system packages), and managing your vote
+Gorbagana validator software and operating system packages), and managing your vote
 account and identity account.
 
 All of these skills are critical to practice. Maximizing your validator uptime
@@ -17,35 +17,35 @@ is an important part of being a good operator.
 
 ## Educational Workshops
 
-The Solana validator community holds regular educational workshops. You can
+The Gorbagana validator community holds regular educational workshops. You can
 watch past workshops through the
-[Solana validator educational workshops playlist](https://www.youtube.com/watch?v=86zySQ5vGW8&list=PLilwLeBwGuK6jKrmn7KOkxRxS9tvbRa5p).
+[Gorbagana validator educational workshops playlist](https://www.youtube.com/watch?v=86zySQ5vGW8&list=PLilwLeBwGuK6jKrmn7KOkxRxS9tvbRa5p).
 
 ## Community Validator calls
 
-The Solana validator community holds regular calls. 
-There is the 'Solana Foundation Validator Discussion' which is hosted by the Solana Foundation and the 'Community Led Validator Call'
+The Gorbagana validator community holds regular calls. 
+There is the 'Gorbagana Foundation Validator Discussion' which is hosted by the Gorbagana Foundation and the 'Community Led Validator Call'
 which is hosted by the community itself. 
 
-### Solana Foundation Validator Discussion
+### Gorbagana Foundation Validator Discussion
 
-This is a monthly call that is hosted by the Solana Foundation. 
+This is a monthly call that is hosted by the Gorbagana Foundation. 
 - Schedule: every second Thursday of the month 18:00 CET
 - Agenda: See [validator-announcements channel in Discord](https://discord.com/channels/428295358100013066/586252910506016798). 
 - This call **is recorded** and past calls can be watched back on the [Community Validator Discussions playlist](https://www.youtube.com/playlist?list=PLilwLeBwGuK78yjGBZwYhTf7rao0t13Zw)
 
 ### Community Led Validator Call
 
-This is also a monthly call which is hosted by the Solana validator community itself.  
+This is also a monthly call which is hosted by the Gorbagana validator community itself.  
 - Schedule: every fourth Thursday of the month 18:00 CET
-- Agenda: See [HackMD site](https://hackmd.io/1DFauFMWTZG37-U7CXhxMg?view#Solana-Community-Validator-Call-Agendas). 
+- Agenda: See [HackMD site](https://hackmd.io/1DFauFMWTZG37-U7CXhxMg?view#Gorbagana-Community-Validator-Call-Agendas). 
 - This call is **not recorded**
 
 ***Please note that the scheduling of these calls can be changed last minute due to any circumstances. For the most up-to-date information go to the [validator-announcements channel in Discord](https://discord.com/channels/428295358100013066/586252910506016798).***
 
 ## Help with the validator command line
 
-From within the Solana CLI, you can execute the `agave-validator` command with
+From within the Gorbagana CLI, you can execute the `agave-validator` command with
 the `--help` flag to get a better understanding of the flags and sub commands
 available.
 
@@ -57,7 +57,7 @@ agave-validator --help
 
 There are many operational reasons you may want to restart your validator. As a
 best practice, you should avoid a restart during a leader slot. A
-[leader slot](https://solana.com/docs/terminology#leader-schedule) is the time
+[leader slot](https://gorbagana.com/docs/terminology#leader-schedule) is the time
 when your validator is expected to produce blocks. For the health of the cluster
 and also for your validator's ability to earn transaction fee rewards, you do
 not want your validator to be offline during an opportunity to produce blocks.
@@ -65,7 +65,7 @@ not want your validator to be offline during an opportunity to produce blocks.
 To see the full leader schedule for an epoch, use the following command:
 
 ```
-solana leader-schedule
+gorbagana leader-schedule
 ```
 
 Based on the current slot and the leader schedule, you can calculate open time
@@ -84,7 +84,7 @@ agave-validator exit --help
 ## Upgrading
 
 There are many ways to upgrade the
-[Solana CLI software](../../cli/install.md). As an operator, you
+[Gorbagana CLI software](../../cli/install.md). As an operator, you
 will need to upgrade often, so it is important to get comfortable with this
 process.
 
@@ -121,9 +121,9 @@ This command downloads the executable for `2.0.15` and installs it into a
 `.local` directory. You can also look at `agave-install --help` for more
 options.
 
-> **Note** this command only works if you already have the solana cli installed.
+> **Note** this command only works if you already have the gorbagana cli installed.
 > If you do not have the cli installed, refer to
-> [install solana cli tools](../../cli/install.md)
+> [install gorbagana cli tools](../../cli/install.md)
 
 ### Restart
 
@@ -161,7 +161,7 @@ To avoid downloading a snapshot on restart, add the following flag to the
 ```
 
 If you use this flag with the `agave-validator` command, make sure that you run
-`solana catchup <pubkey>` after your validator starts to make sure that the
+`gorbagana catchup <pubkey>` after your validator starts to make sure that the
 validator is catching up in a reasonable time. After some time (potentially a
 few hours), if it appears that your validator continues to fall behind, then you
 may have to download a new snapshot.
@@ -185,12 +185,12 @@ threshold that you set.
 In the case that there are network troubles with one or more of your known
 validators, then you may have to manually download the snapshot. To manually
 download a snapshot from one of your known validators, first, find the IP
-address of the validator in using the `solana gossip` command. In the example
+address of the validator in using the `gorbagana gossip` command. In the example
 below, `5D1fNXzvv5NjV1ysLjirC4WY92RNsVH18vjmcszZd8on` is the pubkey of one of my
 known validators:
 
 ```
-solana gossip | grep 5D1fNXzvv5NjV1ysLjirC4WY92RNsVH18vjmcszZd8on
+gorbagana gossip | grep 5D1fNXzvv5NjV1ysLjirC4WY92RNsVH18vjmcszZd8on
 ```
 
 The IP address of the validators is `139.178.68.207` and the open port on this
@@ -226,7 +226,7 @@ up to you. As a best practice, make sure to check the account regularly and
 refill or deduct from it as needed. To check the account balance do:
 
 ```
-solana balance validator-keypair.json
+gorbagana balance validator-keypair.json
 ```
 
 > **Note** `agave-watchtower` can monitor for a minimum validator identity
@@ -239,20 +239,20 @@ server. It should be stored on a hardware wallet, paper wallet, or multisig
 mitigates the risk of hacking and theft of funds.
 
 To withdraw your funds from your vote account, you will need to run
-`solana withdraw-from-vote-account` on a trusted computer. For example, on a
+`gorbagana withdraw-from-vote-account` on a trusted computer. For example, on a
 trusted computer, you could withdraw all of the funds from your vote account
 (excluding the rent exempt minimum). The below example assumes you have a
 separate keypair to store your funds called `person-keypair.json`
 
 ```
-solana withdraw-from-vote-account \
+gorbagana withdraw-from-vote-account \
    vote-account-keypair.json \
    person-keypair.json ALL \
    --authorized-withdrawer authorized-withdrawer-keypair.json
 ```
 
 To get more information on the command, use
-`solana withdraw-from-vote-account --help`.
+`gorbagana withdraw-from-vote-account --help`.
 
 For a more detailed explanation of the different keypairs and other related
 operations refer to

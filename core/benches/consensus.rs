@@ -1,17 +1,17 @@
 #![feature(test)]
 
-extern crate solana_core;
+extern crate gorbagana_core;
 extern crate test;
 
 use {
-    solana_core::{
+    gorbagana_core::{
         consensus::{tower_storage::FileTowerStorage, Tower},
         vote_simulator::VoteSimulator,
     },
-    solana_keypair::Keypair,
-    solana_pubkey::Pubkey,
-    solana_runtime::{bank::Bank, bank_forks::BankForks},
-    solana_signer::Signer,
+    gorbagana_keypair::Keypair,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_runtime::{bank::Bank, bank_forks::BankForks},
+    gorbagana_signer::Signer,
     std::{
         collections::{HashMap, HashSet},
         sync::Arc,

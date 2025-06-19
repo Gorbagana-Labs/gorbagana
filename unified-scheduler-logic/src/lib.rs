@@ -13,9 +13,9 @@
 //! [`::schedule_next_unblocked_task()`](SchedulingStateMachine::schedule_next_unblocked_task) as
 //! newly-unblocked runnable ones.
 //!
-//! The design principle of this crate (`solana-unified-scheduler-logic`) is simplicity for the
+//! The design principle of this crate (`gorbagana-unified-scheduler-logic`) is simplicity for the
 //! separation of concern. It is interacted only with a few of its public API by
-//! `solana-unified-scheduler-pool`. This crate doesn't know about banks, slots, solana-runtime,
+//! `gorbagana-unified-scheduler-pool`. This crate doesn't know about banks, slots, gorbagana-runtime,
 //! threads, crossbeam-channel at all. Becasue of this, it's deterministic, easy-to-unit-test, and
 //! its perf footprint is well understood. It really focuses on its single job: sorting
 //! transactions in executable order.
@@ -98,9 +98,9 @@
 use {
     crate::utils::{ShortCounter, Token, TokenCell},
     assert_matches::assert_matches,
-    solana_pubkey::Pubkey,
-    solana_runtime_transaction::runtime_transaction::RuntimeTransaction,
-    solana_transaction::sanitized::SanitizedTransaction,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_runtime_transaction::runtime_transaction::RuntimeTransaction,
+    gorbagana_transaction::sanitized::SanitizedTransaction,
     static_assertions::const_assert_eq,
     std::{collections::VecDeque, mem, sync::Arc},
     unwrap_none::UnwrapNone,
@@ -313,7 +313,7 @@ mod utils {
 
         #[test]
         #[should_panic(
-            expected = "\"solana_unified_scheduler_logic::utils::Token<usize>\" is wrongly \
+            expected = "\"gorbagana_unified_scheduler_logic::utils::Token<usize>\" is wrongly \
                         initialized twice on Thread"
         )]
         fn test_second_creation_of_tokens_in_a_thread() {
@@ -629,7 +629,7 @@ impl UsageQueueInner {
 
 const_assert_eq!(mem::size_of::<TokenCell<UsageQueueInner>>(), 40);
 
-/// Scheduler's internal data for each address ([`Pubkey`](`solana_pubkey::Pubkey`)). Very
+/// Scheduler's internal data for each address ([`Pubkey`](`gorbagana_pubkey::Pubkey`)). Very
 /// opaque wrapper type; no methods just with [`::clone()`](Clone::clone) and
 /// [`::default()`](Default::default).
 #[derive(Debug, Clone, Default)]
@@ -637,7 +637,7 @@ pub struct UsageQueue(Arc<TokenCell<UsageQueueInner>>);
 const_assert_eq!(mem::size_of::<UsageQueue>(), 8);
 
 /// A high-level `struct`, managing the overall scheduling of [tasks](Task), to be used by
-/// `solana-unified-scheduler-pool`.
+/// `gorbagana-unified-scheduler-pool`.
 pub struct SchedulingStateMachine {
     unblocked_task_queue: VecDeque<Task>,
     /// The number of all tasks which aren't `deschedule_task()`-ed yet while their ownership has
@@ -1034,10 +1034,10 @@ impl SchedulingStateMachine {
 mod tests {
     use {
         super::*,
-        solana_instruction::{AccountMeta, Instruction},
-        solana_message::Message,
-        solana_pubkey::Pubkey,
-        solana_transaction::{sanitized::SanitizedTransaction, Transaction},
+        gorbagana_instruction::{AccountMeta, Instruction},
+        gorbagana_message::Message,
+        gorbagana_pubkey::Pubkey,
+        gorbagana_transaction::{sanitized::SanitizedTransaction, Transaction},
         std::{cell::RefCell, collections::HashMap, rc::Rc},
     };
 

@@ -5,8 +5,8 @@ use {
     crossbeam_channel::{unbounded, Receiver, RecvTimeoutError, Sender},
     gethostname::gethostname,
     log::*,
-    solana_cluster_type::ClusterType,
-    solana_sha256_hasher::hash,
+    gorbagana_cluster_type::ClusterType,
+    gorbagana_sha256_hasher::hash,
     std::{
         cmp,
         collections::HashMap,

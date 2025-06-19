@@ -1,4 +1,4 @@
-use {super::pod, solana_curve25519::ristretto::PodRistrettoPoint};
+use {super::pod, gorbagana_curve25519::ristretto::PodRistrettoPoint};
 
 impl From<(pod::PedersenCommitment, pod::DecryptHandle)> for pod::ElGamalCiphertext {
     fn from((commitment, handle): (pod::PedersenCommitment, pod::DecryptHandle)) -> Self {
@@ -45,7 +45,7 @@ impl From<PodRistrettoPoint> for pod::DecryptHandle {
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 mod target_arch {
     use {super::pod, curve25519_dalek::ristretto::CompressedRistretto};
 
@@ -62,7 +62,7 @@ mod target_arch {
     }
 }
 
-#[cfg(target_os = "solana")]
+#[cfg(target_os = "gorbagana")]
 #[allow(unused_variables)]
 mod target_arch {}
 

@@ -1,7 +1,7 @@
 use {
     crate::new_dummy_x509_certificate,
     rustls::pki_types::{CertificateDer, PrivateKeyDer},
-    solana_keypair::Keypair,
+    gorbagana_keypair::Keypair,
 };
 
 pub struct QuicClientCertificate {

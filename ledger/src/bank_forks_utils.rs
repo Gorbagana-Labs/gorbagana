@@ -9,9 +9,9 @@ use {
         use_snapshot_archives_at_startup::{self, UseSnapshotArchivesAtStartup},
     },
     log::*,
-    solana_accounts_db::accounts_update_notifier_interface::AccountsUpdateNotifier,
-    solana_genesis_config::GenesisConfig,
-    solana_runtime::{
+    gorbagana_accounts_db::accounts_update_notifier_interface::AccountsUpdateNotifier,
+    gorbagana_genesis_config::GenesisConfig,
+    gorbagana_runtime::{
         bank_forks::BankForks,
         snapshot_archive_info::{
             FullSnapshotArchiveInfo, IncrementalSnapshotArchiveInfo, SnapshotArchiveInfoGetter,

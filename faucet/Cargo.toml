@@ -1,7 +1,7 @@
 [package]
-name = "solana-faucet"
-description = "Solana Faucet"
-documentation = "https://docs.rs/solana-faucet"
+name = "gorbagana-faucet"
+description = "Gorbagana Faucet"
+documentation = "https://docs.rs/gorbagana-faucet"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -14,10 +14,10 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [lib]
 crate-type = ["lib"]
-name = "solana_faucet"
+name = "gorbagana_faucet"
 
 [[bin]]
-name = "solana-faucet"
+name = "gorbagana-faucet"
 path = "src/bin/faucet.rs"
 
 [dependencies]
@@ -27,22 +27,22 @@ crossbeam-channel = { workspace = true }
 log = { workspace = true }
 serde = { workspace = true }
 serde_derive = { workspace = true }
-solana-clap-utils = { workspace = true }
-solana-cli-config = { workspace = true }
-solana-hash = "=2.3.0"
-solana-instruction = "=2.3.0"
-solana-keypair = "=2.2.1"
-solana-logger = "=2.3.1"
-solana-message = "=2.4.0"
-solana-metrics = { workspace = true }
-solana-native-token = "=2.2.2"
-solana-packet = "=2.2.1"
-solana-pubkey = { version = "=2.4.0", features = ["rand"] }
-solana-signer = "=2.2.1"
-solana-system-interface = "=1.0"
-solana-system-transaction = "=2.2.1"
-solana-transaction = "=2.2.3"
-solana-version = { workspace = true }
+gorbagana-clap-utils = { workspace = true }
+gorbagana-cli-config = { workspace = true }
+gorbagana-hash = "=2.3.0"
+gorbagana-instruction = "=2.3.0"
+gorbagana-keypair = "=2.2.1"
+gorbagana-logger = "=2.3.1"
+gorbagana-message = "=2.4.0"
+gorbagana-metrics = { workspace = true }
+gorbagana-native-token = "=2.2.2"
+gorbagana-packet = "=2.2.1"
+gorbagana-pubkey = { version = "=2.4.0", features = ["rand"] }
+gorbagana-signer = "=2.2.1"
+gorbagana-system-interface = "=1.0"
+gorbagana-system-transaction = "=2.2.1"
+gorbagana-transaction = "=2.2.3"
+gorbagana-version = { workspace = true }
 spl-memo = { version = "=6.0.0", features = ["no-entrypoint"] }
 thiserror = { workspace = true }
 tokio = { workspace = true, features = ["full"] }

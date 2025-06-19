@@ -1,7 +1,7 @@
 [package]
 name = "noop"
 version = "3.0.0"
-description = "Solana SBF test program written in Rust"
+description = "Gorbagana SBF test program written in Rust"
 authors = ["Anza Maintainers <maintainers@anza.xyz>"]
 repository = "https://github.com/anza-xyz/agave"
 license = "Apache-2.0"
@@ -10,10 +10,10 @@ edition = "2021"
 publish = false
 
 [dependencies]
-solana-account-info = "=2.3.0"
-solana-program-entrypoint = "=2.3.0"
-solana-program-error = "=2.2.2"
-solana-pubkey = "=2.4.0"
+gorbagana-account-info = "=2.3.0"
+gorbagana-program-entrypoint = "=2.3.0"
+gorbagana-program-error = "=2.2.2"
+gorbagana-pubkey = "=2.4.0"
 
 [lib]
 crate-type = ["cdylib"]

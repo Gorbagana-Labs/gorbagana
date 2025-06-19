@@ -6,9 +6,9 @@ use {
     base64::{prelude::BASE64_STANDARD, Engine},
     clap::{crate_description, crate_name, value_t, value_t_or_exit, App, Arg, ArgMatches},
     itertools::Itertools,
-    solana_account::{Account, AccountSharedData, ReadableAccount, WritableAccount},
-    solana_accounts_db::hardened_unpack::MAX_GENESIS_ARCHIVE_UNPACKED_SIZE,
-    solana_clap_utils::{
+    gorbagana_account::{Account, AccountSharedData, ReadableAccount, WritableAccount},
+    gorbagana_accounts_db::hardened_unpack::MAX_GENESIS_ARCHIVE_UNPACKED_SIZE,
+    gorbagana_clap_utils::{
         input_parsers::{
             cluster_type_of, pubkey_of, pubkeys_of, unix_timestamp_from_rfc3339_datetime,
         },
@@ -17,32 +17,32 @@ use {
             is_valid_percentage, normalize_to_url_if_moniker,
         },
     },
-    solana_clock as clock,
-    solana_commitment_config::CommitmentConfig,
-    solana_entry::poh::compute_hashes_per_tick,
-    solana_epoch_schedule::EpochSchedule,
-    solana_feature_gate_interface as feature,
-    solana_fee_calculator::FeeRateGovernor,
-    solana_genesis::{
+    gorbagana_clock as clock,
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_entry::poh::compute_hashes_per_tick,
+    gorbagana_epoch_schedule::EpochSchedule,
+    gorbagana_feature_gate_interface as feature,
+    gorbagana_fee_calculator::FeeRateGovernor,
+    gorbagana_genesis::{
         genesis_accounts::add_genesis_accounts, Base64Account, StakedValidatorAccountInfo,
         ValidatorAccountsFile,
     },
-    solana_genesis_config::{ClusterType, GenesisConfig},
-    solana_inflation::Inflation,
-    solana_keypair::{read_keypair_file, Keypair},
-    solana_ledger::{blockstore::create_new_ledger, blockstore_options::LedgerColumnOptions},
-    solana_loader_v3_interface::state::UpgradeableLoaderState,
-    solana_native_token::sol_to_lamports,
-    solana_poh_config::PohConfig,
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_api::request::MAX_MULTIPLE_ACCOUNTS,
-    solana_sdk_ids::system_program,
-    solana_signer::Signer,
-    solana_stake_interface::state::StakeStateV2,
-    solana_stake_program::stake_state,
-    solana_vote_program::vote_state::{self, VoteState},
+    gorbagana_genesis_config::{ClusterType, GenesisConfig},
+    gorbagana_inflation::Inflation,
+    gorbagana_keypair::{read_keypair_file, Keypair},
+    gorbagana_ledger::{blockstore::create_new_ledger, blockstore_options::LedgerColumnOptions},
+    gorbagana_loader_v3_interface::state::UpgradeableLoaderState,
+    gorbagana_native_token::sol_to_lamports,
+    gorbagana_poh_config::PohConfig,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent::Rent,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_rpc_client_api::request::MAX_MULTIPLE_ACCOUNTS,
+    gorbagana_sdk_ids::system_program,
+    gorbagana_signer::Signer,
+    gorbagana_stake_interface::state::StakeStateV2,
+    gorbagana_stake_program::stake_state,
+    gorbagana_vote_program::vote_state::{self, VoteState},
     std::{
         collections::HashMap,
         error,
@@ -285,7 +285,7 @@ fn rent_exempt_check(stake_lamports: u64, exempt: u64) -> io::Result<()> {
 
 #[allow(clippy::cognitive_complexity)]
 fn main() -> Result<(), Box<dyn error::Error>> {
-    let default_faucet_pubkey = solana_cli_config::Config::default().keypair_path;
+    let default_faucet_pubkey = gorbagana_cli_config::Config::default().keypair_path;
     let fee_rate_governor = FeeRateGovernor::default();
     let (
         default_target_lamports_per_signature,
@@ -328,7 +328,7 @@ fn main() -> Result<(), Box<dyn error::Error>> {
 
     let matches = App::new(crate_name!())
         .about(crate_description!())
-        .version(solana_version::version!())
+        .version(gorbagana_version::version!())
         .arg(
             Arg::with_name("creation_time")
                 .long("creation-time")
@@ -601,7 +601,7 @@ fn main() -> Result<(), Box<dyn error::Error>> {
                 .global(true)
                 .validator(is_url_or_moniker)
                 .help(
-                    "URL for Solana's JSON RPC or moniker (or their first letter): \
+                    "URL for Gorbagana's JSON RPC or moniker (or their first letter): \
                     [mainnet-beta, testnet, devnet, localhost]. Used for cloning \
                     feature sets",
                 ),
@@ -747,10 +747,10 @@ fn main() -> Result<(), Box<dyn error::Error>> {
         );
     }
 
-    solana_stake_program::add_genesis_accounts(&mut genesis_config);
-    solana_runtime::genesis_utils::activate_all_features(&mut genesis_config);
+    gorbagana_stake_program::add_genesis_accounts(&mut genesis_config);
+    gorbagana_runtime::genesis_utils::activate_all_features(&mut genesis_config);
     if !features_to_deactivate.is_empty() {
-        solana_runtime::genesis_utils::deactivate_features(
+        gorbagana_runtime::genesis_utils::deactivate_features(
             &mut genesis_config,
             &features_to_deactivate,
         );
@@ -871,7 +871,7 @@ fn main() -> Result<(), Box<dyn error::Error>> {
         }
     }
 
-    solana_logger::setup();
+    gorbagana_logger::setup();
     create_new_ledger(
         &ledger_path,
         &genesis_config,
@@ -887,9 +887,9 @@ fn main() -> Result<(), Box<dyn error::Error>> {
 mod tests {
     use {
         super::*,
-        solana_borsh::v1 as borsh1,
-        solana_genesis_config::GenesisConfig,
-        solana_stake_interface as stake,
+        gorbagana_borsh::v1 as borsh1,
+        gorbagana_genesis_config::GenesisConfig,
+        gorbagana_stake_interface as stake,
         std::{collections::HashMap, fs::remove_file, io::Write, path::Path},
     };
 
@@ -902,27 +902,27 @@ mod tests {
 
         let mut genesis_accounts = HashMap::new();
         genesis_accounts.insert(
-            solana_pubkey::new_rand().to_string(),
+            gorbagana_pubkey::new_rand().to_string(),
             Base64Account {
-                owner: solana_pubkey::new_rand().to_string(),
+                owner: gorbagana_pubkey::new_rand().to_string(),
                 balance: 2,
                 executable: false,
                 data: String::from("aGVsbG8="),
             },
         );
         genesis_accounts.insert(
-            solana_pubkey::new_rand().to_string(),
+            gorbagana_pubkey::new_rand().to_string(),
             Base64Account {
-                owner: solana_pubkey::new_rand().to_string(),
+                owner: gorbagana_pubkey::new_rand().to_string(),
                 balance: 1,
                 executable: true,
                 data: String::from("aGVsbG8gd29ybGQ="),
             },
         );
         genesis_accounts.insert(
-            solana_pubkey::new_rand().to_string(),
+            gorbagana_pubkey::new_rand().to_string(),
             Base64Account {
-                owner: solana_pubkey::new_rand().to_string(),
+                owner: gorbagana_pubkey::new_rand().to_string(),
                 balance: 3,
                 executable: true,
                 data: String::from("bWUgaGVsbG8gdG8gd29ybGQ="),
@@ -976,27 +976,27 @@ mod tests {
         // Test more accounts can be appended
         let mut genesis_accounts1 = HashMap::new();
         genesis_accounts1.insert(
-            solana_pubkey::new_rand().to_string(),
+            gorbagana_pubkey::new_rand().to_string(),
             Base64Account {
-                owner: solana_pubkey::new_rand().to_string(),
+                owner: gorbagana_pubkey::new_rand().to_string(),
                 balance: 6,
                 executable: true,
                 data: String::from("eW91IGFyZQ=="),
             },
         );
         genesis_accounts1.insert(
-            solana_pubkey::new_rand().to_string(),
+            gorbagana_pubkey::new_rand().to_string(),
             Base64Account {
-                owner: solana_pubkey::new_rand().to_string(),
+                owner: gorbagana_pubkey::new_rand().to_string(),
                 balance: 5,
                 executable: false,
                 data: String::from("bWV0YSBzdHJpbmc="),
             },
         );
         genesis_accounts1.insert(
-            solana_pubkey::new_rand().to_string(),
+            gorbagana_pubkey::new_rand().to_string(),
             Base64Account {
-                owner: solana_pubkey::new_rand().to_string(),
+                owner: gorbagana_pubkey::new_rand().to_string(),
                 balance: 10,
                 executable: false,
                 data: String::from("YmFzZTY0IHN0cmluZw=="),
@@ -1062,7 +1062,7 @@ mod tests {
         genesis_accounts2.insert(
             serde_json::to_string(&account_keypairs[0].to_bytes().to_vec()).unwrap(),
             Base64Account {
-                owner: solana_pubkey::new_rand().to_string(),
+                owner: gorbagana_pubkey::new_rand().to_string(),
                 balance: 20,
                 executable: true,
                 data: String::from("Y2F0IGRvZw=="),
@@ -1071,7 +1071,7 @@ mod tests {
         genesis_accounts2.insert(
             serde_json::to_string(&account_keypairs[1].to_bytes().to_vec()).unwrap(),
             Base64Account {
-                owner: solana_pubkey::new_rand().to_string(),
+                owner: gorbagana_pubkey::new_rand().to_string(),
                 balance: 15,
                 executable: false,
                 data: String::from("bW9ua2V5IGVsZXBoYW50"),
@@ -1080,7 +1080,7 @@ mod tests {
         genesis_accounts2.insert(
             serde_json::to_string(&account_keypairs[2].to_bytes().to_vec()).unwrap(),
             Base64Account {
-                owner: solana_pubkey::new_rand().to_string(),
+                owner: gorbagana_pubkey::new_rand().to_string(),
                 balance: 30,
                 executable: true,
                 data: String::from("Y29tYSBtb2Nh"),
@@ -1245,23 +1245,23 @@ mod tests {
 
         let validator_accounts = vec![
             StakedValidatorAccountInfo {
-                identity_account: solana_pubkey::new_rand().to_string(),
-                vote_account: solana_pubkey::new_rand().to_string(),
-                stake_account: solana_pubkey::new_rand().to_string(),
+                identity_account: gorbagana_pubkey::new_rand().to_string(),
+                vote_account: gorbagana_pubkey::new_rand().to_string(),
+                stake_account: gorbagana_pubkey::new_rand().to_string(),
                 balance_lamports: 100000000000,
                 stake_lamports: 10000000000,
             },
             StakedValidatorAccountInfo {
-                identity_account: solana_pubkey::new_rand().to_string(),
-                vote_account: solana_pubkey::new_rand().to_string(),
-                stake_account: solana_pubkey::new_rand().to_string(),
+                identity_account: gorbagana_pubkey::new_rand().to_string(),
+                vote_account: gorbagana_pubkey::new_rand().to_string(),
+                stake_account: gorbagana_pubkey::new_rand().to_string(),
                 balance_lamports: 200000000000,
                 stake_lamports: 20000000000,
             },
             StakedValidatorAccountInfo {
-                identity_account: solana_pubkey::new_rand().to_string(),
-                vote_account: solana_pubkey::new_rand().to_string(),
-                stake_account: solana_pubkey::new_rand().to_string(),
+                identity_account: gorbagana_pubkey::new_rand().to_string(),
+                vote_account: gorbagana_pubkey::new_rand().to_string(),
+                stake_account: gorbagana_pubkey::new_rand().to_string(),
                 balance_lamports: 300000000000,
                 stake_lamports: 30000000000,
             },
@@ -1335,7 +1335,7 @@ mod tests {
                     let stake_account = AccountSharedData::new(
                         b64_account.stake_lamports,
                         StakeStateV2::size_of(),
-                        &solana_stake_program::id(),
+                        &gorbagana_stake_program::id(),
                     );
                     let rent_exempt_reserve =
                         &Rent::default().minimum_balance(stake_account.data().len());

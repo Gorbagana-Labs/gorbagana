@@ -1,7 +1,7 @@
 [package]
-name = "solana-poseidon"
-description = "Solana Poseidon hashing"
-documentation = "https://docs.rs/solana-poseidon"
+name = "gorbagana-poseidon"
+description = "Gorbagana Poseidon hashing"
+documentation = "https://docs.rs/gorbagana-poseidon"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -15,12 +15,12 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 thiserror = { workspace = true }
 
-[target.'cfg(not(target_os = "solana"))'.dependencies]
+[target.'cfg(not(target_os = "gorbagana"))'.dependencies]
 ark-bn254 = { workspace = true }
 light-poseidon = { workspace = true }
 
-[target.'cfg(target_os = "solana")'.dependencies]
-solana-define-syscall = { workspace = true }
+[target.'cfg(target_os = "gorbagana")'.dependencies]
+gorbagana-define-syscall = { workspace = true }
 
 [lints]
 workspace = true

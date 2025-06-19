@@ -5,18 +5,18 @@ use {
     chrono::{DateTime, Local, SecondsFormat, TimeZone, Utc},
     console::style,
     indicatif::{ProgressBar, ProgressStyle},
-    solana_bincode::limited_deserialize,
-    solana_cli_config::SettingType,
-    solana_clock::UnixTimestamp,
-    solana_hash::Hash,
-    solana_message::{compiled_instruction::CompiledInstruction, v0::MessageAddressTableLookup},
-    solana_native_token::lamports_to_sol,
-    solana_pubkey::Pubkey,
-    solana_signature::Signature,
-    solana_stake_interface as stake,
-    solana_transaction::versioned::{TransactionVersion, VersionedTransaction},
-    solana_transaction_error::TransactionError,
-    solana_transaction_status::{
+    gorbagana_bincode::limited_deserialize,
+    gorbagana_cli_config::SettingType,
+    gorbagana_clock::UnixTimestamp,
+    gorbagana_hash::Hash,
+    gorbagana_message::{compiled_instruction::CompiledInstruction, v0::MessageAddressTableLookup},
+    gorbagana_native_token::lamports_to_sol,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signature::Signature,
+    gorbagana_stake_interface as stake,
+    gorbagana_transaction::versioned::{TransactionVersion, VersionedTransaction},
+    gorbagana_transaction_error::TransactionError,
+    gorbagana_transaction_status::{
         Rewards, UiReturnDataEncoding, UiTransactionReturnData, UiTransactionStatusMeta,
     },
     spl_memo::{id as spl_memo_id, v1::id as spl_memo_v1_id},
@@ -437,11 +437,11 @@ fn write_instruction<'a, W: io::Write>(
 
     let mut raw = true;
     if let AccountKeyType::Known(program_pubkey) = program_pubkey {
-        if program_pubkey == &solana_vote_program::id() {
+        if program_pubkey == &gorbagana_vote_program::id() {
             if let Ok(vote_instruction) =
-                limited_deserialize::<solana_vote_program::vote_instruction::VoteInstruction>(
+                limited_deserialize::<gorbagana_vote_program::vote_instruction::VoteInstruction>(
                     &instruction.data,
-                    solana_packet::PACKET_DATA_SIZE as u64,
+                    gorbagana_packet::PACKET_DATA_SIZE as u64,
                 )
             {
                 writeln!(w, "{prefix}  {vote_instruction:?}")?;
@@ -450,16 +450,16 @@ fn write_instruction<'a, W: io::Write>(
         } else if program_pubkey == &stake::program::id() {
             if let Ok(stake_instruction) = limited_deserialize::<stake::instruction::StakeInstruction>(
                 &instruction.data,
-                solana_packet::PACKET_DATA_SIZE as u64,
+                gorbagana_packet::PACKET_DATA_SIZE as u64,
             ) {
                 writeln!(w, "{prefix}  {stake_instruction:?}")?;
                 raw = false;
             }
-        } else if program_pubkey == &solana_sdk_ids::system_program::id() {
+        } else if program_pubkey == &gorbagana_sdk_ids::system_program::id() {
             if let Ok(system_instruction) =
-                limited_deserialize::<solana_system_interface::instruction::SystemInstruction>(
+                limited_deserialize::<gorbagana_system_interface::instruction::SystemInstruction>(
                     &instruction.data,
-                    solana_packet::PACKET_DATA_SIZE as u64,
+                    gorbagana_packet::PACKET_DATA_SIZE as u64,
                 )
             {
                 writeln!(w, "{prefix}  {system_instruction:?}")?;
@@ -723,16 +723,16 @@ pub fn unix_timestamp_to_string(unix_timestamp: UnixTimestamp) -> String {
 mod test {
     use {
         super::*,
-        solana_keypair::Keypair,
-        solana_message::{
+        gorbagana_keypair::Keypair,
+        gorbagana_message::{
             v0::{self, LoadedAddresses},
             Message as LegacyMessage, MessageHeader, VersionedMessage,
         },
-        solana_pubkey::Pubkey,
-        solana_signer::Signer,
-        solana_transaction::Transaction,
-        solana_transaction_context::TransactionReturnData,
-        solana_transaction_status::{Reward, RewardType, TransactionStatusMeta},
+        gorbagana_pubkey::Pubkey,
+        gorbagana_signer::Signer,
+        gorbagana_transaction::Transaction,
+        gorbagana_transaction_context::TransactionReturnData,
+        gorbagana_transaction_status::{Reward, RewardType, TransactionStatusMeta},
         std::io::BufWriter,
     };
 

@@ -1,10 +1,10 @@
 use {
-    solana_clock::Slot,
-    solana_ledger::{
+    gorbagana_clock::Slot,
+    gorbagana_ledger::{
         blockstore::Blockstore,
         shred::{Nonce, SIZE_OF_NONCE},
     },
-    solana_packet::Packet,
+    gorbagana_packet::Packet,
     std::{io, net::SocketAddr},
 };
 
@@ -46,13 +46,13 @@ pub fn repair_response_packet_from_bytes(
 mod test {
     use {
         super::*,
-        solana_keypair::Keypair,
-        solana_ledger::{
+        gorbagana_keypair::Keypair,
+        gorbagana_ledger::{
             shred::{Shred, ShredFlags},
             sigverify_shreds::{verify_shred_cpu, LruCache},
         },
-        solana_packet::PacketFlags,
-        solana_signer::Signer,
+        gorbagana_packet::PacketFlags,
+        gorbagana_signer::Signer,
         std::{
             collections::HashMap,
             net::{IpAddr, Ipv4Addr},
@@ -61,7 +61,7 @@ mod test {
     };
 
     fn run_test_sigverify_shred_cpu_repair(slot: Slot) {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let cache = RwLock::new(LruCache::new(/*capacity:*/ 128));
         let mut shred = Shred::new_from_data(
             slot,

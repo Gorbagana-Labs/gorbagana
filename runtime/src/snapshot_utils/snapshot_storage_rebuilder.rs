@@ -14,13 +14,13 @@ use {
         ThreadPool, ThreadPoolBuilder,
     },
     regex::Regex,
-    solana_accounts_db::{
+    gorbagana_accounts_db::{
         account_storage::AccountStorageMap,
         accounts_db::{AccountsFileId, AtomicAccountsFileId},
         accounts_file::StorageAccess,
     },
-    solana_clock::Slot,
-    solana_nohash_hasher::BuildNoHashHasher,
+    gorbagana_clock::Slot,
+    gorbagana_nohash_hasher::BuildNoHashHasher,
     std::{
         collections::HashMap,
         fs::File,
@@ -438,7 +438,7 @@ pub(crate) fn get_slot_and_append_vec_id(filename: &str) -> Result<(Slot, usize)
 mod tests {
     use {
         super::*, crate::snapshot_utils::SNAPSHOT_VERSION_FILENAME,
-        solana_accounts_db::accounts_file::AccountsFile,
+        gorbagana_accounts_db::accounts_file::AccountsFile,
     };
 
     #[test]

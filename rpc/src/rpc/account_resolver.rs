@@ -1,5 +1,5 @@
 use {
-    solana_account::AccountSharedData, solana_pubkey::Pubkey, solana_runtime::bank::Bank,
+    gorbagana_account::AccountSharedData, gorbagana_pubkey::Pubkey, gorbagana_runtime::bank::Bank,
     std::collections::HashMap,
 };
 

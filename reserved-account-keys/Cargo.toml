@@ -1,6 +1,6 @@
 [package]
 name = "agave-reserved-account-keys"
-description = "Reserved Solana account keys"
+description = "Reserved Gorbagana account keys"
 documentation = "https://docs.rs/agave-reserved-account-keys"
 version = { workspace = true }
 authors = { workspace = true }
@@ -15,22 +15,22 @@ all-features = true
 rustdoc-args = ["--cfg=docsrs"]
 
 [features]
-frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro"]
+frozen-abi = ["dep:gorbagana-frozen-abi", "dep:gorbagana-frozen-abi-macro"]
 
 [dependencies]
 agave-feature-set = { workspace = true }
-solana-frozen-abi = { workspace = true, optional = true, features = [
+gorbagana-frozen-abi = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
-solana-frozen-abi-macro = { workspace = true, optional = true, features = [
+gorbagana-frozen-abi-macro = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
-solana-pubkey = { workspace = true, default-features = false }
-solana-sdk-ids = { workspace = true }
+gorbagana-pubkey = { workspace = true, default-features = false }
+gorbagana-sdk-ids = { workspace = true }
 
 [dev-dependencies]
-solana-message = { workspace = true }
-solana-sysvar = { workspace = true }
+gorbagana-message = { workspace = true }
+gorbagana-sysvar = { workspace = true }
 
 [lints]
 workspace = true

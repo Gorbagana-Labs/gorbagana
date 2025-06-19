@@ -88,14 +88,14 @@ impl<Tx> TransactionState<Tx> {
 mod tests {
     use {
         super::*,
-        solana_compute_budget_interface::ComputeBudgetInstruction,
-        solana_hash::Hash,
-        solana_keypair::Keypair,
-        solana_message::Message,
-        solana_runtime_transaction::runtime_transaction::RuntimeTransaction,
-        solana_signer::Signer,
-        solana_system_interface::instruction as system_instruction,
-        solana_transaction::{sanitized::SanitizedTransaction, Transaction},
+        gorbagana_compute_budget_interface::ComputeBudgetInstruction,
+        gorbagana_hash::Hash,
+        gorbagana_keypair::Keypair,
+        gorbagana_message::Message,
+        gorbagana_runtime_transaction::runtime_transaction::RuntimeTransaction,
+        gorbagana_signer::Signer,
+        gorbagana_system_interface::instruction as system_instruction,
+        gorbagana_transaction::{sanitized::SanitizedTransaction, Transaction},
     };
 
     fn create_transaction_state(
@@ -103,7 +103,7 @@ mod tests {
     ) -> TransactionState<RuntimeTransaction<SanitizedTransaction>> {
         let from_keypair = Keypair::new();
         let ixs = vec![
-            system_instruction::transfer(&from_keypair.pubkey(), &solana_pubkey::new_rand(), 1),
+            system_instruction::transfer(&from_keypair.pubkey(), &gorbagana_pubkey::new_rand(), 1),
             ComputeBudgetInstruction::set_compute_unit_price(compute_unit_price),
         ];
         let message = Message::new(&ixs, Some(&from_keypair.pubkey()));

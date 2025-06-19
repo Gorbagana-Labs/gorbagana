@@ -3,7 +3,7 @@ extern crate eager;
 use {
     core::fmt,
     enum_iterator::Sequence,
-    solana_pubkey::Pubkey,
+    gorbagana_pubkey::Pubkey,
     std::{
         collections::HashMap,
         num::Saturating,

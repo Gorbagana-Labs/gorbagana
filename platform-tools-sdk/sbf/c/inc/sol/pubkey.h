@@ -1,6 +1,6 @@
 #pragma once
 /**
- * @brief Solana Public key
+ * @brief Gorbagana Public key
  */
 
 #include <sol/types.h>

@@ -2,7 +2,7 @@
 
 #![allow(clippy::arithmetic_side_effects)]
 
-use solana_program::log::{sol_log, sol_log_64};
+use gorbagana_program::log::{sol_log, sol_log_64};
 
 pub fn many_args(
     arg1: u64,

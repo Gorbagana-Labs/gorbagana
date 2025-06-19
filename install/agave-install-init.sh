@@ -36,7 +36,7 @@ FLAGS:
 
 OPTIONS:
     -d, --data-dir <PATH>    Directory to store install data
-    -u, --url <URL>          JSON RPC URL for the solana cluster
+    -u, --url <URL>          JSON RPC URL for the gorbagana cluster
     -p, --pubkey <PUBKEY>    Public key of the update manifest
 EOF
 }
@@ -102,28 +102,28 @@ main() {
     fi
 
     download_url="$SOLANA_DOWNLOAD_ROOT/$release/agave-install-init-$TARGET"
-    solana_install_init="$temp_dir/agave-install-init"
+    gorbagana_install_init="$temp_dir/agave-install-init"
 
     printf 'downloading %s installer\n' "$release" 1>&2
 
     ensure mkdir -p "$temp_dir"
-    ensure downloader "$download_url" "$solana_install_init"
-    ensure chmod u+x "$solana_install_init"
-    if [ ! -x "$solana_install_init" ]; then
-        printf '%s\n' "Cannot execute $solana_install_init (likely because of mounting /tmp as noexec)." 1>&2
+    ensure downloader "$download_url" "$gorbagana_install_init"
+    ensure chmod u+x "$gorbagana_install_init"
+    if [ ! -x "$gorbagana_install_init" ]; then
+        printf '%s\n' "Cannot execute $gorbagana_install_init (likely because of mounting /tmp as noexec)." 1>&2
         printf '%s\n' "Please copy the file to a location where you can execute binaries and run ./agave-install-init." 1>&2
         exit 1
     fi
 
     if [ -z "$1" ]; then
       #shellcheck disable=SC2086
-      ignore "$solana_install_init" $SOLANA_INSTALL_INIT_ARGS
+      ignore "$gorbagana_install_init" $SOLANA_INSTALL_INIT_ARGS
     else
-      ignore "$solana_install_init" "$@"
+      ignore "$gorbagana_install_init" "$@"
     fi
     retval=$?
 
-    ignore rm "$solana_install_init"
+    ignore rm "$gorbagana_install_init"
     ignore rm -rf "$temp_dir"
 
     return "$retval"

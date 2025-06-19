@@ -11,8 +11,8 @@ use {
     },
 };
 pub use {
-    solana_packet::{Meta, Packet, PACKET_DATA_SIZE},
-    solana_perf::packet::{
+    gorbagana_packet::{Meta, Packet, PACKET_DATA_SIZE},
+    gorbagana_perf::packet::{
         PacketBatch, PacketBatchRecycler, PacketRef, PacketRefMut, PinnedPacketBatch, NUM_PACKETS,
         PACKETS_PER_BATCH,
     },
@@ -101,7 +101,7 @@ pub fn send_to(
 mod tests {
     use {
         super::*,
-        solana_net_utils::bind_to_localhost,
+        gorbagana_net_utils::bind_to_localhost,
         std::{io, io::Write, net::SocketAddr},
     };
 
@@ -117,7 +117,7 @@ mod tests {
 
     #[test]
     pub fn packet_send_recv() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let recv_socket = bind_to_localhost().expect("bind");
         let addr = recv_socket.local_addr().unwrap();
         let send_socket = bind_to_localhost().expect("bind");
@@ -175,7 +175,7 @@ mod tests {
 
     #[test]
     fn test_packet_resize() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let recv_socket = bind_to_localhost().expect("bind");
         let addr = recv_socket.local_addr().unwrap();
         let send_socket = bind_to_localhost().expect("bind");

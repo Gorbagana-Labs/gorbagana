@@ -1,7 +1,7 @@
 use {
-    solana_clock::Slot,
-    solana_vote::vote_state_view::VoteStateView,
-    solana_vote_program::vote_state::{Lockout, VoteState, VoteState1_14_11, MAX_LOCKOUT_HISTORY},
+    gorbagana_clock::Slot,
+    gorbagana_vote::vote_state_view::VoteStateView,
+    gorbagana_vote_program::vote_state::{Lockout, VoteState, VoteState1_14_11, MAX_LOCKOUT_HISTORY},
     std::collections::VecDeque,
 };
 
@@ -129,7 +129,7 @@ impl From<TowerVoteState> for VoteState1_14_11 {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, solana_vote_program::vote_state::INITIAL_LOCKOUT, std::collections::VecDeque};
+    use {super::*, gorbagana_vote_program::vote_state::INITIAL_LOCKOUT, std::collections::VecDeque};
 
     fn check_lockouts(vote_state: &TowerVoteState) {
         for (i, vote) in vote_state.votes.iter().enumerate() {

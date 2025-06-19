@@ -1,11 +1,11 @@
 ---
-title: Solana CLI Reference and Usage
-pagination_label: Solana CLI Reference and Usage
+title: Gorbagana CLI Reference and Usage
+pagination_label: Gorbagana CLI Reference and Usage
 sidebar_label: Reference & Usage
 sidebar_position: 3
 ---
 
-The [solana-cli crate](https://crates.io/crates/solana-cli) provides a command-line interface tool for Solana
+The [gorbagana-cli crate](https://crates.io/crates/gorbagana-cli) provides a command-line interface tool for Gorbagana
 
 ## Examples
 
@@ -13,7 +13,7 @@ The [solana-cli crate](https://crates.io/crates/solana-cli) provides a command-l
 
 ```bash
 // Command
-$ solana-keygen pubkey
+$ gorbagana-keygen pubkey
 
 // Return
 <PUBKEY>
@@ -23,7 +23,7 @@ $ solana-keygen pubkey
 
 ```bash
 // Command
-$ solana airdrop 1
+$ gorbagana airdrop 1
 
 // Return
 "1 SOL"
@@ -33,7 +33,7 @@ $ solana airdrop 1
 
 ```bash
 // Command
-$ solana balance
+$ gorbagana balance
 
 // Return
 "3.00050001 SOL"
@@ -43,7 +43,7 @@ $ solana balance
 
 ```bash
 // Command
-$ solana confirm <TX_SIGNATURE>
+$ gorbagana confirm <TX_SIGNATURE>
 
 // Return
 "Confirmed" / "Not found" / "Transaction failed with error <ERR>"
@@ -53,7 +53,7 @@ $ solana confirm <TX_SIGNATURE>
 
 ```bash
 // Command
-$ solana program deploy <PATH>
+$ gorbagana program deploy <PATH>
 
 // Return
 <PROGRAM_ID>

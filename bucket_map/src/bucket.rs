@@ -15,8 +15,8 @@ use {
         MaxSearch, RefCount,
     },
     rand::{thread_rng, Rng},
-    solana_measure::measure::Measure,
-    solana_pubkey::Pubkey,
+    gorbagana_measure::measure::Measure,
+    gorbagana_pubkey::Pubkey,
     std::{
         collections::hash_map::DefaultHasher,
         fs,
@@ -1535,7 +1535,7 @@ mod tests {
     #[test]
     #[should_panic(expected = "index asked to insert the same data twice")]
     fn test_occupy_if_matches_panic() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let random = 1;
         let k = Pubkey::from([1u8; 32]);
         let v = 12u64;
@@ -1569,7 +1569,7 @@ mod tests {
     #[should_panic(expected = "batch insertion can only occur prior to any deletes")]
     #[test]
     fn batch_insert_after_delete() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let tmpdir = tempdir().unwrap();
         let paths: Vec<PathBuf> = vec![tmpdir.path().to_path_buf()];

@@ -47,11 +47,11 @@ use {
 #[cfg(not(target_arch = "wasm32"))]
 use {
     sha3::Digest,
-    solana_derivation_path::DerivationPath,
-    solana_seed_derivable::SeedDerivable,
-    solana_seed_phrase::generate_seed_from_seed_phrase_and_passphrase,
-    solana_signature::Signature,
-    solana_signer::{EncodableKey, EncodableKeypair, Signer, SignerError},
+    gorbagana_derivation_path::DerivationPath,
+    gorbagana_seed_derivable::SeedDerivable,
+    gorbagana_seed_phrase::generate_seed_from_seed_phrase_and_passphrase,
+    gorbagana_signature::Signature,
+    gorbagana_signer::{EncodableKey, EncodableKeypair, Signer, SignerError},
     std::{
         error,
         io::{Read, Write},
@@ -196,15 +196,15 @@ impl ElGamalKeypair {
         Self { public, secret }
     }
 
-    /// Deterministically derives an ElGamal keypair from a Solana signer and a public seed.
+    /// Deterministically derives an ElGamal keypair from a Gorbagana signer and a public seed.
     ///
-    /// This function exists for applications where a user may not wish to maintain a Solana signer
+    /// This function exists for applications where a user may not wish to maintain a Gorbagana signer
     /// and an ElGamal keypair separately. Instead, a user can derive the ElGamal keypair
     /// on-the-fly whenever encryption/decryption is needed.
     ///
     /// For the spl-token-2022 confidential extension, the ElGamal public key is specified in a
     /// token account. A natural way to derive an ElGamal keypair is to define it from the hash of
-    /// a Solana keypair and a Solana address as the public seed. However, for general hardware
+    /// a Gorbagana keypair and a Gorbagana address as the public seed. However, for general hardware
     /// wallets, the signing key is not exposed in the API. Therefore, this function uses a signer
     /// to sign a public seed and the resulting signature is then hashed to derive an ElGamal
     /// keypair.
@@ -494,7 +494,7 @@ impl ElGamalSecretKey {
 
 #[cfg(not(target_arch = "wasm32"))]
 impl ElGamalSecretKey {
-    /// Deterministically derives an ElGamal secret key from a Solana signer and a public seed.
+    /// Deterministically derives an ElGamal secret key from a Gorbagana signer and a public seed.
     ///
     /// See `ElGamalKeypair::new_from_signer` for more context on the key derivation.
     pub fn new_from_signer(
@@ -506,7 +506,7 @@ impl ElGamalSecretKey {
         Ok(key)
     }
 
-    /// Derive a seed from a Solana signer used to generate an ElGamal secret key.
+    /// Derive a seed from a Gorbagana signer used to generate an ElGamal secret key.
     ///
     /// The seed is derived as the hash of the signature of a public seed.
     pub fn seed_from_signer(
@@ -848,9 +848,9 @@ mod tests {
         super::*,
         crate::encryption::pedersen::Pedersen,
         bip39::{Language, Mnemonic, MnemonicType, Seed},
-        solana_keypair::Keypair,
-        solana_pubkey::Pubkey,
-        solana_signer::null_signer::NullSigner,
+        gorbagana_keypair::Keypair,
+        gorbagana_pubkey::Pubkey,
+        gorbagana_signer::null_signer::NullSigner,
         std::fs::{self, File},
     };
 

@@ -1,14 +1,14 @@
 //! Test mem functions
 
 use {
-    solana_account_info::AccountInfo,
-    solana_program_error::ProgramResult,
-    solana_program_memory::{sol_memcmp, sol_memcpy, sol_memmove, sol_memset},
-    solana_pubkey::Pubkey,
-    solana_sbf_rust_mem_dep::{run_mem_tests, MemOps},
+    gorbagana_account_info::AccountInfo,
+    gorbagana_program_error::ProgramResult,
+    gorbagana_program_memory::{sol_memcmp, sol_memcpy, sol_memmove, sol_memset},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sbf_rust_mem_dep::{run_mem_tests, MemOps},
 };
 
-solana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
+gorbagana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
 pub fn process_instruction(
     _program_id: &Pubkey,
     _accounts: &[AccountInfo],

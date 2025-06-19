@@ -7,7 +7,7 @@ use {
         result::Result,
     },
     core::fmt::{Debug, Formatter},
-    solana_svm_transaction::instruction::SVMInstruction,
+    gorbagana_svm_transaction::instruction::SVMInstruction,
 };
 
 /// Contains metadata about the instructions in a transaction packet.
@@ -180,8 +180,8 @@ impl Debug for InstructionsIterator<'_> {
 #[cfg(test)]
 mod tests {
     use {
-        super::*, solana_message::compiled_instruction::CompiledInstruction,
-        solana_short_vec::ShortVec,
+        super::*, gorbagana_message::compiled_instruction::CompiledInstruction,
+        gorbagana_short_vec::ShortVec,
     };
 
     #[test]

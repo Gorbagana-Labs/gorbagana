@@ -1,26 +1,26 @@
 #[cfg(feature = "agave-unstable-api")]
 use qualifier_attr::qualifiers;
 use {
-    solana_bincode::limited_deserialize,
-    solana_bpf_loader_program::{deploy_program, execute},
-    solana_instruction::error::InstructionError,
-    solana_loader_v3_interface::state::UpgradeableLoaderState,
-    solana_loader_v4_interface::{
+    gorbagana_bincode::limited_deserialize,
+    gorbagana_bpf_loader_program::{deploy_program, execute},
+    gorbagana_instruction::error::InstructionError,
+    gorbagana_loader_v3_interface::state::UpgradeableLoaderState,
+    gorbagana_loader_v4_interface::{
         instruction::LoaderV4Instruction,
         state::{LoaderV4State, LoaderV4Status},
         DEPLOYMENT_COOLDOWN_IN_SLOTS,
     },
-    solana_log_collector::{ic_logger_msg, LogCollector},
-    solana_measure::measure::Measure,
-    solana_program_runtime::{
+    gorbagana_log_collector::{ic_logger_msg, LogCollector},
+    gorbagana_measure::measure::Measure,
+    gorbagana_program_runtime::{
         invoke_context::InvokeContext,
         loaded_programs::{ProgramCacheEntry, ProgramCacheEntryOwner, ProgramCacheEntryType},
     },
-    solana_pubkey::Pubkey,
-    solana_sbpf::{declare_builtin_function, memory_region::MemoryMapping},
-    solana_sdk_ids::{bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable, loader_v4},
-    solana_transaction_context::{BorrowedAccount, InstructionContext},
-    solana_type_overrides::sync::{atomic::Ordering, Arc},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sbpf::{declare_builtin_function, memory_region::MemoryMapping},
+    gorbagana_sdk_ids::{bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable, loader_v4},
+    gorbagana_transaction_context::{BorrowedAccount, InstructionContext},
+    gorbagana_type_overrides::sync::{atomic::Ordering, Arc},
     std::{cell::RefCell, rc::Rc},
 };
 
@@ -464,7 +464,7 @@ fn process_instruction_inner(
     let program_id = instruction_context.get_last_program_key(transaction_context)?;
     if loader_v4::check_id(program_id) {
         invoke_context.consume_checked(DEFAULT_COMPUTE_UNITS)?;
-        match limited_deserialize(instruction_data, solana_packet::PACKET_DATA_SIZE as u64)? {
+        match limited_deserialize(instruction_data, gorbagana_packet::PACKET_DATA_SIZE as u64)? {
             LoaderV4Instruction::Write { offset, bytes } => {
                 process_instruction_write(invoke_context, offset, bytes)
             }
@@ -522,16 +522,16 @@ fn process_instruction_inner(
 mod tests {
     use {
         super::*,
-        solana_account::{
+        gorbagana_account::{
             create_account_shared_data_for_test, AccountSharedData, ReadableAccount,
             WritableAccount,
         },
-        solana_bpf_loader_program::test_utils,
-        solana_clock::Slot,
-        solana_instruction::AccountMeta,
-        solana_program_runtime::invoke_context::mock_process_instruction,
-        solana_sysvar::{clock, rent},
-        solana_transaction_context::IndexOfAccount,
+        gorbagana_bpf_loader_program::test_utils,
+        gorbagana_clock::Slot,
+        gorbagana_instruction::AccountMeta,
+        gorbagana_program_runtime::invoke_context::mock_process_instruction,
+        gorbagana_sysvar::{clock, rent},
+        gorbagana_transaction_context::IndexOfAccount,
         std::{fs::File, io::Read, path::Path},
     };
 

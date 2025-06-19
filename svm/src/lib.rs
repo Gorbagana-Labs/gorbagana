@@ -18,4 +18,4 @@ pub mod transaction_processor;
 
 #[cfg_attr(feature = "frozen-abi", macro_use)]
 #[cfg(feature = "frozen-abi")]
-extern crate solana_frozen_abi_macro;
+extern crate gorbagana_frozen_abi_macro;

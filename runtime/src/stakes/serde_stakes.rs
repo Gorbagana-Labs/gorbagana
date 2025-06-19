@@ -3,10 +3,10 @@ use {
     crate::stake_history::StakeHistory,
     im::HashMap as ImHashMap,
     serde::{ser::SerializeMap, Deserialize, Deserializer, Serialize, Serializer},
-    solana_clock::Epoch,
-    solana_pubkey::Pubkey,
-    solana_stake_program::stake_state::Stake,
-    solana_vote::vote_account::VoteAccounts,
+    gorbagana_clock::Epoch,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_stake_program::stake_state::Stake,
+    gorbagana_vote::vote_account::VoteAccounts,
     std::{collections::HashMap, sync::Arc},
 };
 
@@ -232,9 +232,9 @@ impl Serialize for SerdeStakeAccountMapToStakeFormat {
 #[cfg(test)]
 mod tests {
     use {
-        super::*, crate::stakes::StakesCache, rand::Rng, solana_rent::Rent,
-        solana_stake_interface::state::Delegation, solana_stake_program::stake_state,
-        solana_vote_program::vote_state,
+        super::*, crate::stakes::StakesCache, rand::Rng, gorbagana_rent::Rent,
+        gorbagana_stake_interface::state::Delegation, gorbagana_stake_program::stake_state,
+        gorbagana_vote_program::vote_state,
     };
 
     #[test]
@@ -306,16 +306,16 @@ mod tests {
             ..Stakes::default()
         });
         for _ in 0..rng.gen_range(5usize..10) {
-            let vote_pubkey = solana_pubkey::new_rand();
+            let vote_pubkey = gorbagana_pubkey::new_rand();
             let vote_account = vote_state::create_account(
                 &vote_pubkey,
-                &solana_pubkey::new_rand(),  // node_pubkey
+                &gorbagana_pubkey::new_rand(),  // node_pubkey
                 rng.gen_range(0..101),       // commission
                 rng.gen_range(0..1_000_000), // lamports
             );
             stakes_cache.check_and_store(&vote_pubkey, &vote_account, None);
             for _ in 0..rng.gen_range(10usize..20) {
-                let stake_pubkey = solana_pubkey::new_rand();
+                let stake_pubkey = gorbagana_pubkey::new_rand();
                 let rent = Rent::with_slots_per_epoch(rng.gen());
                 let stake_account = stake_state::create_account(
                     &stake_pubkey, // authorized

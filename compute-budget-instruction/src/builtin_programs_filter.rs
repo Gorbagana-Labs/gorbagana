@@ -1,9 +1,9 @@
 use {
-    solana_builtins_default_costs::{
+    gorbagana_builtins_default_costs::{
         get_builtin_migration_feature_index, BuiltinMigrationFeatureIndex, MAYBE_BUILTIN_KEY,
     },
-    solana_packet::PACKET_DATA_SIZE,
-    solana_pubkey::Pubkey,
+    gorbagana_packet::PACKET_DATA_SIZE,
+    gorbagana_pubkey::Pubkey,
 };
 
 // The maximum number of pubkeys that a packet can contain.
@@ -65,7 +65,7 @@ impl BuiltinProgramsFilter {
 mod test {
     use {
         super::*, agave_feature_set as feature_set,
-        solana_builtins_default_costs::get_migration_feature_position,
+        gorbagana_builtins_default_costs::get_migration_feature_position,
     };
 
     const DUMMY_PROGRAM_ID: &str = "dummmy1111111111111111111111111111111111111";
@@ -91,28 +91,28 @@ mod test {
         // lookup same `index` will return cached data, will not lookup `program_id`
         // again
         assert_eq!(
-            test_store.get_program_kind(index, &solana_sdk_ids::loader_v4::id()),
+            test_store.get_program_kind(index, &gorbagana_sdk_ids::loader_v4::id()),
             ProgramKind::NotBuiltin
         );
 
         // not-migrating builtin
         index += 1;
         assert_eq!(
-            test_store.get_program_kind(index, &solana_sdk_ids::loader_v4::id()),
+            test_store.get_program_kind(index, &gorbagana_sdk_ids::loader_v4::id()),
             ProgramKind::Builtin,
         );
 
         // compute-budget
         index += 1;
         assert_eq!(
-            test_store.get_program_kind(index, &solana_sdk_ids::compute_budget::id()),
+            test_store.get_program_kind(index, &gorbagana_sdk_ids::compute_budget::id()),
             ProgramKind::Builtin,
         );
 
         // migrating builtins
         index += 1;
         assert_eq!(
-            test_store.get_program_kind(index, &solana_sdk_ids::stake::id()),
+            test_store.get_program_kind(index, &gorbagana_sdk_ids::stake::id()),
             ProgramKind::MigratingBuiltin {
                 core_bpf_migration_feature_index: get_migration_feature_position(
                     &feature_set::migrate_stake_program_to_core_bpf::id()

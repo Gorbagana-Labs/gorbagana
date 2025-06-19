@@ -17,11 +17,11 @@ use {
     crossbeam_channel::{Receiver, SendError, Sender},
     log::*,
     rayon::iter::{IntoParallelIterator, ParallelIterator},
-    solana_accounts_db::{
+    gorbagana_accounts_db::{
         accounts_db::CalcAccountsHashDataSource, accounts_hash::CalcAccountsHashConfig,
     },
-    solana_clock::{BankId, Slot},
-    solana_measure::{measure::Measure, measure_us},
+    gorbagana_clock::{BankId, Slot},
+    gorbagana_measure::{measure::Measure, measure_us},
     stats::StatsManager,
     std::{
         boxed::Box,
@@ -60,7 +60,7 @@ struct PrunedBankQueueLenReporter {
 
 impl PrunedBankQueueLenReporter {
     fn report(&self, q_len: usize) {
-        let now = solana_time_utils::timestamp();
+        let now = gorbagana_time_utils::timestamp();
         let last_report_time = self.last_report_time.load(Ordering::Acquire);
         if q_len > MAX_DROP_BANK_SIGNAL_QUEUE_SIZE
             && now.saturating_sub(last_report_time) > BANK_DROP_SIGNAL_CHANNEL_REPORT_INTERVAL
@@ -859,11 +859,11 @@ mod test {
             snapshot_config::SnapshotConfig, snapshot_utils::SnapshotInterval,
         },
         crossbeam_channel::unbounded,
-        solana_account::AccountSharedData,
-        solana_accounts_db::epoch_accounts_hash::EpochAccountsHash,
-        solana_epoch_schedule::EpochSchedule,
-        solana_hash::Hash,
-        solana_pubkey::Pubkey,
+        gorbagana_account::AccountSharedData,
+        gorbagana_accounts_db::epoch_accounts_hash::EpochAccountsHash,
+        gorbagana_epoch_schedule::EpochSchedule,
+        gorbagana_hash::Hash,
+        gorbagana_pubkey::Pubkey,
         std::num::NonZeroU64,
     };
 

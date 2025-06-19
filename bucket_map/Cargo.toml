@@ -1,7 +1,7 @@
 [package]
-name = "solana-bucket-map"
-description = "solana-bucket-map"
-documentation = "https://docs.rs/solana-bucket-map"
+name = "gorbagana-bucket-map"
+description = "gorbagana-bucket-map"
+documentation = "https://docs.rs/gorbagana-bucket-map"
 readme = "../README.md"
 version = { workspace = true }
 authors = { workspace = true }
@@ -12,7 +12,7 @@ edition = { workspace = true }
 
 [lib]
 crate-type = ["lib"]
-name = "solana_bucket_map"
+name = "gorbagana_bucket_map"
 
 [dependencies]
 bv = { workspace = true, features = ["serde"] }
@@ -22,16 +22,16 @@ memmap2 = { workspace = true }
 modular-bitfield = { workspace = true }
 num_enum = { workspace = true }
 rand = { workspace = true }
-solana-clock = { workspace = true }
-solana-measure = { workspace = true }
-solana-pubkey = { workspace = true }
+gorbagana-clock = { workspace = true }
+gorbagana-measure = { workspace = true }
+gorbagana-pubkey = { workspace = true }
 tempfile = { workspace = true }
 
 [dev-dependencies]
 fs_extra = { workspace = true }
 rayon = { workspace = true }
-solana-logger = { workspace = true }
-solana-pubkey = { workspace = true, features = ["rand"] }
+gorbagana-logger = { workspace = true }
+gorbagana-pubkey = { workspace = true, features = ["rand"] }
 
 [[bench]]
 name = "bucket_map"

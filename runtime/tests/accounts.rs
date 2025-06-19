@@ -2,20 +2,20 @@ use {
     log::*,
     rand::{thread_rng, Rng},
     rayon::prelude::*,
-    solana_account::{AccountSharedData, WritableAccount},
-    solana_accounts_db::{
+    gorbagana_account::{AccountSharedData, WritableAccount},
+    gorbagana_accounts_db::{
         accounts_db::{AccountsDb, LoadHint},
         accounts_hash::AccountHash,
         ancestors::Ancestors,
     },
-    solana_clock::Slot,
-    solana_hash::Hash,
+    gorbagana_clock::Slot,
+    gorbagana_hash::Hash,
     std::{collections::HashSet, time::Instant},
 };
 
 #[test]
 fn test_bad_bank_hash() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
     let db = AccountsDb::new_single_for_tests();
 
     let some_slot: Slot = 0;
@@ -23,7 +23,7 @@ fn test_bad_bank_hash() {
     let mut accounts_keys: Vec<_> = (0..max_accounts)
         .into_par_iter()
         .map(|_| {
-            let key = solana_pubkey::new_rand();
+            let key = gorbagana_pubkey::new_rand();
             let lamports = thread_rng().gen_range(0..100);
             let some_data_len = thread_rng().gen_range(0..1000);
             let account = AccountSharedData::new(lamports, some_data_len, &key);

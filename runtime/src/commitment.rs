@@ -1,6 +1,6 @@
 use {
-    solana_clock::Slot, solana_commitment_config::CommitmentLevel,
-    solana_vote_program::vote_state::MAX_LOCKOUT_HISTORY, std::collections::HashMap,
+    gorbagana_clock::Slot, gorbagana_commitment_config::CommitmentLevel,
+    gorbagana_vote_program::vote_state::MAX_LOCKOUT_HISTORY, std::collections::HashMap,
 };
 
 pub const VOTE_THRESHOLD_SIZE: f64 = 2f64 / 3f64;

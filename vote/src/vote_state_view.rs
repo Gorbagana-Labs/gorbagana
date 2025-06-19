@@ -9,15 +9,15 @@ use {
         list_view::ListView,
     },
     core::fmt::Debug,
-    solana_clock::{Epoch, Slot},
-    solana_pubkey::Pubkey,
-    solana_vote_interface::state::{BlockTimestamp, Lockout},
+    gorbagana_clock::{Epoch, Slot},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_vote_interface::state::{BlockTimestamp, Lockout},
     std::sync::Arc,
 };
 #[cfg(feature = "dev-context-only-utils")]
 use {
     bincode,
-    solana_vote_interface::state::{VoteState, VoteStateVersions},
+    gorbagana_vote_interface::state::{VoteState, VoteStateVersions},
 };
 
 mod field_frames;
@@ -123,8 +123,8 @@ impl VoteStateView {
         let buffer = &self.data[offset..];
         let mut cursor = std::io::Cursor::new(buffer);
         BlockTimestamp {
-            slot: solana_serialize_utils::cursor::read_u64(&mut cursor).unwrap(),
-            timestamp: solana_serialize_utils::cursor::read_i64(&mut cursor).unwrap(),
+            slot: gorbagana_serialize_utils::cursor::read_u64(&mut cursor).unwrap(),
+            timestamp: gorbagana_serialize_utils::cursor::read_i64(&mut cursor).unwrap(),
         }
     }
 
@@ -174,7 +174,7 @@ impl VoteStateFrame {
     fn try_new(bytes: &[u8]) -> Result<Self> {
         let version = {
             let mut cursor = std::io::Cursor::new(bytes);
-            solana_serialize_utils::cursor::read_u32(&mut cursor)
+            gorbagana_serialize_utils::cursor::read_u32(&mut cursor)
                 .map_err(|_err| VoteStateViewError::AccountDataTooSmall)?
         };
 
@@ -227,8 +227,8 @@ mod tests {
     use {
         super::*,
         arbitrary::{Arbitrary, Unstructured},
-        solana_clock::Clock,
-        solana_vote_interface::{
+        gorbagana_clock::Clock,
+        gorbagana_vote_interface::{
             authorized_voters::AuthorizedVoters,
             state::{
                 vote_state_1_14_11::VoteState1_14_11, LandedVote, VoteInit, VoteState,

@@ -1,5 +1,5 @@
 [package]
-name = "solana-sbf-rust-upgradeable"
+name = "gorbagana-sbf-rust-upgradeable"
 version = { workspace = true }
 description = { workspace = true }
 authors = { workspace = true }
@@ -9,16 +9,16 @@ license = { workspace = true }
 edition = { workspace = true }
 
 [lib]
-name = "solana_sbf_rust_upgradeable"
+name = "gorbagana_sbf_rust_upgradeable"
 crate-type = ["cdylib"]
 
 [dependencies]
-solana-account-info = { workspace = true }
-solana-msg = { workspace = true }
-solana-program-entrypoint = { workspace = true }
-solana-program-error = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-sysvar = { workspace = true }
+gorbagana-account-info = { workspace = true }
+gorbagana-msg = { workspace = true }
+gorbagana-program-entrypoint = { workspace = true }
+gorbagana-program-error = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-sysvar = { workspace = true }
 
 [lints]
 workspace = true

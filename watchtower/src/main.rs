@@ -4,19 +4,19 @@
 use {
     clap::{crate_description, crate_name, value_t, value_t_or_exit, values_t, App, Arg},
     log::*,
-    solana_clap_utils::{
+    gorbagana_clap_utils::{
         hidden_unless_forced,
         input_parsers::pubkeys_of,
         input_validators::{is_parsable, is_pubkey_or_keypair, is_url, is_valid_percentage},
     },
-    solana_cli_output::display::format_labeled_address,
-    solana_hash::Hash,
-    solana_metrics::{datapoint_error, datapoint_info},
-    solana_native_token::{sol_to_lamports, Sol},
-    solana_notifier::{NotificationType, Notifier},
-    solana_pubkey::Pubkey,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_api::{client_error, response::RpcVoteAccountStatus},
+    gorbagana_cli_output::display::format_labeled_address,
+    gorbagana_hash::Hash,
+    gorbagana_metrics::{datapoint_error, datapoint_info},
+    gorbagana_native_token::{sol_to_lamports, Sol},
+    gorbagana_notifier::{NotificationType, Notifier},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_rpc_client_api::{client_error, response::RpcVoteAccountStatus},
     std::{
         collections::HashMap,
         error,
@@ -43,7 +43,7 @@ struct Config {
 fn get_config() -> Config {
     let matches = App::new(crate_name!())
         .about(crate_description!())
-        .version(solana_version::version!())
+        .version(gorbagana_version::version!())
         .after_help("ADDITIONAL HELP:
         To receive a Slack, Discord, PagerDuty and/or Telegram notification on sanity failure,
         define environment variables before running `agave-watchtower`:
@@ -73,7 +73,7 @@ fn get_config() -> Config {
                 .takes_value(true)
                 .global(true)
                 .help("Configuration file to use");
-            if let Some(ref config_file) = *solana_cli_config::CONFIG_FILE {
+            if let Some(ref config_file) = *gorbagana_cli_config::CONFIG_FILE {
                 arg.default_value(config_file)
             } else {
                 arg
@@ -190,9 +190,9 @@ fn get_config() -> Config {
         .get_matches();
 
     let config = if let Some(config_file) = matches.value_of("config_file") {
-        solana_cli_config::Config::load(config_file).unwrap_or_default()
+        gorbagana_cli_config::Config::load(config_file).unwrap_or_default()
     } else {
-        solana_cli_config::Config::default()
+        gorbagana_cli_config::Config::default()
     };
 
     let interval = Duration::from_secs(value_t_or_exit!(matches, "interval", u64));
@@ -442,8 +442,8 @@ fn validate_endpoints(
 }
 
 fn main() -> Result<(), Box<dyn error::Error>> {
-    solana_logger::setup_with_default_filter();
-    solana_metrics::set_panic_hook("watchtower", /*version:*/ None);
+    gorbagana_logger::setup_with_default_filter();
+    gorbagana_metrics::set_panic_hook("watchtower", /*version:*/ None);
 
     let config = get_config();
 

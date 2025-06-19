@@ -4,9 +4,9 @@ use {
         commands::{FromClapArgMatches, Result},
     },
     clap::{value_t, App, Arg, ArgMatches, SubCommand},
-    solana_clap_utils::input_validators::is_keypair,
-    solana_keypair::read_keypair,
-    solana_signer::Signer,
+    gorbagana_clap_utils::input_validators::is_keypair,
+    gorbagana_keypair::read_keypair,
+    gorbagana_signer::Signer,
     std::{fs, path::Path},
 };
 
@@ -92,7 +92,7 @@ pub fn execute(matches: &ArgMatches, ledger_path: &Path) -> Result<()> {
 #[cfg(test)]
 mod tests {
     use {
-        super::*, crate::commands::tests::verify_args_struct_by_command, solana_keypair::Keypair,
+        super::*, crate::commands::tests::verify_args_struct_by_command, gorbagana_keypair::Keypair,
     };
 
     #[test]
@@ -106,7 +106,7 @@ mod tests {
         let tmp_dir = tempfile::tempdir().unwrap();
         let file = tmp_dir.path().join("id.json");
         let keypair = Keypair::new();
-        solana_keypair::write_keypair_file(&keypair, &file).unwrap();
+        gorbagana_keypair::write_keypair_file(&keypair, &file).unwrap();
 
         verify_args_struct_by_command(
             command(),

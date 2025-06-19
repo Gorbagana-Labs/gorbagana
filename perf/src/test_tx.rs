@@ -1,22 +1,22 @@
 use {
     rand::{CryptoRng, Rng, RngCore},
-    solana_clock::Slot,
-    solana_hash::Hash,
-    solana_keypair::Keypair,
-    solana_message::compiled_instruction::CompiledInstruction,
-    solana_sdk_ids::{stake, system_program},
-    solana_signer::Signer,
-    solana_system_interface::instruction::SystemInstruction,
-    solana_transaction::Transaction,
-    solana_vote::vote_transaction,
-    solana_vote_program::vote_state::TowerSync,
+    gorbagana_clock::Slot,
+    gorbagana_hash::Hash,
+    gorbagana_keypair::Keypair,
+    gorbagana_message::compiled_instruction::CompiledInstruction,
+    gorbagana_sdk_ids::{stake, system_program},
+    gorbagana_signer::Signer,
+    gorbagana_system_interface::instruction::SystemInstruction,
+    gorbagana_transaction::Transaction,
+    gorbagana_vote::vote_transaction,
+    gorbagana_vote_program::vote_state::TowerSync,
 };
 
 pub fn test_tx() -> Transaction {
     let keypair1 = Keypair::new();
     let pubkey1 = keypair1.pubkey();
     let zero = Hash::default();
-    solana_system_transaction::transfer(&keypair1, &pubkey1, 42, zero)
+    gorbagana_system_transaction::transfer(&keypair1, &pubkey1, 42, zero)
 }
 
 pub fn test_invalid_tx() -> Transaction {

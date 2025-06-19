@@ -167,7 +167,7 @@ impl Counter {
             .compare_and_swap(0, Self::default_metrics_rate(), Ordering::Relaxed);
     }
     pub fn inc(&self, level: log::Level, events: usize) {
-        let now = solana_time_utils::timestamp();
+        let now = gorbagana_time_utils::timestamp();
         let counts = self.counts.fetch_add(events, Ordering::Relaxed);
         let times = self.times.fetch_add(1, Ordering::Relaxed);
         let lograte = self.lograte.load(Ordering::Relaxed);

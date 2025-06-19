@@ -1,15 +1,15 @@
 use {
     bytemuck::{bytes_of, Pod},
-    solana_account::Account,
-    solana_instruction::error::InstructionError,
-    solana_keypair::Keypair,
-    solana_program_test::*,
-    solana_pubkey::Pubkey,
-    solana_signer::Signer,
-    solana_system_interface::instruction as system_instruction,
-    solana_transaction::Transaction,
-    solana_transaction_error::TransactionError,
-    solana_zk_sdk::{
+    gorbagana_account::Account,
+    gorbagana_instruction::error::InstructionError,
+    gorbagana_keypair::Keypair,
+    gorbagana_program_test::*,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signer::Signer,
+    gorbagana_system_interface::instruction as system_instruction,
+    gorbagana_transaction::Transaction,
+    gorbagana_transaction_error::TransactionError,
+    gorbagana_zk_sdk::{
         encryption::{
             elgamal::{ElGamalKeypair, ElGamalSecretKey},
             grouped_elgamal::GroupedElGamal,
@@ -1385,11 +1385,11 @@ trait WithMaxComputeUnitLimit {
     fn with_max_compute_unit_limit(self) -> Self;
 }
 
-impl WithMaxComputeUnitLimit for Vec<solana_instruction::Instruction> {
+impl WithMaxComputeUnitLimit for Vec<gorbagana_instruction::Instruction> {
     fn with_max_compute_unit_limit(mut self) -> Self {
         self.push(
-            solana_compute_budget_interface::ComputeBudgetInstruction::set_compute_unit_limit(
-                solana_compute_budget::compute_budget_limits::MAX_COMPUTE_UNIT_LIMIT,
+            gorbagana_compute_budget_interface::ComputeBudgetInstruction::set_compute_unit_limit(
+                gorbagana_compute_budget::compute_budget_limits::MAX_COMPUTE_UNIT_LIMIT,
             ),
         );
         self

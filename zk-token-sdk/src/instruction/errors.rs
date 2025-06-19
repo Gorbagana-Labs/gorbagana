@@ -1,8 +1,8 @@
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use thiserror::Error;
 
 #[derive(Error, Clone, Debug, Eq, PartialEq)]
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 pub enum InstructionError {
     #[error("decryption error")]
     Decryption,

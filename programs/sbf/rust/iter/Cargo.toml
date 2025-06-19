@@ -1,5 +1,5 @@
 [package]
-name = "solana-sbf-rust-iter"
+name = "gorbagana-sbf-rust-iter"
 version = { workspace = true }
 description = { workspace = true }
 authors = { workspace = true }
@@ -12,8 +12,8 @@ edition = { workspace = true }
 crate-type = ["cdylib"]
 
 [dependencies]
-solana-program = { workspace = true }
-solana-program-entrypoint = { workspace = true }
+gorbagana-program = { workspace = true }
+gorbagana-program-entrypoint = { workspace = true }
 
 [lints]
 workspace = true

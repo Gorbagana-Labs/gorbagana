@@ -22,14 +22,14 @@ use {
     itertools::Itertools,
     rand::{CryptoRng, Rng},
     rayon::ThreadPool,
-    solana_clock::Slot,
-    solana_hash::Hash,
-    solana_keypair::Keypair,
-    solana_ledger::shred::Shred,
-    solana_pubkey::Pubkey,
-    solana_signer::Signer,
-    solana_streamer::socket::SocketAddrSpace,
-    solana_time_utils::timestamp,
+    gorbagana_clock::Slot,
+    gorbagana_hash::Hash,
+    gorbagana_keypair::Keypair,
+    gorbagana_ledger::shred::Shred,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signer::Signer,
+    gorbagana_streamer::socket::SocketAddrSpace,
+    gorbagana_time_utils::timestamp,
     std::{
         collections::{HashMap, HashSet},
         net::SocketAddr,
@@ -410,7 +410,7 @@ pub(crate) fn maybe_ping_gossip_addresses<R: Rng + CryptoRng>(
 
 #[cfg(test)]
 mod test {
-    use {super::*, solana_sha256_hasher::hash, solana_time_utils::timestamp};
+    use {super::*, gorbagana_sha256_hasher::hash, gorbagana_time_utils::timestamp};
 
     #[test]
     fn test_prune_errors() {

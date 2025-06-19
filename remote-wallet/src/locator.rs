@@ -1,5 +1,5 @@
 use {
-    solana_pubkey::{ParsePubkeyError, Pubkey},
+    gorbagana_pubkey::{ParsePubkeyError, Pubkey},
     std::{
         convert::{Infallible, TryFrom, TryInto},
         str::FromStr,

@@ -1,16 +1,16 @@
 use {
-    solana_keypair::Keypair,
-    solana_program_test::ProgramTestContext,
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
-    solana_signer::Signer,
-    solana_stake_interface::{
+    gorbagana_keypair::Keypair,
+    gorbagana_program_test::ProgramTestContext,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent::Rent,
+    gorbagana_signer::Signer,
+    gorbagana_stake_interface::{
         instruction as stake_instruction,
         state::{Authorized, Lockup},
     },
-    solana_system_interface::{instruction as system_instruction, program as system_program},
-    solana_transaction::Transaction,
-    solana_vote_program::{
+    gorbagana_system_interface::{instruction as system_instruction, program as system_program},
+    gorbagana_transaction::Transaction,
+    gorbagana_vote_program::{
         vote_instruction,
         vote_state::{self, VoteInit, VoteState},
     },

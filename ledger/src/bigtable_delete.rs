@@ -1,10 +1,10 @@
-use {log::*, solana_clock::Slot, solana_measure::measure::Measure, std::result::Result};
+use {log::*, gorbagana_clock::Slot, gorbagana_measure::measure::Measure, std::result::Result};
 
 // Attempt to delete this many blocks in parallel
 const NUM_BLOCKS_TO_DELETE_IN_PARALLEL: usize = 32;
 
 pub async fn delete_confirmed_blocks(
-    bigtable: solana_storage_bigtable::LedgerStorage,
+    bigtable: gorbagana_storage_bigtable::LedgerStorage,
     blocks_to_delete: Vec<Slot>,
     dry_run: bool,
 ) -> Result<(), Box<dyn std::error::Error>> {

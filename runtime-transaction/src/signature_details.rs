@@ -1,7 +1,7 @@
 // static account keys has max
 use {
     agave_transaction_view::static_account_keys_frame::MAX_STATIC_ACCOUNTS_PER_PACKET as FILTER_SIZE,
-    solana_pubkey::Pubkey, solana_svm_transaction::instruction::SVMInstruction,
+    gorbagana_pubkey::Pubkey, gorbagana_svm_transaction::instruction::SVMInstruction,
 };
 
 pub struct PrecompileSignatureDetails {
@@ -112,11 +112,11 @@ impl SignatureDetailsFilter {
 
     #[inline]
     fn check_program_id(program_id: &Pubkey) -> ProgramIdStatus {
-        if program_id == &solana_sdk_ids::secp256k1_program::ID {
+        if program_id == &gorbagana_sdk_ids::secp256k1_program::ID {
             ProgramIdStatus::Secp256k1
-        } else if program_id == &solana_sdk_ids::ed25519_program::ID {
+        } else if program_id == &gorbagana_sdk_ids::ed25519_program::ID {
             ProgramIdStatus::Ed25519
-        } else if program_id == &solana_sdk_ids::secp256r1_program::ID {
+        } else if program_id == &gorbagana_sdk_ids::secp256r1_program::ID {
             ProgramIdStatus::Secp256r1
         } else {
             ProgramIdStatus::NotSignature
@@ -170,9 +170,9 @@ mod tests {
     fn test_get_signature_details_signatures_mixed() {
         let program_ids = [
             Pubkey::new_unique(),
-            solana_sdk_ids::secp256k1_program::ID,
-            solana_sdk_ids::ed25519_program::ID,
-            solana_sdk_ids::secp256r1_program::ID,
+            gorbagana_sdk_ids::secp256k1_program::ID,
+            gorbagana_sdk_ids::ed25519_program::ID,
+            gorbagana_sdk_ids::secp256r1_program::ID,
         ];
         let instructions = [
             make_instruction(&program_ids, 1, &[5]),
@@ -194,9 +194,9 @@ mod tests {
     #[test]
     fn test_get_signature_details_missing_num_signatures() {
         let program_ids = [
-            solana_sdk_ids::secp256k1_program::ID,
-            solana_sdk_ids::ed25519_program::ID,
-            solana_sdk_ids::secp256r1_program::ID,
+            gorbagana_sdk_ids::secp256k1_program::ID,
+            gorbagana_sdk_ids::ed25519_program::ID,
+            gorbagana_sdk_ids::secp256r1_program::ID,
         ];
         let instructions = [
             make_instruction(&program_ids, 0, &[]),

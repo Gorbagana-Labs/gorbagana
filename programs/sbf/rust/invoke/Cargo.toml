@@ -1,5 +1,5 @@
 [package]
-name = "solana-sbf-rust-invoke"
+name = "gorbagana-sbf-rust-invoke"
 version = { workspace = true }
 description = { workspace = true }
 authors = { workspace = true }
@@ -12,19 +12,19 @@ edition = { workspace = true }
 crate-type = ["cdylib"]
 
 [dependencies]
-solana-account-info = { workspace = true }
-solana-instruction = { workspace = true }
-solana-msg = { workspace = true }
-solana-program = { workspace = true }
-solana-program-entrypoint = { workspace = true }
-solana-program-error = { workspace = true }
-solana-program-memory = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-sbf-rust-invoke-dep = { workspace = true }
-solana-sbf-rust-invoked-dep = { workspace = true }
-solana-sbf-rust-realloc-dep = { workspace = true }
-solana-sdk-ids = { workspace = true }
-solana-system-interface = { workspace = true }
+gorbagana-account-info = { workspace = true }
+gorbagana-instruction = { workspace = true }
+gorbagana-msg = { workspace = true }
+gorbagana-program = { workspace = true }
+gorbagana-program-entrypoint = { workspace = true }
+gorbagana-program-error = { workspace = true }
+gorbagana-program-memory = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-sbf-rust-invoke-dep = { workspace = true }
+gorbagana-sbf-rust-invoked-dep = { workspace = true }
+gorbagana-sbf-rust-realloc-dep = { workspace = true }
+gorbagana-sdk-ids = { workspace = true }
+gorbagana-system-interface = { workspace = true }
 
 [lints]
 workspace = true

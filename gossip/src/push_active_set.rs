@@ -2,9 +2,9 @@ use {
     crate::weighted_shuffle::WeightedShuffle,
     indexmap::IndexMap,
     rand::Rng,
-    solana_bloom::bloom::{Bloom, ConcurrentBloom},
-    solana_native_token::LAMPORTS_PER_SOL,
-    solana_pubkey::Pubkey,
+    gorbagana_bloom::bloom::{Bloom, ConcurrentBloom},
+    gorbagana_native_token::LAMPORTS_PER_SOL,
+    gorbagana_pubkey::Pubkey,
     std::collections::HashMap,
 };
 
@@ -92,7 +92,7 @@ impl PushActiveSet {
                     // min stake of {...} is a proxy for how much we care about
                     // the link, and tries to mirror similar logic on the
                     // receiving end when pruning incoming links:
-                    // https://github.com/solana-labs/solana/blob/81394cf92/gossip/src/received_cache.rs#L100-L105
+                    // https://github.com/gorbagana-labs/gorbagana/blob/81394cf92/gossip/src/received_cache.rs#L100-L105
                     let bucket = bucket.min(k) as u64;
                     bucket.saturating_add(1).saturating_pow(2)
                 })

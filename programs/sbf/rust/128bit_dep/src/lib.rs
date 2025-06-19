@@ -1,4 +1,4 @@
-//! Solana Rust-based SBF program utility functions and types
+//! Gorbagana Rust-based SBF program utility functions and types
 
 #![allow(clippy::arithmetic_side_effects)]
 

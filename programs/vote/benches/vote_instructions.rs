@@ -2,20 +2,20 @@ use {
     agave_feature_set::{deprecate_legacy_vote_ixs, FeatureSet},
     bincode::serialize,
     criterion::{criterion_group, criterion_main, Criterion},
-    solana_account::{self as account, create_account_for_test, Account, AccountSharedData},
-    solana_clock::{Clock, Slot},
-    solana_epoch_schedule::EpochSchedule,
-    solana_hash::Hash,
-    solana_instruction::{error::InstructionError, AccountMeta},
-    solana_program_runtime::invoke_context::{
+    gorbagana_account::{self as account, create_account_for_test, Account, AccountSharedData},
+    gorbagana_clock::{Clock, Slot},
+    gorbagana_epoch_schedule::EpochSchedule,
+    gorbagana_hash::Hash,
+    gorbagana_instruction::{error::InstructionError, AccountMeta},
+    gorbagana_program_runtime::invoke_context::{
         mock_process_instruction, mock_process_instruction_with_feature_set,
     },
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
-    solana_sdk_ids::{sysvar, vote::id},
-    solana_slot_hashes::{SlotHashes, MAX_ENTRIES},
-    solana_transaction_context::TransactionAccount,
-    solana_vote_program::{
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent::Rent,
+    gorbagana_sdk_ids::{sysvar, vote::id},
+    gorbagana_slot_hashes::{SlotHashes, MAX_ENTRIES},
+    gorbagana_transaction_context::TransactionAccount,
+    gorbagana_vote_program::{
         vote_instruction::VoteInstruction,
         vote_processor::Entrypoint,
         vote_state::{
@@ -68,14 +68,14 @@ fn create_accounts() -> (Slot, SlotHashes, Vec<TransactionAccount>, Vec<AccountM
         Account {
             lamports: 1,
             data: vote_account_data,
-            owner: solana_vote_program::id(),
+            owner: gorbagana_vote_program::id(),
             executable: false,
             rent_epoch: 0,
         }
     };
 
     let transaction_accounts = vec![
-        (solana_vote_program::id(), AccountSharedData::default()),
+        (gorbagana_vote_program::id(), AccountSharedData::default()),
         (vote_pubkey, AccountSharedData::from(vote_account)),
         (
             sysvar::slot_hashes::id(),
@@ -125,24 +125,24 @@ fn create_accounts() -> (Slot, SlotHashes, Vec<TransactionAccount>, Vec<AccountM
 fn create_test_account() -> (Pubkey, AccountSharedData) {
     let rent = Rent::default();
     let balance = VoteState::get_rent_exempt_reserve(&rent);
-    let vote_pubkey = solana_pubkey::new_rand();
+    let vote_pubkey = gorbagana_pubkey::new_rand();
     (
         vote_pubkey,
-        create_account(&vote_pubkey, &solana_pubkey::new_rand(), 0, balance),
+        create_account(&vote_pubkey, &gorbagana_pubkey::new_rand(), 0, balance),
     )
 }
 
 fn create_test_account_with_authorized() -> (Pubkey, Pubkey, Pubkey, AccountSharedData) {
-    let vote_pubkey = solana_pubkey::new_rand();
-    let authorized_voter = solana_pubkey::new_rand();
-    let authorized_withdrawer = solana_pubkey::new_rand();
+    let vote_pubkey = gorbagana_pubkey::new_rand();
+    let authorized_voter = gorbagana_pubkey::new_rand();
+    let authorized_withdrawer = gorbagana_pubkey::new_rand();
 
     (
         vote_pubkey,
         authorized_voter,
         authorized_withdrawer,
         create_account_with_authorized(
-            &solana_pubkey::new_rand(),
+            &gorbagana_pubkey::new_rand(),
             &authorized_voter,
             &authorized_withdrawer,
             0,
@@ -201,7 +201,7 @@ struct BenchAuthorize {
 impl BenchAuthorize {
     fn new() -> Self {
         let (vote_pubkey, vote_account) = create_test_account();
-        let authorized_voter_pubkey = solana_pubkey::new_rand();
+        let authorized_voter_pubkey = gorbagana_pubkey::new_rand();
         let clock = Clock {
             epoch: 1,
             leader_schedule_epoch: 2,
@@ -255,9 +255,9 @@ struct BenchInitializeAccount {
 
 impl BenchInitializeAccount {
     fn new() -> Self {
-        let vote_pubkey = solana_pubkey::new_rand();
+        let vote_pubkey = gorbagana_pubkey::new_rand();
         let vote_account = AccountSharedData::new(100, VoteState::size_of(), &id());
-        let node_pubkey = solana_pubkey::new_rand();
+        let node_pubkey = gorbagana_pubkey::new_rand();
         let node_account = AccountSharedData::default();
         let instruction_data = serialize(&VoteInstruction::InitializeAccount(VoteInit {
             node_pubkey,
@@ -365,7 +365,7 @@ struct BenchWithdraw {
 impl BenchWithdraw {
     pub fn new() -> Self {
         let (vote_pubkey, vote_account) = create_test_account();
-        let authorized_withdrawer_pubkey = solana_pubkey::new_rand();
+        let authorized_withdrawer_pubkey = gorbagana_pubkey::new_rand();
         let transaction_accounts = vec![
             (vote_pubkey, vote_account.clone()),
             (sysvar::clock::id(), create_default_clock_account()),
@@ -419,7 +419,7 @@ impl BenchUpdateValidatorIdentity {
         let (vote_pubkey, _authorized_voter, authorized_withdrawer, vote_account) =
             create_test_account_with_authorized();
 
-        let node_pubkey = solana_pubkey::new_rand();
+        let node_pubkey = gorbagana_pubkey::new_rand();
         let instruction_data = serialize(&VoteInstruction::UpdateValidatorIdentity).unwrap();
         let transaction_accounts = vec![
             (vote_pubkey, vote_account),

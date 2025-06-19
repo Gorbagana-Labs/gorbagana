@@ -7,8 +7,8 @@ use {
     itertools::MinMaxResult,
     min_max_heap::MinMaxHeap,
     slab::{Slab, VacantEntry},
-    solana_packet::PACKET_DATA_SIZE,
-    solana_runtime_transaction::{
+    gorbagana_packet::PACKET_DATA_SIZE,
+    gorbagana_runtime_transaction::{
         runtime_transaction::RuntimeTransaction, transaction_with_meta::TransactionWithMeta,
     },
     std::sync::Arc,
@@ -346,15 +346,15 @@ mod tests {
         super::*,
         crate::banking_stage::scheduler_messages::MaxAge,
         agave_transaction_view::transaction_view::SanitizedTransactionView,
-        solana_compute_budget_interface::ComputeBudgetInstruction,
-        solana_hash::Hash,
-        solana_keypair::Keypair,
-        solana_message::Message,
-        solana_perf::packet::Packet,
-        solana_runtime_transaction::runtime_transaction::RuntimeTransaction,
-        solana_signer::Signer,
-        solana_system_interface::instruction as system_instruction,
-        solana_transaction::{
+        gorbagana_compute_budget_interface::ComputeBudgetInstruction,
+        gorbagana_hash::Hash,
+        gorbagana_keypair::Keypair,
+        gorbagana_message::Message,
+        gorbagana_perf::packet::Packet,
+        gorbagana_runtime_transaction::runtime_transaction::RuntimeTransaction,
+        gorbagana_signer::Signer,
+        gorbagana_system_interface::instruction as system_instruction,
+        gorbagana_transaction::{
             sanitized::{MessageHash, SanitizedTransaction},
             Transaction,
         },
@@ -367,7 +367,7 @@ mod tests {
     ) -> (RuntimeTransaction<SanitizedTransaction>, MaxAge, u64, u64) {
         let from_keypair = Keypair::new();
         let ixs = vec![
-            system_instruction::transfer(&from_keypair.pubkey(), &solana_pubkey::new_rand(), 1),
+            system_instruction::transfer(&from_keypair.pubkey(), &gorbagana_pubkey::new_rand(), 1),
             ComputeBudgetInstruction::set_compute_unit_price(priority),
         ];
         let message = Message::new(&ixs, Some(&from_keypair.pubkey()));

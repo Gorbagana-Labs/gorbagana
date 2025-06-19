@@ -1,10 +1,10 @@
-pub use solana_file_download::DownloadProgressRecord;
+pub use gorbagana_file_download::DownloadProgressRecord;
 use {
     log::*,
-    solana_clock::Slot,
-    solana_file_download::{download_file, DownloadProgressCallbackOption},
-    solana_genesis_config::DEFAULT_GENESIS_ARCHIVE,
-    solana_runtime::{
+    gorbagana_clock::Slot,
+    gorbagana_file_download::{download_file, DownloadProgressCallbackOption},
+    gorbagana_genesis_config::DEFAULT_GENESIS_ARCHIVE,
+    gorbagana_runtime::{
         snapshot_hash::SnapshotHash,
         snapshot_package::SnapshotKind,
         snapshot_utils::{self, ArchiveFormat, ZstdConfig},

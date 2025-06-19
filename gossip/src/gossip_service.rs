@@ -9,20 +9,20 @@ use {
     },
     crossbeam_channel::Sender,
     rand::{thread_rng, Rng},
-    solana_client::{connection_cache::ConnectionCache, tpu_client::TpuClientWrapper},
-    solana_keypair::Keypair,
-    solana_net_utils::DEFAULT_IP_ECHO_SERVER_THREADS,
-    solana_perf::recycler::Recycler,
-    solana_pubkey::Pubkey,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_runtime::bank_forks::BankForks,
-    solana_signer::Signer,
-    solana_streamer::{
+    gorbagana_client::{connection_cache::ConnectionCache, tpu_client::TpuClientWrapper},
+    gorbagana_keypair::Keypair,
+    gorbagana_net_utils::DEFAULT_IP_ECHO_SERVER_THREADS,
+    gorbagana_perf::recycler::Recycler,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_runtime::bank_forks::BankForks,
+    gorbagana_signer::Signer,
+    gorbagana_streamer::{
         evicting_sender::EvictingSender,
         socket::SocketAddrSpace,
         streamer::{self, StreamerReceiveStats},
     },
-    solana_tpu_client::tpu_client::{TpuClient, TpuClientConfig},
+    gorbagana_tpu_client::tpu_client::{TpuClient, TpuClientConfig},
     std::{
         collections::HashSet,
         net::{SocketAddr, TcpListener, UdpSocket},
@@ -207,7 +207,7 @@ pub fn discover(
     }
 
     let _ip_echo_server = ip_echo.map(|tcp_listener| {
-        solana_net_utils::ip_echo_server(
+        gorbagana_net_utils::ip_echo_server(
             tcp_listener,
             DEFAULT_IP_ECHO_SERVER_THREADS,
             Some(my_shred_version),
@@ -424,8 +424,8 @@ mod tests {
     fn test_gossip_services_spy() {
         const TIMEOUT: Duration = Duration::from_secs(5);
         let keypair = Keypair::new();
-        let peer0 = solana_pubkey::new_rand();
-        let peer1 = solana_pubkey::new_rand();
+        let peer0 = gorbagana_pubkey::new_rand();
+        let peer1 = gorbagana_pubkey::new_rand();
         let contact_info = ContactInfo::new_localhost(&keypair.pubkey(), 0);
         let peer0_info = ContactInfo::new_localhost(&peer0, 0);
         let peer1_info = ContactInfo::new_localhost(&peer1, 0);
@@ -457,7 +457,7 @@ mod tests {
             spy_ref.clone(),
             None,
             TIMEOUT,
-            Some(&[solana_pubkey::new_rand()]),
+            Some(&[gorbagana_pubkey::new_rand()]),
             None,
         );
         assert!(!met_criteria);
@@ -471,7 +471,7 @@ mod tests {
             spy_ref.clone(),
             Some(1),
             TIMEOUT,
-            Some(&[solana_pubkey::new_rand()]),
+            Some(&[gorbagana_pubkey::new_rand()]),
             None,
         );
         assert!(!met_criteria);

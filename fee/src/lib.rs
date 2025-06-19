@@ -1,7 +1,7 @@
 use {
     agave_feature_set::{enable_secp256r1_precompile, FeatureSet},
-    solana_fee_structure::FeeDetails,
-    solana_svm_transaction::svm_message::SVMMessage,
+    gorbagana_fee_structure::FeeDetails,
+    gorbagana_svm_transaction::svm_message::SVMMessage,
 };
 
 /// Bools indicating the activation of features relevant

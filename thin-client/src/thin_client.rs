@@ -6,29 +6,29 @@
 use {
     log::*,
     rayon::iter::{IntoParallelIterator, ParallelIterator},
-    solana_account::Account,
-    solana_client_traits::{AsyncClient, Client, SyncClient},
-    solana_clock::MAX_PROCESSING_AGE,
-    solana_commitment_config::CommitmentConfig,
-    solana_connection_cache::{
+    gorbagana_account::Account,
+    gorbagana_client_traits::{AsyncClient, Client, SyncClient},
+    gorbagana_clock::MAX_PROCESSING_AGE,
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_connection_cache::{
         client_connection::ClientConnection,
         connection_cache::{
             ConnectionCache, ConnectionManager, ConnectionPool, NewConnectionConfig,
         },
     },
-    solana_epoch_info::EpochInfo,
-    solana_hash::Hash,
-    solana_instruction::Instruction,
-    solana_keypair::Keypair,
-    solana_message::Message,
-    solana_pubkey::Pubkey,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_api::config::RpcProgramAccountsConfig,
-    solana_signature::Signature,
-    solana_signer::{signers::Signers, Signer},
-    solana_system_interface::instruction::transfer,
-    solana_transaction::{versioned::VersionedTransaction, Transaction},
-    solana_transaction_error::{TransactionResult, TransportResult},
+    gorbagana_epoch_info::EpochInfo,
+    gorbagana_hash::Hash,
+    gorbagana_instruction::Instruction,
+    gorbagana_keypair::Keypair,
+    gorbagana_message::Message,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_rpc_client_api::config::RpcProgramAccountsConfig,
+    gorbagana_signature::Signature,
+    gorbagana_signer::{signers::Signers, Signer},
+    gorbagana_system_interface::instruction::transfer,
+    gorbagana_transaction::{versioned::VersionedTransaction, Transaction},
+    gorbagana_transaction_error::{TransactionResult, TransportResult},
     std::{
         io,
         net::SocketAddr,
@@ -606,7 +606,7 @@ mod tests {
 
     #[test]
     fn test_client_optimizer() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         const NUM_CLIENTS: usize = 5;
         let optimizer = ClientOptimizer::new(NUM_CLIENTS);

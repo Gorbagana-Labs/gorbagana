@@ -10,14 +10,14 @@ use {
         crypto::rustls::QuicClientConfig, ClientConfig, Connection, EndpointConfig, IdleTimeout,
         TokioRuntime, TransportConfig,
     },
-    solana_keypair::Keypair,
-    solana_net_utils::{
+    gorbagana_keypair::Keypair,
+    gorbagana_net_utils::{
         bind_to_localhost, multi_bind_in_range_with_config,
         sockets::localhost_port_range_for_tests, SocketConfig,
     },
-    solana_perf::packet::PacketBatch,
-    solana_quic_definitions::{QUIC_KEEP_ALIVE, QUIC_MAX_TIMEOUT, QUIC_SEND_FAIRNESS},
-    solana_tls_utils::{new_dummy_x509_certificate, tls_client_config_builder},
+    gorbagana_perf::packet::PacketBatch,
+    gorbagana_quic_definitions::{QUIC_KEEP_ALIVE, QUIC_MAX_TIMEOUT, QUIC_SEND_FAIRNESS},
+    gorbagana_tls_utils::{new_dummy_x509_certificate, tls_client_config_builder},
     std::{
         net::{IpAddr, Ipv4Addr, SocketAddr, UdpSocket},
         sync::{atomic::AtomicBool, Arc, RwLock},

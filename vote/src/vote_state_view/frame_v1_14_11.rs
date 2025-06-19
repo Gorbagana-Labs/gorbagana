@@ -5,8 +5,8 @@ use {
         },
         EpochCreditsListFrame, Field, Result, VoteStateViewError,
     },
-    solana_pubkey::Pubkey,
-    solana_vote_interface::state::BlockTimestamp,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_vote_interface::state::BlockTimestamp,
     std::io::BufRead,
 };
 
@@ -98,8 +98,8 @@ impl VoteStateFrameV1_14_11 {
 mod tests {
     use {
         super::*,
-        solana_clock::Clock,
-        solana_vote_interface::state::{
+        gorbagana_clock::Clock,
+        gorbagana_vote_interface::state::{
             LandedVote, Lockout, VoteInit, VoteState, VoteState1_14_11, VoteStateVersions,
         },
     };

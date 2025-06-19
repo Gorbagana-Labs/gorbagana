@@ -3,8 +3,8 @@
 #![allow(clippy::arithmetic_side_effects)]
 
 use {
-    solana_program::log::sol_log_64,
-    solana_program_entrypoint::{custom_heap_default, custom_panic_default, SUCCESS},
+    gorbagana_program::log::sol_log_64,
+    gorbagana_program_entrypoint::{custom_heap_default, custom_panic_default, SUCCESS},
 };
 
 #[no_mangle]

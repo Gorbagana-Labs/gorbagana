@@ -1,9 +1,9 @@
 //! Example SBF program using Poseidon syscall
 
 use {
-    solana_msg::msg,
-    solana_poseidon::{hashv, Endianness, Parameters, PoseidonSyscallError},
-    solana_program_entrypoint::{custom_heap_default, custom_panic_default},
+    gorbagana_msg::msg,
+    gorbagana_poseidon::{hashv, Endianness, Parameters, PoseidonSyscallError},
+    gorbagana_program_entrypoint::{custom_heap_default, custom_panic_default},
 };
 
 fn test_poseidon_input_ones_twos() -> Result<(), PoseidonSyscallError> {

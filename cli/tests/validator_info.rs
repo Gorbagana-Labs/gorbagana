@@ -1,23 +1,23 @@
 use {
     serde_json::json,
-    solana_cli::{
+    gorbagana_cli::{
         check_balance,
         cli::{process_command, request_and_confirm_airdrop, CliCommand, CliConfig},
     },
-    solana_commitment_config::CommitmentConfig,
-    solana_faucet::faucet::run_local_faucet,
-    solana_keypair::{keypair_from_seed, Keypair},
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_signer::Signer,
-    solana_streamer::socket::SocketAddrSpace,
-    solana_test_validator::TestValidator,
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_faucet::faucet::run_local_faucet,
+    gorbagana_keypair::{keypair_from_seed, Keypair},
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_signer::Signer,
+    gorbagana_streamer::socket::SocketAddrSpace,
+    gorbagana_test_validator::TestValidator,
     test_case::test_case,
 };
 
 #[test_case(None; "base")]
 #[test_case(Some(1_000_000); "with_compute_unit_price")]
 fn test_publish(compute_unit_price: Option<u64>) {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let mint_keypair = Keypair::new();
     let mint_pubkey = mint_keypair.pubkey();

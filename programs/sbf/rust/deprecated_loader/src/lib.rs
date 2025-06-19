@@ -4,15 +4,15 @@
 #![allow(clippy::arithmetic_side_effects)]
 
 use {
-    solana_account_info::AccountInfo,
-    solana_instruction::{AccountMeta, Instruction},
-    solana_msg::msg,
-    solana_program::{log::sol_log_params, program::invoke},
-    solana_program_error::ProgramResult,
-    solana_pubkey::Pubkey,
-    solana_sbf_rust_invoke_dep::*,
-    solana_sbf_rust_realloc_dep::*,
-    solana_sdk_ids::bpf_loader,
+    gorbagana_account_info::AccountInfo,
+    gorbagana_instruction::{AccountMeta, Instruction},
+    gorbagana_msg::msg,
+    gorbagana_program::{log::sol_log_params, program::invoke},
+    gorbagana_program_error::ProgramResult,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sbf_rust_invoke_dep::*,
+    gorbagana_sbf_rust_realloc_dep::*,
+    gorbagana_sdk_ids::bpf_loader,
 };
 
 #[derive(Debug, PartialEq)]
@@ -33,7 +33,7 @@ fn custom_panic(info: &core::panic::PanicInfo<'_>) {
     msg!(&format!("{info}"));
 }
 
-solana_program::entrypoint_deprecated!(process_instruction);
+gorbagana_program::entrypoint_deprecated!(process_instruction);
 fn process_instruction(
     program_id: &Pubkey,
     accounts: &[AccountInfo],
@@ -131,7 +131,7 @@ fn process_instruction(
             )
             .unwrap();
 
-            if !solana_sdk_ids::bpf_loader_deprecated::check_id(realloc_program_owner) {
+            if !gorbagana_sdk_ids::bpf_loader_deprecated::check_id(realloc_program_owner) {
                 assert_eq!(&*account.data.borrow(), &expected);
             }
         }
@@ -165,7 +165,7 @@ fn process_instruction(
 
             // deserialize_parameters_unaligned predates realloc support, and
             // hardcodes the account data length to the original length.
-            if !solana_sdk_ids::bpf_loader_deprecated::check_id(realloc_program_owner) {
+            if !gorbagana_sdk_ids::bpf_loader_deprecated::check_id(realloc_program_owner) {
                 assert_eq!(&*account.data.borrow(), &expected);
                 assert_eq!(
                     unsafe {
@@ -272,7 +272,7 @@ fn process_instruction(
 
             {
                 // Test - arch config
-                #[cfg(not(target_os = "solana"))]
+                #[cfg(not(target_os = "gorbagana"))]
                 panic!();
             }
         }

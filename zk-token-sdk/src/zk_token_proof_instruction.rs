@@ -29,16 +29,16 @@
 //! this instruction must be signed by the context account's owner. This instruction can be used by
 //! the account owner to reclaim lamports for storage.
 //!
-//! [`ZK Token proof`]: https://docs.solanalabs.com/runtime/zk-token-proof
-//! [`context-state`]: https://docs.solanalabs.com/runtime/zk-token-proof#context-data
+//! [`ZK Token proof`]: https://docs.gorbaganalabs.com/runtime/zk-token-proof
+//! [`context-state`]: https://docs.gorbaganalabs.com/runtime/zk-token-proof#context-data
 
 pub use crate::instruction::*;
 use {
     bytemuck::bytes_of,
     num_derive::{FromPrimitive, ToPrimitive},
     num_traits::{FromPrimitive, ToPrimitive},
-    solana_instruction::{AccountMeta, Instruction},
-    solana_pubkey::Pubkey,
+    gorbagana_instruction::{AccountMeta, Instruction},
+    gorbagana_pubkey::Pubkey,
 };
 
 #[derive(Clone, Copy, Debug, FromPrimitive, ToPrimitive, PartialEq, Eq)]

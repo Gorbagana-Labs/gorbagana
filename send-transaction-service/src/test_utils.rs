@@ -8,7 +8,7 @@ use {
             ConnectionCacheClient, TpuClientNextClient, TpuInfoWithSendStatic, TransactionClient,
         },
     },
-    solana_client::connection_cache::ConnectionCache,
+    gorbagana_client::connection_cache::ConnectionCache,
     std::{net::SocketAddr, sync::Arc},
     tokio::runtime::Handle,
     tokio_util::sync::CancellationToken,
@@ -53,7 +53,7 @@ impl CreateClient for TpuClientNextClient {
     ) -> Self {
         let runtime_handle =
             maybe_runtime.expect("Runtime should be provided for the TpuClientNextClient.");
-        let bind_socket = solana_net_utils::bind_to_localhost()
+        let bind_socket = gorbagana_net_utils::bind_to_localhost()
             .expect("Should be able to open UdpSocket for tests.");
         Self::new::<NullTpuInfo>(
             runtime_handle,

@@ -1,20 +1,20 @@
 use {
     criterion::{criterion_group, criterion_main, Criterion},
-    solana_hash::Hash,
-    solana_keypair::Keypair,
-    solana_ledger::{
+    gorbagana_hash::Hash,
+    gorbagana_keypair::Keypair,
+    gorbagana_ledger::{
         blockstore::Blockstore, genesis_utils::create_genesis_config,
         get_tmp_ledger_path_auto_delete, leader_schedule_cache::LeaderScheduleCache,
     },
-    solana_poh::{
+    gorbagana_poh::{
         poh_recorder::PohRecorder,
         poh_service::{PohService, DEFAULT_HASHES_PER_BATCH, DEFAULT_PINNED_CPU_CORE},
         transaction_recorder::TransactionRecorder,
     },
-    solana_poh_config::PohConfig,
-    solana_pubkey::Pubkey,
-    solana_runtime::{bank::Bank, installed_scheduler_pool::BankWithScheduler},
-    solana_transaction::versioned::VersionedTransaction,
+    gorbagana_poh_config::PohConfig,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_runtime::{bank::Bank, installed_scheduler_pool::BankWithScheduler},
+    gorbagana_transaction::versioned::VersionedTransaction,
     std::{
         sync::{atomic::AtomicBool, Arc, RwLock},
         time::{Duration, Instant},
@@ -32,13 +32,13 @@ fn bench_record_transactions(c: &mut Criterion) {
 
     // Setup the PohService.
     let mut genesis_config_info = create_genesis_config(2);
-    genesis_config_info.genesis_config.ticks_per_slot = solana_clock::DEFAULT_TICKS_PER_SLOT;
+    genesis_config_info.genesis_config.ticks_per_slot = gorbagana_clock::DEFAULT_TICKS_PER_SLOT;
     genesis_config_info.genesis_config.poh_config = PohConfig {
         target_tick_duration: Duration::from_micros(
-            solana_clock::DEFAULT_MS_PER_SLOT * 1_000 / solana_clock::DEFAULT_TICKS_PER_SLOT,
+            gorbagana_clock::DEFAULT_MS_PER_SLOT * 1_000 / gorbagana_clock::DEFAULT_TICKS_PER_SLOT,
         ),
         target_tick_count: None,
-        hashes_per_tick: Some(solana_clock::DEFAULT_HASHES_PER_TICK),
+        hashes_per_tick: Some(gorbagana_clock::DEFAULT_HASHES_PER_TICK),
     };
     let exit = Arc::new(AtomicBool::new(false));
     let mut bank = Arc::new(Bank::new_for_tests(&genesis_config_info.genesis_config));
@@ -67,7 +67,7 @@ fn bench_record_transactions(c: &mut Criterion) {
 
     let txs: Vec<_> = (0..NUM_TRANSACTIONS)
         .map(|_| {
-            VersionedTransaction::from(solana_system_transaction::transfer(
+            VersionedTransaction::from(gorbagana_system_transaction::transfer(
                 &Keypair::new(),
                 &Pubkey::new_unique(),
                 1,

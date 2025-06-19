@@ -1,4 +1,4 @@
-use {solana_hash::Hash, solana_pubkey::Pubkey};
+use {gorbagana_hash::Hash, gorbagana_pubkey::Pubkey};
 
 /// Identifies the type of built-in program targeted for Core BPF migration.
 /// The type of target determines whether the program should have a program

@@ -12,9 +12,9 @@ use {
             error::TieredStorageError, hot::HOT_FORMAT, index::IndexOffset, TieredStorage,
         },
     },
-    solana_account::{AccountSharedData, ReadableAccount as _},
-    solana_clock::Slot,
-    solana_pubkey::Pubkey,
+    gorbagana_account::{AccountSharedData, ReadableAccount as _},
+    gorbagana_clock::Slot,
+    gorbagana_pubkey::Pubkey,
     std::{
         mem,
         path::{Path, PathBuf},

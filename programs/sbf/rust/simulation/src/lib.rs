@@ -1,18 +1,18 @@
 #![allow(clippy::arithmetic_side_effects)]
 
 use {
-    solana_account_info::{next_account_info, AccountInfo},
-    solana_clock::Clock,
-    solana_msg::msg,
-    solana_program_error::ProgramResult,
-    solana_pubkey::{declare_id, Pubkey},
-    solana_sysvar::Sysvar,
+    gorbagana_account_info::{next_account_info, AccountInfo},
+    gorbagana_clock::Clock,
+    gorbagana_msg::msg,
+    gorbagana_program_error::ProgramResult,
+    gorbagana_pubkey::{declare_id, Pubkey},
+    gorbagana_sysvar::Sysvar,
     std::convert::TryInto,
 };
 
 declare_id!("Sim1jD5C35odT8mzctm8BWnjic8xW5xgeb5MbcbErTo");
 
-solana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
+gorbagana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
 
 pub fn process_instruction(
     _program_id: &Pubkey,

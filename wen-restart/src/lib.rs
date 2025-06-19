@@ -1,6 +1,6 @@
-pub(crate) mod solana {
+pub(crate) mod gorbagana {
     pub(crate) mod wen_restart_proto {
-        include!(concat!(env!("OUT_DIR"), "/solana.wen_restart_proto.rs"));
+        include!(concat!(env!("OUT_DIR"), "/gorbagana.wen_restart_proto.rs"));
     }
 }
 

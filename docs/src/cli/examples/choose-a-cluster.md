@@ -1,29 +1,29 @@
 ---
-title: Connecting to a Cluster with the Solana CLI
-pagination_label: "Solana CLI: Connecting to a Cluster"
+title: Connecting to a Cluster with the Gorbagana CLI
+pagination_label: "Gorbagana CLI: Connecting to a Cluster"
 sidebar_label: Connecting to a Cluster
 ---
 
-See [Solana Clusters](../../clusters/available.md) for general information about the
+See [Gorbagana Clusters](../../clusters/available.md) for general information about the
 available clusters.
 
 ## Configure the command-line tool
 
-You can check what cluster the Solana command-line tool (CLI) is currently targeting by
+You can check what cluster the Gorbagana command-line tool (CLI) is currently targeting by
 running the following command:
 
 ```bash
-solana config get
+gorbagana config get
 ```
 
-Use `solana config set` command to target a particular cluster. After setting
+Use `gorbagana config set` command to target a particular cluster. After setting
 a cluster target, any future subcommands will send/receive information from that
 cluster.
 
 For example to target the Devnet cluster, run:
 
 ```bash
-solana config set --url https://api.devnet.solana.com
+gorbagana config set --url https://api.devnet.gorbagana.com
 ```
 
 ## Ensure Versions Match
@@ -33,13 +33,13 @@ matches the software version running on the cluster. To get the locally-installe
 CLI version, run:
 
 ```bash
-solana --version
+gorbagana --version
 ```
 
 To get the cluster version, run:
 
 ```bash
-solana cluster-version
+gorbagana cluster-version
 ```
 
 Ensure the local CLI version is greater than or equal to the cluster version.

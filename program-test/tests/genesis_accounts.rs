@@ -1,23 +1,23 @@
-use {solana_account::Account, solana_program_test::ProgramTest, solana_pubkey::Pubkey};
+use {gorbagana_account::Account, gorbagana_program_test::ProgramTest, gorbagana_pubkey::Pubkey};
 
 #[tokio::test]
 async fn genesis_accounts() {
     let my_genesis_accounts = [
         (
             Pubkey::new_unique(),
-            Account::new(1, 0, &solana_system_interface::program::id()),
+            Account::new(1, 0, &gorbagana_system_interface::program::id()),
         ),
         (
             Pubkey::new_unique(),
-            Account::new(1, 0, &solana_sdk_ids::config::id()),
+            Account::new(1, 0, &gorbagana_sdk_ids::config::id()),
         ),
         (
             Pubkey::new_unique(),
-            Account::new(1, 0, &solana_sdk_ids::feature::id()),
+            Account::new(1, 0, &gorbagana_sdk_ids::feature::id()),
         ),
         (
             Pubkey::new_unique(),
-            Account::new(1, 0, &solana_stake_interface::program::id()),
+            Account::new(1, 0, &gorbagana_stake_interface::program::id()),
         ),
     ];
 

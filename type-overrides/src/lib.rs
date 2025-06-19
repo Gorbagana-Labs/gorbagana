@@ -4,7 +4,7 @@
 /// and can efficiently detect bugs in concurrent code. The downside is that we need to replace
 /// all imports by those from Shuttle.
 ///
-/// Instead of importing from std, rand, and so on, import the following from solana-type-override,
+/// Instead of importing from std, rand, and so on, import the following from gorbagana-type-override,
 /// and include the 'shuttle-test' feature in your crate to use shuttle.
 
 #[cfg(feature = "executor")]

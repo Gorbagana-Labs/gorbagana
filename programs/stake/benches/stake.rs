@@ -2,14 +2,14 @@ use {
     agave_feature_set::FeatureSet,
     bincode::serialize,
     criterion::{black_box, criterion_group, criterion_main, Criterion},
-    solana_account::{create_account_shared_data_for_test, AccountSharedData, WritableAccount},
-    solana_clock::{Clock, Epoch},
-    solana_instruction::AccountMeta,
-    solana_program_runtime::invoke_context::mock_process_instruction_with_feature_set,
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
-    solana_sdk_ids::sysvar::{clock, rent, stake_history},
-    solana_stake_interface::{
+    gorbagana_account::{create_account_shared_data_for_test, AccountSharedData, WritableAccount},
+    gorbagana_clock::{Clock, Epoch},
+    gorbagana_instruction::AccountMeta,
+    gorbagana_program_runtime::invoke_context::mock_process_instruction_with_feature_set,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent::Rent,
+    gorbagana_sdk_ids::sysvar::{clock, rent, stake_history},
+    gorbagana_stake_interface::{
         instruction::{
             self, AuthorizeCheckedWithSeedArgs, AuthorizeWithSeedArgs, LockupArgs,
             LockupCheckedArgs, StakeInstruction,
@@ -17,13 +17,13 @@ use {
         stake_flags::StakeFlags,
         state::{Authorized, Lockup, StakeAuthorize, StakeStateV2},
     },
-    solana_stake_program::{
+    gorbagana_stake_program::{
         stake_instruction,
         stake_state::{Delegation, Meta, Stake},
     },
-    solana_sysvar::stake_history::StakeHistory,
-    solana_vote_interface::state::{VoteState, VoteStateVersions},
-    solana_vote_program::vote_state,
+    gorbagana_sysvar::stake_history::StakeHistory,
+    gorbagana_vote_interface::state::{VoteState, VoteStateVersions},
+    gorbagana_vote_program::vote_state,
     std::sync::Arc,
 };
 
@@ -42,9 +42,9 @@ impl TestSetup {
         let stake_account = AccountSharedData::new(
             ACCOUNT_BALANCE,
             StakeStateV2::size_of(),
-            &solana_stake_program::id(),
+            &gorbagana_stake_program::id(),
         );
-        let stake_address = solana_pubkey::Pubkey::new_unique();
+        let stake_address = gorbagana_pubkey::Pubkey::new_unique();
         Self {
             // some stake instructions are behind feature gate, enable all
             // feature gates to bench all instructions
@@ -83,7 +83,7 @@ impl TestSetup {
             ACCOUNT_BALANCE,
             &StakeStateV2::Initialized(Meta::auto(&self.stake_address)),
             StakeStateV2::size_of(),
-            &solana_stake_program::id(),
+            &gorbagana_stake_program::id(),
         )
         .unwrap();
 
@@ -125,7 +125,7 @@ impl TestSetup {
         ];
 
         let accounts = mock_process_instruction_with_feature_set(
-            &solana_stake_program::id(),
+            &gorbagana_stake_program::id(),
             Vec::new(),
             &instruction.data,
             transaction_accounts,
@@ -165,7 +165,7 @@ impl TestSetup {
         ];
 
         let accounts = mock_process_instruction_with_feature_set(
-            &solana_stake_program::id(),
+            &gorbagana_stake_program::id(),
             Vec::new(),
             &instruction.data,
             transaction_accounts,
@@ -183,7 +183,7 @@ impl TestSetup {
 
     fn run(&self, instruction_data: &[u8]) {
         mock_process_instruction_with_feature_set(
-            &solana_stake_program::id(),
+            &gorbagana_stake_program::id(),
             Vec::new(),
             instruction_data,
             self.transaction_accounts.clone(),
@@ -200,7 +200,7 @@ impl TestSetup {
 fn bench_initialize(c: &mut Criterion) {
     let mut test_setup = TestSetup::new();
     test_setup.add_account(
-        solana_sdk_ids::sysvar::rent::id(),
+        gorbagana_sdk_ids::sysvar::rent::id(),
         create_account_shared_data_for_test(&Rent::default()),
     );
 
@@ -217,7 +217,7 @@ fn bench_initialize(c: &mut Criterion) {
 fn bench_initialize_checked(c: &mut Criterion) {
     let mut test_setup = TestSetup::new();
     test_setup.add_account(
-        solana_sdk_ids::sysvar::rent::id(),
+        gorbagana_sdk_ids::sysvar::rent::id(),
         create_account_shared_data_for_test(&Rent::default()),
     );
     // add staker account
@@ -545,7 +545,7 @@ fn bench_split(c: &mut Criterion) {
         0,
         &StakeStateV2::Uninitialized,
         StakeStateV2::size_of(),
-        &solana_stake_program::id(),
+        &gorbagana_stake_program::id(),
     )
     .unwrap();
 
@@ -584,7 +584,7 @@ fn bench_merge(c: &mut Criterion) {
         1,
         &StakeStateV2::Initialized(Meta::auto(&test_setup.stake_address)),
         StakeStateV2::size_of(),
-        &solana_stake_program::id(),
+        &gorbagana_stake_program::id(),
     )
     .unwrap();
 
@@ -619,7 +619,7 @@ fn bench_deactivate_delinquent(c: &mut Criterion) {
 
     // reference vote account has been consistently voting
     let mut vote_state = VoteState::default();
-    for epoch in 0..=solana_stake_interface::MINIMUM_DELINQUENT_EPOCHS_FOR_DEACTIVATION {
+    for epoch in 0..=gorbagana_stake_interface::MINIMUM_DELINQUENT_EPOCHS_FOR_DEACTIVATION {
         vote_state.increment_credits(epoch as Epoch, 1);
     }
     let reference_vote_address = Pubkey::new_unique();
@@ -627,7 +627,7 @@ fn bench_deactivate_delinquent(c: &mut Criterion) {
         1,
         &VoteStateVersions::new_current(vote_state),
         VoteState::size_of(),
-        &solana_sdk_ids::vote::id(),
+        &gorbagana_sdk_ids::vote::id(),
     )
     .unwrap();
 
@@ -644,7 +644,7 @@ fn bench_deactivate_delinquent(c: &mut Criterion) {
             StakeFlags::empty(),
         ),
         StakeStateV2::size_of(),
-        &solana_stake_program::id(),
+        &gorbagana_stake_program::id(),
     )
     .unwrap();
     test_setup.transaction_accounts[0] =
@@ -655,7 +655,7 @@ fn bench_deactivate_delinquent(c: &mut Criterion) {
     test_setup.add_account(
         clock::id(),
         create_account_shared_data_for_test(&Clock {
-            epoch: solana_stake_interface::MINIMUM_DELINQUENT_EPOCHS_FOR_DEACTIVATION as u64,
+            epoch: gorbagana_stake_interface::MINIMUM_DELINQUENT_EPOCHS_FOR_DEACTIVATION as u64,
             ..Clock::default()
         }),
     );

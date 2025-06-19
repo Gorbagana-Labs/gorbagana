@@ -118,7 +118,7 @@ mod tests {
         },
         rand::SeedableRng,
         rand_chacha::ChaChaRng,
-        solana_packet::{Meta, PACKET_DATA_SIZE},
+        gorbagana_packet::{Meta, PACKET_DATA_SIZE},
         test_case::test_case,
     };
 

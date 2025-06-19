@@ -3,8 +3,8 @@
 use {
     super::StoredMeta,
     rand::{distributions::Alphanumeric, Rng},
-    solana_account::AccountSharedData,
-    solana_pubkey::Pubkey,
+    gorbagana_account::AccountSharedData,
+    gorbagana_pubkey::Pubkey,
     std::path::PathBuf,
 };
 

@@ -4,7 +4,7 @@ use {
         bucket_map_holder::{Age, AtomicAge, BucketMapHolder},
         is_zero_lamport::IsZeroLamport,
     },
-    solana_clock::Slot,
+    gorbagana_clock::Slot,
     std::sync::{
         atomic::{AtomicBool, Ordering},
         Arc, RwLock,

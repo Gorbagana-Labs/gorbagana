@@ -1,24 +1,24 @@
 #![allow(clippy::arithmetic_side_effects)]
 use {
-    solana_cli::{
+    gorbagana_cli::{
         check_balance,
         cli::{process_command, request_and_confirm_airdrop, CliCommand, CliConfig},
         spend_utils::SpendAmount,
         test_utils::check_ready,
     },
-    solana_cli_output::{parse_sign_only_reply_string, OutputFormat},
-    solana_commitment_config::CommitmentConfig,
-    solana_faucet::faucet::run_local_faucet,
-    solana_hash::Hash,
-    solana_keypair::{keypair_from_seed, Keypair},
-    solana_native_token::sol_to_lamports,
-    solana_pubkey::Pubkey,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_nonce_utils::blockhash_query::{self, BlockhashQuery},
-    solana_signer::Signer,
-    solana_streamer::socket::SocketAddrSpace,
-    solana_system_interface::program as system_program,
-    solana_test_validator::TestValidator,
+    gorbagana_cli_output::{parse_sign_only_reply_string, OutputFormat},
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_faucet::faucet::run_local_faucet,
+    gorbagana_hash::Hash,
+    gorbagana_keypair::{keypair_from_seed, Keypair},
+    gorbagana_native_token::sol_to_lamports,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_rpc_client_nonce_utils::blockhash_query::{self, BlockhashQuery},
+    gorbagana_signer::Signer,
+    gorbagana_streamer::socket::SocketAddrSpace,
+    gorbagana_system_interface::program as system_program,
+    gorbagana_test_validator::TestValidator,
     test_case::test_case,
 };
 
@@ -137,7 +137,7 @@ fn test_nonce(seed: Option<String>, use_nonce_authority: bool, compute_unit_pric
     assert_ne!(first_nonce, third_nonce);
 
     // Withdraw from nonce account
-    let payee_pubkey = solana_pubkey::new_rand();
+    let payee_pubkey = gorbagana_pubkey::new_rand();
     config_payer.signers = authorized_signers;
     config_payer.command = CliCommand::WithdrawFromNonceAccount {
         nonce_account,
@@ -215,7 +215,7 @@ fn test_nonce(seed: Option<String>, use_nonce_authority: bool, compute_unit_pric
 #[test]
 fn test_create_account_with_seed() {
     const ONE_SIG_FEE: f64 = 0.000005;
-    solana_logger::setup();
+    gorbagana_logger::setup();
     let mint_keypair = Keypair::new();
     let mint_pubkey = mint_keypair.pubkey();
     let faucet_addr = run_local_faucet(mint_keypair, None);
@@ -295,12 +295,12 @@ fn test_create_account_with_seed() {
     check_balance!(0, &rpc_client, &to_address);
 
     // Fetch nonce hash
-    let nonce_hash = solana_rpc_client_nonce_utils::get_account_with_commitment(
+    let nonce_hash = gorbagana_rpc_client_nonce_utils::get_account_with_commitment(
         &rpc_client,
         &nonce_address,
         CommitmentConfig::processed(),
     )
-    .and_then(|ref a| solana_rpc_client_nonce_utils::data_from_account(a))
+    .and_then(|ref a| gorbagana_rpc_client_nonce_utils::data_from_account(a))
     .unwrap()
     .blockhash();
 

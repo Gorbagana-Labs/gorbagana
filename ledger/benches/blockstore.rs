@@ -1,20 +1,20 @@
 #![allow(clippy::arithmetic_side_effects)]
 #![feature(test)]
-extern crate solana_ledger;
+extern crate gorbagana_ledger;
 extern crate test;
 
 use {
     rand::Rng,
-    solana_clock::Slot,
-    solana_entry::entry::{create_ticks, Entry},
-    solana_hash::Hash,
-    solana_ledger::{
+    gorbagana_clock::Slot,
+    gorbagana_entry::entry::{create_ticks, Entry},
+    gorbagana_hash::Hash,
+    gorbagana_ledger::{
         blockstore::{entries_to_test_shreds, Blockstore},
         get_tmp_ledger_path_auto_delete,
     },
-    solana_pubkey::Pubkey,
-    solana_signature::Signature,
-    solana_transaction_status::TransactionStatusMeta,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signature::Signature,
+    gorbagana_transaction_status::TransactionStatusMeta,
     std::path::Path,
     test::Bencher,
 };

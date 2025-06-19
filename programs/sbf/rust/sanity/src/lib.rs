@@ -4,15 +4,15 @@
 #![allow(clippy::arithmetic_side_effects)]
 
 use {
-    solana_account_info::AccountInfo,
-    solana_msg::msg,
-    solana_program::{
+    gorbagana_account_info::AccountInfo,
+    gorbagana_msg::msg,
+    gorbagana_program::{
         log::{sol_log_compute_units, sol_log_params},
         program::check_type_assumptions,
     },
-    solana_program_error::ProgramResult,
-    solana_pubkey::Pubkey,
-    solana_sdk_ids::bpf_loader,
+    gorbagana_program_error::ProgramResult,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sdk_ids::bpf_loader,
 };
 
 #[derive(Debug, PartialEq)]
@@ -42,7 +42,7 @@ fn return_sstruct() -> SStruct {
     SStruct { x: 1, y: 2, z: 3 }
 }
 
-solana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
+gorbagana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
 pub fn process_instruction(
     program_id: &Pubkey,
     accounts: &[AccountInfo],
@@ -79,7 +79,7 @@ pub fn process_instruction(
 
     {
         // Test - arch config
-        #[cfg(not(target_os = "solana"))]
+        #[cfg(not(target_os = "gorbagana"))]
         panic!();
     }
 

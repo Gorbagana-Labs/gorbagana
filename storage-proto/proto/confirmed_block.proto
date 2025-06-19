@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package solana.storage.ConfirmedBlock;
+package gorbagana.storage.ConfirmedBlock;
 
 message ConfirmedBlock {
     string previous_blockhash = 1;
@@ -62,7 +62,7 @@ message TransactionStatusMeta {
     bool return_data_none = 15;
 
     // Sum of compute units consumed by all instructions.
-    // Available since Solana v1.10.35 / v1.11.6.
+    // Available since Gorbagana v1.10.35 / v1.11.6.
     // Set to `None` for txs executed on earlier versions.
     optional uint64 compute_units_consumed = 16;
     // Total transaction cost
@@ -84,7 +84,7 @@ message InnerInstruction {
     bytes data = 3;
 
     // Invocation stack height of an inner instruction.
-    // Available since Solana v1.14.6
+    // Available since Gorbagana v1.14.6
     // Set to `None` for txs executed on earlier versions.
     optional uint32 stack_height = 4;
 }

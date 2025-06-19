@@ -1,4 +1,4 @@
-Solana Remote Wallet
+Gorbagana Remote Wallet
 ===
 
 Library for interacting with "remote" wallets, meaning any wallet where the private key bytes are not directly available,

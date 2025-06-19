@@ -1,6 +1,6 @@
 [package]
-name = "solana-zk-token-proof-program"
-description = "Solana Zk Token Proof Program"
+name = "gorbagana-zk-token-proof-program"
+description = "Gorbagana Zk Token Proof Program"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -13,11 +13,11 @@ agave-feature-set = { workspace = true }
 bytemuck = { workspace = true }
 num-derive = { workspace = true }
 num-traits = { workspace = true }
-solana-instruction = { workspace = true }
-solana-log-collector = { workspace = true }
-solana-program-runtime = { workspace = true }
-solana-sdk-ids = { workspace = true }
-solana-zk-token-sdk = { workspace = true }
+gorbagana-instruction = { workspace = true }
+gorbagana-log-collector = { workspace = true }
+gorbagana-program-runtime = { workspace = true }
+gorbagana-sdk-ids = { workspace = true }
+gorbagana-zk-token-sdk = { workspace = true }
 
 [dev-dependencies]
 criterion = { workspace = true }

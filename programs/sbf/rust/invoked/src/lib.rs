@@ -3,20 +3,20 @@
 #![allow(clippy::arithmetic_side_effects)]
 
 use {
-    solana_account_info::{AccountInfo, MAX_PERMITTED_DATA_INCREASE},
-    solana_msg::msg,
-    solana_program::{
+    gorbagana_account_info::{AccountInfo, MAX_PERMITTED_DATA_INCREASE},
+    gorbagana_msg::msg,
+    gorbagana_program::{
         log::sol_log_64,
         program::{get_return_data, invoke, invoke_signed, set_return_data},
     },
-    solana_program_error::{ProgramError, ProgramResult},
-    solana_pubkey::Pubkey,
-    solana_sbf_rust_invoked_dep::*,
-    solana_sdk_ids::loader_v4,
-    solana_system_interface::instruction as system_instruction,
+    gorbagana_program_error::{ProgramError, ProgramResult},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sbf_rust_invoked_dep::*,
+    gorbagana_sdk_ids::loader_v4,
+    gorbagana_system_interface::instruction as system_instruction,
 };
 
-solana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
+gorbagana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
 #[allow(clippy::cognitive_complexity)]
 fn process_instruction(
     program_id: &Pubkey,
@@ -253,7 +253,7 @@ fn process_instruction(
                 let from_lamports = accounts[FROM_INDEX].lamports();
                 let to_lamports = accounts[DERIVED_KEY2_INDEX].lamports();
                 assert_eq!(accounts[DERIVED_KEY2_INDEX].data_len(), 0);
-                assert!(solana_system_interface::program::check_id(
+                assert!(gorbagana_system_interface::program::check_id(
                     accounts[DERIVED_KEY2_INDEX].owner
                 ));
 

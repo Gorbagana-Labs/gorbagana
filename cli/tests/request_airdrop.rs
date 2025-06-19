@@ -1,14 +1,14 @@
 #![allow(clippy::arithmetic_side_effects)]
 use {
-    solana_cli::cli::{process_command, CliCommand, CliConfig},
-    solana_commitment_config::CommitmentConfig,
-    solana_faucet::faucet::run_local_faucet,
-    solana_keypair::Keypair,
-    solana_native_token::sol_to_lamports,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_signer::Signer,
-    solana_streamer::socket::SocketAddrSpace,
-    solana_test_validator::TestValidator,
+    gorbagana_cli::cli::{process_command, CliCommand, CliConfig},
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_faucet::faucet::run_local_faucet,
+    gorbagana_keypair::Keypair,
+    gorbagana_native_token::sol_to_lamports,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_signer::Signer,
+    gorbagana_streamer::socket::SocketAddrSpace,
+    gorbagana_test_validator::TestValidator,
 };
 
 #[test]

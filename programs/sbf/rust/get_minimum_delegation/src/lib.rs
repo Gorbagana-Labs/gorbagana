@@ -3,11 +3,11 @@
 #![allow(unreachable_code)]
 
 use {
-    solana_account_info::AccountInfo, solana_msg::msg, solana_program_error::ProgramResult,
-    solana_pubkey::Pubkey, solana_stake_interface as stake,
+    gorbagana_account_info::AccountInfo, gorbagana_msg::msg, gorbagana_program_error::ProgramResult,
+    gorbagana_pubkey::Pubkey, gorbagana_stake_interface as stake,
 };
 
-solana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
+gorbagana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
 fn process_instruction(
     _program_id: &Pubkey,
     _accounts: &[AccountInfo],

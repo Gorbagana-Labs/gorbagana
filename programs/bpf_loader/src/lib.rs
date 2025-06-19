@@ -6,16 +6,16 @@ pub mod syscalls;
 #[cfg(feature = "svm-internal")]
 use qualifier_attr::qualifiers;
 use {
-    solana_bincode::limited_deserialize,
-    solana_clock::Slot,
-    solana_instruction::{error::InstructionError, AccountMeta},
-    solana_loader_v3_interface::{
+    gorbagana_bincode::limited_deserialize,
+    gorbagana_clock::Slot,
+    gorbagana_instruction::{error::InstructionError, AccountMeta},
+    gorbagana_loader_v3_interface::{
         instruction::UpgradeableLoaderInstruction, state::UpgradeableLoaderState,
     },
-    solana_log_collector::{ic_logger_msg, ic_msg, LogCollector},
-    solana_measure::measure::Measure,
-    solana_program_entrypoint::{MAX_PERMITTED_DATA_INCREASE, SUCCESS},
-    solana_program_runtime::{
+    gorbagana_log_collector::{ic_logger_msg, ic_msg, LogCollector},
+    gorbagana_measure::measure::Measure,
+    gorbagana_program_entrypoint::{MAX_PERMITTED_DATA_INCREASE, SUCCESS},
+    gorbagana_program_runtime::{
         execution_budget::MAX_INSTRUCTION_STACK_DEPTH,
         invoke_context::{BpfAllocator, InvokeContext, SerializedAccountMetadata, SyscallContext},
         loaded_programs::{
@@ -26,8 +26,8 @@ use {
         serialization, stable_log,
         sysvar_cache::get_sysvar_with_account_check,
     },
-    solana_pubkey::Pubkey,
-    solana_sbpf::{
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sbpf::{
         declare_builtin_function,
         ebpf::{self, MM_HEAP_START},
         elf::Executable,
@@ -37,12 +37,12 @@ use {
         verifier::RequisiteVerifier,
         vm::{ContextObject, EbpfVm},
     },
-    solana_sdk_ids::{
+    gorbagana_sdk_ids::{
         bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable, loader_v4, native_loader,
     },
-    solana_system_interface::{instruction as system_instruction, MAX_PERMITTED_DATA_LENGTH},
-    solana_transaction_context::{IndexOfAccount, InstructionContext, TransactionContext},
-    solana_type_overrides::sync::{atomic::Ordering, Arc},
+    gorbagana_system_interface::{instruction as system_instruction, MAX_PERMITTED_DATA_LENGTH},
+    gorbagana_transaction_context::{IndexOfAccount, InstructionContext, TransactionContext},
+    gorbagana_type_overrides::sync::{atomic::Ordering, Arc},
     std::{cell::RefCell, mem, rc::Rc},
     syscalls::morph_into_deployment_environment_v1,
 };
@@ -173,7 +173,7 @@ macro_rules! deploy_program {
     ($invoke_context:expr, $program_id:expr, $loader_key:expr, $account_size:expr, $programdata:expr, $deployment_slot:expr $(,)?) => {
         let environments = $invoke_context
             .get_environments_for_slot($deployment_slot.saturating_add(
-                solana_program_runtime::loaded_programs::DELAY_VISIBILITY_SLOT_OFFSET,
+                gorbagana_program_runtime::loaded_programs::DELAY_VISIBILITY_SLOT_OFFSET,
             ))
             .map_err(|_err| {
                 // This will never fail since the epoch schedule is already configured.
@@ -300,9 +300,9 @@ macro_rules! create_vm {
 #[macro_export]
 macro_rules! mock_create_vm {
     ($vm:ident, $additional_regions:expr, $accounts_metadata:expr, $invoke_context:expr $(,)?) => {
-        let loader = solana_type_overrides::sync::Arc::new(BuiltinProgram::new_mock());
-        let function_registry = solana_sbpf::program::FunctionRegistry::default();
-        let executable = solana_sbpf::elf::Executable::<InvokeContext>::from_text_bytes(
+        let loader = gorbagana_type_overrides::sync::Arc::new(BuiltinProgram::new_mock());
+        let function_registry = gorbagana_sbpf::program::FunctionRegistry::default();
+        let executable = gorbagana_sbpf::elf::Executable::<InvokeContext>::from_text_bytes(
             &[0x9D, 0, 0, 0, 0, 0, 0, 0],
             loader,
             SBPFVersion::V3,
@@ -310,7 +310,7 @@ macro_rules! mock_create_vm {
         )
         .unwrap();
         executable
-            .verify::<solana_sbpf::verifier::RequisiteVerifier>()
+            .verify::<gorbagana_sbpf::verifier::RequisiteVerifier>()
             .unwrap();
         $crate::create_vm!(
             $vm,
@@ -373,7 +373,7 @@ declare_builtin_function!(
 );
 
 mod migration_authority {
-    solana_pubkey::declare_id!("3Scf35jMNk2xXBD6areNjgMtXgp5ZspDhms8vdcbzC42");
+    gorbagana_pubkey::declare_id!("3Scf35jMNk2xXBD6areNjgMtXgp5ZspDhms8vdcbzC42");
 }
 
 #[cfg_attr(feature = "svm-internal", qualifiers(pub))]
@@ -492,7 +492,7 @@ fn process_loader_upgradeable_instruction(
     let instruction_data = instruction_context.get_instruction_data();
     let program_id = instruction_context.get_last_program_key(transaction_context)?;
 
-    match limited_deserialize(instruction_data, solana_packet::PACKET_DATA_SIZE as u64)? {
+    match limited_deserialize(instruction_data, gorbagana_packet::PACKET_DATA_SIZE as u64)? {
         UpgradeableLoaderInstruction::InitializeBuffer => {
             instruction_context.check_number_of_instruction_accounts(2)?;
             let mut buffer =
@@ -658,7 +658,7 @@ fn process_loader_upgradeable_instruction(
             let signers = [[new_program_id.as_ref(), &[bump_seed]]]
                 .iter()
                 .map(|seeds| Pubkey::create_program_address(seeds, caller_program_id))
-                .collect::<Result<Vec<Pubkey>, solana_pubkey::PubkeyError>>()?;
+                .collect::<Result<Vec<Pubkey>, gorbagana_pubkey::PubkeyError>>()?;
             invoke_context.native_invoke(instruction.into(), signers.as_slice())?;
 
             // Load and verify the program bits
@@ -1286,7 +1286,7 @@ fn process_loader_upgradeable_instruction(
                     );
             } else {
                 invoke_context.native_invoke(
-                    solana_loader_v4_interface::instruction::set_program_length(
+                    gorbagana_loader_v4_interface::instruction::set_program_length(
                         &program_address,
                         &provided_authority_address,
                         program_len as u32,
@@ -1297,7 +1297,7 @@ fn process_loader_upgradeable_instruction(
                 )?;
 
                 invoke_context.native_invoke(
-                    solana_loader_v4_interface::instruction::copy(
+                    gorbagana_loader_v4_interface::instruction::copy(
                         &program_address,
                         &provided_authority_address,
                         &programdata_address,
@@ -1310,7 +1310,7 @@ fn process_loader_upgradeable_instruction(
                 )?;
 
                 invoke_context.native_invoke(
-                    solana_loader_v4_interface::instruction::deploy(
+                    gorbagana_loader_v4_interface::instruction::deploy(
                         &program_address,
                         &provided_authority_address,
                     )
@@ -1320,7 +1320,7 @@ fn process_loader_upgradeable_instruction(
 
                 if upgrade_authority_address.is_none() {
                     invoke_context.native_invoke(
-                        solana_loader_v4_interface::instruction::finalize(
+                        gorbagana_loader_v4_interface::instruction::finalize(
                             &program_address,
                             &provided_authority_address,
                             &program_address,
@@ -1330,7 +1330,7 @@ fn process_loader_upgradeable_instruction(
                     )?;
                 } else if migration_authority::check_id(&provided_authority_address) {
                     invoke_context.native_invoke(
-                        solana_loader_v4_interface::instruction::transfer_authority(
+                        gorbagana_loader_v4_interface::instruction::transfer_authority(
                             &program_address,
                             &provided_authority_address,
                             &upgrade_authority_address.unwrap(),
@@ -1779,9 +1779,9 @@ mod test_utils {
     #[cfg(feature = "svm-internal")]
     use {
         super::*, crate::syscalls::create_program_runtime_environment_v1,
-        solana_account::ReadableAccount, solana_loader_v4_interface::state::LoaderV4State,
-        solana_program_runtime::loaded_programs::DELAY_VISIBILITY_SLOT_OFFSET,
-        solana_sdk_ids::loader_v4,
+        gorbagana_account::ReadableAccount, gorbagana_loader_v4_interface::state::LoaderV4State,
+        gorbagana_program_runtime::loaded_programs::DELAY_VISIBILITY_SLOT_OFFSET,
+        gorbagana_sdk_ids::loader_v4,
     };
 
     #[cfg(feature = "svm-internal")]
@@ -1854,21 +1854,21 @@ mod tests {
         super::*,
         assert_matches::assert_matches,
         rand::Rng,
-        solana_account::{
+        gorbagana_account::{
             create_account_shared_data_for_test as create_account_for_test, state_traits::StateMut,
             AccountSharedData, ReadableAccount, WritableAccount,
         },
-        solana_clock::Clock,
-        solana_epoch_schedule::EpochSchedule,
-        solana_instruction::{error::InstructionError, AccountMeta},
-        solana_program_runtime::{
+        gorbagana_clock::Clock,
+        gorbagana_epoch_schedule::EpochSchedule,
+        gorbagana_instruction::{error::InstructionError, AccountMeta},
+        gorbagana_program_runtime::{
             invoke_context::{mock_process_instruction, mock_process_instruction_with_feature_set},
             with_mock_invoke_context,
         },
-        solana_pubkey::Pubkey,
-        solana_rent::Rent,
-        solana_sdk_ids::{system_program, sysvar},
-        solana_svm_feature_set::SVMFeatureSet,
+        gorbagana_pubkey::Pubkey,
+        gorbagana_rent::Rent,
+        gorbagana_sdk_ids::{system_program, sysvar},
+        gorbagana_svm_feature_set::SVMFeatureSet,
         std::{fs::File, io::Read, ops::Range, sync::atomic::AtomicU64},
     };
 

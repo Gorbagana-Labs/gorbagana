@@ -2,7 +2,7 @@ use {
     crate::{bind_to_unspecified, HEADER_LENGTH, IP_ECHO_SERVER_RESPONSE_LENGTH},
     log::*,
     serde_derive::{Deserialize, Serialize},
-    solana_serde::default_on_eof,
+    gorbagana_serde::default_on_eof,
     std::{
         io,
         net::{IpAddr, SocketAddr},

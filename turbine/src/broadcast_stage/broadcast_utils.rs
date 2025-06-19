@@ -2,15 +2,15 @@ use {
     super::{Error, Result},
     bincode::serialized_size,
     crossbeam_channel::Receiver,
-    solana_clock::Slot,
-    solana_entry::entry::Entry,
-    solana_hash::Hash,
-    solana_ledger::{
+    gorbagana_clock::Slot,
+    gorbagana_entry::entry::Entry,
+    gorbagana_hash::Hash,
+    gorbagana_ledger::{
         blockstore::Blockstore,
         shred::{self, get_data_shred_bytes_per_batch_typical, ProcessShredsStats},
     },
-    solana_poh::poh_recorder::WorkingBankEntry,
-    solana_runtime::bank::Bank,
+    gorbagana_poh::poh_recorder::WorkingBankEntry,
+    gorbagana_runtime::bank::Bank,
     std::{
         sync::Arc,
         time::{Duration, Instant},
@@ -197,11 +197,11 @@ mod tests {
     use {
         super::*,
         crossbeam_channel::unbounded,
-        solana_genesis_config::GenesisConfig,
-        solana_ledger::genesis_utils::{create_genesis_config, GenesisConfigInfo},
-        solana_pubkey::Pubkey,
-        solana_system_transaction as system_transaction,
-        solana_transaction::Transaction,
+        gorbagana_genesis_config::GenesisConfig,
+        gorbagana_ledger::genesis_utils::{create_genesis_config, GenesisConfigInfo},
+        gorbagana_pubkey::Pubkey,
+        gorbagana_system_transaction as system_transaction,
+        gorbagana_transaction::Transaction,
     };
 
     fn setup_test() -> (GenesisConfig, Arc<Bank>, Transaction) {
@@ -213,7 +213,7 @@ mod tests {
         let bank0 = Arc::new(Bank::new_for_tests(&genesis_config));
         let tx = system_transaction::transfer(
             &mint_keypair,
-            &solana_pubkey::new_rand(),
+            &gorbagana_pubkey::new_rand(),
             1,
             genesis_config.hash(),
         );

@@ -1,4 +1,4 @@
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use crate::range_proof::errors::RangeProofGenerationError;
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
@@ -10,7 +10,7 @@ use {
     thiserror::Error,
 };
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 #[derive(Error, Clone, Debug, Eq, PartialEq)]
 pub enum ProofGenerationError {
     #[error("illegal number of commitments")]

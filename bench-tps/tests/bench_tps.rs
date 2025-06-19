@@ -2,31 +2,31 @@
 
 use {
     serial_test::serial,
-    solana_account::{Account, AccountSharedData},
-    solana_bench_tps::{
+    gorbagana_account::{Account, AccountSharedData},
+    gorbagana_bench_tps::{
         bench::{do_bench_tps, generate_and_fund_keypairs},
         cli::{Config, InstructionPaddingConfig},
         send_batch::generate_durable_nonce_accounts,
     },
-    solana_commitment_config::CommitmentConfig,
-    solana_connection_cache::connection_cache::NewConnectionConfig,
-    solana_core::validator::ValidatorConfig,
-    solana_faucet::faucet::run_local_faucet,
-    solana_fee_calculator::FeeRateGovernor,
-    solana_keypair::Keypair,
-    solana_local_cluster::{
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_connection_cache::connection_cache::NewConnectionConfig,
+    gorbagana_core::validator::ValidatorConfig,
+    gorbagana_faucet::faucet::run_local_faucet,
+    gorbagana_fee_calculator::FeeRateGovernor,
+    gorbagana_keypair::Keypair,
+    gorbagana_local_cluster::{
         cluster::Cluster,
         local_cluster::{ClusterConfig, LocalCluster},
         validator_configs::make_identical_validator_configs,
     },
-    solana_quic_client::{QuicConfig, QuicConnectionManager},
-    solana_rent::Rent,
-    solana_rpc::rpc::JsonRpcConfig,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_signer::Signer,
-    solana_streamer::socket::SocketAddrSpace,
-    solana_test_validator::TestValidatorGenesis,
-    solana_tpu_client::tpu_client::{TpuClient, TpuClientConfig},
+    gorbagana_quic_client::{QuicConfig, QuicConnectionManager},
+    gorbagana_rent::Rent,
+    gorbagana_rpc::rpc::JsonRpcConfig,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_signer::Signer,
+    gorbagana_streamer::socket::SocketAddrSpace,
+    gorbagana_test_validator::TestValidatorGenesis,
+    gorbagana_tpu_client::tpu_client::{TpuClient, TpuClientConfig},
     std::{sync::Arc, time::Duration},
 };
 
@@ -34,7 +34,7 @@ fn program_account(program_data: &[u8]) -> AccountSharedData {
     AccountSharedData::from(Account {
         lamports: Rent::default().minimum_balance(program_data.len()).min(1),
         data: program_data.to_vec(),
-        owner: solana_sdk_ids::bpf_loader::id(),
+        owner: gorbagana_sdk_ids::bpf_loader::id(),
         executable: true,
         rent_epoch: 0,
     })
@@ -47,7 +47,7 @@ fn test_bench_tps_local_cluster(config: Config) {
         program_account(include_bytes!("fixtures/spl_instruction_padding.so")),
     )];
 
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let faucet_keypair = Keypair::new();
     let faucet_pubkey = faucet_keypair.pubkey();
@@ -105,7 +105,7 @@ fn test_bench_tps_local_cluster(config: Config) {
 }
 
 fn test_bench_tps_test_validator(config: Config) {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let mint_keypair = Keypair::new();
     let mint_pubkey = mint_keypair.pubkey();
@@ -167,7 +167,7 @@ fn test_bench_tps_test_validator(config: Config) {
 
 #[test]
 #[serial]
-fn test_bench_tps_local_cluster_solana() {
+fn test_bench_tps_local_cluster_gorbagana() {
     test_bench_tps_local_cluster(Config {
         tx_count: 100,
         duration: Duration::from_secs(10),

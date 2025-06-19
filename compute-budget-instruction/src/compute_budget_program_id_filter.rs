@@ -1,7 +1,7 @@
 // static account keys has max
 use {
-    crate::builtin_programs_filter::FILTER_SIZE, solana_builtins_default_costs::MAYBE_BUILTIN_KEY,
-    solana_pubkey::Pubkey,
+    crate::builtin_programs_filter::FILTER_SIZE, gorbagana_builtins_default_costs::MAYBE_BUILTIN_KEY,
+    gorbagana_pubkey::Pubkey,
 };
 
 pub(crate) struct ComputeBudgetProgramIdFilter {
@@ -31,6 +31,6 @@ impl ComputeBudgetProgramIdFilter {
         if !MAYBE_BUILTIN_KEY[program_id.as_ref()[0] as usize] {
             return false;
         }
-        solana_sdk_ids::compute_budget::check_id(program_id)
+        gorbagana_sdk_ids::compute_budget::check_id(program_id)
     }
 }

@@ -2,9 +2,9 @@
 title: Cluster Software Installation and Updates
 ---
 
-Currently users are required to build the solana cluster software themselves from the git repository and manually update it, which is error prone and inconvenient.
+Currently users are required to build the gorbagana cluster software themselves from the git repository and manually update it, which is error prone and inconvenient.
 
-This document proposes an easy to use software install and updater that can be used to deploy pre-built binaries for supported platforms. Users may elect to use binaries supplied by Solana or any other party provider. Deployment of updates is managed using an on-chain update manifest program.
+This document proposes an easy to use software install and updater that can be used to deploy pre-built binaries for supported platforms. Users may elect to use binaries supplied by Gorbagana or any other party provider. Deployment of updates is managed using an on-chain update manifest program.
 
 ## Motivating Examples
 
@@ -13,7 +13,7 @@ This document proposes an easy to use software install and updater that can be u
 The easiest install method for supported platforms:
 
 ```bash
-$ curl -sSf https://raw.githubusercontent.com/solana-labs/solana/v1.0.0/install/agave-install-init.sh | sh
+$ curl -sSf https://raw.githubusercontent.com/gorbagana-labs/gorbagana/v1.0.0/install/agave-install-init.sh | sh
 ```
 
 This script will check github for the latest tagged release and download and run the `agave-install-init` binary from there.
@@ -22,7 +22,7 @@ If additional arguments need to be specified during the installation, the follow
 
 ```bash
 $ init_args=.... # arguments for `agave-install-init ...`
-$ curl -sSf https://raw.githubusercontent.com/solana-labs/solana/v1.0.0/install/agave-install-init.sh | sh -s - ${init_args}
+$ curl -sSf https://raw.githubusercontent.com/gorbagana-labs/gorbagana/v1.0.0/install/agave-install-init.sh | sh -s - ${init_args}
 ```
 
 ### Fetch and run a pre-built installer from a Github release
@@ -30,7 +30,7 @@ $ curl -sSf https://raw.githubusercontent.com/solana-labs/solana/v1.0.0/install/
 With a well-known release URL, a pre-built binary can be obtained for supported platforms:
 
 ```bash
-$ curl -o agave-install-init https://github.com/solana-labs/solana/releases/download/v1.0.0/agave-install-init-x86_64-apple-darwin
+$ curl -o agave-install-init https://github.com/gorbagana-labs/gorbagana/releases/download/v1.0.0/agave-install-init-x86_64-apple-darwin
 $ chmod +x ./agave-install-init
 $ ./agave-install-init --help
 ```
@@ -40,18 +40,18 @@ $ ./agave-install-init --help
 If a pre-built binary is not available for a given platform, building the installer from source is always an option:
 
 ```bash
-$ git clone https://github.com/solana-labs/solana.git
-$ cd solana/install
+$ git clone https://github.com/gorbagana-labs/gorbagana.git
+$ cd gorbagana/install
 $ cargo run -- --help
 ```
 
 ### Deploy a new update to a cluster
 
-Given a solana release tarball \(as created by `ci/publish-tarball.sh`\) that has already been uploaded to a publicly accessible URL, the following commands will deploy the update:
+Given a gorbagana release tarball \(as created by `ci/publish-tarball.sh`\) that has already been uploaded to a publicly accessible URL, the following commands will deploy the update:
 
 ```bash
-$ solana-keygen new -o update-manifest.json  # <-- only generated once, the public key is shared with users
-$ agave-install deploy http://example.com/path/to/solana-release.tar.bz2 update-manifest.json
+$ gorbagana-keygen new -o update-manifest.json  # <-- only generated once, the public key is shared with users
+$ agave-install deploy http://example.com/path/to/gorbagana-release.tar.bz2 update-manifest.json
 ```
 
 ### Run a validator node that auto updates itself
@@ -59,18 +59,18 @@ $ agave-install deploy http://example.com/path/to/solana-release.tar.bz2 update-
 ```bash
 $ agave-install init --pubkey 92DMonmBYXwEMHJ99c9ceRSpAmk9v6i3RdvDdXaVcrfj  # <-- pubkey is obtained from whoever is deploying the updates
 $ export PATH=~/.local/share/agave-install/bin:$PATH
-$ solana-keygen ...  # <-- runs the latest solana-keygen
+$ gorbagana-keygen ...  # <-- runs the latest gorbagana-keygen
 $ agave-install run agave-validator ...  # <-- runs a validator, restarting it as necessary when an update is applied
 ```
 
 ## On-chain Update Manifest
 
-An update manifest is used to advertise the deployment of new release tarballs on a solana cluster. The update manifest is stored using the `config` program, and each update manifest account describes a logical update channel for a given target triple \(eg, `x86_64-apple-darwin`\). The account public key is well-known between the entity deploying new updates and users consuming those updates.
+An update manifest is used to advertise the deployment of new release tarballs on a gorbagana cluster. The update manifest is stored using the `config` program, and each update manifest account describes a logical update channel for a given target triple \(eg, `x86_64-apple-darwin`\). The account public key is well-known between the entity deploying new updates and users consuming those updates.
 
 The update tarball itself is hosted elsewhere, off-chain and can be fetched from the specified `download_url`.
 
 ```text
-use solana_signature::Signature;
+use gorbagana_signature::Signature;
 
 /// Information required to download and apply a given update
 pub struct UpdateManifest {
@@ -87,7 +87,7 @@ pub struct SignedUpdateManifest {
 }
 ```
 
-Note that the `manifest` field itself contains a corresponding signature \(`manifest_signature`\) to guard against man-in-the-middle attacks between the `agave-install` tool and the solana cluster RPC API.
+Note that the `manifest` field itself contains a corresponding signature \(`manifest_signature`\) to guard against man-in-the-middle attacks between the `agave-install` tool and the gorbagana cluster RPC API.
 
 To guard against rollback attacks, `agave-install` will refuse to install an update with an older `timestamp_secs` than what is currently installed.
 
@@ -115,15 +115,15 @@ The `agave-install` tool is used by the user to install and update their cluster
 
 It manages the following files and directories in the user's home directory:
 
-- `~/.config/solana/install/config.yml` - user configuration and information about currently installed software version
-- `~/.local/share/solana/install/bin` - a symlink to the current release. eg, `~/.local/share/solana-update/<update-pubkey>-<manifest_signature>/bin`
-- `~/.local/share/solana/install/releases/<download_sha256>/` - contents of a release
+- `~/.config/gorbagana/install/config.yml` - user configuration and information about currently installed software version
+- `~/.local/share/gorbagana/install/bin` - a symlink to the current release. eg, `~/.local/share/gorbagana-update/<update-pubkey>-<manifest_signature>/bin`
+- `~/.local/share/gorbagana/install/releases/<download_sha256>/` - contents of a release
 
 ### Command-line Interface
 
 ```text
 agave-install 0.16.0
-The solana cluster software installer
+The gorbagana cluster software installer
 
 USAGE:
     agave-install [OPTIONS] <SUBCOMMAND>
@@ -133,7 +133,7 @@ FLAGS:
     -V, --version    Prints version information
 
 OPTIONS:
-    -c, --config <PATH>    Configuration file to use [default: .../Library/Preferences/solana/install.yml]
+    -c, --config <PATH>    Configuration file to use [default: .../Library/Preferences/gorbagana/install.yml]
 
 SUBCOMMANDS:
     deploy    deploys a new update
@@ -155,8 +155,8 @@ FLAGS:
     -h, --help    Prints help information
 
 OPTIONS:
-    -d, --data_dir <PATH>    Directory to store install data [default: .../Library/Application Support/solana]
-    -u, --url <URL>          JSON RPC URL for the solana cluster [default: http://api.devnet.solana.com]
+    -d, --data_dir <PATH>    Directory to store install data [default: .../Library/Application Support/gorbagana]
+    -u, --url <URL>          JSON RPC URL for the gorbagana cluster [default: http://api.devnet.gorbagana.com]
     -p, --pubkey <PUBKEY>    Public key of the update manifest [default: 9XX329sPuskWhH4DQh6k16c87dHKhXLBZTL3Gxmve8Gp]
 ```
 
@@ -183,7 +183,7 @@ FLAGS:
     -h, --help    Prints help information
 
 ARGS:
-    <download_url>               URL to the solana release archive
+    <download_url>               URL to the gorbagana release archive
     <update_manifest_keypair>    Keypair file for the update manifest (/path/to/keypair.json)
 ```
 

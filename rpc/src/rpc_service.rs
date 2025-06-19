@@ -1,4 +1,4 @@
-//! The `rpc_service` module implements the Solana JSON RPC service.
+//! The `rpc_service` module implements the Gorbagana JSON RPC service.
 
 use {
     crate::{
@@ -16,22 +16,22 @@ use {
         RequestMiddlewareAction, ServerBuilder,
     },
     regex::Regex,
-    solana_client::connection_cache::{ConnectionCache, Protocol},
-    solana_genesis_config::DEFAULT_GENESIS_DOWNLOAD_PATH,
-    solana_gossip::cluster_info::ClusterInfo,
-    solana_hash::Hash,
-    solana_keypair::Keypair,
-    solana_ledger::{
+    gorbagana_client::connection_cache::{ConnectionCache, Protocol},
+    gorbagana_genesis_config::DEFAULT_GENESIS_DOWNLOAD_PATH,
+    gorbagana_gossip::cluster_info::ClusterInfo,
+    gorbagana_hash::Hash,
+    gorbagana_keypair::Keypair,
+    gorbagana_ledger::{
         bigtable_upload::ConfirmedBlockUploadConfig,
         bigtable_upload_service::BigTableUploadService, blockstore::Blockstore,
         leader_schedule_cache::LeaderScheduleCache,
     },
-    solana_metrics::inc_new_counter_info,
-    solana_native_token::lamports_to_sol,
-    solana_perf::thread::renice_this_thread,
-    solana_poh::poh_recorder::PohRecorder,
-    solana_quic_definitions::NotifyKeyUpdate,
-    solana_runtime::{
+    gorbagana_metrics::inc_new_counter_info,
+    gorbagana_native_token::lamports_to_sol,
+    gorbagana_perf::thread::renice_this_thread,
+    gorbagana_poh::poh_recorder::PohRecorder,
+    gorbagana_quic_definitions::NotifyKeyUpdate,
+    gorbagana_runtime::{
         bank::Bank,
         bank_forks::BankForks,
         commitment::BlockCommitmentCache,
@@ -41,12 +41,12 @@ use {
         snapshot_config::SnapshotConfig,
         snapshot_utils::{self, SnapshotInterval},
     },
-    solana_send_transaction_service::{
+    gorbagana_send_transaction_service::{
         send_transaction_service::{self, SendTransactionService},
         transaction_client::{ConnectionCacheClient, TpuClientNextClient, TransactionClient},
     },
-    solana_storage_bigtable::CredentialType,
-    solana_validator_exit::Exit,
+    gorbagana_storage_bigtable::CredentialType,
+    gorbagana_validator_exit::Exit,
     std::{
         net::{SocketAddr, UdpSocket},
         path::{Path, PathBuf},
@@ -291,7 +291,7 @@ impl RpcRequestMiddleware {
                     SnapshotInterval::Slots(slots) => Duration::from_millis(
                         slots
                             .get()
-                            .saturating_mul(solana_clock::DEFAULT_MS_PER_SLOT),
+                            .saturating_mul(gorbagana_clock::DEFAULT_MS_PER_SLOT),
                     ),
                 };
                 let fallback = match st {
@@ -743,7 +743,7 @@ impl JsonRpcService {
                 max_message_size,
             }) = config.rpc_bigtable_config
             {
-                let bigtable_config = solana_storage_bigtable::LedgerStorageConfig {
+                let bigtable_config = gorbagana_storage_bigtable::LedgerStorageConfig {
                     read_only: !enable_bigtable_ledger_upload,
                     timeout,
                     credential_type: CredentialType::Filepath(None),
@@ -752,7 +752,7 @@ impl JsonRpcService {
                     max_message_size,
                 };
                 runtime
-                    .block_on(solana_storage_bigtable::LedgerStorage::new_with_config(
+                    .block_on(gorbagana_storage_bigtable::LedgerStorage::new_with_config(
                         bigtable_config,
                     ))
                     .map(|bigtable_ledger_storage| {
@@ -957,14 +957,14 @@ mod tests {
     use {
         super::*,
         crate::rpc::{create_validator_exit, tests::new_test_cluster_info},
-        solana_genesis_config::{ClusterType, DEFAULT_GENESIS_ARCHIVE},
-        solana_ledger::{
+        gorbagana_genesis_config::{ClusterType, DEFAULT_GENESIS_ARCHIVE},
+        gorbagana_ledger::{
             genesis_utils::{create_genesis_config, GenesisConfigInfo},
             get_tmp_ledger_path_auto_delete,
         },
-        solana_rpc_client_api::config::RpcContextConfig,
-        solana_runtime::bank::Bank,
-        solana_signer::Signer,
+        gorbagana_rpc_client_api::config::RpcContextConfig,
+        gorbagana_runtime::bank::Bank,
+        gorbagana_signer::Signer,
         std::{
             io::Write,
             net::{IpAddr, Ipv4Addr},
@@ -986,7 +986,7 @@ mod tests {
         let ip_addr = IpAddr::V4(Ipv4Addr::UNSPECIFIED);
         let rpc_addr = SocketAddr::new(
             ip_addr,
-            solana_net_utils::find_available_port_in_range(ip_addr, (10000, 65535)).unwrap(),
+            gorbagana_net_utils::find_available_port_in_range(ip_addr, (10000, 65535)).unwrap(),
         );
         let bank_forks = BankForks::new_rw_arc(bank);
         let ledger_path = get_tmp_ledger_path_auto_delete!();

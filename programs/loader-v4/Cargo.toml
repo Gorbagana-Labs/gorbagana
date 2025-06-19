@@ -1,6 +1,6 @@
 [package]
-name = "solana-loader-v4-program"
-description = "Solana Loader v4"
+name = "gorbagana-loader-v4-program"
+description = "Gorbagana Loader v4"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -13,37 +13,37 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [lib]
 crate-type = ["lib"]
-name = "solana_loader_v4_program"
+name = "gorbagana_loader_v4_program"
 
 [features]
 agave-unstable-api = []
 shuttle-test = [
-    "solana-type-overrides/shuttle-test",
-    "solana-program-runtime/shuttle-test",
-    "solana-sbpf/shuttle-test",
+    "gorbagana-type-overrides/shuttle-test",
+    "gorbagana-program-runtime/shuttle-test",
+    "gorbagana-sbpf/shuttle-test",
 ]
 svm-internal = []
 
 [dependencies]
 log = { workspace = true }
 qualifier_attr = { workspace = true }
-solana-account = { workspace = true }
-solana-bincode = { workspace = true }
-solana-bpf-loader-program = { workspace = true, features = ["svm-internal"] }
-solana-instruction = { workspace = true }
-solana-loader-v3-interface = { workspace = true }
-solana-loader-v4-interface = { workspace = true, features = ["serde"] }
-solana-log-collector = { workspace = true }
-solana-measure = { workspace = true }
-solana-packet = { workspace = true }
-solana-program-runtime = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-sbpf = { workspace = true }
-solana-sdk-ids = { workspace = true }
-solana-transaction-context = { workspace = true }
-solana-type-overrides = { workspace = true }
+gorbagana-account = { workspace = true }
+gorbagana-bincode = { workspace = true }
+gorbagana-bpf-loader-program = { workspace = true, features = ["svm-internal"] }
+gorbagana-instruction = { workspace = true }
+gorbagana-loader-v3-interface = { workspace = true }
+gorbagana-loader-v4-interface = { workspace = true, features = ["serde"] }
+gorbagana-log-collector = { workspace = true }
+gorbagana-measure = { workspace = true }
+gorbagana-packet = { workspace = true }
+gorbagana-program-runtime = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-sbpf = { workspace = true }
+gorbagana-sdk-ids = { workspace = true }
+gorbagana-transaction-context = { workspace = true }
+gorbagana-type-overrides = { workspace = true }
 
 [dev-dependencies]
 bincode = { workspace = true }
-solana-clock = { workspace = true }
-solana-sysvar = { workspace = true }
+gorbagana-clock = { workspace = true }
+gorbagana-sysvar = { workspace = true }

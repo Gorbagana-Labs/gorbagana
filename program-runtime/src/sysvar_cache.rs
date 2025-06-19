@@ -1,25 +1,25 @@
 #[allow(deprecated)]
-use solana_sysvar::{fees::Fees, recent_blockhashes::RecentBlockhashes};
+use gorbagana_sysvar::{fees::Fees, recent_blockhashes::RecentBlockhashes};
 use {
     crate::invoke_context::InvokeContext,
     serde::de::DeserializeOwned,
-    solana_clock::Clock,
-    solana_epoch_rewards::EpochRewards,
-    solana_epoch_schedule::EpochSchedule,
-    solana_instruction::error::InstructionError,
-    solana_last_restart_slot::LastRestartSlot,
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
-    solana_sdk_ids::sysvar,
-    solana_slot_hashes::SlotHashes,
-    solana_sysvar::{stake_history::StakeHistory, Sysvar},
-    solana_sysvar_id::SysvarId,
-    solana_transaction_context::{IndexOfAccount, InstructionContext, TransactionContext},
-    solana_type_overrides::sync::Arc,
+    gorbagana_clock::Clock,
+    gorbagana_epoch_rewards::EpochRewards,
+    gorbagana_epoch_schedule::EpochSchedule,
+    gorbagana_instruction::error::InstructionError,
+    gorbagana_last_restart_slot::LastRestartSlot,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent::Rent,
+    gorbagana_sdk_ids::sysvar,
+    gorbagana_slot_hashes::SlotHashes,
+    gorbagana_sysvar::{stake_history::StakeHistory, Sysvar},
+    gorbagana_sysvar_id::SysvarId,
+    gorbagana_transaction_context::{IndexOfAccount, InstructionContext, TransactionContext},
+    gorbagana_type_overrides::sync::Arc,
 };
 
 #[cfg(feature = "frozen-abi")]
-impl ::solana_frozen_abi::abi_example::AbiExample for SysvarCache {
+impl ::gorbagana_frozen_abi::abi_example::AbiExample for SysvarCache {
     fn example() -> Self {
         // SysvarCache is not Serialize so just rely on Default.
         SysvarCache::default()

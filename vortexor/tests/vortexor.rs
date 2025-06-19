@@ -1,16 +1,16 @@
 use {
     crossbeam_channel::unbounded,
     log::info,
-    solana_keypair::Keypair,
-    solana_local_cluster::{
+    gorbagana_keypair::Keypair,
+    gorbagana_local_cluster::{
         cluster::ClusterValidatorInfo,
         local_cluster::{ClusterConfig, LocalCluster},
     },
-    solana_native_token::LAMPORTS_PER_SOL,
-    solana_net_utils::VALIDATOR_PORT_RANGE,
-    solana_pubkey::Pubkey,
-    solana_signer::Signer,
-    solana_streamer::{
+    gorbagana_native_token::LAMPORTS_PER_SOL,
+    gorbagana_net_utils::VALIDATOR_PORT_RANGE,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signer::Signer,
+    gorbagana_streamer::{
         nonblocking::testing_utilities::check_multiple_streams,
         quic::{
             DEFAULT_MAX_CONNECTIONS_PER_IPADDR_PER_MINUTE, DEFAULT_MAX_STAKED_CONNECTIONS,
@@ -19,7 +19,7 @@ use {
         socket::SocketAddrSpace,
         streamer::StakedNodes,
     },
-    solana_vortexor::{
+    gorbagana_vortexor::{
         cli::{DEFAULT_MAX_QUIC_CONNECTIONS_PER_PEER, DEFAULT_NUM_QUIC_ENDPOINTS},
         rpc_load_balancer,
         stake_updater::StakeUpdater,
@@ -38,9 +38,9 @@ use {
 
 #[tokio::test(flavor = "multi_thread")]
 async fn test_vortexor() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
-    let bind_address = solana_net_utils::parse_host("127.0.0.1").expect("invalid bind_address");
+    let bind_address = gorbagana_net_utils::parse_host("127.0.0.1").expect("invalid bind_address");
     let keypair = Keypair::new();
     let exit = Arc::new(AtomicBool::new(false));
 
@@ -97,7 +97,7 @@ fn get_server_urls(validator: &ClusterValidatorInfo) -> (Url, Url) {
 
 #[test]
 fn test_stake_update() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     // Create a local cluster with 3 validators
     let default_node_stake = 10 * LAMPORTS_PER_SOL; // Define a default value for node stake

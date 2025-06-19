@@ -7,20 +7,20 @@ use {
     crate::bank::Bank,
     error::CoreBpfMigrationError,
     num_traits::{CheckedAdd, CheckedSub},
-    solana_account::{AccountSharedData, ReadableAccount, WritableAccount},
-    solana_builtins::core_bpf_migration::CoreBpfMigrationConfig,
-    solana_hash::Hash,
-    solana_instruction::error::InstructionError,
-    solana_loader_v3_interface::state::UpgradeableLoaderState,
-    solana_program_runtime::{
+    gorbagana_account::{AccountSharedData, ReadableAccount, WritableAccount},
+    gorbagana_builtins::core_bpf_migration::CoreBpfMigrationConfig,
+    gorbagana_hash::Hash,
+    gorbagana_instruction::error::InstructionError,
+    gorbagana_loader_v3_interface::state::UpgradeableLoaderState,
+    gorbagana_program_runtime::{
         invoke_context::{EnvironmentConfig, InvokeContext},
         loaded_programs::ProgramCacheForTxBatch,
         sysvar_cache::SysvarCache,
     },
-    solana_pubkey::Pubkey,
-    solana_sdk_ids::bpf_loader_upgradeable,
-    solana_svm_callback::InvokeContextCallback,
-    solana_transaction_context::TransactionContext,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sdk_ids::bpf_loader_upgradeable,
+    gorbagana_svm_callback::InvokeContextCallback,
+    gorbagana_transaction_context::TransactionContext,
     source_buffer::SourceBuffer,
     std::{cmp::Ordering, sync::atomic::Ordering::Relaxed},
     target_builtin::TargetBuiltin,
@@ -178,14 +178,14 @@ impl Bank {
 
             let environments = dummy_invoke_context
                 .get_environments_for_slot(self.slot.saturating_add(
-                    solana_program_runtime::loaded_programs::DELAY_VISIBILITY_SLOT_OFFSET,
+                    gorbagana_program_runtime::loaded_programs::DELAY_VISIBILITY_SLOT_OFFSET,
                 ))
                 .map_err(|_err| {
                     // This will never fail since the epoch schedule is already configured.
                     InstructionError::ProgramEnvironmentSetupFailure
                 })?;
 
-            let load_program_metrics = solana_bpf_loader_program::deploy_program(
+            let load_program_metrics = gorbagana_bpf_loader_program::deploy_program(
                 dummy_invoke_context.get_log_collector(),
                 dummy_invoke_context.program_cache_for_tx_batch,
                 environments.program_runtime_v1.clone(),
@@ -391,12 +391,12 @@ pub(crate) mod tests {
         super::*,
         crate::bank::tests::create_simple_test_bank,
         assert_matches::assert_matches,
-        solana_account::state_traits::StateMut,
-        solana_builtins::core_bpf_migration::CoreBpfMigrationTargetType,
-        solana_clock::Slot,
-        solana_loader_v3_interface::get_program_data_address,
-        solana_program_runtime::loaded_programs::{ProgramCacheEntry, ProgramCacheEntryType},
-        solana_sdk_ids::{bpf_loader_upgradeable, native_loader},
+        gorbagana_account::state_traits::StateMut,
+        gorbagana_builtins::core_bpf_migration::CoreBpfMigrationTargetType,
+        gorbagana_clock::Slot,
+        gorbagana_loader_v3_interface::get_program_data_address,
+        gorbagana_program_runtime::loaded_programs::{ProgramCacheEntry, ProgramCacheEntryType},
+        gorbagana_sdk_ids::{bpf_loader_upgradeable, native_loader},
         std::{fs::File, io::Read},
         test_case::test_case,
     };
@@ -711,7 +711,7 @@ pub(crate) mod tests {
         let expected_hash = {
             let data = test_elf();
             let end_offset = data.iter().rposition(|&x| x != 0).map_or(0, |i| i + 1);
-            solana_sha256_hasher::hash(&data[..end_offset])
+            gorbagana_sha256_hasher::hash(&data[..end_offset])
         };
         let core_bpf_migration_config = CoreBpfMigrationConfig {
             source_buffer_address,

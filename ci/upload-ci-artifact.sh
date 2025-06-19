@@ -23,7 +23,7 @@ upload-s3-artifact() {
       --rm
       --env AWS_ACCESS_KEY_ID
       --env AWS_SECRET_ACCESS_KEY
-      --volume "$PWD:/solana"
+      --volume "$PWD:/gorbagana"
 
     )
     if [[ $(uname -m) = arm64 ]]; then
@@ -45,7 +45,7 @@ upload-gcs-artifact() {
   echo "--- artifact: $1 to $2"
   docker run --rm \
     -v "$GCS_RELEASE_BUCKET_WRITER_CREDIENTIAL:/application_default_credentials.json" \
-    -v "$PWD:/solana" \
+    -v "$PWD:/gorbagana" \
     -e CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE=/application_default_credentials.json \
     gcr.io/google.com/cloudsdktool/google-cloud-cli:latest \
     gcloud storage cp "$1" "$2"

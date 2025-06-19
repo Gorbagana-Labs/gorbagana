@@ -1,5 +1,5 @@
 [package]
-name = "solana-sbf-rust-invoke-dep"
+name = "gorbagana-sbf-rust-invoke-dep"
 version = { workspace = true }
 description = { workspace = true }
 authors = { workspace = true }

@@ -1,8 +1,8 @@
 use {
     crate::cli::{CliCommand, CliCommandInfo, CliConfig, CliError, ProcessResult},
     clap::{App, AppSettings, Arg, ArgMatches, SubCommand},
-    solana_account::from_account,
-    solana_address_lookup_table_interface::{
+    gorbagana_account::from_account,
+    gorbagana_address_lookup_table_interface::{
         self as address_lookup_table,
         instruction::{
             close_lookup_table, create_lookup_table, deactivate_lookup_table, extend_lookup_table,
@@ -10,18 +10,18 @@ use {
         },
         state::AddressLookupTable,
     },
-    solana_clap_utils::{self, input_parsers::*, input_validators::*, keypair::*},
-    solana_cli_output::{CliAddressLookupTable, CliAddressLookupTableCreated, CliSignature},
-    solana_clock::Clock,
-    solana_commitment_config::CommitmentConfig,
-    solana_message::Message,
-    solana_pubkey::Pubkey,
-    solana_remote_wallet::remote_wallet::RemoteWalletManager,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_api::config::RpcSendTransactionConfig,
-    solana_sdk_ids::sysvar,
-    solana_signer::Signer,
-    solana_transaction::Transaction,
+    gorbagana_clap_utils::{self, input_parsers::*, input_validators::*, keypair::*},
+    gorbagana_cli_output::{CliAddressLookupTable, CliAddressLookupTableCreated, CliSignature},
+    gorbagana_clock::Clock,
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_message::Message,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_remote_wallet::remote_wallet::RemoteWalletManager,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_rpc_client_api::config::RpcSendTransactionConfig,
+    gorbagana_sdk_ids::sysvar,
+    gorbagana_signer::Signer,
+    gorbagana_transaction::Transaction,
     std::{rc::Rc, sync::Arc},
 };
 

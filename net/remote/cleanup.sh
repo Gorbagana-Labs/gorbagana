@@ -8,18 +8,18 @@ if sudo true; then
 fi
 
 echo "pwd: $(pwd)"
-for pid in solana/*.pid; do
+for pid in gorbagana/*.pid; do
   pgid=$(ps opgid= "$(cat "$pid")" | tr -d '[:space:]')
   if [[ -n $pgid ]]; then
     $sudo kill -- -"$pgid"
   fi
 done
-if [[ -f solana/netem.cfg ]]; then
-  solana/scripts/netem.sh delete < solana/netem.cfg
-  rm -f solana/netem.cfg
+if [[ -f gorbagana/netem.cfg ]]; then
+  gorbagana/scripts/netem.sh delete < gorbagana/netem.cfg
+  rm -f gorbagana/netem.cfg
 fi
-solana/scripts/net-shaper.sh cleanup
-for pattern in validator.sh boostrap-leader.sh solana- remote- iftop validator client node; do
+gorbagana/scripts/net-shaper.sh cleanup
+for pattern in validator.sh boostrap-leader.sh gorbagana- remote- iftop validator client node; do
   echo "killing $pattern"
   pkill -f $pattern
 done

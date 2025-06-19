@@ -1,9 +1,9 @@
 use {
     serde_derive::{Deserialize, Serialize},
-    solana_hash::Hash,
-    solana_keypair::signable::Signable,
-    solana_pubkey::Pubkey,
-    solana_signature::Signature,
+    gorbagana_hash::Hash,
+    gorbagana_keypair::signable::Signable,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signature::Signature,
     std::{borrow::Cow, error, io},
 };
 

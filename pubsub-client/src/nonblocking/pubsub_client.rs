@@ -1,9 +1,9 @@
 //! A client for subscribing to messages from the RPC server.
 //!
-//! The [`PubsubClient`] implements [Solana WebSocket event
+//! The [`PubsubClient`] implements [Gorbagana WebSocket event
 //! subscriptions][spec].
 //!
-//! [spec]: https://solana.com/docs/rpc/websocket
+//! [spec]: https://gorbagana.com/docs/rpc/websocket
 //!
 //! This is a nonblocking (async) API. For a blocking API use the synchronous
 //! client in [`crate::pubsub_client`].
@@ -37,8 +37,8 @@
 //! methods are disabled, the RPC server will return a "Method not found" error
 //! message.
 //!
-//! [`block_subscribe`]: https://docs.rs/solana-rpc/latest/solana_rpc/rpc_pubsub/trait.RpcSolPubSub.html#tymethod.block_subscribe
-//! [`vote_subscribe`]: https://docs.rs/solana-rpc/latest/solana_rpc/rpc_pubsub/trait.RpcSolPubSub.html#tymethod.vote_subscribe
+//! [`block_subscribe`]: https://docs.rs/gorbagana-rpc/latest/gorbagana_rpc/rpc_pubsub/trait.RpcSolPubSub.html#tymethod.block_subscribe
+//! [`vote_subscribe`]: https://docs.rs/gorbagana-rpc/latest/gorbagana_rpc/rpc_pubsub/trait.RpcSolPubSub.html#tymethod.vote_subscribe
 //!
 //! # Examples
 //!
@@ -52,7 +52,7 @@
 //! ```
 //! use anyhow::Result;
 //! use futures_util::StreamExt;
-//! use solana_pubsub_client::nonblocking::pubsub_client::PubsubClient;
+//! use gorbagana_pubsub_client::nonblocking::pubsub_client::PubsubClient;
 //! use std::sync::Arc;
 //! use tokio::io::AsyncReadExt;
 //! use tokio::sync::mpsc::unbounded_channel;
@@ -175,10 +175,10 @@ use {
     log::*,
     serde::de::DeserializeOwned,
     serde_json::{json, Map, Value},
-    solana_account_decoder_client_types::UiAccount,
-    solana_clock::Slot,
-    solana_pubkey::Pubkey,
-    solana_rpc_client_types::{
+    gorbagana_account_decoder_client_types::UiAccount,
+    gorbagana_clock::Slot,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rpc_client_types::{
         config::{
             RpcAccountInfoConfig, RpcBlockSubscribeConfig, RpcBlockSubscribeFilter,
             RpcProgramAccountsConfig, RpcSignatureSubscribeConfig, RpcTransactionLogsConfig,
@@ -190,7 +190,7 @@ use {
             RpcSignatureResult, RpcVote, SlotInfo, SlotUpdate,
         },
     },
-    solana_signature::Signature,
+    gorbagana_signature::Signature,
     std::collections::BTreeMap,
     thiserror::Error,
     tokio::{
@@ -335,7 +335,7 @@ impl PubsubClient {
     ///
     /// This method corresponds directly to the [`accountSubscribe`] RPC method.
     ///
-    /// [`accountSubscribe`]: https://solana.com/docs/rpc/websocket#accountsubscribe
+    /// [`accountSubscribe`]: https://gorbagana.com/docs/rpc/websocket#accountsubscribe
     pub async fn account_subscribe(
         &self,
         pubkey: &Pubkey,
@@ -356,7 +356,7 @@ impl PubsubClient {
     ///
     /// This method corresponds directly to the [`blockSubscribe`] RPC method.
     ///
-    /// [`blockSubscribe`]: https://solana.com/docs/rpc/websocket#blocksubscribe
+    /// [`blockSubscribe`]: https://gorbagana.com/docs/rpc/websocket#blocksubscribe
     pub async fn block_subscribe(
         &self,
         filter: RpcBlockSubscribeFilter,
@@ -373,7 +373,7 @@ impl PubsubClient {
     ///
     /// This method corresponds directly to the [`logsSubscribe`] RPC method.
     ///
-    /// [`logsSubscribe`]: https://solana.com/docs/rpc/websocket#logssubscribe
+    /// [`logsSubscribe`]: https://gorbagana.com/docs/rpc/websocket#logssubscribe
     pub async fn logs_subscribe(
         &self,
         filter: RpcTransactionLogsFilter,
@@ -391,7 +391,7 @@ impl PubsubClient {
     ///
     /// This method corresponds directly to the [`programSubscribe`] RPC method.
     ///
-    /// [`programSubscribe`]: https://solana.com/docs/rpc/websocket#programsubscribe
+    /// [`programSubscribe`]: https://gorbagana.com/docs/rpc/websocket#programsubscribe
     pub async fn program_subscribe(
         &self,
         pubkey: &Pubkey,
@@ -413,7 +413,7 @@ impl PubsubClient {
     ///
     /// This method corresponds directly to the [`voteSubscribe`] RPC method.
     ///
-    /// [`voteSubscribe`]: https://solana.com/docs/rpc/websocket#votesubscribe
+    /// [`voteSubscribe`]: https://gorbagana.com/docs/rpc/websocket#votesubscribe
     pub async fn vote_subscribe(&self) -> SubscribeResult<'_, RpcVote> {
         self.subscribe("vote", json!([])).await
     }
@@ -423,13 +423,13 @@ impl PubsubClient {
     /// Receives messages of type [`Slot`] when a new [root] is set by the
     /// validator.
     ///
-    /// [root]: https://solana.com/docs/terminology#root
+    /// [root]: https://gorbagana.com/docs/terminology#root
     ///
     /// # RPC Reference
     ///
     /// This method corresponds directly to the [`rootSubscribe`] RPC method.
     ///
-    /// [`rootSubscribe`]: https://solana.com/docs/rpc/websocket#rootsubscribe
+    /// [`rootSubscribe`]: https://gorbagana.com/docs/rpc/websocket#rootsubscribe
     pub async fn root_subscribe(&self) -> SubscribeResult<'_, Slot> {
         self.subscribe("root", json!([])).await
     }
@@ -446,7 +446,7 @@ impl PubsubClient {
     ///
     /// This method corresponds directly to the [`signatureSubscribe`] RPC method.
     ///
-    /// [`signatureSubscribe`]: https://solana.com/docs/rpc/websocket#signaturesubscribe
+    /// [`signatureSubscribe`]: https://gorbagana.com/docs/rpc/websocket#signaturesubscribe
     pub async fn signature_subscribe(
         &self,
         signature: &Signature,
@@ -464,7 +464,7 @@ impl PubsubClient {
     ///
     /// This method corresponds directly to the [`slotSubscribe`] RPC method.
     ///
-    /// [`slotSubscribe`]: https://solana.com/docs/rpc/websocket#slotsubscribe
+    /// [`slotSubscribe`]: https://gorbagana.com/docs/rpc/websocket#slotsubscribe
     pub async fn slot_subscribe(&self) -> SubscribeResult<'_, SlotInfo> {
         self.subscribe("slot", json!([])).await
     }
@@ -482,7 +482,7 @@ impl PubsubClient {
     ///
     /// This method corresponds directly to the [`slotUpdatesSubscribe`] RPC method.
     ///
-    /// [`slotUpdatesSubscribe`]: https://solana.com/docs/rpc/websocket#slotsupdatessubscribe
+    /// [`slotUpdatesSubscribe`]: https://gorbagana.com/docs/rpc/websocket#slotsupdatessubscribe
     pub async fn slot_updates_subscribe(&self) -> SubscribeResult<'_, SlotUpdate> {
         self.subscribe("slotsUpdates", json!([])).await
     }

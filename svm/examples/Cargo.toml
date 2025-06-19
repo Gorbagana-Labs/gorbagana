@@ -29,44 +29,44 @@ jsonrpc-http-server = "18.0.0"
 log = "0.4.22"
 serde = "1.0.214"
 serde_json = "1.0.132"
-solana-account = "2.2.1"
-solana-account-decoder = { path = "../../account-decoder" }
-solana-bpf-loader-program = { path = "../../programs/bpf_loader" }
-solana-client = { path = "../../client" }
-solana-clock = "2.2.1"
-solana-commitment-config = "2.2.1"
-solana-compute-budget = { path = "../../compute-budget" }
-solana-compute-budget-interface = "2.2.2"
-solana-epoch-schedule = "2.2.1"
-solana-hash = "2.2.1"
-solana-instruction = "2.2.1"
-solana-keypair = "2.2.1"
-solana-logger = "=2.3.1"
-solana-message = "2.3.0"
-solana-nonce = "2.2.1"
-solana-perf = { path = "../../perf" }
-solana-program-pack = "2.2.1"
-solana-program-runtime = { path = "../../program-runtime" }
-solana-pubkey = "2.3.0"
-solana-rent-collector = "2.2.1"
-solana-rpc-client-api = { path = "../../rpc-client-api" }
-solana-sdk-ids = "2.2.1"
-solana-signature = "2.2.1"
-solana-signer = "2.2.1"
-solana-svm = { path = "../" }
-solana-svm-callback = { path = "../../svm-callback" }
-solana-svm-feature-set = { path = "../../svm-feature-set" }
-solana-system-interface = "1.0"
-solana-system-program = { path = "../../programs/system" }
-solana-sysvar = "2.2.1"
-solana-sysvar-id = "2.2.1"
-solana-test-validator = { path = "../../test-validator" }
-solana-transaction = "2.2.2"
-solana-transaction-context = { path = "../../transaction-context" }
-solana-transaction-error = "2.2.1"
-solana-transaction-status = { path = "../../transaction-status" }
-solana-validator-exit = "2.2.1"
-solana-version = { path = "../../version" }
+gorbagana-account = "2.2.1"
+gorbagana-account-decoder = { path = "../../account-decoder" }
+gorbagana-bpf-loader-program = { path = "../../programs/bpf_loader" }
+gorbagana-client = { path = "../../client" }
+gorbagana-clock = "2.2.1"
+gorbagana-commitment-config = "2.2.1"
+gorbagana-compute-budget = { path = "../../compute-budget" }
+gorbagana-compute-budget-interface = "2.2.2"
+gorbagana-epoch-schedule = "2.2.1"
+gorbagana-hash = "2.2.1"
+gorbagana-instruction = "2.2.1"
+gorbagana-keypair = "2.2.1"
+gorbagana-logger = "=2.3.1"
+gorbagana-message = "2.3.0"
+gorbagana-nonce = "2.2.1"
+gorbagana-perf = { path = "../../perf" }
+gorbagana-program-pack = "2.2.1"
+gorbagana-program-runtime = { path = "../../program-runtime" }
+gorbagana-pubkey = "2.3.0"
+gorbagana-rent-collector = "2.2.1"
+gorbagana-rpc-client-api = { path = "../../rpc-client-api" }
+gorbagana-sdk-ids = "2.2.1"
+gorbagana-signature = "2.2.1"
+gorbagana-signer = "2.2.1"
+gorbagana-svm = { path = "../" }
+gorbagana-svm-callback = { path = "../../svm-callback" }
+gorbagana-svm-feature-set = { path = "../../svm-feature-set" }
+gorbagana-system-interface = "1.0"
+gorbagana-system-program = { path = "../../programs/system" }
+gorbagana-sysvar = "2.2.1"
+gorbagana-sysvar-id = "2.2.1"
+gorbagana-test-validator = { path = "../../test-validator" }
+gorbagana-transaction = "2.2.2"
+gorbagana-transaction-context = { path = "../../transaction-context" }
+gorbagana-transaction-error = "2.2.1"
+gorbagana-transaction-status = { path = "../../transaction-status" }
+gorbagana-validator-exit = "2.2.1"
+gorbagana-version = { path = "../../version" }
 spl-associated-token-account = "7.0.0"
 spl-token = "8.0.0"
 spl-token-2022 = "8.0.0"
@@ -78,5 +78,5 @@ yaml-rust = "0.4"
 
 [patch.crates-io]
 crossbeam-epoch = { git = "https://github.com/anza-xyz/crossbeam", rev = "fd279d707025f0e60951e429bf778b4813d1b6bf" }
-solana-curve25519 = { path = "../../curves/curve25519" }
-solana-zk-sdk = { path = "../../zk-sdk" }
+gorbagana-curve25519 = { path = "../../curves/curve25519" }
+gorbagana-zk-sdk = { path = "../../zk-sdk" }

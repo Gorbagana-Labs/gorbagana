@@ -2,7 +2,7 @@
 mod utils;
 use {
     criterion::{black_box, criterion_group, criterion_main, Criterion, Throughput},
-    solana_core::banking_stage::transaction_scheduler::{
+    gorbagana_core::banking_stage::transaction_scheduler::{
         receive_and_buffer::{
             ReceiveAndBuffer, SanitizedTransactionReceiveAndBuffer, TransactionViewReceiveAndBuffer,
         },

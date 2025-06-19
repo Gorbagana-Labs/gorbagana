@@ -5,10 +5,10 @@
 //!
 use {
     crate::{block_cost_limits::*, transaction_cost::TransactionCost},
-    solana_metrics::datapoint_info,
-    solana_pubkey::Pubkey,
-    solana_runtime_transaction::transaction_with_meta::TransactionWithMeta,
-    solana_transaction_error::TransactionError,
+    gorbagana_metrics::datapoint_info,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_runtime_transaction::transaction_with_meta::TransactionWithMeta,
+    gorbagana_transaction_error::TransactionError,
     std::{cmp::Ordering, collections::HashMap, num::Saturating},
 };
 
@@ -216,7 +216,7 @@ impl CostTracker {
         self.transaction_count.0
     }
 
-    pub fn report_stats(&self, bank_slot: solana_clock::Slot, is_leader: bool) {
+    pub fn report_stats(&self, bank_slot: gorbagana_clock::Slot, is_leader: bool) {
         // skip reporting if block is empty
         if self.transaction_count.0 == 0 {
             return;
@@ -405,8 +405,8 @@ mod tests {
     use {
         super::*,
         crate::transaction_cost::{WritableKeysTransaction, *},
-        solana_keypair::Keypair,
-        solana_signer::Signer,
+        gorbagana_keypair::Keypair,
+        gorbagana_signer::Signer,
         std::cmp,
     };
 
@@ -424,7 +424,7 @@ mod tests {
     }
 
     fn test_setup() -> Keypair {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         Keypair::new()
     }
 

@@ -4,8 +4,8 @@ use {
         commands::{FromClapArgMatches, Result},
     },
     clap::{value_t, App, Arg, ArgMatches, SubCommand},
-    solana_clap_utils::input_validators::{is_parsable, is_pubkey},
-    solana_pubkey::Pubkey,
+    gorbagana_clap_utils::input_validators::{is_parsable, is_pubkey},
+    gorbagana_pubkey::Pubkey,
     std::path::Path,
 };
 

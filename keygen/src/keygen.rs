@@ -5,7 +5,7 @@ use {
         builder::ValueParser, crate_description, crate_name, value_parser, Arg, ArgAction,
         ArgMatches, Command,
     },
-    solana_clap_v3_utils::{
+    gorbagana_clap_v3_utils::{
         input_parsers::{
             signer::{SignerSource, SignerSourceParserBuilder},
             STDOUT_OUTFILE_TOKEN,
@@ -25,16 +25,16 @@ use {
         },
         DisplayError,
     },
-    solana_cli_config::{Config, CONFIG_FILE},
-    solana_instruction::{AccountMeta, Instruction},
-    solana_keypair::{
+    gorbagana_cli_config::{Config, CONFIG_FILE},
+    gorbagana_instruction::{AccountMeta, Instruction},
+    gorbagana_keypair::{
         keypair_from_seed, seed_derivable::keypair_from_seed_and_derivation_path, write_keypair,
         write_keypair_file, Keypair,
     },
-    solana_message::Message,
-    solana_pubkey::Pubkey,
-    solana_remote_wallet::remote_wallet::RemoteWalletManager,
-    solana_signer::Signer,
+    gorbagana_message::Message,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_remote_wallet::remote_wallet::RemoteWalletManager,
+    gorbagana_signer::Signer,
     std::{
         collections::HashSet,
         error,
@@ -49,7 +49,7 @@ use {
 };
 
 mod smallest_length_44_public_key {
-    use solana_pubkey::Pubkey;
+    use gorbagana_pubkey::Pubkey;
 
     pub(super) static PUBKEY: Pubkey =
         Pubkey::from_str_const("21111111111111111111111111111111111111111111");
@@ -113,7 +113,7 @@ fn get_keypair_from_matches(
         &config_source
     } else {
         let mut path = dirs_next::home_dir().expect("home directory");
-        path.extend([".config", "solana", "id.json"]);
+        path.extend([".config", "gorbagana", "id.json"]);
         config_source = SignerSource::parse(path.to_str().unwrap())?;
         &config_source
     };
@@ -440,7 +440,7 @@ fn write_pubkey_file(outfile: &str, pubkey: Pubkey) -> Result<(), Box<dyn std::e
 
 fn main() -> Result<(), Box<dyn error::Error>> {
     let default_num_threads = num_cpus::get().to_string();
-    let matches = app(&default_num_threads, solana_version::version!())
+    let matches = app(&default_num_threads, gorbagana_version::version!())
         .try_get_matches()
         .unwrap_or_else(|e| e.exit());
     do_main(&matches).map_err(|err| DisplayError::new_as_boxed(err).into())
@@ -477,7 +477,7 @@ fn do_main(matches: &ArgMatches) -> Result<(), Box<dyn error::Error>> {
             } else if matches.try_contains_id(NO_OUTFILE_ARG.name)? {
                 None
             } else {
-                path.extend([".config", "solana", "id.json"]);
+                path.extend([".config", "gorbagana", "id.json"]);
                 Some(path.to_str().unwrap())
             };
 
@@ -527,7 +527,7 @@ fn do_main(matches: &ArgMatches) -> Result<(), Box<dyn error::Error>> {
             let outfile = if matches.try_contains_id("outfile")? {
                 matches.get_one::<String>("outfile").unwrap()
             } else {
-                path.extend([".config", "solana", "id.json"]);
+                path.extend([".config", "gorbagana", "id.json"]);
                 path.to_str().unwrap()
             };
 
@@ -792,8 +792,8 @@ mod tests {
 
     fn process_test_command(args: &[&str]) -> Result<(), Box<dyn error::Error>> {
         let default_num_threads = num_cpus::get().to_string();
-        let solana_version = solana_version::version!();
-        let app_matches = app(&default_num_threads, solana_version).get_matches_from(args);
+        let gorbagana_version = gorbagana_version::version!();
+        let app_matches = app(&default_num_threads, gorbagana_version).get_matches_from(args);
         do_main(&app_matches)
     }
 
@@ -829,10 +829,10 @@ mod tests {
     #[test]
     fn test_arguments() {
         let default_num_threads = num_cpus::get().to_string();
-        let solana_version = solana_version::version!();
+        let gorbagana_version = gorbagana_version::version!();
 
         // run clap internal assert statements
-        app(&default_num_threads, solana_version).debug_assert();
+        app(&default_num_threads, gorbagana_version).debug_assert();
     }
 
     #[test]
@@ -844,7 +844,7 @@ mod tests {
 
         // success case using a keypair file
         process_test_command(&[
-            "solana-keygen",
+            "gorbagana-keygen",
             "verify",
             &correct_pubkey.to_string(),
             &keypair_path,
@@ -853,7 +853,7 @@ mod tests {
 
         // success case using a config file
         process_test_command(&[
-            "solana-keygen",
+            "gorbagana-keygen",
             "verify",
             &correct_pubkey.to_string(),
             "--config",
@@ -864,7 +864,7 @@ mod tests {
         // fail case using a keypair file
         let incorrect_pubkey = Pubkey::new_unique();
         let result = process_test_command(&[
-            "solana-keygen",
+            "gorbagana-keygen",
             "verify",
             &incorrect_pubkey.to_string(),
             &keypair_path,
@@ -877,7 +877,7 @@ mod tests {
 
         // fail case using a config file
         process_test_command(&[
-            "solana-keygen",
+            "gorbagana-keygen",
             "verify",
             &incorrect_pubkey.to_string(),
             "--config",
@@ -896,7 +896,7 @@ mod tests {
             create_tmp_keypair_and_config_file(&alt_keypair_out_dir, &alt_config_out_dir);
 
         process_test_command(&[
-            "solana-keygen",
+            "gorbagana-keygen",
             "verify",
             &correct_pubkey.to_string(),
             &keypair_path,
@@ -906,7 +906,7 @@ mod tests {
         .unwrap();
 
         process_test_command(&[
-            "solana-keygen",
+            "gorbagana-keygen",
             "verify",
             &correct_pubkey.to_string(),
             &alt_keypair_path,
@@ -933,7 +933,7 @@ mod tests {
             let outfile_path = tmp_outfile_path(&outfile_dir, &expected_pubkey.to_string());
 
             process_test_command(&[
-                "solana-keygen",
+                "gorbagana-keygen",
                 "pubkey",
                 &keypair_path,
                 "--outfile",
@@ -951,7 +951,7 @@ mod tests {
             let outfile_path = tmp_outfile_path(&outfile_dir, &expected_pubkey.to_string());
 
             process_test_command(&[
-                "solana-keygen",
+                "gorbagana-keygen",
                 "pubkey",
                 "--config",
                 &config_path,
@@ -974,7 +974,7 @@ mod tests {
             let outfile_path = tmp_outfile_path(&outfile_dir, &expected_pubkey.to_string());
 
             process_test_command(&[
-                "solana-keygen",
+                "gorbagana-keygen",
                 "pubkey",
                 &keypair_path,
                 "--config",
@@ -994,7 +994,7 @@ mod tests {
             let outfile_path = tmp_outfile_path(&outfile_dir, &expected_pubkey.to_string());
 
             process_test_command(&[
-                "solana-keygen",
+                "gorbagana-keygen",
                 "pubkey",
                 &keypair_path,
                 "--outfile",
@@ -1003,7 +1003,7 @@ mod tests {
             .unwrap();
 
             let result = process_test_command(&[
-                "solana-keygen",
+                "gorbagana-keygen",
                 "pubkey",
                 "--config",
                 &config_path,
@@ -1030,7 +1030,7 @@ mod tests {
 
         // general success case
         process_test_command(&[
-            "solana-keygen",
+            "gorbagana-keygen",
             "new",
             "--outfile",
             &outfile_path,
@@ -1040,7 +1040,7 @@ mod tests {
 
         // refuse to overwrite file
         let result = process_test_command(&[
-            "solana-keygen",
+            "gorbagana-keygen",
             "new",
             "--outfile",
             &outfile_path,
@@ -1054,7 +1054,7 @@ mod tests {
 
         // no outfile
         process_test_command(&[
-            "solana-keygen",
+            "gorbagana-keygen",
             "new",
             "--no-bip39-passphrase",
             "--no-outfile",
@@ -1077,7 +1077,7 @@ mod tests {
         for language in languages {
             for word_count in word_counts {
                 process_test_command(&[
-                    "solana-keygen",
+                    "gorbagana-keygen",
                     "new",
                     "--no-outfile",
                     "--no-bip39-passphrase",
@@ -1092,7 +1092,7 @@ mod tests {
 
         // sanity check derivation path
         process_test_command(&[
-            "solana-keygen",
+            "gorbagana-keygen",
             "new",
             "--no-bip39-passphrase",
             "--no-outfile",
@@ -1102,7 +1102,7 @@ mod tests {
         .unwrap();
 
         process_test_command(&[
-            "solana-keygen",
+            "gorbagana-keygen",
             "new",
             "--no-bip39-passphrase",
             "--no-outfile",
@@ -1112,7 +1112,7 @@ mod tests {
         .unwrap();
 
         let result = process_test_command(&[
-            "solana-keygen",
+            "gorbagana-keygen",
             "new",
             "--no-bip39-passphrase",
             "--no-outfile",
@@ -1130,7 +1130,7 @@ mod tests {
     fn test_grind() {
         // simple sanity checks
         process_test_command(&[
-            "solana-keygen",
+            "gorbagana-keygen",
             "grind",
             "--no-outfile",
             "--no-bip39-passphrase",
@@ -1141,7 +1141,7 @@ mod tests {
         .unwrap();
 
         process_test_command(&[
-            "solana-keygen",
+            "gorbagana-keygen",
             "grind",
             "--no-outfile",
             "--no-bip39-passphrase",
@@ -1155,7 +1155,7 @@ mod tests {
     #[test]
     fn test_read_write_pubkey() -> Result<(), std::boxed::Box<dyn std::error::Error>> {
         let filename = "test_pubkey.json";
-        let pubkey = solana_pubkey::new_rand();
+        let pubkey = gorbagana_pubkey::new_rand();
         write_pubkey_file(filename, pubkey)?;
         let read = read_pubkey_file(filename)?;
         assert_eq!(read, pubkey);

@@ -1,12 +1,12 @@
-#![cfg(target_os = "solana")]
+#![cfg(target_os = "gorbagana")]
 
 use {
-    solana_account_info::AccountInfo,
-    solana_msg::msg,
-    solana_program::{program::invoke, syscalls::sol_invoke_signed_c},
-    solana_program_error::{ProgramError, ProgramResult},
-    solana_pubkey::Pubkey,
-    solana_system_interface::instruction as system_instruction,
+    gorbagana_account_info::AccountInfo,
+    gorbagana_msg::msg,
+    gorbagana_program::{program::invoke, syscalls::sol_invoke_signed_c},
+    gorbagana_program_error::{ProgramError, ProgramResult},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_system_interface::instruction as system_instruction,
 };
 
 #[derive(Debug)]
@@ -96,7 +96,7 @@ fn check_preconditions(
     Ok(())
 }
 
-solana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
+gorbagana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
 fn process_instruction(
     program_id: &Pubkey,
     accounts: &[AccountInfo],

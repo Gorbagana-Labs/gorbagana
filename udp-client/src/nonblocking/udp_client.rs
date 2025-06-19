@@ -3,8 +3,8 @@
 
 use {
     async_trait::async_trait, core::iter::repeat,
-    solana_connection_cache::nonblocking::client_connection::ClientConnection,
-    solana_streamer::nonblocking::sendmmsg::batch_send, solana_transaction_error::TransportResult,
+    gorbagana_connection_cache::nonblocking::client_connection::ClientConnection,
+    gorbagana_streamer::nonblocking::sendmmsg::batch_send, gorbagana_transaction_error::TransportResult,
     std::net::SocketAddr, tokio::net::UdpSocket,
 };
 
@@ -46,9 +46,9 @@ impl ClientConnection for UdpClientConnection {
 mod tests {
     use {
         super::*,
-        solana_net_utils::{bind_to_async, SocketConfig},
-        solana_packet::{Packet, PACKET_DATA_SIZE},
-        solana_streamer::nonblocking::recvmmsg::recv_mmsg,
+        gorbagana_net_utils::{bind_to_async, SocketConfig},
+        gorbagana_packet::{Packet, PACKET_DATA_SIZE},
+        gorbagana_streamer::nonblocking::recvmmsg::recv_mmsg,
         std::net::{IpAddr, Ipv4Addr},
         tokio::net::UdpSocket,
     };
@@ -73,7 +73,7 @@ mod tests {
     async fn test_send_from_addr() {
         let addr_str = "0.0.0.0:50100";
         let addr = addr_str.parse().unwrap();
-        let socket = solana_net_utils::bind_with_any_port_with_config(
+        let socket = gorbagana_net_utils::bind_with_any_port_with_config(
             IpAddr::V4(Ipv4Addr::UNSPECIFIED),
             SocketConfig::default(),
         )

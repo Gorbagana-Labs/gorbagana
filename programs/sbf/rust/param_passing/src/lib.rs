@@ -1,9 +1,9 @@
 //! Example Rust-based SBF program tests loop iteration
 
 use {
-    solana_program::log::sol_log_64,
-    solana_program_entrypoint::{custom_heap_default, custom_panic_default, SUCCESS},
-    solana_sbf_rust_param_passing_dep::{Data, TestDep},
+    gorbagana_program::log::sol_log_64,
+    gorbagana_program_entrypoint::{custom_heap_default, custom_panic_default, SUCCESS},
+    gorbagana_sbf_rust_param_passing_dep::{Data, TestDep},
 };
 
 #[no_mangle]

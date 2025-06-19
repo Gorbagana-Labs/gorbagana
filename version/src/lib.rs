@@ -5,19 +5,19 @@ pub use self::legacy::{LegacyVersion1, LegacyVersion2};
 use {
     rand::{thread_rng, Rng},
     serde_derive::{Deserialize, Serialize},
-    solana_sanitize::Sanitize,
-    solana_serde_varint as serde_varint,
+    gorbagana_sanitize::Sanitize,
+    gorbagana_serde_varint as serde_varint,
     std::{convert::TryInto, fmt},
 };
 #[cfg_attr(feature = "frozen-abi", macro_use)]
 #[cfg(feature = "frozen-abi")]
-extern crate solana_frozen_abi_macro;
+extern crate gorbagana_frozen_abi_macro;
 
 mod legacy;
 
 #[derive(Debug, Eq, PartialEq)]
 enum ClientId {
-    SolanaLabs,
+    GorbaganaLabs,
     JitoLabs,
     Firedancer,
     Agave,
@@ -98,7 +98,7 @@ impl Sanitize for Version {}
 impl From<u16> for ClientId {
     fn from(client: u16) -> Self {
         match client {
-            0u16 => Self::SolanaLabs,
+            0u16 => Self::GorbaganaLabs,
             1u16 => Self::JitoLabs,
             2u16 => Self::Firedancer,
             3u16 => Self::Agave,
@@ -112,7 +112,7 @@ impl TryFrom<ClientId> for u16 {
 
     fn try_from(client: ClientId) -> Result<Self, Self::Error> {
         match client {
-            ClientId::SolanaLabs => Ok(0u16),
+            ClientId::GorbaganaLabs => Ok(0u16),
             ClientId::JitoLabs => Ok(1u16),
             ClientId::Firedancer => Ok(2u16),
             ClientId::Agave => Ok(3u16),
@@ -150,14 +150,14 @@ mod test {
 
     #[test]
     fn test_client_id() {
-        assert_eq!(ClientId::from(0u16), ClientId::SolanaLabs);
+        assert_eq!(ClientId::from(0u16), ClientId::GorbaganaLabs);
         assert_eq!(ClientId::from(1u16), ClientId::JitoLabs);
         assert_eq!(ClientId::from(2u16), ClientId::Firedancer);
         assert_eq!(ClientId::from(3u16), ClientId::Agave);
         for client in 4u16..=u16::MAX {
             assert_eq!(ClientId::from(client), ClientId::Unknown(client));
         }
-        assert_eq!(u16::try_from(ClientId::SolanaLabs), Ok(0u16));
+        assert_eq!(u16::try_from(ClientId::GorbaganaLabs), Ok(0u16));
         assert_eq!(u16::try_from(ClientId::JitoLabs), Ok(1u16));
         assert_eq!(u16::try_from(ClientId::Firedancer), Ok(2u16));
         assert_eq!(u16::try_from(ClientId::Agave), Ok(3u16));

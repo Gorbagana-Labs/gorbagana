@@ -1,5 +1,5 @@
 [package]
-name = "solana-sbf-rust-128bit-dep"
+name = "gorbagana-sbf-rust-128bit-dep"
 version = { workspace = true }
 description = { workspace = true }
 authors = { workspace = true }

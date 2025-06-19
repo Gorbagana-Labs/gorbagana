@@ -2,14 +2,14 @@ use {
     clap::{crate_name, Parser},
     crossbeam_channel::bounded,
     log::*,
-    solana_core::banking_trace::BankingTracer,
-    solana_keypair::read_keypair_file,
-    solana_logger::redirect_stderr_to_file,
-    solana_net_utils::{bind_in_range_with_config, SocketConfig},
-    solana_quic_definitions::QUIC_PORT_OFFSET,
-    solana_signer::Signer,
-    solana_streamer::streamer::StakedNodes,
-    solana_vortexor::{
+    gorbagana_core::banking_trace::BankingTracer,
+    gorbagana_keypair::read_keypair_file,
+    gorbagana_logger::redirect_stderr_to_file,
+    gorbagana_net_utils::{bind_in_range_with_config, SocketConfig},
+    gorbagana_quic_definitions::QUIC_PORT_OFFSET,
+    gorbagana_signer::Signer,
+    gorbagana_streamer::streamer::StakedNodes,
+    gorbagana_vortexor::{
         cli::Cli,
         rpc_load_balancer::RpcLoadBalancer,
         sender::{
@@ -31,10 +31,10 @@ use {
 const DEFAULT_CHANNEL_SIZE: usize = 100_000;
 
 pub fn main() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let args = Cli::parse();
-    let solana_version = solana_version::version!();
+    let gorbagana_version = gorbagana_version::version!();
     let identity = args.identity;
 
     let identity_keypair = read_keypair_file(identity).unwrap_or_else(|error| {
@@ -48,7 +48,7 @@ pub fn main() {
     let logfile = {
         let logfile = args
             .logfile
-            .unwrap_or_else(|| format!("solana-vortexor-{}.log", identity_keypair.pubkey()));
+            .unwrap_or_else(|| format!("gorbagana-vortexor-{}.log", identity_keypair.pubkey()));
 
         if logfile == "-" {
             None
@@ -59,7 +59,7 @@ pub fn main() {
     };
     let _logger_thread = redirect_stderr_to_file(logfile);
 
-    info!("{} {solana_version}", crate_name!());
+    info!("{} {gorbagana_version}", crate_name!());
     info!(
         "Starting vortexor {} with: {:#?}",
         identity_keypair.pubkey(),

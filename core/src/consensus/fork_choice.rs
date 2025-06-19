@@ -8,8 +8,8 @@ use {
         },
         replay_stage::HeaviestForkFailures,
     },
-    solana_clock::Slot,
-    solana_runtime::{bank::Bank, bank_forks::BankForks},
+    gorbagana_clock::Slot,
+    gorbagana_runtime::{bank::Bank, bank_forks::BankForks},
     std::{
         collections::{HashMap, HashSet},
         sync::{Arc, RwLock},

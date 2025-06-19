@@ -19,24 +19,24 @@
 //! 1. Without blockhash or payer:
 //!    1.1 With invalid signatures
 //!    ```bash
-//!    solana-dos $COMMON --num-signatures 8
+//!    gorbagana-dos $COMMON --num-signatures 8
 //!    ```
 //!    1.2 With valid signatures
 //!    ```bash
-//!    solana-dos $COMMON --valid-signatures --num-signatures 8
+//!    gorbagana-dos $COMMON --valid-signatures --num-signatures 8
 //!    ```
 //! 2. With blockhash and payer:
 //!    2.1 Single-instruction transaction
 //!    ```bash
-//!    solana-dos $COMMON --valid-blockhash --transaction-type transfer --num-instructions 1
+//!    gorbagana-dos $COMMON --valid-blockhash --transaction-type transfer --num-instructions 1
 //!    ```
 //!    2.2 Multi-instruction transaction
 //!    ```bash
-//!    solana-dos $COMMON --valid-blockhash --transaction-type transfer --num-instructions 8
+//!    gorbagana-dos $COMMON --valid-blockhash --transaction-type transfer --num-instructions 8
 //!    ```
 //!    2.3 Account-creation transaction
 //!    ```bash
-//!    solana-dos $COMMON --valid-blockhash --transaction-type account-creation
+//!    gorbagana-dos $COMMON --valid-blockhash --transaction-type account-creation
 //!    ```
 //!
 #![allow(clippy::arithmetic_side_effects)]
@@ -46,34 +46,34 @@ use {
     itertools::Itertools,
     log::*,
     rand::{thread_rng, Rng},
-    solana_bench_tps::bench::generate_and_fund_keypairs,
-    solana_client::{connection_cache::ConnectionCache, tpu_client::TpuClientWrapper},
-    solana_connection_cache::client_connection::ClientConnection as TpuConnection,
-    solana_core::repair::serve_repair::{RepairProtocol, RepairRequestHeader, ServeRepair},
-    solana_dos::cli::*,
-    solana_gossip::{
+    gorbagana_bench_tps::bench::generate_and_fund_keypairs,
+    gorbagana_client::{connection_cache::ConnectionCache, tpu_client::TpuClientWrapper},
+    gorbagana_connection_cache::client_connection::ClientConnection as TpuConnection,
+    gorbagana_core::repair::serve_repair::{RepairProtocol, RepairRequestHeader, ServeRepair},
+    gorbagana_dos::cli::*,
+    gorbagana_gossip::{
         contact_info::{ContactInfo, Protocol},
         gossip_service::{discover, get_client},
     },
-    solana_hash::Hash,
-    solana_keypair::Keypair,
-    solana_measure::measure::Measure,
-    solana_message::{compiled_instruction::CompiledInstruction, Message},
-    solana_net_utils::bind_to_unspecified,
-    solana_pubkey::Pubkey,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_signature::Signature,
-    solana_signer::Signer,
-    solana_stake_interface as stake,
-    solana_streamer::socket::SocketAddrSpace,
-    solana_system_interface::{
+    gorbagana_hash::Hash,
+    gorbagana_keypair::Keypair,
+    gorbagana_measure::measure::Measure,
+    gorbagana_message::{compiled_instruction::CompiledInstruction, Message},
+    gorbagana_net_utils::bind_to_unspecified,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_signature::Signature,
+    gorbagana_signer::Signer,
+    gorbagana_stake_interface as stake,
+    gorbagana_streamer::socket::SocketAddrSpace,
+    gorbagana_system_interface::{
         instruction::{self as system_instruction, SystemInstruction},
         program as system_program,
     },
-    solana_time_utils::timestamp,
-    solana_tps_client::TpsClient,
-    solana_tpu_client::tpu_client::DEFAULT_TPU_CONNECTION_POOL_SIZE,
-    solana_transaction::Transaction,
+    gorbagana_time_utils::timestamp,
+    gorbagana_tps_client::TpsClient,
+    gorbagana_tpu_client::tpu_client::DEFAULT_TPU_CONNECTION_POOL_SIZE,
+    gorbagana_transaction::Transaction,
     std::{
         net::SocketAddr,
         process::exit,
@@ -434,7 +434,7 @@ fn get_target(
     let mut target = None;
     if nodes.is_empty() {
         // skip-gossip case
-        target = Some((solana_pubkey::new_rand(), entrypoint_addr));
+        target = Some((gorbagana_pubkey::new_rand(), entrypoint_addr));
     } else {
         info!("************ NODE ***********");
         for node in nodes {
@@ -760,13 +760,13 @@ fn run_dos<T: 'static + TpsClient + Send + Sync>(
 }
 
 fn main() {
-    solana_logger::setup_with_default_filter();
+    gorbagana_logger::setup_with_default_filter();
     let mut cmd_params = build_cli_parameters();
 
     if !cmd_params.skip_gossip && cmd_params.shred_version.is_none() {
         // Try to get shred version from the entrypoint
         cmd_params.shred_version = Some(
-            solana_net_utils::get_cluster_shred_version(&cmd_params.entrypoint_addr)
+            gorbagana_net_utils::get_cluster_shred_version(&cmd_params.entrypoint_addr)
                 .unwrap_or_else(|err| {
                     eprintln!("Failed to get shred version: {}", err);
                     exit(1);
@@ -830,17 +830,17 @@ fn main() {
 pub mod test {
     use {
         super::*,
-        solana_core::validator::ValidatorConfig,
-        solana_faucet::faucet::run_local_faucet,
-        solana_local_cluster::{
+        gorbagana_core::validator::ValidatorConfig,
+        gorbagana_faucet::faucet::run_local_faucet,
+        gorbagana_local_cluster::{
             cluster::Cluster,
             local_cluster::{ClusterConfig, LocalCluster},
             validator_configs::make_identical_validator_configs,
         },
-        solana_quic_client::{QuicConfig, QuicConnectionManager, QuicPool},
-        solana_rpc::rpc::JsonRpcConfig,
-        solana_time_utils::timestamp,
-        solana_tpu_client::tpu_client::TpuClient,
+        gorbagana_quic_client::{QuicConfig, QuicConnectionManager, QuicPool},
+        gorbagana_rpc::rpc::JsonRpcConfig,
+        gorbagana_time_utils::timestamp,
+        gorbagana_tpu_client::tpu_client::TpuClient,
     };
 
     const TEST_SEND_BATCH_SIZE: usize = 1;
@@ -856,7 +856,7 @@ pub mod test {
     #[test]
     fn test_dos() {
         let nodes = [ContactInfo::new_localhost(
-            &solana_pubkey::new_rand(),
+            &gorbagana_pubkey::new_rand(),
             timestamp(),
         )];
         let entrypoint_addr = nodes[0].gossip().unwrap();
@@ -943,7 +943,7 @@ pub mod test {
 
     #[test]
     fn test_dos_random() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let num_nodes = 1;
         let cluster =
             LocalCluster::new_with_equal_stakes(num_nodes, 100, 3, SocketAddrSpace::Unspecified);
@@ -977,7 +977,7 @@ pub mod test {
 
     #[test]
     fn test_dos_without_blockhash() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let num_nodes = 1;
         let cluster =
             LocalCluster::new_with_equal_stakes(num_nodes, 100, 3, SocketAddrSpace::Unspecified);
@@ -1081,7 +1081,7 @@ pub mod test {
     }
 
     fn run_dos_with_blockhash_and_payer(tpu_use_quic: bool) {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         // 1. Create faucet thread
         let faucet_keypair = Keypair::new();

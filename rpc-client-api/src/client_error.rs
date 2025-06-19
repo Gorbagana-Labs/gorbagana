@@ -1,8 +1,8 @@
 pub use reqwest;
 use {
     crate::{request, response},
-    solana_signer::SignerError,
-    solana_transaction_error::{TransactionError, TransportError},
+    gorbagana_signer::SignerError,
+    gorbagana_transaction_error::{TransactionError, TransportError},
     std::io,
     thiserror::Error as ThisError,
 };

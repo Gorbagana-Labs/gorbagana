@@ -30,12 +30,12 @@ test-version:
 	$(MAKE) test-all
 
 rust-v0:
-	cargo +solana build --release --target sbpf-solana-solana --workspace ; \
-	cp -r target/sbpf-solana-solana/release/* target/deploy
+	cargo +gorbagana build --release --target sbpf-gorbagana-gorbagana --workspace ; \
+	cp -r target/sbpf-gorbagana-gorbagana/release/* target/deploy
 
 rust-new:
-	RUSTFLAGS="-C instrument-coverage=no" cargo +solana build --release --target sbpf$(VER)-solana-solana --workspace ; \
-	cp -r target/sbpf$(VER)-solana-solana/release/* target/deploy
+	RUSTFLAGS="-C instrument-coverage=no" cargo +gorbagana build --release --target sbpf$(VER)-gorbagana-gorbagana --workspace ; \
+	cp -r target/sbpf$(VER)-gorbagana-gorbagana/release/* target/deploy
 
 .PHONY: test-v3
 

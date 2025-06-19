@@ -27,7 +27,7 @@ use log::*;
 use {
     reqwest::{blocking::Client, StatusCode},
     serde_json::json,
-    solana_hash::Hash,
+    gorbagana_hash::Hash,
     std::{env, str::FromStr, thread::sleep, time::Duration},
 };
 

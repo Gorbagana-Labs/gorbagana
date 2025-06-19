@@ -3,11 +3,11 @@ use {
     bv::BitVec,
     itertools::Itertools,
     rand::Rng,
-    solana_clock::Slot,
-    solana_hash::Hash,
-    solana_pubkey::Pubkey,
-    solana_sanitize::{Sanitize, SanitizeError},
-    solana_serde_varint as serde_varint,
+    gorbagana_clock::Slot,
+    gorbagana_hash::Hash,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sanitize::{Sanitize, SanitizeError},
+    gorbagana_serde_varint as serde_varint,
     thiserror::Error,
 };
 
@@ -110,7 +110,7 @@ impl RestartLastVotedForkSlots {
 
     /// New random Version for tests and benchmarks.
     pub(crate) fn new_rand<R: Rng>(rng: &mut R, pubkey: Option<Pubkey>) -> Self {
-        let pubkey = pubkey.unwrap_or_else(solana_pubkey::new_rand);
+        let pubkey = pubkey.unwrap_or_else(gorbagana_pubkey::new_rand);
         let num_slots = rng.gen_range(2..20);
         let slots = std::iter::repeat_with(|| 47825632 + rng.gen_range(0..512))
             .take(num_slots)
@@ -146,7 +146,7 @@ impl Sanitize for RestartHeaviestFork {
 
 impl RestartHeaviestFork {
     pub(crate) fn new_rand<R: Rng>(rng: &mut R, from: Option<Pubkey>) -> Self {
-        let from = from.unwrap_or_else(solana_pubkey::new_rand);
+        let from = from.unwrap_or_else(gorbagana_pubkey::new_rand);
         Self {
             from,
             wallclock: new_rand_timestamp(rng),
@@ -225,9 +225,9 @@ mod test {
             protocol::MAX_CRDS_OBJECT_SIZE,
         },
         bincode::serialized_size,
-        solana_keypair::Keypair,
-        solana_signer::Signer,
-        solana_time_utils::timestamp,
+        gorbagana_keypair::Keypair,
+        gorbagana_signer::Signer,
+        gorbagana_time_utils::timestamp,
         std::iter::repeat_with,
     };
 

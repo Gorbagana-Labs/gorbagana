@@ -1,18 +1,18 @@
 use {
     crate::cli::{CliCommand, CliCommandInfo, CliConfig, CliError, ProcessResult},
     clap::{App, Arg, ArgMatches, SubCommand},
-    solana_clap_utils::{
+    gorbagana_clap_utils::{
         input_parsers::{pubkeys_of, value_of},
         input_validators::is_valid_pubkey,
         keypair::*,
     },
-    solana_cli_output::{
+    gorbagana_cli_output::{
         CliEpochRewardsMetadata, CliInflation, CliKeyedEpochReward, CliKeyedEpochRewards,
     },
-    solana_clock::{Epoch, Slot, UnixTimestamp},
-    solana_pubkey::Pubkey,
-    solana_remote_wallet::remote_wallet::RemoteWalletManager,
-    solana_rpc_client::rpc_client::RpcClient,
+    gorbagana_clock::{Epoch, Slot, UnixTimestamp},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_remote_wallet::remote_wallet::RemoteWalletManager,
+    gorbagana_rpc_client::rpc_client::RpcClient,
     std::{collections::HashMap, rc::Rc},
 };
 

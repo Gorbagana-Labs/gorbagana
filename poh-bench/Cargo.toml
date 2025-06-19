@@ -1,6 +1,6 @@
 [package]
-name = "solana-poh-bench"
-documentation = "https://docs.rs/solana-poh-bench"
+name = "gorbagana-poh-bench"
+documentation = "https://docs.rs/gorbagana-poh-bench"
 publish = false
 version = { workspace = true }
 authors = { workspace = true }
@@ -16,10 +16,10 @@ targets = ["x86_64-unknown-linux-gnu"]
 clap = { version = "3.1.5", features = ["cargo"] }
 log = { workspace = true }
 rayon = { workspace = true }
-solana-entry = { workspace = true }
-solana-logger = { workspace = true }
-solana-measure = { workspace = true }
-solana-perf = { workspace = true }
-solana-rayon-threadlimit = { workspace = true }
-solana-sha256-hasher = { workspace = true }
-solana-version = { workspace = true }
+gorbagana-entry = { workspace = true }
+gorbagana-logger = { workspace = true }
+gorbagana-measure = { workspace = true }
+gorbagana-perf = { workspace = true }
+gorbagana-rayon-threadlimit = { workspace = true }
+gorbagana-sha256-hasher = { workspace = true }
+gorbagana-version = { workspace = true }

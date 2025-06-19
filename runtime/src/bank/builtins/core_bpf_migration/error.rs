@@ -1,13 +1,13 @@
 use {
-    solana_hash::Hash, solana_instruction::error::InstructionError, solana_pubkey::Pubkey,
+    gorbagana_hash::Hash, gorbagana_instruction::error::InstructionError, gorbagana_pubkey::Pubkey,
     thiserror::Error,
 };
 
 /// Errors returned by a Core BPF migration.
 #[derive(Debug, Error)]
 pub enum CoreBpfMigrationError {
-    /// Solana instruction error
-    #[error("Solana instruction error: {0:?}")]
+    /// Gorbagana instruction error
+    #[error("Gorbagana instruction error: {0:?}")]
     InstructionError(#[from] InstructionError),
     /// Bincode serialization error
     #[error("Bincode serialization error: {0:?}")]

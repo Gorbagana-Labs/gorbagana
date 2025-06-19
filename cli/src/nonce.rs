@@ -12,8 +12,8 @@ use {
         spend_utils::{resolve_spend_tx_and_check_account_balance, SpendAmount},
     },
     clap::{App, Arg, ArgMatches, SubCommand},
-    solana_account::Account,
-    solana_clap_utils::{
+    gorbagana_account::Account,
+    gorbagana_clap_utils::{
         compute_budget::{compute_unit_price_arg, ComputeUnitLimit, COMPUTE_UNIT_PRICE_ARG},
         input_parsers::*,
         input_validators::*,
@@ -21,23 +21,23 @@ use {
         memo::{memo_arg, MEMO_ARG},
         nonce::*,
     },
-    solana_cli_output::CliNonceAccount,
-    solana_hash::Hash,
-    solana_message::Message,
-    solana_nonce::{self as nonce, state::State},
-    solana_pubkey::Pubkey,
-    solana_remote_wallet::remote_wallet::RemoteWalletManager,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_nonce_utils::*,
-    solana_sdk_ids::system_program,
-    solana_system_interface::{
+    gorbagana_cli_output::CliNonceAccount,
+    gorbagana_hash::Hash,
+    gorbagana_message::Message,
+    gorbagana_nonce::{self as nonce, state::State},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_remote_wallet::remote_wallet::RemoteWalletManager,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_rpc_client_nonce_utils::*,
+    gorbagana_sdk_ids::system_program,
+    gorbagana_system_interface::{
         error::SystemError,
         instruction::{
             advance_nonce_account, authorize_nonce_account, create_nonce_account,
             create_nonce_account_with_seed, upgrade_nonce_account, withdraw_nonce_account,
         },
     },
-    solana_transaction::Transaction,
+    gorbagana_transaction::Transaction,
     std::rc::Rc,
 };
 
@@ -726,17 +726,17 @@ mod tests {
     use {
         super::*,
         crate::{clap_app::get_clap_app, cli::parse_command},
-        solana_account::{state_traits::StateMut, Account},
-        solana_keypair::{read_keypair_file, write_keypair, Keypair},
-        solana_nonce::{
+        gorbagana_account::{state_traits::StateMut, Account},
+        gorbagana_keypair::{read_keypair_file, write_keypair, Keypair},
+        gorbagana_nonce::{
             self as nonce,
             state::{DurableNonce, State},
             versions::Versions,
         },
-        solana_nonce_account as nonce_account,
-        solana_sdk_ids::system_program,
-        solana_sha256_hasher::hash,
-        solana_signer::Signer,
+        gorbagana_nonce_account as nonce_account,
+        gorbagana_sdk_ids::system_program,
+        gorbagana_sha256_hasher::hash,
+        gorbagana_signer::Signer,
         tempfile::NamedTempFile,
     };
 
@@ -1042,7 +1042,7 @@ mod tests {
     fn test_check_nonce_account() {
         let durable_nonce = DurableNonce::from_blockhash(&Hash::default());
         let blockhash = *durable_nonce.as_hash();
-        let nonce_pubkey = solana_pubkey::new_rand();
+        let nonce_pubkey = gorbagana_pubkey::new_rand();
         let data = Versions::new(State::Initialized(nonce::state::Data::new(
             nonce_pubkey,
             durable_nonce,
@@ -1084,7 +1084,7 @@ mod tests {
             );
         }
 
-        let new_nonce_authority = solana_pubkey::new_rand();
+        let new_nonce_authority = gorbagana_pubkey::new_rand();
         let data = Versions::new(State::Initialized(nonce::state::Data::new(
             new_nonce_authority,
             durable_nonce,

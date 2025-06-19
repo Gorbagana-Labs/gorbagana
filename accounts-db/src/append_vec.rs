@@ -2,7 +2,7 @@
 //!
 //! For more information, see:
 //!
-//! <https://docs.solanalabs.com/implemented-proposals/persistent-account-storage>
+//! <https://docs.gorbaganalabs.com/implemented-proposals/persistent-account-storage>
 
 mod meta;
 pub mod test_utils;
@@ -31,11 +31,11 @@ use {
     log::*,
     memmap2::MmapMut,
     meta::StoredAccountNoData,
-    solana_account::{AccountSharedData, ReadableAccount, WritableAccount},
-    solana_clock::Epoch,
-    solana_hash::Hash,
-    solana_pubkey::Pubkey,
-    solana_system_interface::MAX_PERMITTED_DATA_LENGTH,
+    gorbagana_account::{AccountSharedData, ReadableAccount, WritableAccount},
+    gorbagana_clock::Epoch,
+    gorbagana_hash::Hash,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_system_interface::MAX_PERMITTED_DATA_LENGTH,
     std::{
         self,
         convert::TryFrom,
@@ -925,7 +925,7 @@ impl AppendVec {
     pub fn get_account_test(
         &self,
         offset: usize,
-    ) -> Option<(StoredMeta, solana_account::AccountSharedData)> {
+    ) -> Option<(StoredMeta, gorbagana_account::AccountSharedData)> {
         let data_len = self.get_account_data_lens(&[offset]);
         let sizes: usize = data_len
             .iter()
@@ -933,7 +933,7 @@ impl AppendVec {
             .sum();
         let result = self.get_stored_account_meta_callback(offset, |r_callback| {
             let r2 = self.get_account_shared_data(offset);
-            assert!(solana_account::accounts_equal(
+            assert!(gorbagana_account::accounts_equal(
                 &r_callback,
                 r2.as_ref().unwrap()
             ));
@@ -1388,8 +1388,8 @@ pub mod tests {
         assert_matches::assert_matches,
         memoffset::offset_of,
         rand::{thread_rng, Rng},
-        solana_account::{Account, AccountSharedData},
-        solana_clock::Slot,
+        gorbagana_account::{Account, AccountSharedData},
+        gorbagana_clock::Slot,
         std::{mem::ManuallyDrop, time::Instant},
         test_case::test_case,
     };
@@ -1793,14 +1793,14 @@ pub mod tests {
         // So, the sanitizing on load behavior can be tested by capturing [u8] that would be created if such a write was possible (as it used to be).
         // The contents of [u8] written by an append vec cannot easily or reasonably change frequently since it has released a long time.
         /*
-            solana_logger::setup();
+            gorbagana_logger::setup();
             // uncomment this code to generate the invalid append vec that will fail on load
             let file = get_append_vec_path("test_append");
             let path = &file.path;
             let mut av = AppendVec::new(path, true, 256);
             av.set_no_remove_on_drop();
 
-            let pubkey = solana_pubkey::new_rand();
+            let pubkey = gorbagana_pubkey::new_rand();
             let owner = Pubkey::default();
             let data_len = 3_u64;
             let mut account = AccountSharedData::new(0, data_len as usize, &owner);
@@ -2137,7 +2137,7 @@ pub mod tests {
         check_fn: impl Fn(&AppendVec, &[Pubkey], &[usize], &[AccountSharedData]),
     ) {
         const NUM_ACCOUNTS: usize = 37;
-        let pubkeys: Vec<_> = std::iter::repeat_with(solana_pubkey::new_rand)
+        let pubkeys: Vec<_> = std::iter::repeat_with(gorbagana_pubkey::new_rand)
             .take(NUM_ACCOUNTS)
             .collect();
 
@@ -2230,12 +2230,12 @@ pub mod tests {
             let fake_stored_meta = StoredMeta {
                 write_version_obsolete: 0,
                 data_len: 100,
-                pubkey: solana_pubkey::new_rand(),
+                pubkey: gorbagana_pubkey::new_rand(),
             };
             let fake_account_meta = AccountMeta {
                 lamports: 100,
                 rent_epoch: 10,
-                owner: solana_pubkey::new_rand(),
+                owner: gorbagana_pubkey::new_rand(),
                 executable: false,
             };
 
@@ -2329,12 +2329,12 @@ pub mod tests {
             let fake_stored_meta = StoredMeta {
                 write_version_obsolete: 0,
                 data_len: 100,
-                pubkey: solana_pubkey::new_rand(),
+                pubkey: gorbagana_pubkey::new_rand(),
             };
             let fake_account_meta = AccountMeta {
                 lamports: 100,
                 rent_epoch: 10,
-                owner: solana_pubkey::new_rand(),
+                owner: gorbagana_pubkey::new_rand(),
                 executable: false,
             };
 

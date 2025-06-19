@@ -1,12 +1,12 @@
 //! Test builtin mem functions
 
-#![cfg(target_os = "solana")]
+#![cfg(target_os = "gorbagana")]
 #![feature(rustc_private)]
 
 extern crate compiler_builtins;
 use {
-    solana_program_entrypoint::{custom_heap_default, custom_panic_default, SUCCESS},
-    solana_sbf_rust_mem_dep::{run_mem_tests, MemOps},
+    gorbagana_program_entrypoint::{custom_heap_default, custom_panic_default, SUCCESS},
+    gorbagana_sbf_rust_mem_dep::{run_mem_tests, MemOps},
 };
 
 #[no_mangle]

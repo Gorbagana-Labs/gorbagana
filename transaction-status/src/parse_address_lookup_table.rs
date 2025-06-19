@@ -4,8 +4,8 @@ use {
     },
     bincode::deserialize,
     serde_json::json,
-    solana_address_lookup_table_interface::instruction::ProgramInstruction,
-    solana_message::{compiled_instruction::CompiledInstruction, AccountKeys},
+    gorbagana_address_lookup_table_interface::instruction::ProgramInstruction,
+    gorbagana_message::{compiled_instruction::CompiledInstruction, AccountKeys},
 };
 
 pub fn parse_address_lookup_table(
@@ -114,8 +114,8 @@ fn check_num_address_lookup_table_accounts(
 #[cfg(test)]
 mod test {
     use {
-        super::*, solana_address_lookup_table_interface::instruction, solana_message::Message,
-        solana_pubkey::Pubkey, solana_sdk_ids::system_program, std::str::FromStr,
+        super::*, gorbagana_address_lookup_table_interface::instruction, gorbagana_message::Message,
+        gorbagana_pubkey::Pubkey, gorbagana_sdk_ids::system_program, std::str::FromStr,
     };
 
     #[test]

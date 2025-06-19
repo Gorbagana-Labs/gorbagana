@@ -6,10 +6,10 @@
 //! for the duration of the channel.
 
 use {
-    solana_account::{AccountSharedData, ReadableAccount},
-    solana_client::rpc_client::RpcClient,
-    solana_pubkey::Pubkey,
-    solana_svm_callback::{InvokeContextCallback, TransactionProcessingCallback},
+    gorbagana_account::{AccountSharedData, ReadableAccount},
+    gorbagana_client::rpc_client::RpcClient,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_svm_callback::{InvokeContextCallback, TransactionProcessingCallback},
     std::{collections::HashMap, sync::RwLock},
 };
 

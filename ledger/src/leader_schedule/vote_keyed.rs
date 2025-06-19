@@ -1,8 +1,8 @@
 use {
     super::{stake_weighted_slot_leaders, IdentityKeyedLeaderSchedule, LeaderScheduleVariant},
-    solana_clock::Epoch,
-    solana_pubkey::Pubkey,
-    solana_vote::vote_account::VoteAccountsHashMap,
+    gorbagana_clock::Epoch,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_vote::vote_account::VoteAccountsHashMap,
     std::{collections::HashMap, ops::Index, sync::Arc},
 };
 
@@ -98,12 +98,12 @@ impl Index<u64> for LeaderSchedule {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, solana_vote::vote_account::VoteAccount};
+    use {super::*, gorbagana_vote::vote_account::VoteAccount};
 
     #[test]
     fn test_index() {
-        let pubkey0 = solana_pubkey::new_rand();
-        let pubkey1 = solana_pubkey::new_rand();
+        let pubkey0 = gorbagana_pubkey::new_rand();
+        let pubkey1 = gorbagana_pubkey::new_rand();
         let vote_keyed_slot_leaders = vec![pubkey0, pubkey1];
         let vote_accounts_map: VoteAccountsHashMap = [
             (pubkey0, (0, VoteAccount::new_random())),
@@ -130,8 +130,8 @@ mod tests {
 
     #[test]
     fn test_get_vote_key_at_slot_index() {
-        let pubkey0 = solana_pubkey::new_rand();
-        let pubkey1 = solana_pubkey::new_rand();
+        let pubkey0 = gorbagana_pubkey::new_rand();
+        let pubkey1 = gorbagana_pubkey::new_rand();
         let vote_keyed_slot_leaders = vec![pubkey0, pubkey1];
         let vote_accounts_map: VoteAccountsHashMap = [
             (pubkey0, (0, VoteAccount::new_random())),
@@ -160,7 +160,7 @@ mod tests {
     fn test_leader_schedule_basic() {
         let num_keys = 10;
         let vote_accounts_map: HashMap<_, _> = (0..num_keys)
-            .map(|i| (solana_pubkey::new_rand(), (i, VoteAccount::new_random())))
+            .map(|i| (gorbagana_pubkey::new_rand(), (i, VoteAccount::new_random())))
             .collect();
 
         let epoch: Epoch = rand::random();
@@ -176,7 +176,7 @@ mod tests {
     fn test_repeated_leader_schedule() {
         let num_keys = 10;
         let vote_accounts_map: HashMap<_, _> = (0..num_keys)
-            .map(|i| (solana_pubkey::new_rand(), (i, VoteAccount::new_random())))
+            .map(|i| (gorbagana_pubkey::new_rand(), (i, VoteAccount::new_random())))
             .collect();
 
         let epoch = rand::random::<Epoch>();
@@ -196,8 +196,8 @@ mod tests {
 
     #[test]
     fn test_repeated_leader_schedule_specific() {
-        let vote_key0 = solana_pubkey::new_rand();
-        let vote_key1 = solana_pubkey::new_rand();
+        let vote_key0 = gorbagana_pubkey::new_rand();
+        let vote_key1 = gorbagana_pubkey::new_rand();
         let vote_accounts_map: HashMap<_, _> = [
             (vote_key0, (2, VoteAccount::new_random())),
             (vote_key1, (1, VoteAccount::new_random())),

@@ -1,6 +1,6 @@
 #pragma once
 /**
- * @brief Solana Cross-Program Invocation
+ * @brief Gorbagana Cross-Program Invocation
  */
 
 #include <sol/types.h>

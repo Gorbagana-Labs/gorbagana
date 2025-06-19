@@ -3,8 +3,8 @@ use {
         stakes::{create_and_add_stakes, StakerInfo},
         unlocks::UnlockInfo,
     },
-    solana_genesis_config::{ClusterType, GenesisConfig},
-    solana_native_token::LAMPORTS_PER_SOL,
+    gorbagana_genesis_config::{ClusterType, GenesisConfig},
+    gorbagana_native_token::LAMPORTS_PER_SOL,
 };
 
 // 9 month schedule is 100% after 9 months

@@ -67,8 +67,8 @@ where
 
 pub(crate) fn rust_target_triple(config: &Config) -> String {
     if config.arch == "v0" {
-        "sbpf-solana-solana".to_string()
+        "sbpf-gorbagana-gorbagana".to_string()
     } else {
-        format!("sbpf{}-solana-solana", config.arch)
+        format!("sbpf{}-gorbagana-gorbagana", config.arch)
     }
 }

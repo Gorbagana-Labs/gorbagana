@@ -56,7 +56,7 @@ pub(crate) use self::{
     payload::serde_bytes_payload,
 };
 #[cfg(any(test, feature = "dev-context-only-utils"))]
-use solana_perf::packet::{bytes::Bytes, BytesPacket, Meta, Packet};
+use gorbagana_perf::packet::{bytes::Bytes, BytesPacket, Meta, Packet};
 pub use {
     self::{
         payload::Payload,
@@ -73,15 +73,15 @@ use {
     num_enum::{IntoPrimitive, TryFromPrimitive},
     rayon::ThreadPool,
     serde::{Deserialize, Serialize},
-    solana_clock::Slot,
-    solana_entry::entry::{create_ticks, Entry},
-    solana_hash::Hash,
-    solana_keypair::Keypair,
-    solana_perf::packet::PacketRef,
-    solana_pubkey::Pubkey,
-    solana_sha256_hasher::hashv,
-    solana_signature::{Signature, SIGNATURE_BYTES},
-    solana_signer::Signer,
+    gorbagana_clock::Slot,
+    gorbagana_entry::entry::{create_ticks, Entry},
+    gorbagana_hash::Hash,
+    gorbagana_keypair::Keypair,
+    gorbagana_perf::packet::PacketRef,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sha256_hasher::hashv,
+    gorbagana_signature::{Signature, SIGNATURE_BYTES},
+    gorbagana_signer::Signer,
     static_assertions::const_assert_eq,
     std::{fmt::Debug, time::Instant},
     thiserror::Error,
@@ -1050,8 +1050,8 @@ mod tests {
         rand::Rng,
         rand_chacha::{rand_core::SeedableRng, ChaChaRng},
         rayon::ThreadPoolBuilder,
-        solana_keypair::keypair_from_seed,
-        solana_signer::Signer,
+        gorbagana_keypair::keypair_from_seed,
+        gorbagana_signer::Signer,
         std::io::{Cursor, Seek, SeekFrom, Write},
         test_case::test_case,
     };
@@ -1177,19 +1177,19 @@ mod tests {
             0x5a, 0x5a, 0xa5, 0xa5, 0x5a, 0x5a, 0xa5, 0xa5, 0x5a, 0x5a, 0xa5, 0xa5, 0x5a, 0x5a,
             0xa5, 0xa5, 0x5a, 0x5a,
         ];
-        let version = solana_shred_version::version_from_hash(&Hash::new_from_array(hash));
+        let version = gorbagana_shred_version::version_from_hash(&Hash::new_from_array(hash));
         assert_eq!(version, 1);
         let hash = [
             0xa5u8, 0xa5, 0x5a, 0x5a, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0,
         ];
-        let version = solana_shred_version::version_from_hash(&Hash::new_from_array(hash));
+        let version = gorbagana_shred_version::version_from_hash(&Hash::new_from_array(hash));
         assert_eq!(version, 0xffff);
         let hash = [
             0xa5u8, 0xa5, 0x5a, 0x5a, 0xa5, 0xa5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         ];
-        let version = solana_shred_version::version_from_hash(&Hash::new_from_array(hash));
+        let version = gorbagana_shred_version::version_from_hash(&Hash::new_from_array(hash));
         assert_eq!(version, 0x5a5b);
     }
 
@@ -1220,7 +1220,7 @@ mod tests {
     #[test_case(true, false)]
     #[test_case(true, true)]
     fn test_should_discard_shred(chained: bool, is_last_in_slot: bool) {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let mut rng = rand::thread_rng();
         let slot = 18_291;
         let shreds = make_merkle_shreds_for_tests(

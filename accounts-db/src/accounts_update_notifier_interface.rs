@@ -1,8 +1,8 @@
 use {
-    solana_account::{AccountSharedData, ReadableAccount},
-    solana_clock::{Epoch, Slot},
-    solana_pubkey::Pubkey,
-    solana_transaction::sanitized::SanitizedTransaction,
+    gorbagana_account::{AccountSharedData, ReadableAccount},
+    gorbagana_clock::{Epoch, Slot},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_transaction::sanitized::SanitizedTransaction,
     std::sync::Arc,
 };
 

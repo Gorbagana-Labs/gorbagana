@@ -1,30 +1,30 @@
 #![allow(clippy::arithmetic_side_effects)]
 
 use {
-    solana_account::{from_account, state_traits::StateMut},
-    solana_accounts_db::epoch_accounts_hash::EpochAccountsHash,
-    solana_client_traits::SyncClient,
-    solana_clock::Slot,
-    solana_epoch_schedule::{EpochSchedule, MINIMUM_SLOTS_PER_EPOCH},
-    solana_hash::Hash,
-    solana_keypair::Keypair,
-    solana_message::Message,
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
-    solana_runtime::{
+    gorbagana_account::{from_account, state_traits::StateMut},
+    gorbagana_accounts_db::epoch_accounts_hash::EpochAccountsHash,
+    gorbagana_client_traits::SyncClient,
+    gorbagana_clock::Slot,
+    gorbagana_epoch_schedule::{EpochSchedule, MINIMUM_SLOTS_PER_EPOCH},
+    gorbagana_hash::Hash,
+    gorbagana_keypair::Keypair,
+    gorbagana_message::Message,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent::Rent,
+    gorbagana_runtime::{
         bank::Bank,
         bank_client::BankClient,
         bank_forks::BankForks,
         genesis_utils::{create_genesis_config_with_leader, GenesisConfigInfo},
     },
-    solana_signer::Signer,
-    solana_stake_interface::{
+    gorbagana_signer::Signer,
+    gorbagana_stake_interface::{
         self as stake, instruction as stake_instruction,
         state::{Authorized, Lockup, StakeStateV2},
     },
-    solana_stake_program::stake_state,
-    solana_sysvar::{self as sysvar, stake_history::StakeHistory},
-    solana_vote_program::{
+    gorbagana_stake_program::stake_state,
+    gorbagana_sysvar::{self as sysvar, stake_history::StakeHistory},
+    gorbagana_vote_program::{
         vote_instruction,
         vote_state::{TowerSync, VoteInit, VoteState, VoteStateVersions, MAX_LOCKOUT_HISTORY},
     },
@@ -133,13 +133,13 @@ fn get_staked(bank: &Bank, stake_pubkey: &Pubkey) -> u64 {
 
 #[test]
 fn test_stake_create_and_split_single_signature() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
         mint_keypair: staker_keypair,
         ..
-    } = create_genesis_config_with_leader(100_000_000_000, &solana_pubkey::new_rand(), 1_000_000);
+    } = create_genesis_config_with_leader(100_000_000_000, &gorbagana_pubkey::new_rand(), 1_000_000);
 
     let staker_pubkey = staker_keypair.pubkey();
 
@@ -154,7 +154,7 @@ fn test_stake_create_and_split_single_signature() {
     let lamports = {
         let rent = &bank.rent_collector().rent;
         let rent_exempt_reserve = rent.minimum_balance(StakeStateV2::size_of());
-        let minimum_delegation = solana_stake_program::get_minimum_delegation(
+        let minimum_delegation = gorbagana_stake_program::get_minimum_delegation(
             bank.feature_set
                 .is_active(&agave_feature_set::stake_raise_minimum_delegation_to_1_sol::id()),
         );
@@ -208,13 +208,13 @@ fn test_stake_create_and_split_to_existing_system_account() {
     // Ensure stake-split allows the user to promote an existing system account into
     // a stake account.
 
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
         mint_keypair: staker_keypair,
         ..
-    } = create_genesis_config_with_leader(100_000_000_000, &solana_pubkey::new_rand(), 1_000_000);
+    } = create_genesis_config_with_leader(100_000_000_000, &gorbagana_pubkey::new_rand(), 1_000_000);
 
     let staker_pubkey = staker_keypair.pubkey();
 
@@ -229,7 +229,7 @@ fn test_stake_create_and_split_to_existing_system_account() {
     let lamports = {
         let rent = &bank.rent_collector().rent;
         let rent_exempt_reserve = rent.minimum_balance(StakeStateV2::size_of());
-        let minimum_delegation = solana_stake_program::get_minimum_delegation(
+        let minimum_delegation = gorbagana_stake_program::get_minimum_delegation(
             bank.feature_set
                 .is_active(&agave_feature_set::stake_raise_minimum_delegation_to_1_sol::id()),
         );
@@ -303,7 +303,7 @@ fn test_stake_account_lifetime() {
         ..
     } = create_genesis_config_with_leader(
         100_000_000_000,
-        &solana_pubkey::new_rand(),
+        &gorbagana_pubkey::new_rand(),
         2_000_000_000,
     );
     genesis_config.epoch_schedule = EpochSchedule::new(MINIMUM_SLOTS_PER_EPOCH);
@@ -324,7 +324,7 @@ fn test_stake_account_lifetime() {
         (
             rent.minimum_balance(VoteState::size_of()),
             rent.minimum_balance(StakeStateV2::size_of()),
-            solana_stake_program::get_minimum_delegation(
+            gorbagana_stake_program::get_minimum_delegation(
                 bank.feature_set
                     .is_active(&agave_feature_set::stake_raise_minimum_delegation_to_1_sol::id()),
             ),
@@ -390,7 +390,7 @@ fn test_stake_account_lifetime() {
         &[stake_instruction::withdraw(
             &stake_pubkey,
             &stake_pubkey,
-            &solana_pubkey::new_rand(),
+            &gorbagana_pubkey::new_rand(),
             1,
             None,
         )],
@@ -515,7 +515,7 @@ fn test_stake_account_lifetime() {
         &[stake_instruction::withdraw(
             &split_stake_pubkey,
             &stake_pubkey,
-            &solana_pubkey::new_rand(),
+            &gorbagana_pubkey::new_rand(),
             split_starting_delegation + 1,
             None,
         )],
@@ -539,7 +539,7 @@ fn test_stake_account_lifetime() {
         &[stake_instruction::withdraw(
             &split_stake_pubkey,
             &stake_pubkey,
-            &solana_pubkey::new_rand(),
+            &gorbagana_pubkey::new_rand(),
             split_balance,
             None,
         )],
@@ -556,7 +556,7 @@ fn test_stake_account_lifetime() {
         &[stake_instruction::withdraw(
             &split_stake_pubkey,
             &stake_pubkey,
-            &solana_pubkey::new_rand(),
+            &gorbagana_pubkey::new_rand(),
             split_unstaked,
             None,
         )],
@@ -581,7 +581,7 @@ fn test_stake_account_lifetime() {
         &[stake_instruction::withdraw(
             &split_stake_pubkey,
             &stake_pubkey,
-            &solana_pubkey::new_rand(),
+            &gorbagana_pubkey::new_rand(),
             split_remaining_balance,
             None,
         )],
@@ -607,7 +607,7 @@ fn test_create_stake_account_from_seed() {
         genesis_config,
         mint_keypair,
         ..
-    } = create_genesis_config_with_leader(100_000_000_000, &solana_pubkey::new_rand(), 1_000_000);
+    } = create_genesis_config_with_leader(100_000_000_000, &gorbagana_pubkey::new_rand(), 1_000_000);
     let (bank, _bank_forks) = Bank::new_with_bank_forks_for_tests(&genesis_config);
     let mint_pubkey = mint_keypair.pubkey();
     let bank_client = BankClient::new_shared(bank.clone());
@@ -642,7 +642,7 @@ fn test_create_stake_account_from_seed() {
     let (balance, delegation) = {
         let rent = &bank.rent_collector().rent;
         let rent_exempt_reserve = rent.minimum_balance(StakeStateV2::size_of());
-        let minimum_delegation = solana_stake_program::get_minimum_delegation(
+        let minimum_delegation = gorbagana_stake_program::get_minimum_delegation(
             bank.feature_set
                 .is_active(&agave_feature_set::stake_raise_minimum_delegation_to_1_sol::id()),
         );

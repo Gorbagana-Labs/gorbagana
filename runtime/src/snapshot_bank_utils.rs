@@ -1,7 +1,7 @@
 #[cfg(feature = "dev-context-only-utils")]
 use {
     crate::{bank::BankFieldsToDeserialize, serde_snapshot::fields_from_streams},
-    solana_accounts_db::accounts_file::StorageAccess,
+    gorbagana_accounts_db::accounts_file::StorageAccess,
     tempfile::TempDir,
 };
 use {
@@ -30,7 +30,7 @@ use {
     agave_feature_set as feature_set,
     bincode::{config::Options, serialize_into},
     log::*,
-    solana_accounts_db::{
+    gorbagana_accounts_db::{
         accounts_db::{
             AccountStorageEntry, AccountsDbConfig, AtomicAccountsFileId,
             CalcAccountsHashDataSource, DuplicatesLtHash,
@@ -39,12 +39,12 @@ use {
         accounts_update_notifier_interface::AccountsUpdateNotifier,
         utils::remove_dir_contents,
     },
-    solana_builtins::prototype::BuiltinPrototype,
-    solana_clock::{Epoch, Slot},
-    solana_genesis_config::GenesisConfig,
-    solana_measure::{measure::Measure, measure_time},
-    solana_pubkey::Pubkey,
-    solana_slot_history::{Check, SlotHistory},
+    gorbagana_builtins::prototype::BuiltinPrototype,
+    gorbagana_clock::{Epoch, Slot},
+    gorbagana_genesis_config::GenesisConfig,
+    gorbagana_measure::{measure::Measure, measure_time},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_slot_history::{Check, SlotHistory},
     std::{
         collections::{HashMap, HashSet},
         ops::RangeInclusive,
@@ -1123,17 +1123,17 @@ mod tests {
             status_cache::Status,
         },
         agave_feature_set as feature_set,
-        solana_accounts_db::{
+        gorbagana_accounts_db::{
             accounts_db::ACCOUNTS_DB_CONFIG_FOR_TESTING,
             accounts_hash::{CalcAccountsHashConfig, HashStats},
             sorted_storages::SortedStorages,
         },
-        solana_genesis_config::create_genesis_config,
-        solana_keypair::Keypair,
-        solana_native_token::{sol_to_lamports, LAMPORTS_PER_SOL},
-        solana_signer::Signer,
-        solana_system_transaction as system_transaction,
-        solana_transaction::sanitized::SanitizedTransaction,
+        gorbagana_genesis_config::create_genesis_config,
+        gorbagana_keypair::Keypair,
+        gorbagana_native_token::{sol_to_lamports, LAMPORTS_PER_SOL},
+        gorbagana_signer::Signer,
+        gorbagana_system_transaction as system_transaction,
+        gorbagana_transaction::sanitized::SanitizedTransaction,
         std::{
             fs,
             sync::{atomic::Ordering, Arc, RwLock},
@@ -1714,7 +1714,7 @@ mod tests {
 
         let (mut genesis_config, mint_keypair) = create_genesis_config(sol_to_lamports(1_000_000.));
         // test expects 0 transaction fee
-        genesis_config.fee_rate_governor = solana_fee_calculator::FeeRateGovernor::new(0, 0);
+        genesis_config.fee_rate_governor = gorbagana_fee_calculator::FeeRateGovernor::new(0, 0);
 
         let lamports_to_transfer = sol_to_lamports(123_456.);
         let (bank0, bank_forks) = Bank::new_with_paths_for_tests(

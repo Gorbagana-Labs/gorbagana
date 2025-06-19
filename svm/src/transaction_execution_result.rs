@@ -1,15 +1,15 @@
-// Re-exported since these have moved to `solana_message`.
+// Re-exported since these have moved to `gorbagana_message`.
 #[deprecated(
     since = "1.18.0",
-    note = "Please use `solana_message::inner_instruction` types instead"
+    note = "Please use `gorbagana_message::inner_instruction` types instead"
 )]
-pub use solana_message::inner_instruction::{InnerInstruction, InnerInstructionsList};
+pub use gorbagana_message::inner_instruction::{InnerInstruction, InnerInstructionsList};
 use {
     crate::account_loader::LoadedTransaction,
-    solana_program_runtime::loaded_programs::ProgramCacheEntry,
-    solana_pubkey::Pubkey,
-    solana_transaction_context::TransactionReturnData,
-    solana_transaction_error::TransactionResult,
+    gorbagana_program_runtime::loaded_programs::ProgramCacheEntry,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_transaction_context::TransactionReturnData,
+    gorbagana_transaction_error::TransactionResult,
     std::{collections::HashMap, sync::Arc},
 };
 

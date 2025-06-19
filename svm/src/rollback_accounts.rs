@@ -1,8 +1,8 @@
 use {
     crate::nonce_info::NonceInfo,
-    solana_account::{AccountSharedData, ReadableAccount, WritableAccount},
-    solana_clock::Epoch,
-    solana_pubkey::Pubkey,
+    gorbagana_account::{AccountSharedData, ReadableAccount, WritableAccount},
+    gorbagana_clock::Epoch,
+    gorbagana_pubkey::Pubkey,
 };
 
 /// Captured account state used to rollback account state for nonce and fee
@@ -105,13 +105,13 @@ impl RollbackAccounts {
 mod tests {
     use {
         super::*,
-        solana_account::{ReadableAccount, WritableAccount},
-        solana_hash::Hash,
-        solana_nonce::{
+        gorbagana_account::{ReadableAccount, WritableAccount},
+        gorbagana_hash::Hash,
+        gorbagana_nonce::{
             state::{Data as NonceData, DurableNonce, State as NonceState},
             versions::Versions as NonceVersions,
         },
-        solana_sdk_ids::system_program,
+        gorbagana_sdk_ids::system_program,
     };
 
     #[test]

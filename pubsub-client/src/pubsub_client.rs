@@ -1,9 +1,9 @@
 //! A client for subscribing to messages from the RPC server.
 //!
-//! The [`PubsubClient`] implements [Solana WebSocket event
+//! The [`PubsubClient`] implements [Gorbagana WebSocket event
 //! subscriptions][spec].
 //!
-//! [spec]: https://solana.com/docs/rpc/websocket
+//! [spec]: https://gorbagana.com/docs/rpc/websocket
 //!
 //! This is a blocking API. For a non-blocking API use the asynchronous client
 //! in [`crate::nonblocking::pubsub_client`].
@@ -36,8 +36,8 @@
 //! methods are disabled, the RPC server will return a "Method not found" error
 //! message.
 //!
-//! [`block_subscribe`]: https://docs.rs/solana-rpc/latest/solana_rpc/rpc_pubsub/trait.RpcSolPubSub.html#tymethod.block_subscribe
-//! [`vote_subscribe`]: https://docs.rs/solana-rpc/latest/solana_rpc/rpc_pubsub/trait.RpcSolPubSub.html#tymethod.vote_subscribe
+//! [`block_subscribe`]: https://docs.rs/gorbagana-rpc/latest/gorbagana_rpc/rpc_pubsub/trait.RpcSolPubSub.html#tymethod.block_subscribe
+//! [`vote_subscribe`]: https://docs.rs/gorbagana-rpc/latest/gorbagana_rpc/rpc_pubsub/trait.RpcSolPubSub.html#tymethod.vote_subscribe
 //!
 //! # Examples
 //!
@@ -46,14 +46,14 @@
 //!
 //! ```
 //! use anyhow::Result;
-//! use solana_commitment_config::CommitmentConfig;
-//! use solana_pubkey::Pubkey;
-//! use solana_pubsub_client::pubsub_client::PubsubClient;
-//! use solana_rpc_client_types::config::RpcAccountInfoConfig;
+//! use gorbagana_commitment_config::CommitmentConfig;
+//! use gorbagana_pubkey::Pubkey;
+//! use gorbagana_pubsub_client::pubsub_client::PubsubClient;
+//! use gorbagana_rpc_client_types::config::RpcAccountInfoConfig;
 //! use std::thread;
 //!
 //! fn get_account_updates(account_pubkey: Pubkey) -> Result<()> {
-//!     let url = "wss://api.devnet.solana.com/";
+//!     let url = "wss://api.devnet.gorbagana.com/";
 //!
 //!     let (mut account_subscription_client, account_subscription_receiver) =
 //!         PubsubClient::account_subscribe(
@@ -82,7 +82,7 @@
 //!     Ok(())
 //! }
 //! #
-//! # get_account_updates(solana_pubkey::new_rand());
+//! # get_account_updates(gorbagana_pubkey::new_rand());
 //! # Ok::<(), anyhow::Error>(())
 //! ```
 
@@ -96,10 +96,10 @@ use {
         value::Value::{Number, Object},
         Map, Value,
     },
-    solana_account_decoder_client_types::UiAccount,
-    solana_clock::Slot,
-    solana_pubkey::Pubkey,
-    solana_rpc_client_types::{
+    gorbagana_account_decoder_client_types::UiAccount,
+    gorbagana_clock::Slot,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rpc_client_types::{
         config::{
             RpcAccountInfoConfig, RpcBlockSubscribeConfig, RpcBlockSubscribeFilter,
             RpcProgramAccountsConfig, RpcSignatureSubscribeConfig, RpcTransactionLogsConfig,
@@ -110,7 +110,7 @@ use {
             RpcSignatureResult, RpcVote, SlotInfo, SlotUpdate,
         },
     },
-    solana_signature::Signature,
+    gorbagana_signature::Signature,
     std::{
         marker::PhantomData,
         net::TcpStream,
@@ -345,7 +345,7 @@ impl PubsubClient {
     ///
     /// This method corresponds directly to the [`accountSubscribe`] RPC method.
     ///
-    /// [`accountSubscribe`]: https://solana.com/docs/rpc/websocket/accountsubscribe
+    /// [`accountSubscribe`]: https://gorbagana.com/docs/rpc/websocket/accountsubscribe
     pub fn account_subscribe(
         url: &str,
         pubkey: &Pubkey,
@@ -398,7 +398,7 @@ impl PubsubClient {
     ///
     /// This method corresponds directly to the [`blockSubscribe`] RPC method.
     ///
-    /// [`blockSubscribe`]: https://solana.com/docs/rpc/websocket/blocksubscribe
+    /// [`blockSubscribe`]: https://gorbagana.com/docs/rpc/websocket/blocksubscribe
     pub fn block_subscribe(
         url: &str,
         filter: RpcBlockSubscribeFilter,
@@ -446,7 +446,7 @@ impl PubsubClient {
     ///
     /// This method corresponds directly to the [`logsSubscribe`] RPC method.
     ///
-    /// [`logsSubscribe`]: https://solana.com/docs/rpc/websocket/logssubscribe
+    /// [`logsSubscribe`]: https://gorbagana.com/docs/rpc/websocket/logssubscribe
     pub fn logs_subscribe(
         url: &str,
         filter: RpcTransactionLogsFilter,
@@ -495,7 +495,7 @@ impl PubsubClient {
     ///
     /// This method corresponds directly to the [`programSubscribe`] RPC method.
     ///
-    /// [`programSubscribe`]: https://solana.com/docs/rpc/websocket/programsubscribe
+    /// [`programSubscribe`]: https://gorbagana.com/docs/rpc/websocket/programsubscribe
     pub fn program_subscribe(
         url: &str,
         pubkey: &Pubkey,
@@ -550,7 +550,7 @@ impl PubsubClient {
     ///
     /// This method corresponds directly to the [`voteSubscribe`] RPC method.
     ///
-    /// [`voteSubscribe`]: https://solana.com/docs/rpc/websocket/votesubscribe
+    /// [`voteSubscribe`]: https://gorbagana.com/docs/rpc/websocket/votesubscribe
     pub fn vote_subscribe(url: &str) -> Result<VoteSubscription, PubsubClientError> {
         let url = Url::parse(url)?;
         let socket = connect_with_retry(url)?;
@@ -589,13 +589,13 @@ impl PubsubClient {
     /// Receives messages of type [`Slot`] when a new [root] is set by the
     /// validator.
     ///
-    /// [root]: https://solana.com/docs/terminology#root
+    /// [root]: https://gorbagana.com/docs/terminology#root
     ///
     /// # RPC Reference
     ///
     /// This method corresponds directly to the [`rootSubscribe`] RPC method.
     ///
-    /// [`rootSubscribe`]: https://solana.com/docs/rpc/websocket/rootsubscribe
+    /// [`rootSubscribe`]: https://gorbagana.com/docs/rpc/websocket/rootsubscribe
     pub fn root_subscribe(url: &str) -> Result<RootSubscription, PubsubClientError> {
         let url = Url::parse(url)?;
         let socket = connect_with_retry(url)?;
@@ -641,7 +641,7 @@ impl PubsubClient {
     ///
     /// This method corresponds directly to the [`signatureSubscribe`] RPC method.
     ///
-    /// [`signatureSubscribe`]: https://solana.com/docs/rpc/websocket/signaturesubscribe
+    /// [`signatureSubscribe`]: https://gorbagana.com/docs/rpc/websocket/signaturesubscribe
     pub fn signature_subscribe(
         url: &str,
         signature: &Signature,
@@ -692,7 +692,7 @@ impl PubsubClient {
     ///
     /// This method corresponds directly to the [`slotSubscribe`] RPC method.
     ///
-    /// [`slotSubscribe`]: https://solana.com/docs/rpc/websocket/slotsubscribe
+    /// [`slotSubscribe`]: https://gorbagana.com/docs/rpc/websocket/slotsubscribe
     pub fn slot_subscribe(url: &str) -> Result<SlotsSubscription, PubsubClientError> {
         let url = Url::parse(url)?;
         let socket = connect_with_retry(url)?;
@@ -740,7 +740,7 @@ impl PubsubClient {
     ///
     /// This method corresponds directly to the [`slotUpdatesSubscribe`] RPC method.
     ///
-    /// [`slotUpdatesSubscribe`]: https://solana.com/docs/rpc/websocket/slotsupdatessubscribe
+    /// [`slotUpdatesSubscribe`]: https://gorbagana.com/docs/rpc/websocket/slotsupdatessubscribe
     pub fn slot_updates_subscribe(
         url: &str,
         handler: impl Fn(SlotUpdate) + Send + 'static,

@@ -1,8 +1,8 @@
 
 [package]
-name = "solana-sbf-programs"
+name = "gorbagana-sbf-programs"
 description = "Blockchain, Rebuilt for Scale"
-documentation = "https://docs.rs/solana"
+documentation = "https://docs.rs/gorbagana"
 readme = "README.md"
 publish = false
 version = { workspace = true }
@@ -74,7 +74,7 @@ members = [
 ]
 [workspace.package]
 version = "3.0.0"
-description = "Solana SBF test program written in Rust"
+description = "Gorbagana SBF test program written in Rust"
 authors = ["Anza Maintainers <maintainers@anza.xyz>"]
 repository = "https://github.com/anza-xyz/agave"
 homepage = "https://anza.xyz"
@@ -84,7 +84,7 @@ edition = "2021"
 [workspace.lints.rust.unexpected_cfgs]
 level = "warn"
 check-cfg = [
-    'cfg(target_os, values("solana"))',
+    'cfg(target_os, values("gorbagana"))',
     'cfg(feature, values("custom-panic", "custom-heap"))',
     'cfg(target_feature, values("dynamic-frames"))',
 ]
@@ -111,64 +111,64 @@ rand = "0.8"
 serde = "1.0.112"                                                                             # must match the serde_derive version, see https://github.com/serde-rs/serde/issues/2584#issuecomment-1685252251
 serde_derive = "1.0.112"                                                                      # must match the serde version, see https://github.com/serde-rs/serde/issues/2584#issuecomment-1685252251
 serde_json = "1.0.56"
-solana-account-decoder = { path = "../../account-decoder", version = "=3.0.0" }
-solana-account-info = "=2.3.0"
-solana-accounts-db = { path = "../../accounts-db", version = "=3.0.0" }
-solana-big-mod-exp = "=2.2.1"
-solana-blake3-hasher = { version = "=2.2.1", features = ["blake3"] }
-solana-bn254 = "=2.2.2"
-solana-bpf-loader-program = { path = "../bpf_loader", version = "=3.0.0" }
-solana-cli-output = { path = "../../cli-output", version = "=3.0.0" }
-solana-clock = { version = "=2.2.2", features = ["serde", "sysvar"] }
-solana-compute-budget = { path = "../../compute-budget", version = "=3.0.0" }
-solana-compute-budget-instruction = { path = "../../compute-budget-instruction", version = "=3.0.0" }
-solana-curve25519 = { path = "../../curves/curve25519", version = "=3.0.0" }
-solana-define-syscall = "=2.3.0"
-solana-fee = { path = "../../fee", version = "=3.0.0" }
-solana-hash = { version = "=2.3.0", features = ["bytemuck", "serde", "std"] }
-solana-instruction = "=2.3.0"
-solana-instructions-sysvar = "=2.2.2"
-solana-keccak-hasher = { version = "=2.2.1", features = ["sha3"] }
-solana-ledger = { path = "../../ledger", version = "=3.0.0" }
-solana-log-collector = { path = "../../log-collector", version = "=3.0.0" }
-solana-logger = "=2.3.1"
-solana-measure = { path = "../../measure", version = "=3.0.0" }
-solana-msg = "=2.2.1"
-solana-poseidon = { path = "../../poseidon/", version = "=3.0.0" }
-solana-program = "=2.2.1"
-solana-program-entrypoint = "=2.3.0"
-solana-program-error = "=2.2.2"
-solana-program-memory = "=2.2.1"
-solana-program-runtime = { path = "../../program-runtime", version = "=3.0.0" }
-solana-pubkey = { version = "=2.4.0", default-features = false }
-solana-runtime = { path = "../../runtime", version = "=3.0.0" }
-solana-runtime-transaction = { path = "../../runtime-transaction", version = "=3.0.0" }
-solana-sbf-rust-128bit-dep = { path = "rust/128bit_dep", version = "=3.0.0" }
-solana-sbf-rust-invoke-dep = { path = "rust/invoke_dep", version = "=3.0.0" }
-solana-sbf-rust-invoked-dep = { path = "rust/invoked_dep", version = "=3.0.0" }
-solana-sbf-rust-many-args-dep = { path = "rust/many_args_dep", version = "=3.0.0" }
-solana-sbf-rust-mem-dep = { path = "rust/mem_dep", version = "=3.0.0" }
-solana-sbf-rust-param-passing-dep = { path = "rust/param_passing_dep", version = "=3.0.0" }
-solana-sbf-rust-realloc-dep = { path = "rust/realloc_dep", version = "=3.0.0" }
-solana-sbf-rust-realloc-invoke-dep = { path = "rust/realloc_invoke_dep", version = "=3.0.0" }
-solana-sbpf = "=0.11.1"
-solana-sdk-ids = "=2.2.1"
-solana-secp256k1-recover = "=2.2.1"
-solana-sha256-hasher = { version = "=2.2.1", features = ["sha2"] }
-solana-stake-interface = { version = "=1.2.1", features = ["bincode"] }
-solana-svm = { path = "../../svm", version = "=3.0.0" }
-solana-svm-callback = { path = "../../svm-callback", version = "=3.0.0" }
-solana-svm-feature-set = { path = "../../svm-feature-set", version = "=3.0.0" }
-solana-svm-transaction = { path = "../../svm-transaction", version = "=3.0.0" }
-solana-system-interface = { version = "=1.0", features = ["bincode"] }
-solana-sysvar = "=2.2.2"
-solana-timings = { path = "../../timings", version = "=3.0.0" }
-solana-transaction-context = { path = "../../transaction-context", version = "=3.0.0" }
-solana-transaction-status = { path = "../../transaction-status", version = "=3.0.0" }
-solana-type-overrides = { path = "../../type-overrides", version = "=3.0.0" }
-solana-vote = { path = "../../vote", version = "=3.0.0" }
-solana-vote-program = { path = "../../programs/vote", version = "=3.0.0" }
-solana-zk-sdk = "=2.2.1"
+gorbagana-account-decoder = { path = "../../account-decoder", version = "=3.0.0" }
+gorbagana-account-info = "=2.3.0"
+gorbagana-accounts-db = { path = "../../accounts-db", version = "=3.0.0" }
+gorbagana-big-mod-exp = "=2.2.1"
+gorbagana-blake3-hasher = { version = "=2.2.1", features = ["blake3"] }
+gorbagana-bn254 = "=2.2.2"
+gorbagana-bpf-loader-program = { path = "../bpf_loader", version = "=3.0.0" }
+gorbagana-cli-output = { path = "../../cli-output", version = "=3.0.0" }
+gorbagana-clock = { version = "=2.2.2", features = ["serde", "sysvar"] }
+gorbagana-compute-budget = { path = "../../compute-budget", version = "=3.0.0" }
+gorbagana-compute-budget-instruction = { path = "../../compute-budget-instruction", version = "=3.0.0" }
+gorbagana-curve25519 = { path = "../../curves/curve25519", version = "=3.0.0" }
+gorbagana-define-syscall = "=2.3.0"
+gorbagana-fee = { path = "../../fee", version = "=3.0.0" }
+gorbagana-hash = { version = "=2.3.0", features = ["bytemuck", "serde", "std"] }
+gorbagana-instruction = "=2.3.0"
+gorbagana-instructions-sysvar = "=2.2.2"
+gorbagana-keccak-hasher = { version = "=2.2.1", features = ["sha3"] }
+gorbagana-ledger = { path = "../../ledger", version = "=3.0.0" }
+gorbagana-log-collector = { path = "../../log-collector", version = "=3.0.0" }
+gorbagana-logger = "=2.3.1"
+gorbagana-measure = { path = "../../measure", version = "=3.0.0" }
+gorbagana-msg = "=2.2.1"
+gorbagana-poseidon = { path = "../../poseidon/", version = "=3.0.0" }
+gorbagana-program = "=2.2.1"
+gorbagana-program-entrypoint = "=2.3.0"
+gorbagana-program-error = "=2.2.2"
+gorbagana-program-memory = "=2.2.1"
+gorbagana-program-runtime = { path = "../../program-runtime", version = "=3.0.0" }
+gorbagana-pubkey = { version = "=2.4.0", default-features = false }
+gorbagana-runtime = { path = "../../runtime", version = "=3.0.0" }
+gorbagana-runtime-transaction = { path = "../../runtime-transaction", version = "=3.0.0" }
+gorbagana-sbf-rust-128bit-dep = { path = "rust/128bit_dep", version = "=3.0.0" }
+gorbagana-sbf-rust-invoke-dep = { path = "rust/invoke_dep", version = "=3.0.0" }
+gorbagana-sbf-rust-invoked-dep = { path = "rust/invoked_dep", version = "=3.0.0" }
+gorbagana-sbf-rust-many-args-dep = { path = "rust/many_args_dep", version = "=3.0.0" }
+gorbagana-sbf-rust-mem-dep = { path = "rust/mem_dep", version = "=3.0.0" }
+gorbagana-sbf-rust-param-passing-dep = { path = "rust/param_passing_dep", version = "=3.0.0" }
+gorbagana-sbf-rust-realloc-dep = { path = "rust/realloc_dep", version = "=3.0.0" }
+gorbagana-sbf-rust-realloc-invoke-dep = { path = "rust/realloc_invoke_dep", version = "=3.0.0" }
+gorbagana-sbpf = "=0.11.1"
+gorbagana-sdk-ids = "=2.2.1"
+gorbagana-secp256k1-recover = "=2.2.1"
+gorbagana-sha256-hasher = { version = "=2.2.1", features = ["sha2"] }
+gorbagana-stake-interface = { version = "=1.2.1", features = ["bincode"] }
+gorbagana-svm = { path = "../../svm", version = "=3.0.0" }
+gorbagana-svm-callback = { path = "../../svm-callback", version = "=3.0.0" }
+gorbagana-svm-feature-set = { path = "../../svm-feature-set", version = "=3.0.0" }
+gorbagana-svm-transaction = { path = "../../svm-transaction", version = "=3.0.0" }
+gorbagana-system-interface = { version = "=1.0", features = ["bincode"] }
+gorbagana-sysvar = "=2.2.2"
+gorbagana-timings = { path = "../../timings", version = "=3.0.0" }
+gorbagana-transaction-context = { path = "../../transaction-context", version = "=3.0.0" }
+gorbagana-transaction-status = { path = "../../transaction-status", version = "=3.0.0" }
+gorbagana-type-overrides = { path = "../../type-overrides", version = "=3.0.0" }
+gorbagana-vote = { path = "../../vote", version = "=3.0.0" }
+gorbagana-vote-program = { path = "../../programs/vote", version = "=3.0.0" }
+gorbagana-zk-sdk = "=2.2.1"
 thiserror = "1.0"
 
 [features]
@@ -191,63 +191,63 @@ itertools = { workspace = true }
 log = { workspace = true }
 miow = { workspace = true }
 net2 = { workspace = true }
-solana-account = "2.2.1"
-solana-account-decoder = { workspace = true }
-solana-account-info = "2.3.0"
-solana-accounts-db = { workspace = true }
-solana-bpf-loader-program = { workspace = true }
-solana-cli-output = { workspace = true }
-solana-client-traits = "2.2.1"
-solana-clock = "2.2.1"
-solana-compute-budget = { workspace = true }
-solana-compute-budget-instruction = { workspace = true, features = [
+gorbagana-account = "2.2.1"
+gorbagana-account-decoder = { workspace = true }
+gorbagana-account-info = "2.3.0"
+gorbagana-accounts-db = { workspace = true }
+gorbagana-bpf-loader-program = { workspace = true }
+gorbagana-cli-output = { workspace = true }
+gorbagana-client-traits = "2.2.1"
+gorbagana-clock = "2.2.1"
+gorbagana-compute-budget = { workspace = true }
+gorbagana-compute-budget-instruction = { workspace = true, features = [
     "dev-context-only-utils",
 ] }
-solana-compute-budget-interface = "2.2.2"
-solana-fee = { workspace = true }
-solana-fee-calculator = "2.2.1"
-solana-fee-structure = "2.3.0"
-solana-genesis-config = "2.2.1"
-solana-hash = "2.2.1"
-solana-instruction = "2.2.1"
-solana-keypair = "2.2.1"
-solana-ledger = { workspace = true }
-solana-loader-v3-interface = "5.0.0"
-solana-loader-v4-interface = "2.2.1"
-solana-log-collector = { workspace = true }
-solana-logger = { workspace = true }
-solana-measure = { workspace = true }
-solana-message = "2.3.0"
-solana-program = { workspace = true }
-solana-program-entrypoint = "2.3.0"
-solana-program-runtime = { workspace = true }
-solana-pubkey = "2.4.0"
-solana-rent = "2.2.1"
-solana-runtime = { workspace = true, features = ["dev-context-only-utils"] }
-solana-runtime-transaction = { workspace = true, features = [
+gorbagana-compute-budget-interface = "2.2.2"
+gorbagana-fee = { workspace = true }
+gorbagana-fee-calculator = "2.2.1"
+gorbagana-fee-structure = "2.3.0"
+gorbagana-genesis-config = "2.2.1"
+gorbagana-hash = "2.2.1"
+gorbagana-instruction = "2.2.1"
+gorbagana-keypair = "2.2.1"
+gorbagana-ledger = { workspace = true }
+gorbagana-loader-v3-interface = "5.0.0"
+gorbagana-loader-v4-interface = "2.2.1"
+gorbagana-log-collector = { workspace = true }
+gorbagana-logger = { workspace = true }
+gorbagana-measure = { workspace = true }
+gorbagana-message = "2.3.0"
+gorbagana-program = { workspace = true }
+gorbagana-program-entrypoint = "2.3.0"
+gorbagana-program-runtime = { workspace = true }
+gorbagana-pubkey = "2.4.0"
+gorbagana-rent = "2.2.1"
+gorbagana-runtime = { workspace = true, features = ["dev-context-only-utils"] }
+gorbagana-runtime-transaction = { workspace = true, features = [
     "dev-context-only-utils",
 ] }
-solana-sbf-rust-invoke-dep = { workspace = true }
-solana-sbf-rust-realloc-dep = { workspace = true }
-solana-sbf-rust-realloc-invoke-dep = { workspace = true }
-solana-sbpf = { workspace = true }
-solana-sdk-ids = "2.2.1"
-solana-signer = "2.2.1"
-solana-stake-interface = "1.2.1"
-solana-svm = { workspace = true }
-solana-svm-callback = { workspace = true }
-solana-svm-feature-set = { workspace = true }
-solana-svm-transaction = { workspace = true }
-solana-system-interface = "1.0"
-solana-sysvar = "2.2.1"
-solana-timings = { workspace = true }
-solana-transaction = "2.2.2"
-solana-transaction-context = { workspace = true, features = ["dev-context-only-utils"] }
-solana-transaction-error = "2.2.1"
-solana-transaction-status = { workspace = true }
-solana-type-overrides = { workspace = true }
-solana-vote = { workspace = true }
-solana-vote-program = { workspace = true }
+gorbagana-sbf-rust-invoke-dep = { workspace = true }
+gorbagana-sbf-rust-realloc-dep = { workspace = true }
+gorbagana-sbf-rust-realloc-invoke-dep = { workspace = true }
+gorbagana-sbpf = { workspace = true }
+gorbagana-sdk-ids = "2.2.1"
+gorbagana-signer = "2.2.1"
+gorbagana-stake-interface = "1.2.1"
+gorbagana-svm = { workspace = true }
+gorbagana-svm-callback = { workspace = true }
+gorbagana-svm-feature-set = { workspace = true }
+gorbagana-svm-transaction = { workspace = true }
+gorbagana-system-interface = "1.0"
+gorbagana-sysvar = "2.2.1"
+gorbagana-timings = { workspace = true }
+gorbagana-transaction = "2.2.2"
+gorbagana-transaction-context = { workspace = true, features = ["dev-context-only-utils"] }
+gorbagana-transaction-error = "2.2.1"
+gorbagana-transaction-status = { workspace = true }
+gorbagana-type-overrides = { workspace = true }
+gorbagana-vote = { workspace = true }
+gorbagana-vote-program = { workspace = true }
 
 [profile.release]
 # The test programs are build in release mode
@@ -270,7 +270,7 @@ name = "bpf_loader"
 #
 # They are included indirectly, for example, `account-decoder` depends on
 #
-#     solana-sdk = { workspace = true }
+#     gorbagana-sdk = { workspace = true }
 #
 # and that is specified as
 #
@@ -278,25 +278,25 @@ name = "bpf_loader"
 #
 # in `../../Cargo.toml`.
 #
-# `spl-token`, in turn, depends on `solana-program`, which we explicitly specify
+# `spl-token`, in turn, depends on `gorbagana-program`, which we explicitly specify
 # above as a local path dependency:
 #
-#     solana-program = { path = "../../sdk/program", version = "=1.16.0" }
+#     gorbagana-program = { path = "../../sdk/program", version = "=1.16.0" }
 #
-# Unfortunately, Cargo will try to resolve the `spl-token` `solana-program`
+# Unfortunately, Cargo will try to resolve the `spl-token` `gorbagana-program`
 # dependency only using what is available on crates.io.  Crates.io normally
 # contains a previous version of these crates, and we end up with two versions
-# of `solana-program` and `solana-zk-token-sdk` and all of their dependencies in
+# of `gorbagana-program` and `gorbagana-zk-token-sdk` and all of their dependencies in
 # our build tree.
 #
-# If you are developing downstream using non-crates-io solana-program (local or
+# If you are developing downstream using non-crates-io gorbagana-program (local or
 # forked repo, or from github rev, eg), duplicate the following patch statements
 # in your Cargo.toml. If you still hit duplicate-type errors with the patch
-# statements in place, run `cargo update -p solana-program` and/or `cargo update
-# -p solana-zk-token-sdk` to remove extraneous versions from your Cargo.lock
+# statements in place, run `cargo update -p gorbagana-program` and/or `cargo update
+# -p gorbagana-zk-token-sdk` to remove extraneous versions from your Cargo.lock
 # file.
 #
 # There is a similar override in `../../Cargo.toml`.  Please keep both comments
 # and the overrides in sync.
-solana-curve25519 = { path = "../../curves/curve25519" }
-solana-zk-sdk = { path = "../../zk-sdk" }
+gorbagana-curve25519 = { path = "../../curves/curve25519" }
+gorbagana-zk-sdk = { path = "../../zk-sdk" }

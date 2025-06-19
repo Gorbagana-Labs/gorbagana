@@ -1,6 +1,6 @@
 use {
     crate::zk_token_elgamal::pod,
-    solana_curve25519::{
+    gorbagana_curve25519::{
         ristretto::{add_ristretto, multiply_ristretto, subtract_ristretto, PodRistrettoPoint},
         scalar::PodScalar,
     },

@@ -1,7 +1,7 @@
 [package]
-name = "solana-curve25519"
-description = "Solana Curve25519 Syscalls"
-documentation = "https://docs.rs/solana-curve25519"
+name = "gorbagana-curve25519"
+description = "Gorbagana Curve25519 Syscalls"
+documentation = "https://docs.rs/gorbagana-curve25519"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -19,11 +19,11 @@ bytemuck_derive = { workspace = true }
 subtle = { workspace = true }
 thiserror = { workspace = true }
 
-[target.'cfg(not(target_os = "solana"))'.dependencies]
+[target.'cfg(not(target_os = "gorbagana"))'.dependencies]
 curve25519-dalek = { workspace = true, features = ["serde"] }
 
-[target.'cfg(target_os = "solana")'.dependencies]
-solana-define-syscall = { workspace = true }
+[target.'cfg(target_os = "gorbagana")'.dependencies]
+gorbagana-define-syscall = { workspace = true }
 
 [lints]
 workspace = true

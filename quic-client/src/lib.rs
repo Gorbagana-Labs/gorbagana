@@ -4,7 +4,7 @@ pub mod nonblocking;
 pub mod quic_client;
 
 #[macro_use]
-extern crate solana_metrics;
+extern crate gorbagana_metrics;
 
 use {
     crate::{
@@ -16,18 +16,18 @@ use {
     },
     quic_client::get_runtime,
     quinn::{Endpoint, EndpointConfig, TokioRuntime},
-    solana_connection_cache::{
+    gorbagana_connection_cache::{
         connection_cache::{
             BaseClientConnection, ClientError, ConnectionCache, ConnectionManager, ConnectionPool,
             ConnectionPoolError, NewConnectionConfig, Protocol,
         },
         connection_cache_stats::ConnectionCacheStats,
     },
-    solana_keypair::Keypair,
-    solana_pubkey::Pubkey,
-    solana_signer::Signer,
-    solana_streamer::streamer::StakedNodes,
-    solana_tls_utils::{new_dummy_x509_certificate, QuicClientCertificate},
+    gorbagana_keypair::Keypair,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signer::Signer,
+    gorbagana_streamer::streamer::StakedNodes,
+    gorbagana_tls_utils::{new_dummy_x509_certificate, QuicClientCertificate},
     std::{
         net::{IpAddr, SocketAddr, UdpSocket},
         sync::{Arc, RwLock},

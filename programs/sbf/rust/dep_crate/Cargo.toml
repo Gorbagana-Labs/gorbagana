@@ -1,5 +1,5 @@
 [package]
-name = "solana-sbf-rust-dep-crate"
+name = "gorbagana-sbf-rust-dep-crate"
 version = { workspace = true }
 description = { workspace = true }
 authors = { workspace = true }
@@ -13,4 +13,4 @@ crate-type = ["cdylib"]
 
 [dependencies]
 byteorder = { workspace = true }
-solana-program-entrypoint = { workspace = true }
+gorbagana-program-entrypoint = { workspace = true }

@@ -1,5 +1,5 @@
 use {
-    solana_pubkey::Pubkey,
+    gorbagana_pubkey::Pubkey,
     spl_generic_token::{associated_token_account, token, token_2022},
 };
 

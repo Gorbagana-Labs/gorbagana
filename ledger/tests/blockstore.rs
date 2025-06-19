@@ -1,7 +1,7 @@
 use {
-    solana_entry::entry,
-    solana_hash::Hash,
-    solana_ledger::{
+    gorbagana_entry::entry,
+    gorbagana_hash::Hash,
+    gorbagana_ledger::{
         blockstore::{self, make_many_slot_entries, test_all_empty_or_min, Blockstore},
         get_tmp_ledger_path_auto_delete,
     },

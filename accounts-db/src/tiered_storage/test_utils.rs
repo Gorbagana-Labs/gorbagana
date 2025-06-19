@@ -3,9 +3,9 @@
 use {
     super::footer::TieredStorageFooter,
     crate::{account_storage::stored_account_info::StoredAccountInfo, append_vec::StoredMeta},
-    solana_account::{Account, AccountSharedData, ReadableAccount},
-    solana_pubkey::Pubkey,
-    solana_rent_collector::RENT_EXEMPT_RENT_EPOCH,
+    gorbagana_account::{Account, AccountSharedData, ReadableAccount},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent_collector::RENT_EXEMPT_RENT_EPOCH,
 };
 
 /// Create a test account based on the specified seed.

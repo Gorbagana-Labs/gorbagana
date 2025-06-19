@@ -2,9 +2,9 @@
 title: Backward Compatibility Policy
 ---
 
-As the Solana developer ecosystem grows, so does the need for clear expectations around
-breaking API and behavior changes affecting applications and tooling built for Solana by Anza.
-In a perfect world, Solana development could continue at a very fast pace without ever
+As the Gorbagana developer ecosystem grows, so does the need for clear expectations around
+breaking API and behavior changes affecting applications and tooling built for Gorbagana by Anza.
+In a perfect world, Gorbagana development could continue at a very fast pace without ever
 causing issues for existing developers. However, some compromises will need to be made
 and so this document attempts to clarify and codify the process for new releases. Furthermore,
 there will be a growing number of validator clients maintained separately by distinct teams.
@@ -27,15 +27,15 @@ communication.
 
 ### Release Cadence
 
-The Solana RPC API, Rust SDK, CLI tooling, and SBF Program SDK are all updated and shipped
-along with each Solana software release and should always be compatible between `PATCH`
+The Gorbagana RPC API, Rust SDK, CLI tooling, and SBF Program SDK are all updated and shipped
+along with each Gorbagana software release and should always be compatible between `PATCH`
 updates of a particular `MINOR` version release.
 
 #### Release Channels
 
 - `edge` software that contains cutting-edge features with no backward compatibility policy
-- `beta` software that runs on the Solana Testnet cluster
-- `stable` software that run on the Solana Mainnet Beta and Devnet clusters
+- `beta` software that runs on the Gorbagana Testnet cluster
+- `stable` software that run on the Gorbagana Mainnet Beta and Devnet clusters
 
 #### Major Releases (x.0.0)
 
@@ -46,7 +46,7 @@ that were enabled in the previous `MAJOR` version.
 #### Minor Releases (1.x.0)
 
 New features and proposal implementations are added to _new_ `MINOR` version
-releases (e.g. 1.4.0) and are first run on Solana's Testnet cluster. While running
+releases (e.g. 1.4.0) and are first run on Gorbagana's Testnet cluster. While running
 on the testnet, `MINOR` versions are considered to be in the `beta` release channel. After
 those changes have been patched as needed and proven to be reliable, the `MINOR` version will
 be upgraded to the `stable` release channel and deployed to the Mainnet Beta cluster.
@@ -75,11 +75,11 @@ Major releases:
 
 ### Rust Crates
 
-- [`solana-sdk`](https://docs.rs/solana-sdk/) - Rust SDK for creating transactions and parsing account state
-- [`solana-program`](https://docs.rs/solana-program/) - Rust SDK for writing programs
-- [`solana-client`](https://docs.rs/solana-client/) - Rust client for connecting to RPC API
-- [`solana-cli-config`](https://docs.rs/solana-cli-config/) - Rust client for managing Solana CLI config files
-- [`agave-geyser-plugin-interface`](https://docs.rs/agave-geyser-plugin-interface/) - Rust interface for developing Solana Geyser plugins.
+- [`gorbagana-sdk`](https://docs.rs/gorbagana-sdk/) - Rust SDK for creating transactions and parsing account state
+- [`gorbagana-program`](https://docs.rs/gorbagana-program/) - Rust SDK for writing programs
+- [`gorbagana-client`](https://docs.rs/gorbagana-client/) - Rust client for connecting to RPC API
+- [`gorbagana-cli-config`](https://docs.rs/gorbagana-cli-config/) - Rust client for managing Gorbagana CLI config files
+- [`agave-geyser-plugin-interface`](https://docs.rs/agave-geyser-plugin-interface/) - Rust interface for developing Gorbagana Geyser plugins.
 
 Patch releases:
 
@@ -138,7 +138,7 @@ be backwards compatible.
 
 #### Web3 JavaScript SDK
 
-The Web3.JS SDK also follows semantic versioning specifications but is shipped separately from Solana
+The Web3.JS SDK also follows semantic versioning specifications but is shipped separately from Gorbagana
 software releases.
 
 #### Attack Vectors

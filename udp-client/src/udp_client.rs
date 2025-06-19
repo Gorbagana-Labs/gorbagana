@@ -2,9 +2,9 @@
 //! an interface for sending data
 
 use {
-    solana_connection_cache::client_connection::ClientConnection,
-    solana_streamer::sendmmsg::batch_send,
-    solana_transaction_error::TransportResult,
+    gorbagana_connection_cache::client_connection::ClientConnection,
+    gorbagana_streamer::sendmmsg::batch_send,
+    gorbagana_transaction_error::TransportResult,
     std::{
         net::{SocketAddr, UdpSocket},
         sync::Arc,

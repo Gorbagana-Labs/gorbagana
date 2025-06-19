@@ -4,20 +4,20 @@ use {
         withdraw_nonce_account,
     },
     log::*,
-    solana_bincode::limited_deserialize,
-    solana_instruction::error::InstructionError,
-    solana_log_collector::ic_msg,
-    solana_nonce as nonce,
-    solana_program_runtime::{
+    gorbagana_bincode::limited_deserialize,
+    gorbagana_instruction::error::InstructionError,
+    gorbagana_log_collector::ic_msg,
+    gorbagana_nonce as nonce,
+    gorbagana_program_runtime::{
         declare_process_instruction, invoke_context::InvokeContext,
         sysvar_cache::get_sysvar_with_account_check,
     },
-    solana_pubkey::Pubkey,
-    solana_sdk_ids::system_program,
-    solana_system_interface::{
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sdk_ids::system_program,
+    gorbagana_system_interface::{
         error::SystemError, instruction::SystemInstruction, MAX_PERMITTED_DATA_LENGTH,
     },
-    solana_transaction_context::{
+    gorbagana_transaction_context::{
         BorrowedAccount, IndexOfAccount, InstructionContext, TransactionContext,
     },
     std::collections::HashSet,
@@ -303,7 +303,7 @@ declare_process_instruction!(Entrypoint, DEFAULT_COMPUTE_UNITS, |invoke_context|
     let instruction_context = transaction_context.get_current_instruction_context()?;
     let instruction_data = instruction_context.get_instruction_data();
     let instruction =
-        limited_deserialize(instruction_data, solana_packet::PACKET_DATA_SIZE as u64)?;
+        limited_deserialize(instruction_data, gorbagana_packet::PACKET_DATA_SIZE as u64)?;
 
     trace!("process_instruction: {:?}", instruction);
 
@@ -545,30 +545,30 @@ mod tests {
     use {
         super::*,
         bincode::serialize,
-        solana_nonce_account::{get_system_account_kind, SystemAccountKind},
-        solana_program_runtime::{
+        gorbagana_nonce_account::{get_system_account_kind, SystemAccountKind},
+        gorbagana_program_runtime::{
             invoke_context::mock_process_instruction, with_mock_invoke_context,
         },
         std::collections::BinaryHeap,
     };
     #[allow(deprecated)]
     use {
-        solana_account::{
+        gorbagana_account::{
             self as account, create_account_shared_data_with_fields, to_account, Account,
             AccountSharedData, ReadableAccount, DUMMY_INHERITABLE_ACCOUNT_FIELDS,
         },
-        solana_fee_calculator::FeeCalculator,
-        solana_hash::Hash,
-        solana_instruction::{error::InstructionError, AccountMeta, Instruction},
-        solana_nonce::{
+        gorbagana_fee_calculator::FeeCalculator,
+        gorbagana_hash::Hash,
+        gorbagana_instruction::{error::InstructionError, AccountMeta, Instruction},
+        gorbagana_nonce::{
             self as nonce,
             state::{Data as NonceData, DurableNonce, State as NonceState},
             versions::Versions as NonceVersions,
         },
-        solana_nonce_account as nonce_account,
-        solana_sha256_hasher::hash,
-        solana_system_interface::{instruction as system_instruction, program as system_program},
-        solana_sysvar::{
+        gorbagana_nonce_account as nonce_account,
+        gorbagana_sha256_hasher::hash,
+        gorbagana_system_interface::{instruction as system_instruction, program as system_program},
+        gorbagana_sysvar::{
             self as sysvar,
             recent_blockhashes::{IntoIterSorted, IterItem, RecentBlockhashes, MAX_ENTRIES},
             rent::Rent,
@@ -1115,7 +1115,7 @@ mod tests {
             &bincode::serialize(&SystemInstruction::CreateAccount {
                 lamports: 50,
                 space: 2,
-                owner: solana_sdk_ids::sysvar::id(),
+                owner: gorbagana_sdk_ids::sysvar::id(),
             })
             .unwrap(),
             vec![(from, from_account), (to, to_account)],
@@ -1256,7 +1256,7 @@ mod tests {
         // assign to sysvar instead of system_program
         process_instruction(
             &bincode::serialize(&SystemInstruction::Assign {
-                owner: solana_sdk_ids::sysvar::id(),
+                owner: gorbagana_sdk_ids::sysvar::id(),
             })
             .unwrap(),
             vec![(pubkey, account)],
@@ -2052,7 +2052,7 @@ mod tests {
             let account = AccountSharedData::new(100, size, &system_program::id());
             let accounts = process_instruction(
                 &bincode::serialize(&SystemInstruction::Assign {
-                    owner: solana_sdk_ids::native_loader::id(),
+                    owner: gorbagana_sdk_ids::native_loader::id(),
                 })
                 .unwrap(),
                 vec![(pubkey, account.clone())],
@@ -2063,7 +2063,7 @@ mod tests {
                 }],
                 Ok(()),
             );
-            assert_eq!(accounts[0].owner(), &solana_sdk_ids::native_loader::id());
+            assert_eq!(accounts[0].owner(), &gorbagana_sdk_ids::native_loader::id());
             assert_eq!(accounts[0].lamports(), 100);
 
             let pubkey2 = Pubkey::new_unique();
@@ -2090,7 +2090,7 @@ mod tests {
                 ],
                 Ok(()),
             );
-            assert_eq!(accounts[1].owner(), &solana_sdk_ids::native_loader::id());
+            assert_eq!(accounts[1].owner(), &gorbagana_sdk_ids::native_loader::id());
             assert_eq!(accounts[1].lamports(), 150);
         }
     }

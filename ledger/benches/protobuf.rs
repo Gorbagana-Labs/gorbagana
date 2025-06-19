@@ -5,15 +5,15 @@ extern crate test;
 use {
     bincode::{deserialize, serialize},
     prost::Message,
-    solana_runtime::bank::RewardType,
-    solana_transaction_status::{Reward, Rewards},
+    gorbagana_runtime::bank::RewardType,
+    gorbagana_transaction_status::{Reward, Rewards},
     test::Bencher,
 };
 
 fn create_rewards() -> Rewards {
     (0..100)
         .map(|i| Reward {
-            pubkey: solana_pubkey::new_rand().to_string(),
+            pubkey: gorbagana_pubkey::new_rand().to_string(),
             lamports: 42 + i,
             post_balance: u64::MAX,
             reward_type: Some(RewardType::Fee),
@@ -27,7 +27,7 @@ fn bincode_serialize_rewards(rewards: Rewards) -> Vec<u8> {
 }
 
 fn protobuf_serialize_rewards(rewards: Rewards) -> Vec<u8> {
-    let rewards: solana_storage_proto::convert::generated::Rewards = rewards.into();
+    let rewards: gorbagana_storage_proto::convert::generated::Rewards = rewards.into();
     let mut buffer = Vec::with_capacity(rewards.encoded_len());
     rewards.encode(&mut buffer).unwrap();
     buffer
@@ -38,7 +38,7 @@ fn bincode_deserialize_rewards(bytes: &[u8]) -> Rewards {
 }
 
 fn protobuf_deserialize_rewards(bytes: &[u8]) -> Rewards {
-    solana_storage_proto::convert::generated::Rewards::decode(bytes)
+    gorbagana_storage_proto::convert::generated::Rewards::decode(bytes)
         .unwrap()
         .into()
 }

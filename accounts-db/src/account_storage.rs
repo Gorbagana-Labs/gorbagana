@@ -3,8 +3,8 @@
 use {
     crate::accounts_db::{AccountStorageEntry, AccountsFileId},
     dashmap::DashMap,
-    solana_clock::Slot,
-    solana_nohash_hasher::BuildNoHashHasher,
+    gorbagana_clock::Slot,
+    gorbagana_nohash_hasher::BuildNoHashHasher,
     std::sync::Arc,
 };
 

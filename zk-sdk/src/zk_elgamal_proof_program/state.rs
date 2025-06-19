@@ -2,8 +2,8 @@ use {
     crate::zk_elgamal_proof_program::proof_data::{pod::PodProofType, ProofType},
     bytemuck::{bytes_of, Pod, Zeroable},
     num_traits::ToPrimitive,
-    solana_instruction::error::{InstructionError, InstructionError::InvalidAccountData},
-    solana_pubkey::Pubkey,
+    gorbagana_instruction::error::{InstructionError, InstructionError::InvalidAccountData},
+    gorbagana_pubkey::Pubkey,
     std::mem::size_of,
 };
 

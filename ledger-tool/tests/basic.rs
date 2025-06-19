@@ -1,6 +1,6 @@
 use {
     assert_cmd::prelude::*,
-    solana_ledger::{
+    gorbagana_ledger::{
         blockstore, blockstore::Blockstore, create_new_tmp_ledger_auto_delete,
         genesis_utils::create_genesis_config, get_tmp_ledger_path_auto_delete,
     },

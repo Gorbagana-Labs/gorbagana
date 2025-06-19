@@ -5,8 +5,8 @@
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 use {
     agave_feature_set::{self as feature_set, FeatureSet},
-    solana_pubkey::Pubkey,
-    solana_sdk_ids::{
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sdk_ids::{
         address_lookup_table, bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable,
         compute_budget, config, ed25519_program, feature, loader_v4, native_loader,
         secp256k1_program, secp256r1_program, stake, system_program, sysvar, vote,
@@ -18,7 +18,7 @@ use {
 // ReservedAccountKeys is not serialized into or deserialized from bank
 // snapshots but the bank requires this trait to be implemented anyways.
 #[cfg(feature = "frozen-abi")]
-impl ::solana_frozen_abi::abi_example::AbiExample for ReservedAccountKeys {
+impl ::gorbagana_frozen_abi::abi_example::AbiExample for ReservedAccountKeys {
     fn example() -> Self {
         // ReservedAccountKeys is not Serialize so just rely on Default.
         ReservedAccountKeys::default()

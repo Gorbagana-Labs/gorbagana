@@ -1,4 +1,4 @@
-pub use solana_transaction_status_client_types::ParsedInstruction;
+pub use gorbagana_transaction_status_client_types::ParsedInstruction;
 use {
     crate::{
         parse_address_lookup_table::parse_address_lookup_table,
@@ -11,10 +11,10 @@ use {
     },
     inflector::Inflector,
     serde_json::Value,
-    solana_account_decoder::parse_token::spl_token_ids,
-    solana_message::{compiled_instruction::CompiledInstruction, AccountKeys},
-    solana_pubkey::Pubkey,
-    solana_sdk_ids::{address_lookup_table, stake, system_program, vote},
+    gorbagana_account_decoder::parse_token::spl_token_ids,
+    gorbagana_message::{compiled_instruction::CompiledInstruction, AccountKeys},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sdk_ids::{address_lookup_table, stake, system_program, vote},
     std::{
         collections::HashMap,
         str::{from_utf8, Utf8Error},
@@ -35,9 +35,9 @@ static PARSABLE_PROGRAM_IDS: std::sync::LazyLock<HashMap<Pubkey, ParsableProgram
             ),
             (spl_memo::v1::id(), ParsableProgram::SplMemo),
             (spl_memo::id(), ParsableProgram::SplMemo),
-            (solana_sdk_ids::bpf_loader::id(), ParsableProgram::BpfLoader),
+            (gorbagana_sdk_ids::bpf_loader::id(), ParsableProgram::BpfLoader),
             (
-                solana_sdk_ids::bpf_loader_upgradeable::id(),
+                gorbagana_sdk_ids::bpf_loader_upgradeable::id(),
                 ParsableProgram::BpfUpgradeableLoader,
             ),
             (stake::id(), ParsableProgram::Stake),

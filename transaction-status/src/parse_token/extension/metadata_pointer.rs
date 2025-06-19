@@ -74,7 +74,7 @@ pub(in crate::parse_token) fn parse_metadata_pointer_instruction(
 
 #[cfg(test)]
 mod test {
-    use {super::*, solana_message::Message, solana_pubkey::Pubkey};
+    use {super::*, gorbagana_message::Message, gorbagana_pubkey::Pubkey};
 
     #[test]
     fn test_parse_metadata_pointer_instruction() {

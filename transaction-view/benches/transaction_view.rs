@@ -4,17 +4,17 @@ use {
         black_box, criterion_group, criterion_main, measurement::Measurement, BenchmarkGroup,
         Criterion, Throughput,
     },
-    solana_hash::Hash,
-    solana_instruction::Instruction,
-    solana_keypair::Keypair,
-    solana_message::{
+    gorbagana_hash::Hash,
+    gorbagana_instruction::Instruction,
+    gorbagana_keypair::Keypair,
+    gorbagana_message::{
         v0::{self, MessageAddressTableLookup},
         Message, MessageHeader, VersionedMessage,
     },
-    solana_pubkey::Pubkey,
-    solana_signer::Signer,
-    solana_system_interface::instruction as system_instruction,
-    solana_transaction::versioned::{
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signer::Signer,
+    gorbagana_system_interface::instruction as system_instruction,
+    gorbagana_transaction::versioned::{
         sanitized::SanitizedVersionedTransaction, VersionedTransaction,
     },
 };

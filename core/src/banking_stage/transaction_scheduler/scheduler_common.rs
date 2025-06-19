@@ -15,7 +15,7 @@ use {
     },
     crossbeam_channel::{Receiver, Sender, TryRecvError},
     itertools::izip,
-    solana_runtime_transaction::transaction_with_meta::TransactionWithMeta,
+    gorbagana_runtime_transaction::transaction_with_meta::TransactionWithMeta,
 };
 
 pub struct Batches<Tx> {
@@ -282,10 +282,10 @@ mod tests {
     use {
         super::*,
         crate::banking_stage::transaction_scheduler::transaction_state_container::TransactionStateContainer,
-        crossbeam_channel::unbounded, solana_hash::Hash, solana_keypair::Keypair,
-        solana_pubkey::Pubkey, solana_runtime_transaction::runtime_transaction::RuntimeTransaction,
-        solana_system_transaction as system_transaction,
-        solana_transaction::sanitized::SanitizedTransaction, test_case::test_case,
+        crossbeam_channel::unbounded, gorbagana_hash::Hash, gorbagana_keypair::Keypair,
+        gorbagana_pubkey::Pubkey, gorbagana_runtime_transaction::runtime_transaction::RuntimeTransaction,
+        gorbagana_system_transaction as system_transaction,
+        gorbagana_transaction::sanitized::SanitizedTransaction, test_case::test_case,
     };
 
     const NUM_WORKERS: usize = 4;

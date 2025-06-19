@@ -1,9 +1,9 @@
 #[cfg(feature = "dev-context-only-utils")]
-use solana_compute_budget_instruction::compute_budget_instruction_details::ComputeBudgetInstructionDetails;
+use gorbagana_compute_budget_instruction::compute_budget_instruction_details::ComputeBudgetInstructionDetails;
 use {
-    crate::block_cost_limits, solana_pubkey::Pubkey,
-    solana_runtime_transaction::transaction_meta::StaticMeta,
-    solana_svm_transaction::svm_message::SVMMessage,
+    crate::block_cost_limits, gorbagana_pubkey::Pubkey,
+    gorbagana_runtime_transaction::transaction_meta::StaticMeta,
+    gorbagana_svm_transaction::svm_message::SVMMessage,
 };
 
 /// `TransactionCost`` is used to represent resources required to process a
@@ -33,7 +33,7 @@ impl<Tx> TransactionCost<'_, Tx> {
             Self::SimpleVote { .. } => {
                 const _: () = assert!(
                     SIMPLE_VOTE_USAGE_COST
-                        == solana_vote_program::vote_processor::DEFAULT_COMPUTE_UNITS
+                        == gorbagana_vote_program::vote_processor::DEFAULT_COMPUTE_UNITS
                             + block_cost_limits::SIGNATURE_COST
                             + 2 * block_cost_limits::WRITE_LOCK_UNITS
                             + 8
@@ -47,7 +47,7 @@ impl<Tx> TransactionCost<'_, Tx> {
 
     pub fn programs_execution_cost(&self) -> u64 {
         match self {
-            Self::SimpleVote { .. } => solana_vote_program::vote_processor::DEFAULT_COMPUTE_UNITS,
+            Self::SimpleVote { .. } => gorbagana_vote_program::vote_processor::DEFAULT_COMPUTE_UNITS,
             Self::Transaction(usage_cost) => usage_cost.programs_execution_cost,
         }
     }
@@ -179,7 +179,7 @@ impl<Tx> UsageCostDetails<'_, Tx> {
 pub struct WritableKeysTransaction(pub Vec<Pubkey>);
 
 #[cfg(feature = "dev-context-only-utils")]
-impl solana_svm_transaction::svm_message::SVMMessage for WritableKeysTransaction {
+impl gorbagana_svm_transaction::svm_message::SVMMessage for WritableKeysTransaction {
     fn num_transaction_signatures(&self) -> u64 {
         unimplemented!("WritableKeysTransaction::num_transaction_signatures")
     }
@@ -188,7 +188,7 @@ impl solana_svm_transaction::svm_message::SVMMessage for WritableKeysTransaction
         unimplemented!("WritableKeysTransaction::num_write_locks")
     }
 
-    fn recent_blockhash(&self) -> &solana_hash::Hash {
+    fn recent_blockhash(&self) -> &gorbagana_hash::Hash {
         unimplemented!("WritableKeysTransaction::recent_blockhash")
     }
 
@@ -198,13 +198,13 @@ impl solana_svm_transaction::svm_message::SVMMessage for WritableKeysTransaction
 
     fn instructions_iter(
         &self,
-    ) -> impl Iterator<Item = solana_svm_transaction::instruction::SVMInstruction> {
+    ) -> impl Iterator<Item = gorbagana_svm_transaction::instruction::SVMInstruction> {
         core::iter::empty()
     }
 
     fn program_instructions_iter(
         &self,
-    ) -> impl Iterator<Item = (&Pubkey, solana_svm_transaction::instruction::SVMInstruction)> + Clone
+    ) -> impl Iterator<Item = (&Pubkey, gorbagana_svm_transaction::instruction::SVMInstruction)> + Clone
     {
         core::iter::empty()
     }
@@ -213,8 +213,8 @@ impl solana_svm_transaction::svm_message::SVMMessage for WritableKeysTransaction
         &self.0
     }
 
-    fn account_keys(&self) -> solana_message::AccountKeys {
-        solana_message::AccountKeys::new(&self.0, None)
+    fn account_keys(&self) -> gorbagana_message::AccountKeys {
+        gorbagana_message::AccountKeys::new(&self.0, None)
     }
 
     fn fee_payer(&self) -> &Pubkey {
@@ -240,26 +240,26 @@ impl solana_svm_transaction::svm_message::SVMMessage for WritableKeysTransaction
     fn message_address_table_lookups(
         &self,
     ) -> impl Iterator<
-        Item = solana_svm_transaction::message_address_table_lookup::SVMMessageAddressTableLookup,
+        Item = gorbagana_svm_transaction::message_address_table_lookup::SVMMessageAddressTableLookup,
     > {
         core::iter::empty()
     }
 }
 
 #[cfg(feature = "dev-context-only-utils")]
-impl solana_svm_transaction::svm_transaction::SVMTransaction for WritableKeysTransaction {
-    fn signature(&self) -> &solana_signature::Signature {
+impl gorbagana_svm_transaction::svm_transaction::SVMTransaction for WritableKeysTransaction {
+    fn signature(&self) -> &gorbagana_signature::Signature {
         unimplemented!("WritableKeysTransaction::signature")
     }
 
-    fn signatures(&self) -> &[solana_signature::Signature] {
+    fn signatures(&self) -> &[gorbagana_signature::Signature] {
         unimplemented!("WritableKeysTransaction::signatures")
     }
 }
 
 #[cfg(feature = "dev-context-only-utils")]
-impl solana_runtime_transaction::transaction_meta::StaticMeta for WritableKeysTransaction {
-    fn message_hash(&self) -> &solana_hash::Hash {
+impl gorbagana_runtime_transaction::transaction_meta::StaticMeta for WritableKeysTransaction {
+    fn message_hash(&self) -> &gorbagana_hash::Hash {
         unimplemented!("WritableKeysTransaction::message_hash")
     }
 
@@ -267,9 +267,9 @@ impl solana_runtime_transaction::transaction_meta::StaticMeta for WritableKeysTr
         unimplemented!("WritableKeysTransaction::is_simple_vote_transaction")
     }
 
-    fn signature_details(&self) -> &solana_message::TransactionSignatureDetails {
-        const DUMMY: solana_message::TransactionSignatureDetails =
-            solana_message::TransactionSignatureDetails::new(0, 0, 0, 0);
+    fn signature_details(&self) -> &gorbagana_message::TransactionSignatureDetails {
+        const DUMMY: gorbagana_message::TransactionSignatureDetails =
+            gorbagana_message::TransactionSignatureDetails::new(0, 0, 0, 0);
         &DUMMY
     }
 
@@ -283,17 +283,17 @@ impl solana_runtime_transaction::transaction_meta::StaticMeta for WritableKeysTr
 }
 
 #[cfg(feature = "dev-context-only-utils")]
-impl solana_runtime_transaction::transaction_with_meta::TransactionWithMeta
+impl gorbagana_runtime_transaction::transaction_with_meta::TransactionWithMeta
     for WritableKeysTransaction
 {
     #[allow(refining_impl_trait)]
     fn as_sanitized_transaction(
         &self,
-    ) -> std::borrow::Cow<solana_transaction::sanitized::SanitizedTransaction> {
+    ) -> std::borrow::Cow<gorbagana_transaction::sanitized::SanitizedTransaction> {
         unimplemented!("WritableKeysTransaction::as_sanitized_transaction");
     }
 
-    fn to_versioned_transaction(&self) -> solana_transaction::versioned::VersionedTransaction {
+    fn to_versioned_transaction(&self) -> gorbagana_transaction::versioned::VersionedTransaction {
         unimplemented!("WritableKeysTransaction::to_versioned_transaction")
     }
 }
@@ -305,13 +305,13 @@ mod tests {
         crate::cost_model::CostModel,
         agave_feature_set::FeatureSet,
         agave_reserved_account_keys::ReservedAccountKeys,
-        solana_hash::Hash,
-        solana_keypair::Keypair,
-        solana_message::SimpleAddressLoader,
-        solana_runtime_transaction::runtime_transaction::RuntimeTransaction,
-        solana_transaction::{sanitized::MessageHash, versioned::VersionedTransaction},
-        solana_vote::vote_transaction,
-        solana_vote_program::vote_state::TowerSync,
+        gorbagana_hash::Hash,
+        gorbagana_keypair::Keypair,
+        gorbagana_message::SimpleAddressLoader,
+        gorbagana_runtime_transaction::runtime_transaction::RuntimeTransaction,
+        gorbagana_transaction::{sanitized::MessageHash, versioned::VersionedTransaction},
+        gorbagana_vote::vote_transaction,
+        gorbagana_vote_program::vote_state::TowerSync,
     };
 
     fn get_example_transaction() -> VersionedTransaction {
@@ -332,7 +332,7 @@ mod tests {
 
     #[test]
     fn test_vote_transaction_cost() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         // Create a sanitized vote transaction.
         let vote_transaction = RuntimeTransaction::try_create(
@@ -351,7 +351,7 @@ mod tests {
 
     #[test]
     fn test_non_vote_transaction_cost() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         // Create a sanitized non-vote transaction.
         let non_vote_transaction = RuntimeTransaction::try_create(

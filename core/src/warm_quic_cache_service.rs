@@ -3,11 +3,11 @@
 
 use {
     rand::{thread_rng, Rng},
-    solana_client::connection_cache::{ConnectionCache, Protocol},
-    solana_connection_cache::client_connection::ClientConnection as TpuConnection,
-    solana_gossip::{cluster_info::ClusterInfo, contact_info::ContactInfoQuery},
-    solana_poh::poh_recorder::PohRecorder,
-    solana_pubkey::Pubkey,
+    gorbagana_client::connection_cache::{ConnectionCache, Protocol},
+    gorbagana_connection_cache::client_connection::ClientConnection as TpuConnection,
+    gorbagana_gossip::{cluster_info::ClusterInfo, contact_info::ContactInfoQuery},
+    gorbagana_poh::poh_recorder::PohRecorder,
+    gorbagana_pubkey::Pubkey,
     std::{
         net::SocketAddr,
         sync::{

@@ -9,7 +9,7 @@ use {
     },
     agave_banking_stage_ingress_types::BankingPacketReceiver,
     crossbeam_channel::RecvTimeoutError,
-    solana_measure::{measure::Measure, measure_us},
+    gorbagana_measure::{measure::Measure, measure_us},
     std::{num::Saturating, sync::atomic::Ordering, time::Duration},
 };
 

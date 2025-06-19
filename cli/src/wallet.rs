@@ -11,7 +11,7 @@ use {
     },
     clap::{value_t_or_exit, App, Arg, ArgMatches, SubCommand},
     hex::FromHex,
-    solana_clap_utils::{
+    gorbagana_clap_utils::{
         compute_budget::{compute_unit_price_arg, ComputeUnitLimit, COMPUTE_UNIT_PRICE_ARG},
         fee_payer::*,
         hidden_unless_forced,
@@ -22,25 +22,25 @@ use {
         nonce::*,
         offline::*,
     },
-    solana_cli_output::{
+    gorbagana_cli_output::{
         display::{build_balance_message, BuildBalanceMessageConfig},
         return_signers_with_config, CliAccount, CliBalance, CliFindProgramDerivedAddress,
         CliSignatureVerificationStatus, CliTransaction, CliTransactionConfirmation, OutputFormat,
         ReturnSignersConfig,
     },
-    solana_commitment_config::CommitmentConfig,
-    solana_message::Message,
-    solana_offchain_message::OffchainMessage,
-    solana_pubkey::Pubkey,
-    solana_remote_wallet::remote_wallet::RemoteWalletManager,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_api::config::RpcTransactionConfig,
-    solana_rpc_client_nonce_utils::blockhash_query::BlockhashQuery,
-    solana_sdk_ids::{stake, system_program},
-    solana_signature::Signature,
-    solana_system_interface::{error::SystemError, instruction as system_instruction},
-    solana_transaction::{versioned::VersionedTransaction, Transaction},
-    solana_transaction_status::{
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_message::Message,
+    gorbagana_offchain_message::OffchainMessage,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_remote_wallet::remote_wallet::RemoteWalletManager,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_rpc_client_api::config::RpcTransactionConfig,
+    gorbagana_rpc_client_nonce_utils::blockhash_query::BlockhashQuery,
+    gorbagana_sdk_ids::{stake, system_program},
+    gorbagana_signature::Signature,
+    gorbagana_system_interface::{error::SystemError, instruction as system_instruction},
+    gorbagana_transaction::{versioned::VersionedTransaction, Transaction},
+    gorbagana_transaction_status::{
         EncodableWithMeta, EncodedConfirmedTransactionWithStatusMeta, EncodedTransaction,
         TransactionBinaryEncoding, UiTransactionEncoding,
     },
@@ -391,7 +391,7 @@ fn resolve_derived_address_program_id(matches: &ArgMatches<'_>, arg_name: &str) 
         match upper.as_str() {
             "NONCE" | "SYSTEM" => Some(system_program::id()),
             "STAKE" => Some(stake::id()),
-            "VOTE" => Some(solana_vote_program::id()),
+            "VOTE" => Some(gorbagana_vote_program::id()),
             _ => pubkey_of(matches, arg_name),
         }
     })
@@ -710,7 +710,7 @@ pub fn process_airdrop(
 
         if current_balance < pre_balance.saturating_add(lamports) {
             println!("Balance unchanged");
-            println!("Run `solana confirm -v {signature:?}` for more info");
+            println!("Run `gorbagana confirm -v {signature:?}` for more info");
             Ok("".to_string())
         } else {
             Ok(build_balance_message(current_balance, false, true))
@@ -973,7 +973,7 @@ pub fn process_transfer(
         )
     } else {
         if let Some(nonce_account) = &nonce_account {
-            let nonce_account = solana_rpc_client_nonce_utils::get_account_with_commitment(
+            let nonce_account = gorbagana_rpc_client_nonce_utils::get_account_with_commitment(
                 rpc_client,
                 nonce_account,
                 config.commitment,

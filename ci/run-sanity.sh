@@ -7,12 +7,12 @@ source multinode-demo/common.sh
 
 if [[ -z $CI ]]; then
   # Build eargerly if needed for local development. Otherwise, odd timing error occurs...
-  $solana_keygen --version
-  $solana_genesis --version
-  $solana_faucet --version
-  $solana_cli --version
+  $gorbagana_keygen --version
+  $gorbagana_genesis --version
+  $gorbagana_faucet --version
+  $gorbagana_cli --version
   $agave_validator --version
-  $solana_ledger_tool --version
+  $gorbagana_ledger_tool --version
 fi
 
 rm -rf config/run/init-completed config/ledger
@@ -49,7 +49,7 @@ latest_slot=0
 while [[ $latest_slot -le $((snapshot_slot + 1)) ]]; do
   sleep 1
   echo "Checking slot"
-  latest_slot=$($solana_cli --url http://localhost:8899 slot --commitment processed)
+  latest_slot=$($gorbagana_cli --url http://localhost:8899 slot --commitment processed)
 done
 
 $agave_validator --ledger config/ledger exit --force || true
@@ -59,20 +59,20 @@ wait $pid
 for method in blockstore-processor unified-scheduler
 do
   rm -rf config/snapshot-ledger
-  $solana_ledger_tool create-snapshot --ledger config/ledger "$snapshot_slot" config/snapshot-ledger
+  $gorbagana_ledger_tool create-snapshot --ledger config/ledger "$snapshot_slot" config/snapshot-ledger
   cp config/ledger/genesis.tar.bz2 config/snapshot-ledger
-  $solana_ledger_tool copy --ledger config/ledger \
+  $gorbagana_ledger_tool copy --ledger config/ledger \
     --target-db config/snapshot-ledger --starting-slot "$snapshot_slot" --ending-slot "$latest_slot"
 
   set -x
-  $solana_ledger_tool --ledger config/snapshot-ledger slot "$latest_slot" --verbose --verbose \
+  $gorbagana_ledger_tool --ledger config/snapshot-ledger slot "$latest_slot" --verbose --verbose \
     |& grep -q "Log Messages:$" && exit 1
 
-  $solana_ledger_tool verify --abort-on-invalid-block \
+  $gorbagana_ledger_tool verify --abort-on-invalid-block \
     --ledger config/snapshot-ledger --block-verification-method "$method" \
     --enable-rpc-transaction-history --enable-extended-tx-metadata-storage
 
-  $solana_ledger_tool --ledger config/snapshot-ledger slot "$latest_slot" --verbose --verbose \
+  $gorbagana_ledger_tool --ledger config/snapshot-ledger slot "$latest_slot" --verbose --verbose \
     |& grep -q "Log Messages:$"
   set +x
 done
@@ -81,9 +81,9 @@ first_simulated_slot=$((latest_slot / 2))
 purge_slot=$((first_simulated_slot + latest_slot / 4))
 echo "First simulated slot: ${first_simulated_slot}"
 # Purge some slots so that later verify fails if sim is broken
-$solana_ledger_tool purge --ledger config/ledger "$purge_slot"
-$solana_ledger_tool simulate-block-production --ledger config/ledger \
+$gorbagana_ledger_tool purge --ledger config/ledger "$purge_slot"
+$gorbagana_ledger_tool simulate-block-production --ledger config/ledger \
   --first-simulated-slot $first_simulated_slot
 # Slots should be available and correctly replayable upto snapshot_slot at least.
-$solana_ledger_tool verify --abort-on-invalid-block \
+$gorbagana_ledger_tool verify --abort-on-invalid-block \
   --ledger config/ledger --enable-hash-overrides --halt-at-slot "$snapshot_slot"

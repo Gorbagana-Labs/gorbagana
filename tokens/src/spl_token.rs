@@ -4,16 +4,16 @@ use {
         commands::{get_fee_estimate_for_messages, Error, FundingSource, TypedAllocation},
     },
     console::style,
-    solana_account_decoder::parse_token::{real_number_string, real_number_string_trimmed},
-    solana_instruction::Instruction,
-    solana_message::Message,
-    solana_native_token::lamports_to_sol,
-    solana_rpc_client::rpc_client::RpcClient,
+    gorbagana_account_decoder::parse_token::{real_number_string, real_number_string_trimmed},
+    gorbagana_instruction::Instruction,
+    gorbagana_message::Message,
+    gorbagana_native_token::lamports_to_sol,
+    gorbagana_rpc_client::rpc_client::RpcClient,
     spl_associated_token_account::{
         get_associated_token_address, instruction::create_associated_token_account,
     },
     spl_token::{
-        solana_program::program_pack::Pack,
+        gorbagana_program::program_pack::Pack,
         state::{Account as SplTokenAccount, Mint},
     },
 };
@@ -152,8 +152,8 @@ pub(crate) fn print_token_balances(
 #[cfg(test)]
 mod tests {
     // The following unit tests were written for v1.4 using the ProgramTest framework, passing its
-    // BanksClient into the `solana-tokens` methods. With the revert to RpcClient in this module
-    // (https://github.com/solana-labs/solana/pull/13623), that approach was no longer viable.
+    // BanksClient into the `gorbagana-tokens` methods. With the revert to RpcClient in this module
+    // (https://github.com/gorbagana-labs/gorbagana/pull/13623), that approach was no longer viable.
     // These tests were removed rather than rewritten to avoid accruing technical debt. Once a new
     // rpc/client framework is implemented, they should be restored.
     //
@@ -161,5 +161,5 @@ mod tests {
     // async fn test_process_spl_token_transfer_amount_allocations()
     // async fn test_check_spl_token_balances()
     //
-    // https://github.com/solana-labs/solana/blob/5511d52c6284013a24ced10966d11d8f4585799e/tokens/src/spl_token.rs#L490-L685
+    // https://github.com/gorbagana-labs/gorbagana/blob/5511d52c6284013a24ced10966d11d8f4585799e/tokens/src/spl_token.rs#L490-L685
 }

@@ -7,33 +7,33 @@ use {
         transaction_execution_result::ExecutedTransaction,
     },
     ahash::{AHashMap, AHashSet},
-    solana_account::{
+    gorbagana_account::{
         state_traits::StateMut, Account, AccountSharedData, ReadableAccount, WritableAccount,
         PROGRAM_OWNERS,
     },
-    solana_fee_structure::FeeDetails,
-    solana_instruction::{BorrowedAccountMeta, BorrowedInstruction},
-    solana_instructions_sysvar::construct_instructions_data,
-    solana_loader_v3_interface::state::UpgradeableLoaderState,
-    solana_nonce::state::State as NonceState,
-    solana_nonce_account::{get_system_account_kind, SystemAccountKind},
-    solana_program_runtime::execution_budget::{
+    gorbagana_fee_structure::FeeDetails,
+    gorbagana_instruction::{BorrowedAccountMeta, BorrowedInstruction},
+    gorbagana_instructions_sysvar::construct_instructions_data,
+    gorbagana_loader_v3_interface::state::UpgradeableLoaderState,
+    gorbagana_nonce::state::State as NonceState,
+    gorbagana_nonce_account::{get_system_account_kind, SystemAccountKind},
+    gorbagana_program_runtime::execution_budget::{
         SVMTransactionExecutionAndFeeBudgetLimits, SVMTransactionExecutionBudget,
     },
-    solana_pubkey::Pubkey,
-    solana_rent::RentDue,
-    solana_rent_collector::{CollectedInfo, RENT_EXEMPT_RENT_EPOCH},
-    solana_rent_debits::RentDebits,
-    solana_sdk_ids::{
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent::RentDue,
+    gorbagana_rent_collector::{CollectedInfo, RENT_EXEMPT_RENT_EPOCH},
+    gorbagana_rent_debits::RentDebits,
+    gorbagana_sdk_ids::{
         bpf_loader_upgradeable, native_loader,
         sysvar::{self, slot_history},
     },
-    solana_svm_callback::{AccountState, TransactionProcessingCallback},
-    solana_svm_feature_set::SVMFeatureSet,
-    solana_svm_rent_collector::svm_rent_collector::SVMRentCollector,
-    solana_svm_transaction::svm_message::SVMMessage,
-    solana_transaction_context::{IndexOfAccount, TransactionAccount},
-    solana_transaction_error::{TransactionError, TransactionResult as Result},
+    gorbagana_svm_callback::{AccountState, TransactionProcessingCallback},
+    gorbagana_svm_feature_set::SVMFeatureSet,
+    gorbagana_svm_rent_collector::svm_rent_collector::SVMRentCollector,
+    gorbagana_svm_transaction::svm_message::SVMMessage,
+    gorbagana_transaction_context::{IndexOfAccount, TransactionAccount},
+    gorbagana_transaction_error::{TransactionError, TransactionResult as Result},
     std::num::{NonZeroU32, Saturating},
 };
 
@@ -115,7 +115,7 @@ impl Default for ValidatedTransactionDetails {
             rollback_accounts: RollbackAccounts::default(),
             compute_budget: SVMTransactionExecutionBudget::default(),
             loaded_accounts_bytes_limit:
-                solana_program_runtime::execution_budget::MAX_LOADED_ACCOUNTS_DATA_SIZE_BYTES,
+                gorbagana_program_runtime::execution_budget::MAX_LOADED_ACCOUNTS_DATA_SIZE_BYTES,
             fee_details: FeeDetails::default(),
             loaded_fee_payer_account: LoadedTransactionAccount::default(),
         }
@@ -350,7 +350,7 @@ impl<CB: TransactionProcessingCallback> TransactionProcessingCallback for Accoun
 // NOTE this is a required subtrait of TransactionProcessingCallback.
 // It may make sense to break out a second subtrait just for the above two functions,
 // but this would be a nontrivial breaking change and require careful consideration.
-impl<CB: TransactionProcessingCallback> solana_svm_callback::InvokeContextCallback
+impl<CB: TransactionProcessingCallback> gorbagana_svm_callback::InvokeContextCallback
     for AccountLoader<'_, CB>
 {
 }
@@ -814,7 +814,7 @@ fn load_transaction_account<CB: TransactionProcessingCallback>(
     rent_collector: &dyn SVMRentCollector,
 ) -> LoadedTransactionAccount {
     let is_writable = message.is_writable(account_index);
-    let loaded_account = if solana_sdk_ids::sysvar::instructions::check_id(account_key) {
+    let loaded_account = if gorbagana_sdk_ids::sysvar::instructions::check_id(account_key) {
         // Since the instructions sysvar is constructed by the SVM and modified
         // for each transaction instruction, it cannot be loaded.
         LoadedTransactionAccount {
@@ -915,36 +915,36 @@ mod tests {
         crate::transaction_account_state_info::TransactionAccountStateInfo,
         agave_reserved_account_keys::ReservedAccountKeys,
         rand0_7::prelude::*,
-        solana_account::{Account, AccountSharedData, ReadableAccount, WritableAccount},
-        solana_epoch_schedule::EpochSchedule,
-        solana_hash::Hash,
-        solana_instruction::{AccountMeta, Instruction},
-        solana_keypair::Keypair,
-        solana_loader_v3_interface::state::UpgradeableLoaderState,
-        solana_message::{
+        gorbagana_account::{Account, AccountSharedData, ReadableAccount, WritableAccount},
+        gorbagana_epoch_schedule::EpochSchedule,
+        gorbagana_hash::Hash,
+        gorbagana_instruction::{AccountMeta, Instruction},
+        gorbagana_keypair::Keypair,
+        gorbagana_loader_v3_interface::state::UpgradeableLoaderState,
+        gorbagana_message::{
             compiled_instruction::CompiledInstruction,
             v0::{LoadedAddresses, LoadedMessage},
             LegacyMessage, Message, MessageHeader, SanitizedMessage,
         },
-        solana_native_token::{sol_to_lamports, LAMPORTS_PER_SOL},
-        solana_nonce::{self as nonce, versions::Versions as NonceVersions},
-        solana_program_runtime::execution_budget::{
+        gorbagana_native_token::{sol_to_lamports, LAMPORTS_PER_SOL},
+        gorbagana_nonce::{self as nonce, versions::Versions as NonceVersions},
+        gorbagana_program_runtime::execution_budget::{
             DEFAULT_INSTRUCTION_COMPUTE_UNIT_LIMIT, MAX_LOADED_ACCOUNTS_DATA_SIZE_BYTES,
         },
-        solana_pubkey::Pubkey,
-        solana_rent::Rent,
-        solana_rent_collector::{RentCollector, RENT_EXEMPT_RENT_EPOCH},
-        solana_rent_debits::RentDebits,
-        solana_sdk_ids::{
+        gorbagana_pubkey::Pubkey,
+        gorbagana_rent::Rent,
+        gorbagana_rent_collector::{RentCollector, RENT_EXEMPT_RENT_EPOCH},
+        gorbagana_rent_debits::RentDebits,
+        gorbagana_sdk_ids::{
             bpf_loader, bpf_loader_upgradeable, native_loader, system_program, sysvar,
         },
-        solana_signature::Signature,
-        solana_signer::Signer,
-        solana_svm_callback::{InvokeContextCallback, TransactionProcessingCallback},
-        solana_system_transaction::transfer,
-        solana_transaction::{sanitized::SanitizedTransaction, Transaction},
-        solana_transaction_context::{TransactionAccount, TransactionContext},
-        solana_transaction_error::{TransactionError, TransactionResult as Result},
+        gorbagana_signature::Signature,
+        gorbagana_signer::Signer,
+        gorbagana_svm_callback::{InvokeContextCallback, TransactionProcessingCallback},
+        gorbagana_system_transaction::transfer,
+        gorbagana_transaction::{sanitized::SanitizedTransaction, Transaction},
+        gorbagana_transaction_context::{TransactionAccount, TransactionContext},
+        gorbagana_transaction_error::{TransactionError, TransactionResult as Result},
         std::{borrow::Cow, cell::RefCell, collections::HashMap, fs::File, io::Read},
         test_case::test_case,
     };
@@ -1360,13 +1360,13 @@ mod tests {
 
     #[test]
     fn test_instructions() {
-        solana_logger::setup();
-        let instructions_key = solana_sdk_ids::sysvar::instructions::id();
+        gorbagana_logger::setup();
+        let instructions_key = gorbagana_sdk_ids::sysvar::instructions::id();
         let keypair = Keypair::new();
         let instructions = vec![CompiledInstruction::new(1, &(), vec![0, 1])];
         let tx = Transaction::new_with_compiled_instructions(
             &[&keypair],
-            &[solana_pubkey::new_rand(), instructions_key],
+            &[gorbagana_pubkey::new_rand(), instructions_key],
             Hash::default(),
             vec![native_loader::id()],
             instructions,
@@ -1384,7 +1384,7 @@ mod tests {
 
     #[test]
     fn test_overrides() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let mut account_overrides = AccountOverrides::default();
         let slot_history_id = sysvar::slot_history::id();
         let account = AccountSharedData::new(42, 0, &Pubkey::default());
@@ -1602,7 +1602,7 @@ mod tests {
     #[test]
     fn test_construct_instructions_account() {
         let loaded_message = LoadedMessage {
-            message: Cow::Owned(solana_message::v0::Message::default()),
+            message: Cow::Owned(gorbagana_message::v0::Message::default()),
             loaded_addresses: Cow::Owned(LoadedAddresses::default()),
             is_writable_account_cache: vec![false],
         };
@@ -2630,7 +2630,7 @@ mod tests {
         let program1 = program1_keypair.pubkey();
         let program2 = Pubkey::new_unique();
         let programdata2 = Pubkey::new_unique();
-        use solana_account::state_traits::StateMut;
+        use gorbagana_account::state_traits::StateMut;
 
         let program2_size = std::mem::size_of::<UpgradeableLoaderState>() as u32;
         let mut program2_account = AccountSharedData::default();
@@ -2656,7 +2656,7 @@ mod tests {
             .unwrap();
         let mut programdata = programdata2_account.data().to_vec();
         let mut file =
-            File::open("tests/example-programs/hello-solana/hello_solana_program.so").unwrap();
+            File::open("tests/example-programs/hello-gorbagana/hello_gorbagana_program.so").unwrap();
         file.read_to_end(&mut programdata).unwrap();
         let programdata2_size = programdata.len() as u32;
         programdata2_account.set_data(programdata);

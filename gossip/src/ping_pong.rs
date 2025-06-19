@@ -4,12 +4,12 @@ use {
     rand::{CryptoRng, Rng},
     serde_big_array::BigArray,
     siphasher::sip::SipHasher24,
-    solana_hash::Hash,
-    solana_keypair::{signable::Signable, Keypair},
-    solana_pubkey::Pubkey,
-    solana_sanitize::{Sanitize, SanitizeError},
-    solana_signature::Signature,
-    solana_signer::Signer,
+    gorbagana_hash::Hash,
+    gorbagana_keypair::{signable::Signable, Keypair},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sanitize::{Sanitize, SanitizeError},
+    gorbagana_signature::Signature,
+    gorbagana_signer::Signer,
     std::{
         borrow::Cow,
         hash::{Hash as _, Hasher},
@@ -287,7 +287,7 @@ fn make_ping_token<const N: usize>(
 }
 
 fn hash_ping_token<const N: usize>(token: &[u8; N]) -> Hash {
-    solana_sha256_hasher::hashv(&[PING_PONG_HASH_PREFIX, token])
+    gorbagana_sha256_hasher::hashv(&[PING_PONG_HASH_PREFIX, token])
 }
 
 #[cfg(test)]
@@ -313,7 +313,7 @@ mod tests {
         assert!(pong.verify());
         assert!(pong.sanitize().is_ok());
         assert_eq!(
-            solana_sha256_hasher::hashv(&[PING_PONG_HASH_PREFIX, &ping.token]),
+            gorbagana_sha256_hasher::hashv(&[PING_PONG_HASH_PREFIX, &ping.token]),
             pong.hash
         );
     }

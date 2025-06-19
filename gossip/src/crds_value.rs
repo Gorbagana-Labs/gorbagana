@@ -9,13 +9,13 @@ use {
     bincode::serialize,
     rand::Rng,
     serde::de::{Deserialize, Deserializer},
-    solana_hash::Hash,
-    solana_keypair::{signable::Signable, Keypair},
-    solana_packet::PACKET_DATA_SIZE,
-    solana_pubkey::Pubkey,
-    solana_sanitize::{Sanitize, SanitizeError},
-    solana_signature::Signature,
-    solana_signer::Signer,
+    gorbagana_hash::Hash,
+    gorbagana_keypair::{signable::Signable, Keypair},
+    gorbagana_packet::PACKET_DATA_SIZE,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sanitize::{Sanitize, SanitizeError},
+    gorbagana_signature::Signature,
+    gorbagana_signer::Signer,
     std::borrow::{Borrow, Cow},
 };
 
@@ -104,7 +104,7 @@ impl CrdsValue {
     pub fn new(data: CrdsData, keypair: &Keypair) -> Self {
         let bincode_serialized_data = bincode::serialize(&data).unwrap();
         let signature = keypair.sign_message(&bincode_serialized_data);
-        let hash = solana_sha256_hasher::hashv(&[signature.as_ref(), &bincode_serialized_data]);
+        let hash = gorbagana_sha256_hasher::hashv(&[signature.as_ref(), &bincode_serialized_data]);
         Self {
             signature,
             data,
@@ -116,7 +116,7 @@ impl CrdsValue {
     pub(crate) fn new_unsigned(data: CrdsData) -> Self {
         let bincode_serialized_data = bincode::serialize(&data).unwrap();
         let signature = Signature::default();
-        let hash = solana_sha256_hasher::hashv(&[signature.as_ref(), &bincode_serialized_data]);
+        let hash = gorbagana_sha256_hasher::hashv(&[signature.as_ref(), &bincode_serialized_data]);
         Self {
             signature,
             data,
@@ -234,7 +234,7 @@ impl<'de> Deserialize<'de> for CrdsValue {
         // ArrayVec allows us to write serialized data into stack memory without initializing it
         let mut buffer = ArrayVec::<u8, PACKET_DATA_SIZE>::new();
         bincode::serialize_into(&mut buffer, &data).map_err(serde::de::Error::custom)?;
-        let hash = solana_sha256_hasher::hashv(&[signature.as_ref(), &buffer]);
+        let hash = gorbagana_sha256_hasher::hashv(&[signature.as_ref(), &buffer]);
         Ok(Self {
             signature,
             data,
@@ -251,13 +251,13 @@ mod test {
         bincode::deserialize,
         rand0_7::{Rng, SeedableRng},
         rand_chacha0_2::ChaChaRng,
-        solana_keypair::Keypair,
-        solana_perf::test_tx::new_test_vote_tx,
-        solana_signer::Signer,
-        solana_time_utils::timestamp,
-        solana_vote::vote_transaction::new_tower_sync_transaction,
-        solana_vote_interface::state::TowerSync,
-        solana_vote_program::vote_state::Lockout,
+        gorbagana_keypair::Keypair,
+        gorbagana_perf::test_tx::new_test_vote_tx,
+        gorbagana_signer::Signer,
+        gorbagana_time_utils::timestamp,
+        gorbagana_vote::vote_transaction::new_tower_sync_transaction,
+        gorbagana_vote_interface::state::TowerSync,
+        gorbagana_vote_program::vote_state::Lockout,
         std::str::FromStr,
     };
 
@@ -435,7 +435,7 @@ mod test {
         let bytes = bincode::serialize(&values).unwrap();
         // Serialized bytes are fixed and should never change.
         assert_eq!(
-            solana_sha256_hasher::hash(&bytes),
+            gorbagana_sha256_hasher::hash(&bytes),
             Hash::from_str("7gtcoafccWE964njbs2bA1QuVFeV34RaoY781yLx2A8N").unwrap()
         );
         // serialize -> deserialize should round trip.

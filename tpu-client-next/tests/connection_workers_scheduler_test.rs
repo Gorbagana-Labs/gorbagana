@@ -1,13 +1,13 @@
 use {
     crossbeam_channel::Receiver as CrossbeamReceiver,
     futures::future::BoxFuture,
-    solana_cli_config::ConfigInput,
-    solana_commitment_config::CommitmentConfig,
-    solana_keypair::Keypair,
-    solana_pubkey::Pubkey,
-    solana_rpc_client::nonblocking::rpc_client::RpcClient,
-    solana_signer::Signer,
-    solana_streamer::{
+    gorbagana_cli_config::ConfigInput,
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_keypair::Keypair,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rpc_client::nonblocking::rpc_client::RpcClient,
+    gorbagana_signer::Signer,
+    gorbagana_streamer::{
         nonblocking::testing_utilities::{
             make_client_endpoint, setup_quic_server, SpawnTestServerResult,
         },
@@ -15,7 +15,7 @@ use {
         quic::QuicServerParams,
         streamer::StakedNodes,
     },
-    solana_tpu_client_next::{
+    gorbagana_tpu_client_next::{
         connection_workers_scheduler::{
             BindTarget, ConnectionWorkersSchedulerConfig, Fanout, StakeIdentity,
         },

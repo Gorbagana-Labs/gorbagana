@@ -1,7 +1,7 @@
 [package]
-name = "solana-merkle-tree"
-description = "Solana Merkle Tree"
-documentation = "https://docs.rs/solana-merkle-tree"
+name = "gorbagana-merkle-tree"
+description = "Gorbagana Merkle Tree"
+documentation = "https://docs.rs/gorbagana-merkle-tree"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -14,12 +14,12 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [lib]
 crate-type = ["lib"]
-name = "solana_merkle_tree"
+name = "gorbagana_merkle_tree"
 
 [dependencies]
 fast-math = { workspace = true }
-solana-hash = { workspace = true }
-solana-sha256-hasher = { workspace = true }
+gorbagana-hash = { workspace = true }
+gorbagana-sha256-hasher = { workspace = true }
 
 [dev-dependencies]
 hex = { workspace = true }

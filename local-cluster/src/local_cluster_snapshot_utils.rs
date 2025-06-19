@@ -1,7 +1,7 @@
 use {
     crate::local_cluster::LocalCluster,
     log::*,
-    solana_runtime::{
+    gorbagana_runtime::{
         snapshot_archive_info::{
             FullSnapshotArchiveInfo, IncrementalSnapshotArchiveInfo, SnapshotArchiveInfoGetter,
         },

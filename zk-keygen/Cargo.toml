@@ -1,7 +1,7 @@
 [package]
-name = "solana-zk-keygen"
+name = "gorbagana-zk-keygen"
 description = """
-Solana privacy-related key generation utility
+Gorbagana privacy-related key generation utility
 
 The tool currently supports two types of encryption keys that are used in the SPL Token-2022 program:
   - ElGamal keypair that can be used for public key encryption
@@ -19,22 +19,22 @@ edition = { workspace = true }
 targets = ["x86_64-unknown-linux-gnu"]
 
 [[bin]]
-name = "solana-zk-keygen"
+name = "gorbagana-zk-keygen"
 path = "src/main.rs"
 
 [dependencies]
 bs58 = { workspace = true }
 clap = { version = "3.1.5", features = ["cargo", "derive"] }
 dirs-next = { workspace = true }
-solana-clap-v3-utils = { workspace = true }
-solana-remote-wallet = { workspace = true, features = ["default"] }
-solana-seed-derivable = "=2.2.1"
-solana-signer = "=2.2.1"
-solana-version = { workspace = true }
-solana-zk-token-sdk = { workspace = true }
+gorbagana-clap-v3-utils = { workspace = true }
+gorbagana-remote-wallet = { workspace = true, features = ["default"] }
+gorbagana-seed-derivable = "=2.2.1"
+gorbagana-signer = "=2.2.1"
+gorbagana-version = { workspace = true }
+gorbagana-zk-token-sdk = { workspace = true }
 thiserror = { workspace = true }
 tiny-bip39 = { workspace = true }
 
 [dev-dependencies]
-solana-pubkey = { workspace = true, features = ["rand"] }
+gorbagana-pubkey = { workspace = true, features = ["rand"] }
 tempfile = { workspace = true }

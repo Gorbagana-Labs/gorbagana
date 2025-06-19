@@ -16,31 +16,31 @@ use {
     inflector::cases::titlecase::to_title_case,
     serde::{Deserialize, Serialize},
     serde_json::{Map, Value},
-    solana_account::ReadableAccount,
-    solana_account_decoder::{
+    gorbagana_account::ReadableAccount,
+    gorbagana_account_decoder::{
         encode_ui_account, parse_account_data::AccountAdditionalDataV3,
         parse_token::UiTokenAccount, UiAccountEncoding, UiDataSliceConfig,
     },
-    solana_clap_utils::keypair::SignOnly,
-    solana_clock::{Epoch, Slot, UnixTimestamp},
-    solana_epoch_info::EpochInfo,
-    solana_hash::Hash,
-    solana_native_token::lamports_to_sol,
-    solana_pubkey::Pubkey,
-    solana_rpc_client_api::response::{
+    gorbagana_clap_utils::keypair::SignOnly,
+    gorbagana_clock::{Epoch, Slot, UnixTimestamp},
+    gorbagana_epoch_info::EpochInfo,
+    gorbagana_hash::Hash,
+    gorbagana_native_token::lamports_to_sol,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rpc_client_api::response::{
         RpcAccountBalance, RpcContactInfo, RpcInflationGovernor, RpcInflationRate, RpcKeyedAccount,
         RpcSupply, RpcVoteAccountInfo,
     },
-    solana_signature::Signature,
-    solana_stake_interface::state::{Authorized, Lockup},
-    solana_sysvar::stake_history::StakeHistoryEntry,
-    solana_transaction::{versioned::VersionedTransaction, Transaction},
-    solana_transaction_error::TransactionError,
-    solana_transaction_status::{
+    gorbagana_signature::Signature,
+    gorbagana_stake_interface::state::{Authorized, Lockup},
+    gorbagana_sysvar::stake_history::StakeHistoryEntry,
+    gorbagana_transaction::{versioned::VersionedTransaction, Transaction},
+    gorbagana_transaction_error::TransactionError,
+    gorbagana_transaction_status::{
         EncodedConfirmedBlock, EncodedTransaction, TransactionConfirmationStatus,
         UiTransactionStatusMeta,
     },
-    solana_vote_program::{
+    gorbagana_vote_program::{
         authorized_voters::AuthorizedVoters,
         vote_state::{BlockTimestamp, LandedVote, MAX_EPOCH_CREDITS_HISTORY, MAX_LOCKOUT_HISTORY},
     },
@@ -3298,13 +3298,13 @@ mod tests {
     use {
         super::*,
         clap::{App, Arg},
-        solana_keypair::keypair_from_seed,
-        solana_message::Message,
-        solana_pubkey::Pubkey,
-        solana_signature::Signature,
-        solana_signer::{null_signer::NullSigner, Signer, SignerError},
-        solana_system_interface::instruction::transfer,
-        solana_transaction::Transaction,
+        gorbagana_keypair::keypair_from_seed,
+        gorbagana_message::Message,
+        gorbagana_pubkey::Pubkey,
+        gorbagana_signature::Signature,
+        gorbagana_signer::{null_signer::NullSigner, Signer, SignerError},
+        gorbagana_system_interface::instruction::transfer,
+        gorbagana_transaction::Transaction,
     };
 
     #[test]

@@ -1,10 +1,10 @@
 use {
     crate::cluster_info_vote_listener::VoteTracker,
-    solana_clock::Slot,
-    solana_hash::Hash,
-    solana_ledger::blockstore::Blockstore,
-    solana_runtime::bank::Bank,
-    solana_time_utils::timestamp,
+    gorbagana_clock::Slot,
+    gorbagana_hash::Hash,
+    gorbagana_ledger::blockstore::Blockstore,
+    gorbagana_runtime::bank::Bank,
+    gorbagana_time_utils::timestamp,
     std::{collections::BTreeSet, time::Instant},
 };
 
@@ -145,8 +145,8 @@ impl OptimisticConfirmationVerifier {
 mod test {
     use {
         super::*, crate::vote_simulator::VoteSimulator,
-        solana_ledger::get_tmp_ledger_path_auto_delete, solana_pubkey::Pubkey,
-        solana_runtime::bank::Bank, std::collections::HashMap, trees::tr,
+        gorbagana_ledger::get_tmp_ledger_path_auto_delete, gorbagana_pubkey::Pubkey,
+        gorbagana_runtime::bank::Bank, std::collections::HashMap, trees::tr,
     };
 
     #[test]

@@ -1,7 +1,7 @@
 [package]
-name = "solana-turbine"
+name = "gorbagana-turbine"
 description = "Blockchain, Rebuilt for Scale"
-documentation = "https://docs.rs/solana-turbine"
+documentation = "https://docs.rs/gorbagana-turbine"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -25,32 +25,32 @@ rand = { workspace = true }
 rand_chacha = { workspace = true }
 rayon = { workspace = true }
 rustls = { workspace = true }
-solana-clock = { workspace = true }
-solana-cluster-type = { workspace = true }
-solana-entry = { workspace = true }
-solana-gossip = { workspace = true }
-solana-hash = { workspace = true }
-solana-keypair = { workspace = true }
-solana-ledger = { workspace = true }
-solana-measure = { workspace = true }
-solana-metrics = { workspace = true }
-solana-native-token = { workspace = true }
-solana-net-utils = { workspace = true }
-solana-perf = { workspace = true }
-solana-poh = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-quic-client = { workspace = true }
-solana-rayon-threadlimit = { workspace = true }
-solana-rpc = { workspace = true }
-solana-rpc-client-api = { workspace = true }
-solana-runtime = { workspace = true }
-solana-signature = { workspace = true }
-solana-signer = { workspace = true }
-solana-streamer = { workspace = true }
-solana-system-transaction = { workspace = true }
-solana-time-utils = { workspace = true }
-solana-tls-utils = { workspace = true }
-solana-transaction-error = { workspace = true }
+gorbagana-clock = { workspace = true }
+gorbagana-cluster-type = { workspace = true }
+gorbagana-entry = { workspace = true }
+gorbagana-gossip = { workspace = true }
+gorbagana-hash = { workspace = true }
+gorbagana-keypair = { workspace = true }
+gorbagana-ledger = { workspace = true }
+gorbagana-measure = { workspace = true }
+gorbagana-metrics = { workspace = true }
+gorbagana-native-token = { workspace = true }
+gorbagana-net-utils = { workspace = true }
+gorbagana-perf = { workspace = true }
+gorbagana-poh = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-quic-client = { workspace = true }
+gorbagana-rayon-threadlimit = { workspace = true }
+gorbagana-rpc = { workspace = true }
+gorbagana-rpc-client-api = { workspace = true }
+gorbagana-runtime = { workspace = true }
+gorbagana-signature = { workspace = true }
+gorbagana-signer = { workspace = true }
+gorbagana-streamer = { workspace = true }
+gorbagana-system-transaction = { workspace = true }
+gorbagana-time-utils = { workspace = true }
+gorbagana-tls-utils = { workspace = true }
+gorbagana-transaction-error = { workspace = true }
 static_assertions = { workspace = true }
 thiserror = { workspace = true }
 tokio = { workspace = true }
@@ -61,10 +61,10 @@ caps = { workspace = true }
 [dev-dependencies]
 assert_matches = { workspace = true }
 bs58 = { workspace = true }
-solana-genesis-config = { workspace = true }
-solana-logger = { workspace = true }
-solana-runtime = { workspace = true, features = ["dev-context-only-utils"] }
-solana-transaction = { workspace = true }
+gorbagana-genesis-config = { workspace = true }
+gorbagana-logger = { workspace = true }
+gorbagana-runtime = { workspace = true, features = ["dev-context-only-utils"] }
+gorbagana-transaction = { workspace = true }
 test-case = { workspace = true }
 
 [[bench]]

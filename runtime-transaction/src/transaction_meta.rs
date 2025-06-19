@@ -12,8 +12,8 @@
 //! RuntimeTransaction types, not the TransactionMeta itself.
 //!
 use {
-    solana_compute_budget_instruction::compute_budget_instruction_details::ComputeBudgetInstructionDetails,
-    solana_hash::Hash, solana_message::TransactionSignatureDetails,
+    gorbagana_compute_budget_instruction::compute_budget_instruction_details::ComputeBudgetInstructionDetails,
+    gorbagana_hash::Hash, gorbagana_message::TransactionSignatureDetails,
 };
 
 /// metadata can be extracted statically from sanitized transaction,

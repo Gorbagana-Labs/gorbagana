@@ -1,13 +1,13 @@
 use {
-    solana_keypair::Keypair,
-    solana_loader_v3_interface::state::UpgradeableLoaderState,
-    solana_message::{v0::Message, VersionedMessage},
-    solana_program_test::ProgramTest,
-    solana_pubkey::Pubkey,
-    solana_sdk_ids::bpf_loader_upgradeable,
-    solana_signer::Signer,
-    solana_system_interface::instruction as system_instruction,
-    solana_transaction::{versioned::VersionedTransaction, Transaction},
+    gorbagana_keypair::Keypair,
+    gorbagana_loader_v3_interface::state::UpgradeableLoaderState,
+    gorbagana_message::{v0::Message, VersionedMessage},
+    gorbagana_program_test::ProgramTest,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sdk_ids::bpf_loader_upgradeable,
+    gorbagana_signer::Signer,
+    gorbagana_system_interface::instruction as system_instruction,
+    gorbagana_transaction::{versioned::VersionedTransaction, Transaction},
 };
 
 #[tokio::test]
@@ -21,7 +21,7 @@ async fn test_bpf_loader_upgradeable_present() {
     let rent = banks_client.get_rent().await.unwrap();
     let buffer_rent = rent.minimum_balance(UpgradeableLoaderState::size_of_programdata(1));
 
-    let create_buffer_instructions = solana_loader_v3_interface::instruction::create_buffer(
+    let create_buffer_instructions = gorbagana_loader_v3_interface::instruction::create_buffer(
         &payer.pubkey(),
         &buffer_keypair.pubkey(),
         &upgrade_authority_keypair.pubkey(),

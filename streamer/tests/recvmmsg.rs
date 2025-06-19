@@ -1,8 +1,8 @@
 #![cfg(target_os = "linux")]
 
 use {
-    solana_net_utils::bind_to_localhost,
-    solana_streamer::{
+    gorbagana_net_utils::bind_to_localhost,
+    gorbagana_streamer::{
         packet::{Meta, Packet, PACKET_DATA_SIZE},
         recvmmsg::*,
     },

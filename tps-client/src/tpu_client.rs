@@ -1,20 +1,20 @@
 use {
     crate::{TpsClient, TpsClientError, TpsClientResult},
-    solana_account::Account,
-    solana_commitment_config::CommitmentConfig,
-    solana_connection_cache::connection_cache::{
+    gorbagana_account::Account,
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_connection_cache::connection_cache::{
         ConnectionManager, ConnectionPool, NewConnectionConfig,
     },
-    solana_epoch_info::EpochInfo,
-    solana_hash::Hash,
-    solana_message::Message,
-    solana_pubkey::Pubkey,
-    solana_rpc_client_api::config::RpcBlockConfig,
-    solana_signature::Signature,
-    solana_tpu_client::tpu_client::TpuClient,
-    solana_transaction::Transaction,
-    solana_transaction_error::TransactionResult as Result,
-    solana_transaction_status::UiConfirmedBlock,
+    gorbagana_epoch_info::EpochInfo,
+    gorbagana_hash::Hash,
+    gorbagana_message::Message,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rpc_client_api::config::RpcBlockConfig,
+    gorbagana_signature::Signature,
+    gorbagana_tpu_client::tpu_client::TpuClient,
+    gorbagana_transaction::Transaction,
+    gorbagana_transaction_error::TransactionResult as Result,
+    gorbagana_transaction_status::UiConfirmedBlock,
 };
 
 impl<P, M, C> TpsClient for TpuClient<P, M, C>

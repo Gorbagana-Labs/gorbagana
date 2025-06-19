@@ -1,5 +1,5 @@
 use {
-    solana_clock::{Epoch, Slot},
+    gorbagana_clock::{Epoch, Slot},
     std::fmt::Display,
 };
 

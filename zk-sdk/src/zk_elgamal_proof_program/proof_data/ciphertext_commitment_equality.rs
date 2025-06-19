@@ -18,7 +18,7 @@ use {
     },
     bytemuck_derive::{Pod, Zeroable},
 };
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use {
     crate::{
         encryption::{
@@ -63,7 +63,7 @@ pub struct CiphertextCommitmentEqualityProofContext {
     pub commitment: PodPedersenCommitment, // 32 bytes
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 #[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
 impl CiphertextCommitmentEqualityProofData {
     pub fn new(
@@ -104,7 +104,7 @@ impl ZkProofData<CiphertextCommitmentEqualityProofContext>
         &self.context
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     fn verify_proof(&self) -> Result<(), ProofVerificationError> {
         let mut transcript = self.context.new_transcript();
 
@@ -120,7 +120,7 @@ impl ZkProofData<CiphertextCommitmentEqualityProofContext>
 }
 
 #[allow(non_snake_case)]
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl CiphertextCommitmentEqualityProofContext {
     fn new_transcript(&self) -> Transcript {
         let mut transcript = Transcript::new(b"ciphertext-commitment-equality-instruction");

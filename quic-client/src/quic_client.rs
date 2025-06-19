@@ -6,12 +6,12 @@ use {
         QuicClient, QuicClientConnection as NonblockingQuicConnection, QuicLazyInitializedEndpoint,
     },
     log::*,
-    solana_connection_cache::{
+    gorbagana_connection_cache::{
         client_connection::{ClientConnection, ClientStats},
         connection_cache_stats::ConnectionCacheStats,
         nonblocking::client_connection::ClientConnection as NonblockingClientConnection,
     },
-    solana_transaction_error::{TransportError, TransportResult},
+    gorbagana_transaction_error::{TransportError, TransportResult},
     std::{
         net::SocketAddr,
         sync::{atomic::Ordering, Arc, Condvar, Mutex, MutexGuard},

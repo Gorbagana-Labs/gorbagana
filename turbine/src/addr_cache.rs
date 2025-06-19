@@ -1,8 +1,8 @@
 use {
     crate::retransmit_stage::RetransmitSlotStats,
     itertools::Itertools,
-    solana_clock::Slot,
-    solana_ledger::{
+    gorbagana_clock::Slot,
+    gorbagana_ledger::{
         blockstore::MAX_DATA_SHREDS_PER_SLOT,
         shred::{shred_code::MAX_CODE_SHREDS_PER_SLOT, ShredId, ShredType},
     },

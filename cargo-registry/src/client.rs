@@ -1,16 +1,16 @@
 use {
     clap::{crate_description, crate_name, value_t, value_t_or_exit, App, Arg, ArgMatches},
-    solana_clap_utils::{
+    gorbagana_clap_utils::{
         hidden_unless_forced,
         input_validators::is_url_or_moniker,
         keypair::{DefaultSigner, SignerIndex},
     },
-    solana_cli::cli::{CliConfig, DEFAULT_CONFIRM_TX_TIMEOUT_SECONDS, DEFAULT_RPC_TIMEOUT_SECONDS},
-    solana_cli_config::{Config, ConfigInput},
-    solana_commitment_config::CommitmentConfig,
-    solana_keypair::{read_keypair_file, Keypair},
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_api::config::RpcSendTransactionConfig,
+    gorbagana_cli::cli::{CliConfig, DEFAULT_CONFIRM_TX_TIMEOUT_SECONDS, DEFAULT_RPC_TIMEOUT_SECONDS},
+    gorbagana_cli_config::{Config, ConfigInput},
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_keypair::{read_keypair_file, Keypair},
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_rpc_client_api::config::RpcSendTransactionConfig,
     std::{error, sync::Arc, time::Duration},
 };
 
@@ -80,7 +80,7 @@ impl Client {
                     .global(true)
                     .validator(is_url_or_moniker)
                     .help(
-                        "URL for Solana's JSON RPC or moniker (or their first letter): \
+                        "URL for Gorbagana's JSON RPC or moniker (or their first letter): \
                        [mainnet-beta, testnet, devnet, localhost]",
                     ),
             )
@@ -163,7 +163,7 @@ impl Client {
         let matches = Self::get_clap_app(
             crate_name!(),
             crate_description!(),
-            solana_version::version!(),
+            gorbagana_version::version!(),
         )
         .get_matches();
 

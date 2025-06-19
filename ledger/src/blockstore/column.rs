@@ -6,10 +6,10 @@ use {
     },
     bincode::Options as BincodeOptions,
     serde::{de::DeserializeOwned, Serialize},
-    solana_clock::{Slot, UnixTimestamp},
-    solana_pubkey::{Pubkey, PUBKEY_BYTES},
-    solana_signature::{Signature, SIGNATURE_BYTES},
-    solana_storage_proto::convert::generated,
+    gorbagana_clock::{Slot, UnixTimestamp},
+    gorbagana_pubkey::{Pubkey, PUBKEY_BYTES},
+    gorbagana_signature::{Signature, SIGNATURE_BYTES},
+    gorbagana_storage_proto::convert::generated,
 };
 
 pub(crate) const DEPRECATED_PROGRAM_COSTS_COLUMN_NAME: &str = "program_costs";

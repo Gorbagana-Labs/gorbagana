@@ -1,6 +1,6 @@
 //! This module holds [`TransactionBatch`] structure.
 
-use {solana_time_utils::timestamp, tokio_util::bytes::Bytes};
+use {gorbagana_time_utils::timestamp, tokio_util::bytes::Bytes};
 
 /// Batch of generated transactions timestamp is used to discard batches which
 /// are too old to have valid blockhash.

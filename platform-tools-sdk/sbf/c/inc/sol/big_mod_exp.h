@@ -1,6 +1,6 @@
 #pragma once
 /**
- * @brief Solana big_mod_exp system call
+ * @brief Gorbagana big_mod_exp system call
 **/
 
 #ifdef __cplusplus

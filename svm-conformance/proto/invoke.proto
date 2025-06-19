@@ -1,5 +1,5 @@
 syntax = "proto3";
-package org.solana.sealevel.v1;
+package org.gorbagana.sealevel.v1;
 
 import "context.proto";
 import "metadata.proto";

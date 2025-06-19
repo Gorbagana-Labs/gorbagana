@@ -15,7 +15,7 @@ use {
     },
     bytemuck_derive::{Pod, Zeroable},
 };
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use {
     crate::{
         encryption::{
@@ -61,7 +61,7 @@ pub struct CiphertextCiphertextEqualityProofContext {
     pub second_ciphertext: PodElGamalCiphertext, // 64 bytes
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 #[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
 impl CiphertextCiphertextEqualityProofData {
     pub fn new(
@@ -111,7 +111,7 @@ impl ZkProofData<CiphertextCiphertextEqualityProofContext>
         &self.context
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     fn verify_proof(&self) -> Result<(), ProofVerificationError> {
         let mut transcript = self.context.new_transcript();
 
@@ -134,7 +134,7 @@ impl ZkProofData<CiphertextCiphertextEqualityProofContext>
 }
 
 #[allow(non_snake_case)]
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl CiphertextCiphertextEqualityProofContext {
     fn new_transcript(&self) -> Transcript {
         let mut transcript = Transcript::new(b"ciphertext-ciphertext-equality-instruction");

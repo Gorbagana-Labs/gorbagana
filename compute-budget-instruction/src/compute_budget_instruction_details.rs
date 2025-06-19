@@ -4,14 +4,14 @@ use {
         compute_budget_program_id_filter::ComputeBudgetProgramIdFilter,
     },
     agave_feature_set::FeatureSet,
-    solana_borsh::v1::try_from_slice_unchecked,
-    solana_builtins_default_costs::{get_migration_feature_id, MIGRATING_BUILTINS_COSTS},
-    solana_compute_budget::compute_budget_limits::*,
-    solana_compute_budget_interface::ComputeBudgetInstruction,
-    solana_instruction::error::InstructionError,
-    solana_pubkey::Pubkey,
-    solana_svm_transaction::instruction::SVMInstruction,
-    solana_transaction_error::{TransactionError, TransactionResult as Result},
+    gorbagana_borsh::v1::try_from_slice_unchecked,
+    gorbagana_builtins_default_costs::{get_migration_feature_id, MIGRATING_BUILTINS_COSTS},
+    gorbagana_compute_budget::compute_budget_limits::*,
+    gorbagana_compute_budget_interface::ComputeBudgetInstruction,
+    gorbagana_instruction::error::InstructionError,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_svm_transaction::instruction::SVMInstruction,
+    gorbagana_transaction_error::{TransactionError, TransactionResult as Result},
     std::num::{NonZeroU32, Saturating},
 };
 
@@ -223,14 +223,14 @@ impl ComputeBudgetInstructionDetails {
 mod test {
     use {
         super::*,
-        solana_builtins_default_costs::get_migration_feature_position,
-        solana_instruction::Instruction,
-        solana_keypair::Keypair,
-        solana_message::Message,
-        solana_pubkey::Pubkey,
-        solana_signer::Signer,
-        solana_svm_transaction::svm_message::SVMMessage,
-        solana_transaction::{sanitized::SanitizedTransaction, Transaction},
+        gorbagana_builtins_default_costs::get_migration_feature_position,
+        gorbagana_instruction::Instruction,
+        gorbagana_keypair::Keypair,
+        gorbagana_message::Message,
+        gorbagana_pubkey::Pubkey,
+        gorbagana_signer::Signer,
+        gorbagana_svm_transaction::svm_message::SVMMessage,
+        gorbagana_transaction::{sanitized::SanitizedTransaction, Transaction},
     };
 
     fn build_sanitized_transaction(instructions: &[Instruction]) -> SanitizedTransaction {
@@ -516,7 +516,7 @@ mod test {
     fn test_builtin_program_migration() {
         let tx = build_sanitized_transaction(&[
             Instruction::new_with_bincode(Pubkey::new_unique(), &(), vec![]),
-            solana_stake_interface::instruction::delegate_stake(
+            gorbagana_stake_interface::instruction::delegate_stake(
                 &Pubkey::new_unique(),
                 &Pubkey::new_unique(),
                 &Pubkey::new_unique(),

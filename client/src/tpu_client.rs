@@ -1,22 +1,22 @@
 use {
     crate::connection_cache::ConnectionCache,
-    solana_connection_cache::connection_cache::{
+    gorbagana_connection_cache::connection_cache::{
         ConnectionCache as BackendConnectionCache, ConnectionManager, ConnectionPool,
         NewConnectionConfig,
     },
-    solana_message::Message,
-    solana_quic_client::{QuicConfig, QuicConnectionManager, QuicPool},
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_signer::signers::Signers,
-    solana_tpu_client::tpu_client::{Result, TpuClient as BackendTpuClient},
-    solana_transaction::Transaction,
-    solana_transaction_error::{TransactionError, TransportResult},
-    solana_udp_client::{UdpConfig, UdpConnectionManager, UdpPool},
+    gorbagana_message::Message,
+    gorbagana_quic_client::{QuicConfig, QuicConnectionManager, QuicPool},
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_signer::signers::Signers,
+    gorbagana_tpu_client::tpu_client::{Result, TpuClient as BackendTpuClient},
+    gorbagana_transaction::Transaction,
+    gorbagana_transaction_error::{TransactionError, TransportResult},
+    gorbagana_udp_client::{UdpConfig, UdpConnectionManager, UdpPool},
     std::sync::Arc,
 };
 pub use {
     crate::nonblocking::tpu_client::TpuSenderError,
-    solana_tpu_client::tpu_client::{TpuClientConfig, DEFAULT_FANOUT_SLOTS, MAX_FANOUT_SLOTS},
+    gorbagana_tpu_client::tpu_client::{TpuClientConfig, DEFAULT_FANOUT_SLOTS, MAX_FANOUT_SLOTS},
 };
 
 pub enum TpuClientWrapper {

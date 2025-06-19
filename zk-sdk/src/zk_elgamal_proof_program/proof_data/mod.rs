@@ -1,4 +1,4 @@
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use crate::zk_elgamal_proof_program::errors::ProofVerificationError;
 use {
     bytemuck::Pod,
@@ -67,6 +67,6 @@ pub trait ZkProofData<T: Pod> {
 
     fn context_data(&self) -> &T;
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     fn verify_proof(&self) -> Result<(), ProofVerificationError>;
 }

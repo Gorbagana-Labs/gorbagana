@@ -1,8 +1,8 @@
 use {
     crate::{accounts_hash::AccountHash, is_zero_lamport::IsZeroLamport},
-    solana_account::ReadableAccount,
-    solana_clock::Epoch,
-    solana_pubkey::Pubkey,
+    gorbagana_account::ReadableAccount,
+    gorbagana_clock::Epoch,
+    gorbagana_pubkey::Pubkey,
     std::{ptr, str},
 };
 

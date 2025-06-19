@@ -1,10 +1,10 @@
 use {
-    solana_measure::measure_us,
-    solana_program_runtime::invoke_context::InvokeContext,
-    solana_svm_transaction::svm_message::SVMMessage,
-    solana_timings::{ExecuteDetailsTimings, ExecuteTimings},
-    solana_transaction_context::{IndexOfAccount, InstructionAccount},
-    solana_transaction_error::TransactionError,
+    gorbagana_measure::measure_us,
+    gorbagana_program_runtime::invoke_context::InvokeContext,
+    gorbagana_svm_transaction::svm_message::SVMMessage,
+    gorbagana_timings::{ExecuteDetailsTimings, ExecuteTimings},
+    gorbagana_transaction_context::{IndexOfAccount, InstructionAccount},
+    gorbagana_transaction_error::TransactionError,
 };
 
 /// Process a message.
@@ -107,32 +107,32 @@ mod tests {
             nid::Nid,
         },
         rand0_7::thread_rng,
-        solana_account::{
+        gorbagana_account::{
             Account, AccountSharedData, ReadableAccount, WritableAccount,
             DUMMY_INHERITABLE_ACCOUNT_FIELDS,
         },
-        solana_ed25519_program::new_ed25519_instruction_with_signature,
-        solana_hash::Hash,
-        solana_instruction::{error::InstructionError, AccountMeta, Instruction},
-        solana_message::{AccountKeys, Message, SanitizedMessage},
-        solana_precompile_error::PrecompileError,
-        solana_program_runtime::{
+        gorbagana_ed25519_program::new_ed25519_instruction_with_signature,
+        gorbagana_hash::Hash,
+        gorbagana_instruction::{error::InstructionError, AccountMeta, Instruction},
+        gorbagana_message::{AccountKeys, Message, SanitizedMessage},
+        gorbagana_precompile_error::PrecompileError,
+        gorbagana_program_runtime::{
             declare_process_instruction,
             execution_budget::{SVMTransactionExecutionBudget, SVMTransactionExecutionCost},
             invoke_context::EnvironmentConfig,
             loaded_programs::{ProgramCacheEntry, ProgramCacheForTxBatch},
             sysvar_cache::SysvarCache,
         },
-        solana_pubkey::Pubkey,
-        solana_rent::Rent,
-        solana_sdk_ids::{ed25519_program, native_loader, secp256k1_program, system_program},
-        solana_secp256k1_program::{
+        gorbagana_pubkey::Pubkey,
+        gorbagana_rent::Rent,
+        gorbagana_sdk_ids::{ed25519_program, native_loader, secp256k1_program, system_program},
+        gorbagana_secp256k1_program::{
             eth_address_from_pubkey, new_secp256k1_instruction_with_signature,
         },
-        solana_secp256r1_program::{new_secp256r1_instruction_with_signature, sign_message},
-        solana_svm_callback::InvokeContextCallback,
-        solana_svm_feature_set::SVMFeatureSet,
-        solana_transaction_context::TransactionContext,
+        gorbagana_secp256r1_program::{new_secp256r1_instruction_with_signature, sign_message},
+        gorbagana_svm_callback::InvokeContextCallback,
+        gorbagana_svm_feature_set::SVMFeatureSet,
+        gorbagana_transaction_context::TransactionContext,
         std::sync::Arc,
     };
 
@@ -434,11 +434,11 @@ mod tests {
         let mock_program_id = Pubkey::from([2u8; 32]);
         let accounts = vec![
             (
-                solana_pubkey::new_rand(),
+                gorbagana_pubkey::new_rand(),
                 AccountSharedData::new(100, 1, &mock_program_id),
             ),
             (
-                solana_pubkey::new_rand(),
+                gorbagana_pubkey::new_rand(),
                 AccountSharedData::new(0, 1, &mock_program_id),
             ),
             (
@@ -605,7 +605,7 @@ mod tests {
         let pubkey = libsecp256k1::PublicKey::from_secret_key(&secret_key);
         let eth_address = eth_address_from_pubkey(&pubkey.serialize()[1..].try_into().unwrap());
         let (signature, recovery_id) =
-            solana_secp256k1_program::sign_message(&secret_key.serialize(), &message[..]).unwrap();
+            gorbagana_secp256k1_program::sign_message(&secret_key.serialize(), &message[..]).unwrap();
         new_secp256k1_instruction_with_signature(
             &message[..],
             &signature,
@@ -659,7 +659,7 @@ mod tests {
             ),
             (secp256k1_program::id(), secp256k1_account),
             (ed25519_program::id(), ed25519_account),
-            (solana_secp256r1_program::id(), secp256r1_account),
+            (gorbagana_secp256r1_program::id(), secp256r1_account),
             (mock_program_id, mock_program_account),
         ];
         let mut transaction_context = TransactionContext::new(accounts, Rent::default(), 1, 4);
@@ -685,7 +685,7 @@ mod tests {
             fn is_precompile(&self, program_id: &Pubkey) -> bool {
                 program_id == &secp256k1_program::id()
                     || program_id == &ed25519_program::id()
-                    || program_id == &solana_secp256r1_program::id()
+                    || program_id == &gorbagana_secp256r1_program::id()
             }
 
             fn process_precompile(

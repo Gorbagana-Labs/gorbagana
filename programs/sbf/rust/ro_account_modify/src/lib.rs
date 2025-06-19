@@ -1,10 +1,10 @@
 use {
-    solana_account_info::AccountInfo,
-    solana_instruction::{AccountMeta, Instruction},
-    solana_msg::msg,
-    solana_program::program::invoke,
-    solana_program_error::ProgramResult,
-    solana_pubkey::Pubkey,
+    gorbagana_account_info::AccountInfo,
+    gorbagana_instruction::{AccountMeta, Instruction},
+    gorbagana_msg::msg,
+    gorbagana_program::program::invoke,
+    gorbagana_program_error::ProgramResult,
+    gorbagana_pubkey::Pubkey,
 };
 
 const ARGUMENT_INDEX: usize = 0;
@@ -14,7 +14,7 @@ const INSTRUCTION_INVOKE_MODIFY: u8 = 1;
 const INSTRUCTION_MODIFY_INVOKE: u8 = 2;
 const INSTRUCTION_VERIFY_MODIFIED: u8 = 3;
 
-solana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
+gorbagana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
 fn process_instruction(
     program_id: &Pubkey,
     accounts: &[AccountInfo],

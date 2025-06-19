@@ -2,9 +2,9 @@ use {
     crate::repair::{quic_endpoint::RemoteRequest, serve_repair::ServeRepair},
     bytes::Bytes,
     crossbeam_channel::{unbounded, Receiver, Sender},
-    solana_ledger::blockstore::Blockstore,
-    solana_perf::{packet::PacketBatch, recycler::Recycler},
-    solana_streamer::{
+    gorbagana_ledger::blockstore::Blockstore,
+    gorbagana_perf::{packet::PacketBatch, recycler::Recycler},
+    gorbagana_streamer::{
         socket::SocketAddrSpace,
         streamer::{self, StreamerReceiveStats},
     },

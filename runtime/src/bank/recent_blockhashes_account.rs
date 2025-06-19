@@ -1,9 +1,9 @@
 //! Helpers for the recent blockhashes sysvar.
 
 #[allow(deprecated)]
-use solana_sysvar::recent_blockhashes::{IntoIterSorted, IterItem, RecentBlockhashes, MAX_ENTRIES};
+use gorbagana_sysvar::recent_blockhashes::{IntoIterSorted, IterItem, RecentBlockhashes, MAX_ENTRIES};
 use {
-    solana_account::{
+    gorbagana_account::{
         create_account_shared_data_with_fields, to_account, AccountSharedData,
         InheritableAccountFields,
     },
@@ -47,9 +47,9 @@ mod tests {
     use {
         super::*,
         rand::{seq::SliceRandom, thread_rng},
-        solana_account::{from_account, DUMMY_INHERITABLE_ACCOUNT_FIELDS},
-        solana_hash::{Hash, HASH_BYTES},
-        solana_sysvar::recent_blockhashes::Entry,
+        gorbagana_account::{from_account, DUMMY_INHERITABLE_ACCOUNT_FIELDS},
+        gorbagana_hash::{Hash, HASH_BYTES},
+        gorbagana_sysvar::recent_blockhashes::Entry,
     };
 
     fn create_account_with_data_for_test<'a, I>(recent_blockhash_iter: I) -> AccountSharedData

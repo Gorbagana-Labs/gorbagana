@@ -5,8 +5,8 @@ use {
     },
     base64::{prelude::BASE64_STANDARD, Engine},
     bincode::{deserialize, serialized_size},
-    solana_loader_v3_interface::state::UpgradeableLoaderState,
-    solana_pubkey::Pubkey,
+    gorbagana_loader_v3_interface::state::UpgradeableLoaderState,
+    gorbagana_pubkey::Pubkey,
 };
 
 pub fn parse_bpf_upgradeable_loader(
@@ -94,7 +94,7 @@ pub struct UiProgramData {
 
 #[cfg(test)]
 mod test {
-    use {super::*, bincode::serialize, solana_pubkey::Pubkey};
+    use {super::*, bincode::serialize, gorbagana_pubkey::Pubkey};
 
     #[test]
     fn test_parse_bpf_upgradeable_loader_accounts() {

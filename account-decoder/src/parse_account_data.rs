@@ -1,4 +1,4 @@
-pub use solana_account_decoder_client_types::ParsedAccount;
+pub use gorbagana_account_decoder_client_types::ParsedAccount;
 use {
     crate::{
         parse_address_lookup_table::parse_address_lookup_table,
@@ -7,10 +7,10 @@ use {
         parse_token::parse_token_v3, parse_vote::parse_vote,
     },
     inflector::Inflector,
-    solana_clock::UnixTimestamp,
-    solana_instruction::error::InstructionError,
-    solana_pubkey::Pubkey,
-    solana_sdk_ids::{
+    gorbagana_clock::UnixTimestamp,
+    gorbagana_instruction::error::InstructionError,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sdk_ids::{
         address_lookup_table, bpf_loader_upgradeable, config, stake, system_program, sysvar, vote,
     },
     spl_token_2022::extension::{
@@ -208,11 +208,11 @@ pub fn parse_account_data_v3(
 mod test {
     use {
         super::*,
-        solana_nonce::{
+        gorbagana_nonce::{
             state::{Data, State},
             versions::Versions,
         },
-        solana_vote_interface::{
+        gorbagana_vote_interface::{
             program::id as vote_program_id,
             state::{VoteState, VoteStateVersions},
         },
@@ -220,8 +220,8 @@ mod test {
 
     #[test]
     fn test_parse_account_data() {
-        let account_pubkey = solana_pubkey::new_rand();
-        let other_program = solana_pubkey::new_rand();
+        let account_pubkey = gorbagana_pubkey::new_rand();
+        let other_program = gorbagana_pubkey::new_rand();
         let data = vec![0; 4];
         assert!(parse_account_data_v3(&account_pubkey, &other_program, &data, None).is_err());
 

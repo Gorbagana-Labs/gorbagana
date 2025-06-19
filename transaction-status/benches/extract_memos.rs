@@ -3,9 +3,9 @@
 extern crate test;
 
 use {
-    solana_message::{compiled_instruction::CompiledInstruction, Message},
-    solana_pubkey::Pubkey,
-    solana_transaction_status::extract_memos::ExtractMemos,
+    gorbagana_message::{compiled_instruction::CompiledInstruction, Message},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_transaction_status::extract_memos::ExtractMemos,
     test::Bencher,
 };
 

@@ -120,7 +120,7 @@ pub mod tests {
 
     #[test]
     fn test_real() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let verify = Arc::new(VerifyAccountsHashInBackground::default());
         start_thread_and_return(&verify, true, || {});
         verify.join_background_thread();
@@ -138,7 +138,7 @@ pub mod tests {
 
     #[test]
     fn test_long_running() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let verify = Arc::new(VerifyAccountsHashInBackground::default());
         let finish = Arc::new(AtomicBool::default());
         let finish_ = finish.clone();

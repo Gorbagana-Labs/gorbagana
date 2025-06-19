@@ -3,8 +3,8 @@
 use {
     agave_feature_set::{self as feature_set, FeatureSet},
     ahash::AHashMap,
-    solana_pubkey::Pubkey,
-    solana_sdk_ids::{
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sdk_ids::{
         bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable, compute_budget, ed25519_program,
         loader_v4, secp256k1_program, stake, system_program, vote,
     },
@@ -82,7 +82,7 @@ impl BuiltinCost {
 /// of https://github.com/anza-xyz/agave/issues/2212.  It's also used to
 /// calculate the cost of a transaction which is used in replay to enforce
 /// block cost limits as of
-/// https://github.com/solana-labs/solana/issues/29595.
+/// https://github.com/gorbagana-labs/gorbagana/issues/29595.
 static BUILTIN_INSTRUCTION_COSTS: std::sync::LazyLock<AHashMap<Pubkey, BuiltinCost>> =
     std::sync::LazyLock::new(|| {
         MIGRATING_BUILTINS_COSTS
@@ -110,7 +110,7 @@ static_assertions::const_assert_eq!(
 pub const MIGRATING_BUILTINS_COSTS: &[(Pubkey, BuiltinCost)] = &[(
     stake::id(),
     BuiltinCost::Migrating(MigratingBuiltinCost {
-        native_cost: solana_stake_program::stake_instruction::DEFAULT_COMPUTE_UNITS,
+        native_cost: gorbagana_stake_program::stake_instruction::DEFAULT_COMPUTE_UNITS,
         core_bpf_migration_feature: feature_set::migrate_stake_program_to_core_bpf::id(),
         position: 0,
     }),
@@ -120,43 +120,43 @@ const NON_MIGRATING_BUILTINS_COSTS: &[(Pubkey, BuiltinCost)] = &[
     (
         vote::id(),
         BuiltinCost::NotMigrating(NotMigratingBuiltinCost {
-            native_cost: solana_vote_program::vote_processor::DEFAULT_COMPUTE_UNITS,
+            native_cost: gorbagana_vote_program::vote_processor::DEFAULT_COMPUTE_UNITS,
         }),
     ),
     (
         system_program::id(),
         BuiltinCost::NotMigrating(NotMigratingBuiltinCost {
-            native_cost: solana_system_program::system_processor::DEFAULT_COMPUTE_UNITS,
+            native_cost: gorbagana_system_program::system_processor::DEFAULT_COMPUTE_UNITS,
         }),
     ),
     (
         compute_budget::id(),
         BuiltinCost::NotMigrating(NotMigratingBuiltinCost {
-            native_cost: solana_compute_budget_program::DEFAULT_COMPUTE_UNITS,
+            native_cost: gorbagana_compute_budget_program::DEFAULT_COMPUTE_UNITS,
         }),
     ),
     (
         bpf_loader_upgradeable::id(),
         BuiltinCost::NotMigrating(NotMigratingBuiltinCost {
-            native_cost: solana_bpf_loader_program::UPGRADEABLE_LOADER_COMPUTE_UNITS,
+            native_cost: gorbagana_bpf_loader_program::UPGRADEABLE_LOADER_COMPUTE_UNITS,
         }),
     ),
     (
         bpf_loader_deprecated::id(),
         BuiltinCost::NotMigrating(NotMigratingBuiltinCost {
-            native_cost: solana_bpf_loader_program::DEPRECATED_LOADER_COMPUTE_UNITS,
+            native_cost: gorbagana_bpf_loader_program::DEPRECATED_LOADER_COMPUTE_UNITS,
         }),
     ),
     (
         bpf_loader::id(),
         BuiltinCost::NotMigrating(NotMigratingBuiltinCost {
-            native_cost: solana_bpf_loader_program::DEFAULT_LOADER_COMPUTE_UNITS,
+            native_cost: gorbagana_bpf_loader_program::DEFAULT_LOADER_COMPUTE_UNITS,
         }),
     ),
     (
         loader_v4::id(),
         BuiltinCost::NotMigrating(NotMigratingBuiltinCost {
-            native_cost: solana_loader_v4_program::DEFAULT_COMPUTE_UNITS,
+            native_cost: gorbagana_loader_v4_program::DEFAULT_COMPUTE_UNITS,
         }),
     ),
     // Note: These are precompile, run directly in bank during sanitizing;
@@ -270,13 +270,13 @@ mod test {
     fn test_get_builtin_instruction_cost() {
         // use native cost if no migration planned
         assert_eq!(
-            Some(solana_compute_budget_program::DEFAULT_COMPUTE_UNITS),
+            Some(gorbagana_compute_budget_program::DEFAULT_COMPUTE_UNITS),
             get_builtin_instruction_cost(&compute_budget::id(), &FeatureSet::all_enabled())
         );
 
         // use native cost if migration is planned but not activated
         assert_eq!(
-            Some(solana_stake_program::stake_instruction::DEFAULT_COMPUTE_UNITS),
+            Some(gorbagana_stake_program::stake_instruction::DEFAULT_COMPUTE_UNITS),
             get_builtin_instruction_cost(&stake::id(), &FeatureSet::default())
         );
 

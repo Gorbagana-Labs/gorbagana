@@ -1,11 +1,11 @@
 use {
     log::{error, info},
-    solana_client::connection_cache::ConnectionCache as ClientConnectionCache,
-    solana_keypair::Keypair,
-    solana_pubkey::Pubkey,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_signer::Signer,
-    solana_streamer::streamer::StakedNodes,
+    gorbagana_client::connection_cache::ConnectionCache as ClientConnectionCache,
+    gorbagana_keypair::Keypair,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_signer::Signer,
+    gorbagana_streamer::streamer::StakedNodes,
     std::{
         collections::HashMap,
         net::IpAddr,
@@ -58,13 +58,13 @@ pub fn create_connection_cache(
 ) -> ClientConnectionCache {
     if !use_quic {
         return ClientConnectionCache::with_udp(
-            "solana-tps-connection_cache_udp",
+            "gorbagana-tps-connection_cache_udp",
             tpu_connection_pool_size,
         );
     }
     if client_node_id.is_none() {
         return ClientConnectionCache::new_quic(
-            "solana-tps-connection_cache_quic",
+            "gorbagana-tps-connection_cache_quic",
             tpu_connection_pool_size,
         );
     }
@@ -85,7 +85,7 @@ pub fn create_connection_cache(
         HashMap::<Pubkey, u64>::default(), // overrides
     )));
     ClientConnectionCache::new_with_client_options(
-        "solana-tps-connection_cache_quic",
+        "gorbagana-tps-connection_cache_quic",
         tpu_connection_pool_size,
         None,
         Some((client_node_id, bind_address)),

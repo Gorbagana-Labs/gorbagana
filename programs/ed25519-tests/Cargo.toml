@@ -1,5 +1,5 @@
 [package]
-name = "solana-ed25519-program-tests"
+name = "gorbagana-ed25519-program-tests"
 publish = false
 version = { workspace = true }
 authors = { workspace = true }
@@ -15,10 +15,10 @@ targets = ["x86_64-unknown-linux-gnu"]
 assert_matches = { workspace = true }
 ed25519-dalek = { workspace = true }
 rand = { workspace = true }
-solana-ed25519-program = { workspace = true }
-solana-instruction = { workspace = true }
-solana-precompile-error = { workspace = true }
-solana-program-test = { workspace = true }
-solana-signer = { workspace = true }
-solana-transaction = { workspace = true }
-solana-transaction-error = { workspace = true }
+gorbagana-ed25519-program = { workspace = true }
+gorbagana-instruction = { workspace = true }
+gorbagana-precompile-error = { workspace = true }
+gorbagana-program-test = { workspace = true }
+gorbagana-signer = { workspace = true }
+gorbagana-transaction = { workspace = true }
+gorbagana-transaction-error = { workspace = true }

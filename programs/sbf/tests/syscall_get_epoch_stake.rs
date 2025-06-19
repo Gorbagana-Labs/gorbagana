@@ -1,10 +1,10 @@
 #![cfg(feature = "sbf_rust")]
 
 use {
-    solana_instruction::{AccountMeta, Instruction},
-    solana_keypair::Keypair,
-    solana_message::Message,
-    solana_runtime::{
+    gorbagana_instruction::{AccountMeta, Instruction},
+    gorbagana_keypair::Keypair,
+    gorbagana_message::Message,
+    gorbagana_runtime::{
         bank::Bank,
         bank_client::BankClient,
         epoch_stakes::VersionedEpochStakes,
@@ -13,17 +13,17 @@ use {
         },
         loader_utils::load_program_of_loader_v4,
     },
-    solana_runtime_transaction::runtime_transaction::RuntimeTransaction,
-    solana_signer::Signer,
-    solana_transaction::Transaction,
-    solana_vote::vote_account::VoteAccount,
-    solana_vote_program::vote_state::create_account_with_authorized,
+    gorbagana_runtime_transaction::runtime_transaction::RuntimeTransaction,
+    gorbagana_signer::Signer,
+    gorbagana_transaction::Transaction,
+    gorbagana_vote::vote_account::VoteAccount,
+    gorbagana_vote_program::vote_state::create_account_with_authorized,
     std::collections::HashMap,
 };
 
 #[test]
 fn test_syscall_get_epoch_stake() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     // Two vote accounts with stake.
     let stakes = vec![100_000_000, 500_000_000];
@@ -74,7 +74,7 @@ fn test_syscall_get_epoch_stake() {
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_syscall_get_epoch_stake",
+        "gorbagana_sbf_syscall_get_epoch_stake",
     );
     bank.freeze();
 

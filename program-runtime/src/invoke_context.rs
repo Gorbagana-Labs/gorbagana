@@ -8,32 +8,32 @@ use {
         stable_log,
         sysvar_cache::SysvarCache,
     },
-    solana_account::{create_account_shared_data_for_test, AccountSharedData},
-    solana_clock::Slot,
-    solana_epoch_schedule::EpochSchedule,
-    solana_hash::Hash,
-    solana_instruction::{error::InstructionError, AccountMeta},
-    solana_log_collector::{ic_msg, LogCollector},
-    solana_measure::measure::Measure,
-    solana_pubkey::Pubkey,
-    solana_sbpf::{
+    gorbagana_account::{create_account_shared_data_for_test, AccountSharedData},
+    gorbagana_clock::Slot,
+    gorbagana_epoch_schedule::EpochSchedule,
+    gorbagana_hash::Hash,
+    gorbagana_instruction::{error::InstructionError, AccountMeta},
+    gorbagana_log_collector::{ic_msg, LogCollector},
+    gorbagana_measure::measure::Measure,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sbpf::{
         ebpf::MM_HEAP_START,
         error::{EbpfError, ProgramResult},
         memory_region::MemoryMapping,
         program::{BuiltinFunction, SBPFVersion},
         vm::{Config, ContextObject, EbpfVm},
     },
-    solana_sdk_ids::{
+    gorbagana_sdk_ids::{
         bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable, loader_v4, native_loader, sysvar,
     },
-    solana_stable_layout::stable_instruction::StableInstruction,
-    solana_svm_callback::InvokeContextCallback,
-    solana_svm_feature_set::SVMFeatureSet,
-    solana_timings::{ExecuteDetailsTimings, ExecuteTimings},
-    solana_transaction_context::{
+    gorbagana_stable_layout::stable_instruction::StableInstruction,
+    gorbagana_svm_callback::InvokeContextCallback,
+    gorbagana_svm_feature_set::SVMFeatureSet,
+    gorbagana_timings::{ExecuteDetailsTimings, ExecuteTimings},
+    gorbagana_transaction_context::{
         IndexOfAccount, InstructionAccount, TransactionAccount, TransactionContext,
     },
-    solana_type_overrides::sync::{atomic::Ordering, Arc},
+    gorbagana_type_overrides::sync::{atomic::Ordering, Arc},
     std::{
         alloc::Layout,
         cell::RefCell,
@@ -48,7 +48,7 @@ pub type BuiltinFunctionWithContext = BuiltinFunction<InvokeContext<'static>>;
 #[macro_export]
 macro_rules! declare_process_instruction {
     ($process_instruction:ident, $cu_to_consume:expr, |$invoke_context:ident| $inner:tt) => {
-        $crate::solana_sbpf::declare_builtin_function!(
+        $crate::gorbagana_sbpf::declare_builtin_function!(
             $process_instruction,
             fn rust(
                 invoke_context: &mut $crate::invoke_context::InvokeContext,
@@ -57,7 +57,7 @@ macro_rules! declare_process_instruction {
                 _arg2: u64,
                 _arg3: u64,
                 _arg4: u64,
-                _memory_mapping: &mut $crate::solana_sbpf::memory_region::MemoryMapping,
+                _memory_mapping: &mut $crate::gorbagana_sbpf::memory_region::MemoryMapping,
             ) -> std::result::Result<u64, Box<dyn std::error::Error>> {
                 fn process_instruction_inner(
                     $invoke_context: &mut $crate::invoke_context::InvokeContext,
@@ -295,7 +295,7 @@ impl<'a> InvokeContext<'a> {
     }
 
     /// Current height of the invocation stack, top level instructions are height
-    /// `solana_instruction::TRANSACTION_LEVEL_STACK_HEIGHT`
+    /// `gorbagana_instruction::TRANSACTION_LEVEL_STACK_HEIGHT`
     pub fn get_stack_height(&self) -> usize {
         self.transaction_context
             .get_instruction_context_stack_height()
@@ -739,8 +739,8 @@ macro_rules! with_mock_invoke_context_with_feature_set {
         $transaction_accounts:expr $(,)?
     ) => {
         use {
-            solana_log_collector::LogCollector,
-            solana_svm_callback::InvokeContextCallback,
+            gorbagana_log_collector::LogCollector,
+            gorbagana_svm_callback::InvokeContextCallback,
             $crate::{
                 __private::{Hash, ReadableAccount, Rent, TransactionContext},
                 execution_budget::{SVMTransactionExecutionBudget, SVMTransactionExecutionCost},
@@ -805,7 +805,7 @@ macro_rules! with_mock_invoke_context {
         $transaction_accounts:expr $(,)?
     ) => {
         use $crate::with_mock_invoke_context_with_feature_set;
-        let feature_set = &solana_svm_feature_set::SVMFeatureSet::default();
+        let feature_set = &gorbagana_svm_feature_set::SVMFeatureSet::default();
         with_mock_invoke_context_with_feature_set!(
             $invoke_context,
             $transaction_context,
@@ -933,9 +933,9 @@ mod tests {
         super::*,
         crate::execution_budget::DEFAULT_INSTRUCTION_COMPUTE_UNIT_LIMIT,
         serde::{Deserialize, Serialize},
-        solana_account::WritableAccount,
-        solana_instruction::Instruction,
-        solana_rent::Rent,
+        gorbagana_account::WritableAccount,
+        gorbagana_instruction::Instruction,
+        gorbagana_rent::Rent,
         test_case::test_case,
     };
 
@@ -1068,9 +1068,9 @@ mod tests {
         let mut transaction_accounts = vec![];
         let mut instruction_accounts = vec![];
         for index in 0..one_more_than_max_depth {
-            invoke_stack.push(solana_pubkey::new_rand());
+            invoke_stack.push(gorbagana_pubkey::new_rand());
             transaction_accounts.push((
-                solana_pubkey::new_rand(),
+                gorbagana_pubkey::new_rand(),
                 AccountSharedData::new(index as u64, 1, invoke_stack.get(index).unwrap()),
             ));
             instruction_accounts.push(InstructionAccount {
@@ -1084,7 +1084,7 @@ mod tests {
         for (index, program_id) in invoke_stack.iter().enumerate() {
             transaction_accounts.push((
                 *program_id,
-                AccountSharedData::new(1, 1, &solana_pubkey::Pubkey::default()),
+                AccountSharedData::new(1, 1, &gorbagana_pubkey::Pubkey::default()),
             ));
             instruction_accounts.push(InstructionAccount {
                 index_in_transaction: index as IndexOfAccount,
@@ -1143,19 +1143,19 @@ mod tests {
         instruction: MockInstruction,
         expected_result: Result<(), InstructionError>,
     ) {
-        let callee_program_id = solana_pubkey::new_rand();
+        let callee_program_id = gorbagana_pubkey::new_rand();
         let owned_account = AccountSharedData::new(42, 1, &callee_program_id);
-        let not_owned_account = AccountSharedData::new(84, 1, &solana_pubkey::new_rand());
-        let readonly_account = AccountSharedData::new(168, 1, &solana_pubkey::new_rand());
+        let not_owned_account = AccountSharedData::new(84, 1, &gorbagana_pubkey::new_rand());
+        let readonly_account = AccountSharedData::new(168, 1, &gorbagana_pubkey::new_rand());
         let loader_account = AccountSharedData::new(0, 1, &native_loader::id());
         let mut program_account = AccountSharedData::new(1, 1, &native_loader::id());
         program_account.set_executable(true);
         let transaction_accounts = vec![
-            (solana_pubkey::new_rand(), owned_account),
-            (solana_pubkey::new_rand(), not_owned_account),
-            (solana_pubkey::new_rand(), readonly_account),
+            (gorbagana_pubkey::new_rand(), owned_account),
+            (gorbagana_pubkey::new_rand(), not_owned_account),
+            (gorbagana_pubkey::new_rand(), readonly_account),
             (callee_program_id, program_account),
-            (solana_pubkey::new_rand(), loader_account),
+            (gorbagana_pubkey::new_rand(), loader_account),
         ];
         let metas = vec![
             AccountMeta::new(transaction_accounts.first().unwrap().0, false),
@@ -1199,19 +1199,19 @@ mod tests {
     fn test_process_instruction_compute_unit_consumption(
         expected_result: Result<(), InstructionError>,
     ) {
-        let callee_program_id = solana_pubkey::new_rand();
+        let callee_program_id = gorbagana_pubkey::new_rand();
         let owned_account = AccountSharedData::new(42, 1, &callee_program_id);
-        let not_owned_account = AccountSharedData::new(84, 1, &solana_pubkey::new_rand());
-        let readonly_account = AccountSharedData::new(168, 1, &solana_pubkey::new_rand());
+        let not_owned_account = AccountSharedData::new(84, 1, &gorbagana_pubkey::new_rand());
+        let readonly_account = AccountSharedData::new(168, 1, &gorbagana_pubkey::new_rand());
         let loader_account = AccountSharedData::new(0, 1, &native_loader::id());
         let mut program_account = AccountSharedData::new(1, 1, &native_loader::id());
         program_account.set_executable(true);
         let transaction_accounts = vec![
-            (solana_pubkey::new_rand(), owned_account),
-            (solana_pubkey::new_rand(), not_owned_account),
-            (solana_pubkey::new_rand(), readonly_account),
+            (gorbagana_pubkey::new_rand(), owned_account),
+            (gorbagana_pubkey::new_rand(), not_owned_account),
+            (gorbagana_pubkey::new_rand(), readonly_account),
             (callee_program_id, program_account),
-            (solana_pubkey::new_rand(), loader_account),
+            (gorbagana_pubkey::new_rand(), loader_account),
         ];
         let metas = vec![
             AccountMeta::new(transaction_accounts.first().unwrap().0, false),
@@ -1280,7 +1280,7 @@ mod tests {
 
     #[test]
     fn test_invoke_context_compute_budget() {
-        let transaction_accounts = vec![(solana_pubkey::new_rand(), AccountSharedData::default())];
+        let transaction_accounts = vec![(gorbagana_pubkey::new_rand(), AccountSharedData::default())];
         let execution_budget = SVMTransactionExecutionBudget {
             compute_unit_limit: u64::from(DEFAULT_INSTRUCTION_COMPUTE_UNIT_LIMIT),
             ..SVMTransactionExecutionBudget::default()

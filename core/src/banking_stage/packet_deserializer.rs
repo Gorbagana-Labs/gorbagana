@@ -7,7 +7,7 @@ use {
     },
     agave_banking_stage_ingress_types::{BankingPacketBatch, BankingPacketReceiver},
     crossbeam_channel::RecvTimeoutError,
-    solana_perf::packet::PacketBatch,
+    gorbagana_perf::packet::PacketBatch,
     std::{num::Saturating, time::{Duration, Instant}},
 };
 
@@ -185,12 +185,12 @@ impl PacketDeserializer {
 mod tests {
     use {
         super::*,
-        solana_perf::packet::to_packet_batches,
-        solana_hash::Hash,
-        solana_pubkey::Pubkey,
-        solana_keypair::Keypair,
-        solana_system_transaction as system_transaction,
-        solana_transaction::Transaction,
+        gorbagana_perf::packet::to_packet_batches,
+        gorbagana_hash::Hash,
+        gorbagana_pubkey::Pubkey,
+        gorbagana_keypair::Keypair,
+        gorbagana_system_transaction as system_transaction,
+        gorbagana_transaction::Transaction,
     };
 
     fn random_transfer() -> Transaction {

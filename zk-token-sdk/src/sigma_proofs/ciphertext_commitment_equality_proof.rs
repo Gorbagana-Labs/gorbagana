@@ -8,7 +8,7 @@
 //! The protocol guarantees computationally soundness (by the hardness of discrete log) and perfect
 //! zero-knowledge in the random oracle model.
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use {
     crate::{
         encryption::{
@@ -53,7 +53,7 @@ pub struct CiphertextCommitmentEqualityProof {
 }
 
 #[allow(non_snake_case)]
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl CiphertextCommitmentEqualityProof {
     /// Creates a ciphertext-commitment equality proof.
     ///

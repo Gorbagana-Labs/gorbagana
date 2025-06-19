@@ -1,5 +1,5 @@
 [package]
-name = "solana-sbf-rust-simulation"
+name = "gorbagana-sbf-rust-simulation"
 version = { workspace = true }
 description = { workspace = true }
 authors = { workspace = true }
@@ -12,13 +12,13 @@ edition = { workspace = true }
 crate-type = ["cdylib"]
 
 [dependencies]
-solana-account-info = { workspace = true }
-solana-clock = { workspace = true }
-solana-msg = { workspace = true }
-solana-program-entrypoint = { workspace = true }
-solana-program-error = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-sysvar = { workspace = true }
+gorbagana-account-info = { workspace = true }
+gorbagana-clock = { workspace = true }
+gorbagana-msg = { workspace = true }
+gorbagana-program-entrypoint = { workspace = true }
+gorbagana-program-error = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-sysvar = { workspace = true }
 
 [lints]
 workspace = true

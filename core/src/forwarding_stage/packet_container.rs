@@ -1,4 +1,4 @@
-use {min_max_heap::MinMaxHeap, solana_perf::packet::BytesPacket};
+use {min_max_heap::MinMaxHeap, gorbagana_perf::packet::BytesPacket};
 
 /// Container for storing packets and their priorities.
 pub struct PacketContainer(MinMaxHeap<PacketContainerEntry>);
@@ -59,7 +59,7 @@ impl PacketContainerEntry {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, solana_packet::PacketFlags};
+    use {super::*, gorbagana_packet::PacketFlags};
 
     fn simple_packet_with_flags(packet_flags: PacketFlags) -> BytesPacket {
         let mut packet = BytesPacket::empty();

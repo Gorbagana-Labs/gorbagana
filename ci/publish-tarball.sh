@@ -68,7 +68,7 @@ windows)
   ;;
 esac
 
-RELEASE_BASENAME="${RELEASE_BASENAME:=solana-release}"
+RELEASE_BASENAME="${RELEASE_BASENAME:=gorbagana-release}"
 TARBALL_BASENAME="${TARBALL_BASENAME:="$RELEASE_BASENAME"}"
 
 echo --- Creating release tarball
@@ -119,7 +119,7 @@ for file in "${TARBALL_BASENAME}"-$TARGET.tar.bz2 "${TARBALL_BASENAME}"-$TARGET.
 
   if [[ -n $BUILDKITE ]]; then
     echo --- GCS Store: "$file"
-    upload-gcs-artifact "/solana/$file" gs://anza-release/"$CHANNEL_OR_TAG"/"$file"
+    upload-gcs-artifact "/gorbagana/$file" gs://anza-release/"$CHANNEL_OR_TAG"/"$file"
 
     echo Published to:
     $DRYRUN ci/format-url.sh https://release.anza.xyz/"$CHANNEL_OR_TAG"/"$file"

@@ -1,20 +1,20 @@
 #![allow(dead_code)]
 
 use {
-    solana_account::{state_traits::StateMut, AccountSharedData},
-    solana_instruction::{error::InstructionError, Instruction},
-    solana_keypair::Keypair,
-    solana_loader_v3_interface::state::UpgradeableLoaderState,
-    solana_program_test::*,
-    solana_pubkey::Pubkey,
-    solana_sdk_ids::bpf_loader_upgradeable::id,
-    solana_signer::Signer,
-    solana_transaction::Transaction,
-    solana_transaction_error::TransactionError,
+    gorbagana_account::{state_traits::StateMut, AccountSharedData},
+    gorbagana_instruction::{error::InstructionError, Instruction},
+    gorbagana_keypair::Keypair,
+    gorbagana_loader_v3_interface::state::UpgradeableLoaderState,
+    gorbagana_program_test::*,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sdk_ids::bpf_loader_upgradeable::id,
+    gorbagana_signer::Signer,
+    gorbagana_transaction::Transaction,
+    gorbagana_transaction_error::TransactionError,
 };
 
 pub async fn setup_test_context() -> ProgramTestContext {
-    let program_test = ProgramTest::new("", id(), Some(solana_bpf_loader_program::Entrypoint::vm));
+    let program_test = ProgramTest::new("", id(), Some(gorbagana_bpf_loader_program::Entrypoint::vm));
     program_test.start_with_context().await
 }
 

@@ -2,19 +2,19 @@ pub use crate::nonblocking::tpu_client::TpuSenderError;
 use {
     crate::nonblocking::tpu_client::TpuClient as NonblockingTpuClient,
     rayon::iter::{IntoParallelIterator, ParallelIterator},
-    solana_client_traits::AsyncClient,
-    solana_clock::Slot,
-    solana_connection_cache::{
+    gorbagana_client_traits::AsyncClient,
+    gorbagana_clock::Slot,
+    gorbagana_connection_cache::{
         client_connection::ClientConnection,
         connection_cache::{
             ConnectionCache, ConnectionManager, ConnectionPool, NewConnectionConfig,
         },
     },
-    solana_net_utils::bind_to_unspecified,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_signature::Signature,
-    solana_transaction::{versioned::VersionedTransaction, Transaction},
-    solana_transaction_error::{TransportError, TransportResult},
+    gorbagana_net_utils::bind_to_unspecified,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_signature::Signature,
+    gorbagana_transaction::{versioned::VersionedTransaction, Transaction},
+    gorbagana_transaction_error::{TransportError, TransportResult},
     std::{
         collections::VecDeque,
         net::UdpSocket,
@@ -23,8 +23,8 @@ use {
 };
 #[cfg(feature = "spinner")]
 use {
-    solana_message::Message, solana_signer::signers::Signers,
-    solana_transaction_error::TransactionError, tokio::time::Duration,
+    gorbagana_message::Message, gorbagana_signer::signers::Signers,
+    gorbagana_transaction_error::TransactionError, tokio::time::Duration,
 };
 
 pub const DEFAULT_TPU_ENABLE_UDP: bool = false;

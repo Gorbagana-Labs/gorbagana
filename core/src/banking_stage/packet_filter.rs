@@ -1,8 +1,8 @@
 use {
     super::immutable_deserialized_packet::ImmutableDeserializedPacket,
     agave_feature_set::FeatureSet,
-    solana_builtins_default_costs::get_builtin_instruction_cost,
-    solana_sdk_ids::{ed25519_program, secp256k1_program, secp256r1_program},
+    gorbagana_builtins_default_costs::get_builtin_instruction_cost,
+    gorbagana_sdk_ids::{ed25519_program, secp256k1_program, secp256r1_program},
     std::num::Saturating,
     thiserror::Error,
 };

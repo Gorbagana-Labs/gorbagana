@@ -1,7 +1,7 @@
 use {
     crate::{args::StakeArgs, commands::Error},
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_stake_interface::state::StakeStateV2,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_stake_interface::state::StakeStateV2,
 };
 
 pub fn update_stake_args(client: &RpcClient, args: &mut Option<StakeArgs>) -> Result<(), Error> {

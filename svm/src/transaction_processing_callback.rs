@@ -1,1 +1,1 @@
-pub use solana_svm_callback::{AccountState, TransactionProcessingCallback};
+pub use gorbagana_svm_callback::{AccountState, TransactionProcessingCallback};

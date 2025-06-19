@@ -6,11 +6,11 @@ use {
     crate::errors::AuthenticatedEncryptionError,
     base64::{prelude::BASE64_STANDARD, Engine},
     sha3::{Digest, Sha3_512},
-    solana_derivation_path::DerivationPath,
-    solana_seed_derivable::SeedDerivable,
-    solana_seed_phrase::generate_seed_from_seed_phrase_and_passphrase,
-    solana_signature::Signature,
-    solana_signer::{EncodableKey, Signer, SignerError},
+    gorbagana_derivation_path::DerivationPath,
+    gorbagana_seed_derivable::SeedDerivable,
+    gorbagana_seed_phrase::generate_seed_from_seed_phrase_and_passphrase,
+    gorbagana_signature::Signature,
+    gorbagana_signer::{EncodableKey, Signer, SignerError},
     std::{
         convert::TryInto,
         error, fmt,
@@ -19,7 +19,7 @@ use {
     subtle::ConstantTimeEq,
     zeroize::Zeroize,
 };
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use {
     aes_gcm_siv::{
         aead::{Aead, KeyInit},
@@ -46,14 +46,14 @@ impl AuthenticatedEncryption {
     /// Generates an authenticated encryption key.
     ///
     /// This function is randomized. It internally samples a 128-bit key using `OsRng`.
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     fn keygen() -> AeKey {
         AeKey(OsRng.gen::<[u8; AE_KEY_LEN]>())
     }
 
     /// On input of an authenticated encryption key and an amount, the function returns a
     /// corresponding authenticated encryption ciphertext.
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     fn encrypt(key: &AeKey, balance: u64) -> AeCiphertext {
         let mut plaintext = balance.to_le_bytes();
         let nonce: Nonce = OsRng.gen::<[u8; NONCE_LEN]>();
@@ -73,7 +73,7 @@ impl AuthenticatedEncryption {
 
     /// On input of an authenticated encryption key and a ciphertext, the function returns the
     /// originally encrypted amount.
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     fn decrypt(key: &AeKey, ciphertext: &AeCiphertext) -> Option<u64> {
         let plaintext = Aes128GcmSiv::new(&key.0.into())
             .decrypt(&ciphertext.nonce.into(), ciphertext.ciphertext.as_ref());
@@ -90,10 +90,10 @@ impl AuthenticatedEncryption {
 #[derive(Debug, Zeroize, Eq, PartialEq)]
 pub struct AeKey([u8; AE_KEY_LEN]);
 impl AeKey {
-    /// Deterministically derives an authenticated encryption key from a Solana signer and a public
+    /// Deterministically derives an authenticated encryption key from a Gorbagana signer and a public
     /// seed.
     ///
-    /// This function exists for applications where a user may not wish to maintain a Solana signer
+    /// This function exists for applications where a user may not wish to maintain a Gorbagana signer
     /// and an authenticated encryption key separately. Instead, a user can derive the ElGamal
     /// keypair on-the-fly whenever encrytion/decryption is needed.
     pub fn new_from_signer(
@@ -104,7 +104,7 @@ impl AeKey {
         Self::from_seed(&seed)
     }
 
-    /// Derive a seed from a Solana signer used to generate an authenticated encryption key.
+    /// Derive a seed from a Gorbagana signer used to generate an authenticated encryption key.
     ///
     /// The seed is derived as the hash of the signature of a public seed.
     pub fn seed_from_signer(
@@ -264,8 +264,8 @@ impl fmt::Display for AeCiphertext {
 #[cfg(test)]
 mod tests {
     use {
-        super::*, solana_keypair::Keypair, solana_pubkey::Pubkey,
-        solana_signer::null_signer::NullSigner,
+        super::*, gorbagana_keypair::Keypair, gorbagana_pubkey::Pubkey,
+        gorbagana_signer::null_signer::NullSigner,
     };
 
     #[test]

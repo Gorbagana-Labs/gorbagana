@@ -5,25 +5,25 @@ use {
     log::*,
     rand::{thread_rng, Rng},
     rayon::prelude::*,
-    solana_clap_utils::input_parsers::pubkey_of,
-    solana_cli::{
+    gorbagana_clap_utils::input_parsers::pubkey_of,
+    gorbagana_cli::{
         cli::{process_command, CliCommand, CliConfig},
         program::ProgramCliCommand,
     },
-    solana_client::transaction_executor::TransactionExecutor,
-    solana_commitment_config::CommitmentConfig,
-    solana_faucet::faucet::{request_airdrop_transaction, FAUCET_PORT},
-    solana_gossip::gossip_service::discover,
-    solana_instruction::{AccountMeta, Instruction},
-    solana_keypair::{read_keypair_file, Keypair},
-    solana_message::Message,
-    solana_packet::PACKET_DATA_SIZE,
-    solana_pubkey::Pubkey,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_signer::Signer,
-    solana_streamer::socket::SocketAddrSpace,
-    solana_system_interface::instruction as system_instruction,
-    solana_transaction::Transaction,
+    gorbagana_client::transaction_executor::TransactionExecutor,
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_faucet::faucet::{request_airdrop_transaction, FAUCET_PORT},
+    gorbagana_gossip::gossip_service::discover,
+    gorbagana_instruction::{AccountMeta, Instruction},
+    gorbagana_keypair::{read_keypair_file, Keypair},
+    gorbagana_message::Message,
+    gorbagana_packet::PACKET_DATA_SIZE,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_signer::Signer,
+    gorbagana_streamer::socket::SocketAddrSpace,
+    gorbagana_system_interface::instruction as system_instruction,
+    gorbagana_transaction::Transaction,
     std::{
         net::{Ipv4Addr, SocketAddr},
         process::exit,
@@ -428,10 +428,10 @@ fn run_transactions_dos(
 }
 
 fn main() {
-    solana_logger::setup_with_default_filter();
+    gorbagana_logger::setup_with_default_filter();
     let matches = App::new(crate_name!())
         .about(crate_description!())
-        .version(solana_version::version!())
+        .version(gorbagana_version::version!())
         .arg(
             Arg::with_name("entrypoint")
                 .long("entrypoint")
@@ -549,7 +549,7 @@ fn main() {
     let port = if skip_gossip { 8899 } else { 8001 };
     let mut entrypoint_addr = SocketAddr::from((Ipv4Addr::LOCALHOST, port));
     if let Some(addr) = matches.value_of("entrypoint") {
-        entrypoint_addr = solana_net_utils::parse_host_port(addr).unwrap_or_else(|e| {
+        entrypoint_addr = gorbagana_net_utils::parse_host_port(addr).unwrap_or_else(|e| {
             eprintln!("failed to parse entrypoint address: {e}");
             exit(1)
         });
@@ -559,7 +559,7 @@ fn main() {
             Some(version)
         } else {
             Some(
-                solana_net_utils::get_cluster_shred_version(&entrypoint_addr).unwrap_or_else(
+                gorbagana_net_utils::get_cluster_shred_version(&entrypoint_addr).unwrap_or_else(
                     |err| {
                         eprintln!("Failed to get shred version: {}", err);
                         exit(1);
@@ -574,7 +574,7 @@ fn main() {
     let just_calculate_fees = matches.is_present("just_calculate_fees");
     let mut faucet_addr = SocketAddr::from((Ipv4Addr::LOCALHOST, FAUCET_PORT));
     if let Some(addr) = matches.value_of("faucet_addr") {
-        faucet_addr = solana_net_utils::parse_host_port(addr).unwrap_or_else(|e| {
+        faucet_addr = gorbagana_net_utils::parse_host_port(addr).unwrap_or_else(|e| {
             eprintln!("failed to parse entrypoint address: {e}");
             exit(1)
         });
@@ -662,18 +662,18 @@ fn main() {
 pub mod test {
     use {
         super::*,
-        solana_core::validator::ValidatorConfig,
-        solana_local_cluster::{
+        gorbagana_core::validator::ValidatorConfig,
+        gorbagana_local_cluster::{
             local_cluster::{ClusterConfig, LocalCluster},
             validator_configs::make_identical_validator_configs,
         },
-        solana_measure::measure::Measure,
-        solana_poh_config::PohConfig,
+        gorbagana_measure::measure::Measure,
+        gorbagana_poh_config::PohConfig,
     };
 
     #[test]
     fn test_tx_size() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let keypair = Keypair::new();
         let num_instructions = 20;
         let program_id = Pubkey::new_unique();
@@ -691,7 +691,7 @@ pub mod test {
             &account_metas,
         );
         let signers: Vec<&Keypair> = vec![&keypair];
-        let blockhash = solana_hash::Hash::default();
+        let blockhash = gorbagana_hash::Hash::default();
         let tx = Transaction::new(&signers, message, blockhash);
         let size = bincode::serialized_size(&tx).unwrap();
         info!("size:{}", size);
@@ -701,7 +701,7 @@ pub mod test {
     #[test]
     #[ignore]
     fn test_transaction_dos() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let validator_config = ValidatorConfig::default_for_test();
         let num_nodes = 1;

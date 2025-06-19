@@ -40,8 +40,8 @@ pub(in crate::parse_token) fn parse_memo_transfer_instruction(
 mod test {
     use {
         super::*,
-        solana_message::Message,
-        solana_pubkey::Pubkey,
+        gorbagana_message::Message,
+        gorbagana_pubkey::Pubkey,
         spl_token_2022::extension::memo_transfer::instruction::{
             disable_required_transfer_memos, enable_required_transfer_memos,
         },

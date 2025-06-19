@@ -3,15 +3,15 @@ extern crate test;
 
 use {
     rand::{thread_rng, Rng},
-    solana_account::{AccountSharedData, ReadableAccount},
-    solana_accounts_db::{
+    gorbagana_account::{AccountSharedData, ReadableAccount},
+    gorbagana_accounts_db::{
         accounts_file::StoredAccountsInfo,
         append_vec::{
             test_utils::{create_test_account, get_append_vec_path},
             AppendVec, StoredMeta,
         },
     },
-    solana_clock::Slot,
+    gorbagana_clock::Slot,
     std::{
         sync::{Arc, Mutex},
         thread::{sleep, spawn},

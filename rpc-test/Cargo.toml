@@ -1,7 +1,7 @@
 [package]
-name = "solana-rpc-test"
-description = "Solana RPC Test"
-documentation = "https://docs.rs/solana-rpc-test"
+name = "gorbagana-rpc-test"
+description = "Gorbagana RPC Test"
+documentation = "https://docs.rs/gorbagana-rpc-test"
 publish = false
 version = { workspace = true }
 authors = { workspace = true }
@@ -22,29 +22,29 @@ log = { workspace = true }
 reqwest = { workspace = true, features = ["blocking", "brotli", "deflate", "gzip", "rustls-tls", "json"] }
 serde = { workspace = true }
 serde_json = { workspace = true }
-solana-account-decoder = { workspace = true }
-solana-client = { workspace = true }
-solana-net-utils = { workspace = true }
-solana-pubsub-client = { workspace = true }
-solana-rpc = { workspace = true }
-solana-rpc-client = { workspace = true }
-solana-rpc-client-api = { workspace = true }
-solana-streamer = { workspace = true }
-solana-test-validator = { workspace = true }
-solana-tpu-client = { workspace = true }
-solana-transaction-status = { workspace = true }
+gorbagana-account-decoder = { workspace = true }
+gorbagana-client = { workspace = true }
+gorbagana-net-utils = { workspace = true }
+gorbagana-pubsub-client = { workspace = true }
+gorbagana-rpc = { workspace = true }
+gorbagana-rpc-client = { workspace = true }
+gorbagana-rpc-client-api = { workspace = true }
+gorbagana-streamer = { workspace = true }
+gorbagana-test-validator = { workspace = true }
+gorbagana-tpu-client = { workspace = true }
+gorbagana-transaction-status = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 
 [dev-dependencies]
-solana-clock = { workspace = true }
-solana-commitment-config = { workspace = true }
-solana-connection-cache = { workspace = true }
-solana-hash = { workspace = true }
-solana-keypair = { workspace = true }
-solana-logger = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-rent = { workspace = true }
-solana-signature = { workspace = true }
-solana-signer = { workspace = true }
-solana-system-transaction = { workspace = true }
-solana-transaction = { workspace = true }
+gorbagana-clock = { workspace = true }
+gorbagana-commitment-config = { workspace = true }
+gorbagana-connection-cache = { workspace = true }
+gorbagana-hash = { workspace = true }
+gorbagana-keypair = { workspace = true }
+gorbagana-logger = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-rent = { workspace = true }
+gorbagana-signature = { workspace = true }
+gorbagana-signer = { workspace = true }
+gorbagana-system-transaction = { workspace = true }
+gorbagana-transaction = { workspace = true }

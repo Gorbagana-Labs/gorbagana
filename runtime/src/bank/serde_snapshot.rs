@@ -20,7 +20,7 @@ mod tests {
             },
             stakes::{SerdeStakesToStakeFormat, Stakes},
         },
-        solana_accounts_db::{
+        gorbagana_accounts_db::{
             account_storage::AccountStorageMap,
             accounts_db::{
                 get_temp_accounts_paths, AccountStorageEntry, AccountsDb, AccountsDbConfig,
@@ -30,12 +30,12 @@ mod tests {
             accounts_hash::{AccountsDeltaHash, AccountsHash},
             epoch_accounts_hash::EpochAccountsHash,
         },
-        solana_epoch_schedule::EpochSchedule,
-        solana_genesis_config::create_genesis_config,
-        solana_hash::Hash,
-        solana_nohash_hasher::BuildNoHashHasher,
-        solana_pubkey::Pubkey,
-        solana_stake_interface::state::Stake,
+        gorbagana_epoch_schedule::EpochSchedule,
+        gorbagana_genesis_config::create_genesis_config,
+        gorbagana_hash::Hash,
+        gorbagana_nohash_hasher::BuildNoHashHasher,
+        gorbagana_pubkey::Pubkey,
+        gorbagana_stake_interface::state::Stake,
         std::{
             io::{BufReader, BufWriter, Cursor},
             mem,
@@ -266,7 +266,7 @@ mod tests {
     #[test_case(StorageAccess::Mmap)]
     #[test_case(StorageAccess::File)]
     fn test_extra_fields_eof(storage_access: StorageAccess) {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let (genesis_config, _) = create_genesis_config(500);
 
         let bank0 = Arc::new(Bank::new_for_tests(&genesis_config));
@@ -336,7 +336,7 @@ mod tests {
             None,
             None,
             false,
-            Some(solana_accounts_db::accounts_db::ACCOUNTS_DB_CONFIG_FOR_TESTING),
+            Some(gorbagana_accounts_db::accounts_db::ACCOUNTS_DB_CONFIG_FOR_TESTING),
             None,
             Arc::default(),
         )
@@ -351,7 +351,7 @@ mod tests {
 
     #[test]
     fn test_extra_fields_full_snapshot_archive() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let (mut genesis_config, _) = create_genesis_config(500);
         activate_all_features(&mut genesis_config);
@@ -396,7 +396,7 @@ mod tests {
             false,
             false,
             false,
-            Some(solana_accounts_db::accounts_db::ACCOUNTS_DB_CONFIG_FOR_TESTING),
+            Some(gorbagana_accounts_db::accounts_db::ACCOUNTS_DB_CONFIG_FOR_TESTING),
             None,
             Arc::default(),
         )
@@ -411,7 +411,7 @@ mod tests {
     #[test_case(StorageAccess::Mmap)]
     #[test_case(StorageAccess::File)]
     fn test_blank_extra_fields(storage_access: StorageAccess) {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let (genesis_config, _) = create_genesis_config(500);
 
         let bank0 = Arc::new(Bank::new_for_tests(&genesis_config));
@@ -468,7 +468,7 @@ mod tests {
             None,
             None,
             false,
-            Some(solana_accounts_db::accounts_db::ACCOUNTS_DB_CONFIG_FOR_TESTING),
+            Some(gorbagana_accounts_db::accounts_db::ACCOUNTS_DB_CONFIG_FOR_TESTING),
             None,
             Arc::default(),
         )
@@ -486,8 +486,8 @@ mod tests {
     mod test_bank_serialize {
         use {
             super::*, crate::bank::BankHashStats,
-            solana_accounts_db::accounts_hash::AccountsLtHash, solana_clock::Slot,
-            solana_frozen_abi::abi_example::AbiExample, solana_lattice_hash::lt_hash::LtHash,
+            gorbagana_accounts_db::accounts_hash::AccountsLtHash, gorbagana_clock::Slot,
+            gorbagana_frozen_abi::abi_example::AbiExample, gorbagana_lattice_hash::lt_hash::LtHash,
             std::marker::PhantomData,
         };
 

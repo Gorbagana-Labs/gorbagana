@@ -10,13 +10,13 @@ use {
         Endpoint, IdleTimeout, ServerConfig,
     },
     rustls::KeyLogFile,
-    solana_keypair::Keypair,
-    solana_packet::PACKET_DATA_SIZE,
-    solana_perf::packet::PacketBatch,
-    solana_quic_definitions::{
+    gorbagana_keypair::Keypair,
+    gorbagana_packet::PACKET_DATA_SIZE,
+    gorbagana_perf::packet::PacketBatch,
+    gorbagana_quic_definitions::{
         NotifyKeyUpdate, QUIC_MAX_TIMEOUT, QUIC_MAX_UNSTAKED_CONCURRENT_STREAMS,
     },
-    solana_tls_utils::{new_dummy_x509_certificate, tls_server_config_builder},
+    gorbagana_tls_utils::{new_dummy_x509_certificate, tls_server_config_builder},
     std::{
         net::UdpSocket,
         num::NonZeroUsize,
@@ -35,7 +35,7 @@ pub const DEFAULT_MAX_QUIC_CONNECTIONS_PER_PEER: usize = 8;
 
 #[deprecated(
     since = "2.2.0",
-    note = "Use solana_streamer::quic::DEFAULT_MAX_STAKED_CONNECTIONS"
+    note = "Use gorbagana_streamer::quic::DEFAULT_MAX_STAKED_CONNECTIONS"
 )]
 pub const MAX_STAKED_CONNECTIONS: usize = 2000;
 
@@ -43,7 +43,7 @@ pub const DEFAULT_MAX_STAKED_CONNECTIONS: usize = 2000;
 
 #[deprecated(
     since = "2.2.0",
-    note = "Use solana_streamer::quic::DEFAULT_MAX_UNSTAKED_CONNECTIONS"
+    note = "Use gorbagana_streamer::quic::DEFAULT_MAX_UNSTAKED_CONNECTIONS"
 )]
 pub const MAX_UNSTAKED_CONNECTIONS: usize = 500;
 
@@ -706,7 +706,7 @@ mod test {
         super::*,
         crate::nonblocking::{quic::test::*, testing_utilities::check_multiple_streams},
         crossbeam_channel::unbounded,
-        solana_net_utils::bind_to_localhost,
+        gorbagana_net_utils::bind_to_localhost,
         std::net::SocketAddr,
     };
 
@@ -756,7 +756,7 @@ mod test {
 
     #[test]
     fn test_quic_timeout() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let (t, exit, receiver, server_address) = setup_quic_server();
         let runtime = rt_for_test();
         runtime.block_on(check_timeout(receiver, server_address));
@@ -766,7 +766,7 @@ mod test {
 
     #[test]
     fn test_quic_server_block_multiple_connections() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let (t, exit, _receiver, server_address) = setup_quic_server();
 
         let runtime = rt_for_test();
@@ -777,7 +777,7 @@ mod test {
 
     #[test]
     fn test_quic_server_multiple_streams() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let s = bind_to_localhost().unwrap();
         let exit = Arc::new(AtomicBool::new(false));
         let (sender, receiver) = unbounded();
@@ -811,7 +811,7 @@ mod test {
 
     #[test]
     fn test_quic_server_multiple_writes() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let (t, exit, receiver, server_address) = setup_quic_server();
 
         let runtime = rt_for_test();
@@ -822,7 +822,7 @@ mod test {
 
     #[test]
     fn test_quic_server_unstaked_node_connect_failure() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let s = bind_to_localhost().unwrap();
         let exit = Arc::new(AtomicBool::new(false));
         let (sender, _) = unbounded();

@@ -1,7 +1,7 @@
 [package]
-name = "solana-compute-budget-program"
-description = "Solana Compute Budget program"
-documentation = "https://docs.rs/solana-compute-budget-program"
+name = "gorbagana-compute-budget-program"
+description = "Gorbagana Compute Budget program"
+documentation = "https://docs.rs/gorbagana-compute-budget-program"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -14,7 +14,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [lib]
 crate-type = ["lib"]
-name = "solana_compute_budget_program"
+name = "gorbagana_compute_budget_program"
 
 [dependencies]
-solana-program-runtime = { workspace = true }
+gorbagana-program-runtime = { workspace = true }

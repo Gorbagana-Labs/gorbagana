@@ -39,10 +39,10 @@ pub mod transaction_batch;
 pub mod vote_sender_types;
 
 #[macro_use]
-extern crate solana_metrics;
+extern crate gorbagana_metrics;
 #[macro_use]
 extern crate serde_derive;
 
 #[cfg_attr(feature = "frozen-abi", macro_use)]
 #[cfg(feature = "frozen-abi")]
-extern crate solana_frozen_abi_macro;
+extern crate gorbagana_frozen_abi_macro;

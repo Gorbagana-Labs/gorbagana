@@ -15,7 +15,7 @@ proof-of-concept. Speculative submissions without proof-of-concept will be close
 with no further consideration.
 
 Please refer to the
-[Solana Program Library (SPL) security policy](https://github.com/solana-labs/solana-program-library/security/policy)
+[Gorbagana Program Library (SPL) security policy](https://github.com/gorbagana-labs/gorbagana-program-library/security/policy)
 for vulnerabilities regarding SPL programs such as SPL Token.
 
 If you haven't done so already, please **enable two-factor auth** in your GitHub account.
@@ -31,7 +31,7 @@ security issue in this email. **Only provide such details in the advisory**.
 
 If you do not receive a response from security@anza.xyz please followup with
 the team directly. You can do this in the `#core-technology` channel of the
-[Solana Tech discord server](https://solana.com/discord), by pinging the `Anza`
+[Gorbagana Tech discord server](https://gorbagana.com/discord), by pinging the `Anza`
 role in the channel and referencing the fact that you submitted a security problem.
 
 <a name="process"></a>
@@ -54,7 +54,7 @@ comment as such and then close the report.
 
 ### 2. Triage
 Within the draft security advisory, discuss and determine the severity of the issue. If necessary, members of the anza-xyz/security-incident-response group may add other github users to the advisory to assist.
-If it is determined that this is not a critical network issue then the advisory should be closed and if more follow-up is required a normal Solana public github issue should be created.
+If it is determined that this is not a critical network issue then the advisory should be closed and if more follow-up is required a normal Gorbagana public github issue should be created.
 
 ### 3. Prepare Fixes
 For the affected branches, typically all three (edge, beta and stable), prepare a fix for the issue and push them to the corresponding branch in the private repository associated with the draft security advisory.
@@ -62,7 +62,7 @@ There is no CI available in the private repository so you must build from source
 Code review from the reporter is ideal, as well as from multiple members of the core development team.
 
 ### 4. Notify Security Group Validators
-Once an ETA is available for the fix, a member of the anza-xyz/security-incident-response group should notify the validators so they can prepare for an update using the "Solana Red Alert" notification system.
+Once an ETA is available for the fix, a member of the anza-xyz/security-incident-response group should notify the validators so they can prepare for an update using the "Gorbagana Red Alert" notification system.
 The teams are all over the world and it's critical to provide actionable information at the right time. Don't be the person that wakes everybody up at 2am when a fix won't be available for hours.
 
 ### 5. Ship the patch
@@ -87,15 +87,15 @@ We currently do not use the Github workflow to publish security advisories. Once
 
 <a name="bounty"></a>
 ## Security Bug Bounties
-At its sole discretion, the Solana Foundation may offer a bounty for
-[valid reports](#reporting) of critical Solana vulnerabilities. Please see below
+At its sole discretion, the Gorbagana Foundation may offer a bounty for
+[valid reports](#reporting) of critical Gorbagana vulnerabilities. Please see below
 for more details. The submitter is not required to provide a
 mitigation to qualify.
 
 #### IMPORTANT | PLEASE NOTE
 _Beginning February 1st 2024, the Security bounty program payouts will be updated in the following ways:_
 - _Bug Bounty rewards will be denominated in SOL tokens, rather than USD value._
-_This change is to better reflect for changing value of the Solana network._
+_This change is to better reflect for changing value of the Gorbagana network._
 - _Categories will now have a discretionary range to distinguish the varying severity_
 _and impact of bugs reported within each broader category._
 
@@ -139,22 +139,22 @@ _Max: 65 SOL tokens. Min: 20 SOL tokens_
 
 ### Out of Scope:
 The following components are out of scope for the bounty program
-* Metrics: `/metrics` in the monorepo as well as https://metrics.solana.com
+* Metrics: `/metrics` in the monorepo as well as https://metrics.gorbagana.com
 * Any encrypted credentials, auth tokens, etc. checked into the repo
 * Bugs in dependencies. Please take them upstream!
 * Attacks that require social engineering
 * Any undeveloped automated tooling (scanners, etc) results. (OK with developed PoC)
 * Any asset whose source code does not exist in this repository (including, but not limited
 to, any and all web properties not explicitly listed on this page)
-* Programs in the Solana Program Library, such as SPL Token. Please refer to the
-[SPL security policy](https://github.com/solana-labs/solana-program-library/security/policy).
+* Programs in the Gorbagana Program Library, such as SPL Token. Please refer to the
+[SPL security policy](https://github.com/gorbagana-labs/gorbagana-program-library/security/policy).
 
 ### Eligibility:
 * Submissions _MUST_ include an exploit proof-of-concept to be considered eligible
 * The participant submitting the bug report shall follow the process outlined within this document
 * Valid exploits can be eligible even if they are not successfully executed on a public cluster
 * Multiple submissions for the same class of exploit are still eligible for compensation, though may be compensated at a lower rate, however these will be assessed on a case-by-case basis
-* Participants must complete KYC and sign the participation agreement here when the registrations are open https://solana.foundation/kyc. Security exploits will still be assessed and open for submission at all times. This needs only be done prior to distribution of tokens.
+* Participants must complete KYC and sign the participation agreement here when the registrations are open https://gorbagana.foundation/kyc. Security exploits will still be assessed and open for submission at all times. This needs only be done prior to distribution of tokens.
 
 ### Duplicate Reports
 Compensation for duplicative reports will be split among reporters with first to report taking priority using the following equation
@@ -178,4 +178,4 @@ bi = 2 ^ (R - ri) / ((2^R) - 1)
 ### Payment of Bug Bounties:
 * Bounties are currently awarded on a rolling/weekly basis and paid out within 30 days upon receipt of an invoice.
 * Bug bounties that are paid out in SOL are paid to stake accounts with a lockup expiring 12 months from the date of delivery of SOL.
-* **Note: payment notices need to be sent to ap@solana.org within 90 days of receiving payment advice instructions.** Failure to do so may result in forfeiture of the bug bounty reward.
+* **Note: payment notices need to be sent to ap@gorbagana.org within 90 days of receiving payment advice instructions.** Failure to do so may result in forfeiture of the bug bounty reward.

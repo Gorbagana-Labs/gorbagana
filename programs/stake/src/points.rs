@@ -1,7 +1,7 @@
 //! Information about points calculation based on stake state.
-//! Used by `solana-runtime`.
+//! Used by `gorbagana-runtime`.
 
-use {solana_pubkey::Pubkey, solana_stake_interface::state::Delegation};
+use {gorbagana_pubkey::Pubkey, gorbagana_stake_interface::state::Delegation};
 
 /// captures a rewards round as lamports to be awarded
 ///  and the total points over which those lamports

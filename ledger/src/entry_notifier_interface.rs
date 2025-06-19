@@ -1,4 +1,4 @@
-use {solana_clock::Slot, solana_entry::entry::EntrySummary, std::sync::Arc};
+use {gorbagana_clock::Slot, gorbagana_entry::entry::EntrySummary, std::sync::Arc};
 
 pub trait EntryNotifier {
     fn notify_entry(

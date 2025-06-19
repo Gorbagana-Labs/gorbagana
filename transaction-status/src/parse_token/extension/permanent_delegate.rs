@@ -1,4 +1,4 @@
-use {super::*, solana_pubkey::Pubkey};
+use {super::*, gorbagana_pubkey::Pubkey};
 
 pub(in crate::parse_token) fn parse_initialize_permanent_delegate_instruction(
     delegate: Pubkey,
@@ -18,7 +18,7 @@ pub(in crate::parse_token) fn parse_initialize_permanent_delegate_instruction(
 #[cfg(test)]
 mod test {
     use {
-        super::*, solana_message::Message, solana_pubkey::Pubkey, spl_token_2022::instruction::*,
+        super::*, gorbagana_message::Message, gorbagana_pubkey::Pubkey, spl_token_2022::instruction::*,
     };
 
     #[test]

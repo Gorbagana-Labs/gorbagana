@@ -1,9 +1,9 @@
 use {
     criterion::{black_box, criterion_group, criterion_main, Criterion, Throughput},
-    solana_message::compiled_instruction::CompiledInstruction,
-    solana_pubkey::Pubkey,
-    solana_runtime_transaction::signature_details::get_precompile_signature_details,
-    solana_svm_transaction::instruction::SVMInstruction,
+    gorbagana_message::compiled_instruction::CompiledInstruction,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_runtime_transaction::signature_details::get_precompile_signature_details,
+    gorbagana_svm_transaction::instruction::SVMInstruction,
 };
 
 fn bench_get_signature_details_empty(c: &mut Criterion) {
@@ -52,8 +52,8 @@ fn bench_get_signature_details_no_sigs_unique(c: &mut Criterion) {
 
 fn bench_get_signature_details_packed_sigs(c: &mut Criterion) {
     let program_ids = [
-        solana_sdk_ids::secp256k1_program::id(),
-        solana_sdk_ids::ed25519_program::id(),
+        gorbagana_sdk_ids::secp256k1_program::id(),
+        gorbagana_sdk_ids::ed25519_program::id(),
     ];
     for num_instructions in [4, 64] {
         let instructions = (0..num_instructions)
@@ -87,8 +87,8 @@ fn bench_get_signature_details_packed_sigs(c: &mut Criterion) {
 
 fn bench_get_signature_details_mixed_sigs(c: &mut Criterion) {
     let program_ids = [
-        solana_sdk_ids::secp256k1_program::id(),
-        solana_sdk_ids::ed25519_program::id(),
+        gorbagana_sdk_ids::secp256k1_program::id(),
+        gorbagana_sdk_ids::ed25519_program::id(),
     ]
     .into_iter()
     .chain((0..6).map(|_| Pubkey::new_unique()))

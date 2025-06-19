@@ -1,7 +1,7 @@
 use {
     crate::update_manifest::UpdateManifest,
     serde_derive::{Deserialize, Serialize},
-    solana_pubkey::Pubkey,
+    gorbagana_pubkey::Pubkey,
     std::{
         fs::{create_dir_all, File},
         io::{self, Write},
@@ -141,7 +141,7 @@ mod test {
     #[test]
     fn test_save() {
         let root_dir = env::var("CARGO_MANIFEST_DIR").expect("$CARGO_MANIFEST_DIR");
-        let json_rpc_url = "https://api.mainnet-beta.solana.com";
+        let json_rpc_url = "https://api.mainnet-beta.gorbagana.com";
         let pubkey = Pubkey::default();
         let config_name = "config.yaml";
         let config_path = format!("{root_dir}/{config_name}");
@@ -157,7 +157,7 @@ mod test {
             read_to_string(&config_path).unwrap(),
             format!(
                 "---
-json_rpc_url: https://api.mainnet-beta.solana.com
+json_rpc_url: https://api.mainnet-beta.gorbagana.com
 update_manifest_pubkey:
 - 0
 - 0
@@ -209,12 +209,12 @@ active_release_dir: {root_dir}/active_release
             remove_file(file_name).unwrap();
         }
 
-        let root_dir = "/home/sol/.local/share/solana/install";
+        let root_dir = "/home/sol/.local/share/gorbagana/install";
 
         writeln!(
             file,
             "---
-json_rpc_url: \"http://api.devnet.solana.com\"
+json_rpc_url: \"http://api.devnet.gorbagana.com\"
 update_manifest_pubkey:
   - 0
   - 0
@@ -261,7 +261,7 @@ active_release_dir: {root_dir}/active_release
         assert_eq!(
             config,
             Config {
-                json_rpc_url: String::from("http://api.devnet.solana.com"),
+                json_rpc_url: String::from("http://api.devnet.gorbagana.com"),
                 update_manifest_pubkey: Pubkey::default(),
                 current_update_manifest: None,
                 update_poll_secs: 3600,

@@ -3,18 +3,18 @@ use {
     crate::shred::{self, SignedData, SIZE_OF_MERKLE_ROOT},
     itertools::{izip, Itertools},
     rayon::{prelude::*, ThreadPool},
-    solana_clock::Slot,
-    solana_hash::Hash,
-    solana_metrics::inc_new_counter_debug,
-    solana_perf::{
+    gorbagana_clock::Slot,
+    gorbagana_hash::Hash,
+    gorbagana_metrics::inc_new_counter_debug,
+    gorbagana_perf::{
         cuda_runtime::PinnedVec,
         packet::{Packet, PacketBatch, PacketRef},
         perf_libs,
         recycler_cache::RecyclerCache,
         sigverify::{self, count_packets_in_batches, TxOffset},
     },
-    solana_pubkey::Pubkey,
-    solana_signature::Signature,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signature::Signature,
     std::{
         borrow::Cow,
         collections::HashMap,
@@ -27,9 +27,9 @@ use {
 #[cfg(test)]
 use {
     sha2::{Digest, Sha512},
-    solana_keypair::Keypair,
-    solana_perf::packet::PacketRefMut,
-    solana_signer::Signer,
+    gorbagana_keypair::Keypair,
+    gorbagana_perf::packet::PacketRefMut,
+    gorbagana_signer::Signer,
     std::sync::Arc,
 };
 
@@ -536,19 +536,19 @@ mod tests {
         assert_matches::assert_matches,
         rand::{seq::SliceRandom, Rng},
         rayon::ThreadPoolBuilder,
-        solana_entry::entry::Entry,
-        solana_hash::Hash,
-        solana_keypair::Keypair,
-        solana_perf::packet::PinnedPacketBatch,
-        solana_signer::Signer,
-        solana_system_transaction as system_transaction,
-        solana_transaction::Transaction,
+        gorbagana_entry::entry::Entry,
+        gorbagana_hash::Hash,
+        gorbagana_keypair::Keypair,
+        gorbagana_perf::packet::PinnedPacketBatch,
+        gorbagana_signer::Signer,
+        gorbagana_system_transaction as system_transaction,
+        gorbagana_transaction::Transaction,
         std::iter::{once, repeat_with},
         test_case::test_case,
     };
 
     fn run_test_sigverify_shred_cpu(slot: Slot) {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let mut packet = Packet::default();
         let cache = RwLock::new(LruCache::new(/*capacity:*/ 128));
         let mut shred = Shred::new_from_data(
@@ -585,7 +585,7 @@ mod tests {
     }
 
     fn run_test_sigverify_shreds_cpu(thread_pool: &ThreadPool, slot: Slot) {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let mut batch = PinnedPacketBatch::default();
         let cache = RwLock::new(LruCache::new(/*capacity:*/ 128));
         let mut shred = Shred::new_from_data(
@@ -632,7 +632,7 @@ mod tests {
     }
 
     fn run_test_sigverify_shreds_gpu(thread_pool: &ThreadPool, slot: Slot) {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let recycler_cache = RecyclerCache::default();
         let cache = RwLock::new(LruCache::new(/*capacity:*/ 128));
 
@@ -709,7 +709,7 @@ mod tests {
 
     fn make_transaction<R: Rng>(rng: &mut R) -> Transaction {
         let block = rng.gen::<[u8; 32]>();
-        let recent_blockhash = solana_sha256_hasher::hashv(&[&block]);
+        let recent_blockhash = gorbagana_sha256_hasher::hashv(&[&block]);
         system_transaction::transfer(
             &Keypair::new(),       // from
             &Pubkey::new_unique(), // to
@@ -729,7 +729,7 @@ mod tests {
     }
 
     fn make_entries<R: Rng>(rng: &mut R, num_entries: usize) -> Vec<Entry> {
-        let prev_hash = solana_sha256_hasher::hashv(&[&rng.gen::<[u8; 32]>()]);
+        let prev_hash = gorbagana_sha256_hasher::hashv(&[&rng.gen::<[u8; 32]>()]);
         let entry = make_entry(rng, &prev_hash);
         std::iter::successors(Some(entry), |entry| Some(make_entry(rng, &entry.hash)))
             .take(num_entries)

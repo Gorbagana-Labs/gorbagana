@@ -1,5 +1,5 @@
 [package]
-name = "solana-sbf-rust-account-mem-deprecated"
+name = "gorbagana-sbf-rust-account-mem-deprecated"
 version = { workspace = true }
 description = { workspace = true }
 authors = { workspace = true }
@@ -12,11 +12,11 @@ edition = { workspace = true }
 crate-type = ["cdylib"]
 
 [dependencies]
-solana-account-info = { workspace = true }
-solana-program = { workspace = true }
-solana-program-error = { workspace = true }
-solana-program-memory = { workspace = true }
-solana-pubkey = { workspace = true }
+gorbagana-account-info = { workspace = true }
+gorbagana-program = { workspace = true }
+gorbagana-program-error = { workspace = true }
+gorbagana-program-memory = { workspace = true }
+gorbagana-pubkey = { workspace = true }
 
 [lints]
 workspace = true

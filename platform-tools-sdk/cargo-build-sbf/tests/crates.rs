@@ -252,7 +252,7 @@ fn test_corrupted_toolchain() {
         let output = assert.get_output();
 
         assert!(
-            String::from_utf8_lossy(&output.stderr).contains("The Solana toolchain is corrupted.")
+            String::from_utf8_lossy(&output.stderr).contains("The Gorbagana toolchain is corrupted.")
         );
     }
 

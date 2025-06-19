@@ -2,16 +2,16 @@
 //!  carries variables that the stake program cares about
 #[deprecated(
     since = "1.8.0",
-    note = "Please use `solana_stake_interface::config` instead"
+    note = "Please use `gorbagana_stake_interface::config` instead"
 )]
-pub use solana_stake_interface::config::*;
+pub use gorbagana_stake_interface::config::*;
 use {
     bincode::{deserialize, serialize},
-    solana_account::{Account, AccountSharedData, ReadableAccount, WritableAccount},
-    solana_config_program_client::{get_config_data, ConfigKeys},
-    solana_genesis_config::GenesisConfig,
-    solana_pubkey::Pubkey,
-    solana_transaction_context::BorrowedAccount,
+    gorbagana_account::{Account, AccountSharedData, ReadableAccount, WritableAccount},
+    gorbagana_config_program_client::{get_config_data, ConfigKeys},
+    gorbagana_genesis_config::GenesisConfig,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_transaction_context::BorrowedAccount,
 };
 
 #[allow(deprecated)]
@@ -25,7 +25,7 @@ fn create_config_account(
     AccountSharedData::from(Account {
         lamports,
         data,
-        owner: solana_sdk_ids::config::id(),
+        owner: gorbagana_sdk_ids::config::id(),
         ..Account::default()
     })
 }
@@ -49,7 +49,7 @@ pub fn add_genesis_account(genesis_config: &mut GenesisConfig) -> u64 {
 
     account.set_lamports(lamports);
 
-    genesis_config.add_account(solana_stake_interface::config::id(), account);
+    genesis_config.add_account(gorbagana_stake_interface::config::id(), account);
 
     lamports
 }

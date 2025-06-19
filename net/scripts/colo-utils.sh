@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-declare -r SOLANA_LOCK_FILE="/home/solana/.solana.lock"
+declare -r SOLANA_LOCK_FILE="/home/gorbagana/.gorbagana.lock"
 
 __colo_here="$(dirname "${BASH_SOURCE[0]}")"
 
@@ -78,7 +78,7 @@ colo_instance_run() {
   declare CMD="${2}"
   declare OUT
   set +e
-  OUT=$(ssh -l solana -o "StrictHostKeyChecking=no" -o "ConnectTimeout=3" -n "${IP}" "${CMD}" 2>&1)
+  OUT=$(ssh -l gorbagana -o "StrictHostKeyChecking=no" -o "ConnectTimeout=3" -n "${IP}" "${CMD}" 2>&1)
   declare RC=$?
   set -e
   while read -r LINE; do
@@ -128,7 +128,7 @@ colo_whoami() {
 }
 
 COLO_SOLANA_USER=""
-colo_get_solana_user() {
+colo_get_gorbagana_user() {
   if [ -z "${COLO_SOLANA_USER}" ]; then
     COLO_SOLANA_USER=$(colo_whoami)
   fi

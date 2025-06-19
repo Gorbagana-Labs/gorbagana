@@ -1,7 +1,7 @@
 [package]
-name = "solana-system-program"
-description = "Solana System program"
-documentation = "https://docs.rs/solana-system-program"
+name = "gorbagana-system-program"
+description = "Gorbagana System program"
+documentation = "https://docs.rs/gorbagana-system-program"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -14,40 +14,40 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [lib]
 crate-type = ["lib"]
-name = "solana_system_program"
+name = "gorbagana_system_program"
 
 [dependencies]
 bincode = { workspace = true }
 log = { workspace = true }
 serde = { workspace = true }
 serde_derive = { workspace = true }
-solana-account = { workspace = true }
-solana-bincode = { workspace = true }
-solana-fee-calculator = { workspace = true }
-solana-instruction = { workspace = true }
-solana-log-collector = { workspace = true }
-solana-nonce = { workspace = true, features = ["serde"] }
-solana-nonce-account = { workspace = true }
-solana-packet = { workspace = true }
-solana-program-runtime = { workspace = true }
-solana-pubkey = { workspace = true, features = ["sha2"] }
-solana-sdk-ids = { workspace = true }
-solana-system-interface = { workspace = true, features = ["serde"] }
-solana-sysvar = { workspace = true }
-solana-transaction-context = { workspace = true, features = ["bincode"] }
-solana-type-overrides = { workspace = true }
+gorbagana-account = { workspace = true }
+gorbagana-bincode = { workspace = true }
+gorbagana-fee-calculator = { workspace = true }
+gorbagana-instruction = { workspace = true }
+gorbagana-log-collector = { workspace = true }
+gorbagana-nonce = { workspace = true, features = ["serde"] }
+gorbagana-nonce-account = { workspace = true }
+gorbagana-packet = { workspace = true }
+gorbagana-program-runtime = { workspace = true }
+gorbagana-pubkey = { workspace = true, features = ["sha2"] }
+gorbagana-sdk-ids = { workspace = true }
+gorbagana-system-interface = { workspace = true, features = ["serde"] }
+gorbagana-sysvar = { workspace = true }
+gorbagana-transaction-context = { workspace = true, features = ["bincode"] }
+gorbagana-type-overrides = { workspace = true }
 
 [dev-dependencies]
 agave-feature-set = { workspace = true }
 assert_matches = { workspace = true }
 criterion = { workspace = true }
-solana-compute-budget = { workspace = true }
-solana-hash = { workspace = true }
-solana-nonce-account = { workspace = true }
-solana-rent = { workspace = true }
-solana-sha256-hasher = { workspace = true }
-solana-svm-callback = { workspace = true }
-solana-svm-feature-set = { workspace = true }
+gorbagana-compute-budget = { workspace = true }
+gorbagana-hash = { workspace = true }
+gorbagana-nonce-account = { workspace = true }
+gorbagana-rent = { workspace = true }
+gorbagana-sha256-hasher = { workspace = true }
+gorbagana-svm-callback = { workspace = true }
+gorbagana-svm-feature-set = { workspace = true }
 
 [[bench]]
 name = "system"

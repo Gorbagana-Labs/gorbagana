@@ -1,11 +1,11 @@
 #[allow(deprecated)]
-use solana_sysvar::recent_blockhashes;
+use gorbagana_sysvar::recent_blockhashes;
 use {
     serde::{Deserialize, Serialize},
-    solana_clock::MAX_RECENT_BLOCKHASHES,
-    solana_fee_calculator::FeeCalculator,
-    solana_hash::Hash,
-    solana_time_utils::timestamp,
+    gorbagana_clock::MAX_RECENT_BLOCKHASHES,
+    gorbagana_fee_calculator::FeeCalculator,
+    gorbagana_hash::Hash,
+    gorbagana_time_utils::timestamp,
     std::collections::HashMap,
 };
 
@@ -144,7 +144,7 @@ impl BlockhashQueue {
 
     #[deprecated(
         since = "2.0.0",
-        note = "Please use `solana_clock::MAX_PROCESSING_AGE`"
+        note = "Please use `gorbagana_clock::MAX_PROCESSING_AGE`"
     )]
     pub fn get_max_age(&self) -> usize {
         self.max_age
@@ -153,10 +153,10 @@ impl BlockhashQueue {
 #[cfg(test)]
 mod tests {
     #[allow(deprecated)]
-    use solana_sysvar::recent_blockhashes::IterItem;
+    use gorbagana_sysvar::recent_blockhashes::IterItem;
     use {
-        super::*, bincode::serialize, solana_clock::MAX_RECENT_BLOCKHASHES,
-        solana_sha256_hasher::hash,
+        super::*, bincode::serialize, gorbagana_clock::MAX_RECENT_BLOCKHASHES,
+        gorbagana_sha256_hasher::hash,
     };
 
     #[test]

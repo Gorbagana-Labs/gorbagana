@@ -1,5 +1,5 @@
 [package]
-name = "solana-sbf-rust-many-args-dep"
+name = "gorbagana-sbf-rust-many-args-dep"
 version = { workspace = true }
 description = { workspace = true }
 authors = { workspace = true }
@@ -9,5 +9,5 @@ license = { workspace = true }
 edition = { workspace = true }
 
 [dependencies]
-solana-msg = { workspace = true }
-solana-program = { workspace = true }
+gorbagana-msg = { workspace = true }
+gorbagana-program = { workspace = true }

@@ -2,8 +2,8 @@ use {
     agave_transaction_view::bytes::{optimized_read_compressed_u16, read_compressed_u16},
     bincode::{serialize_into, DefaultOptions, Options},
     criterion::{black_box, criterion_group, criterion_main, Criterion, Throughput},
-    solana_packet::PACKET_DATA_SIZE,
-    solana_short_vec::{decode_shortu16_len, ShortU16},
+    gorbagana_packet::PACKET_DATA_SIZE,
+    gorbagana_short_vec::{decode_shortu16_len, ShortU16},
 };
 
 fn setup() -> Vec<(u16, usize, Vec<u8>)> {
@@ -31,7 +31,7 @@ fn bench_u16_parsing(c: &mut Criterion) {
         values_serialized_lengths_and_buffers.len() as u64,
     ));
 
-    // Benchmark the decode_shortu16_len function from `solana-sdk`
+    // Benchmark the decode_shortu16_len function from `gorbagana-sdk`
     group.bench_function("short_u16_decode", |c| {
         c.iter(|| {
             decode_shortu16_len_iter(&values_serialized_lengths_and_buffers);

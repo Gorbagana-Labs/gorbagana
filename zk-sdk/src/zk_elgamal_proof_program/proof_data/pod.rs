@@ -22,7 +22,7 @@ impl TryFrom<PodProofType> for ProofType {
 
 macro_rules! impl_wasm_to_bytes {
     (TYPE = $type:ident) => {
-        #[cfg(not(target_os = "solana"))]
+        #[cfg(not(target_os = "gorbagana"))]
         #[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
         impl $type {
             #[cfg_attr(target_arch = "wasm32", wasm_bindgen(js_name = toBytes))]

@@ -17,16 +17,16 @@
 //
 // `clippy::op_ref` is turned off to prevent clippy from warning that this is not idiomatic code.
 
-pub use solana_curve25519 as curve25519;
+pub use gorbagana_curve25519 as curve25519;
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 #[macro_use]
 pub(crate) mod macros;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 pub mod encryption;
 mod range_proof;
 mod sigma_proofs;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 mod transcript;
 
 pub mod errors;
@@ -36,7 +36,7 @@ pub mod zk_token_proof_instruction;
 pub mod zk_token_proof_program;
 pub mod zk_token_proof_state;
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 pub use curve25519_dalek;
 
 /// Byte length of a compressed Ristretto point or scalar in Curve255519

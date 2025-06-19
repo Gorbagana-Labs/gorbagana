@@ -3,8 +3,8 @@ use {
         accounts_index::{in_mem_accounts_index::InMemAccountsIndex, DiskIndexValue, IndexValue},
         bucket_map_holder::{Age, AtomicAge, BucketMapHolder},
     },
-    solana_clock::Slot,
-    solana_time_utils::AtomicInterval,
+    gorbagana_clock::Slot,
+    gorbagana_time_utils::AtomicInterval,
     std::{
         fmt::Debug,
         sync::atomic::{AtomicBool, AtomicU64, AtomicUsize, Ordering},

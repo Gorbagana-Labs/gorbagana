@@ -11,23 +11,23 @@ use {
     log::*,
     rand::distributions::{Distribution, Uniform},
     rayon::prelude::*,
-    solana_account::Account,
-    solana_client::nonce_utils,
-    solana_clock::{DEFAULT_MS_PER_SLOT, DEFAULT_S_PER_SLOT, MAX_PROCESSING_AGE},
-    solana_compute_budget_interface::ComputeBudgetInstruction,
-    solana_hash::Hash,
-    solana_instruction::{AccountMeta, Instruction},
-    solana_keypair::Keypair,
-    solana_message::Message,
-    solana_metrics::{self, datapoint_info},
-    solana_native_token::Sol,
-    solana_pubkey::Pubkey,
-    solana_rpc_client_api::request::MAX_MULTIPLE_ACCOUNTS,
-    solana_signer::Signer,
-    solana_system_interface::instruction as system_instruction,
-    solana_time_utils::timestamp,
-    solana_tps_client::*,
-    solana_transaction::Transaction,
+    gorbagana_account::Account,
+    gorbagana_client::nonce_utils,
+    gorbagana_clock::{DEFAULT_MS_PER_SLOT, DEFAULT_S_PER_SLOT, MAX_PROCESSING_AGE},
+    gorbagana_compute_budget_interface::ComputeBudgetInstruction,
+    gorbagana_hash::Hash,
+    gorbagana_instruction::{AccountMeta, Instruction},
+    gorbagana_keypair::Keypair,
+    gorbagana_message::Message,
+    gorbagana_metrics::{self, datapoint_info},
+    gorbagana_native_token::Sol,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rpc_client_api::request::MAX_MULTIPLE_ACCOUNTS,
+    gorbagana_signer::Signer,
+    gorbagana_system_interface::instruction as system_instruction,
+    gorbagana_time_utils::timestamp,
+    gorbagana_tps_client::*,
+    gorbagana_transaction::Transaction,
     spl_instruction_padding::instruction::wrap_instruction,
     std::{
         collections::{HashSet, VecDeque},
@@ -299,7 +299,7 @@ where
     let maxes = maxes.clone();
     let client = client.clone();
     Builder::new()
-        .name("solana-client-sample".to_string())
+        .name("gorbagana-client-sample".to_string())
         .spawn(move || {
             sample_txs(exit_signal, &maxes, sample_period, &client);
         })
@@ -380,7 +380,7 @@ where
             let client = client.clone();
             let signatures_sender = signatures_sender.clone();
             Builder::new()
-                .name("solana-client-sender".to_string())
+                .name("gorbagana-client-sender".to_string())
                 .spawn(move || {
                     do_tx_transfers(
                         &exit_signal,
@@ -469,7 +469,7 @@ where
         let id = id.pubkey();
         Some(
             Builder::new()
-                .name("solana-blockhash-poller".to_string())
+                .name("gorbagana-blockhash-poller".to_string())
                 .spawn(move || {
                     poll_blockhash(&exit_signal, &blockhash, &client, &id);
                 })
@@ -1151,7 +1151,7 @@ pub fn fund_keypairs<T: 'static + TpsClient + Send + Sync + ?Sized>(
     let rent = client.get_minimum_balance_for_rent_exemption(0)?;
     info!("Get lamports...");
 
-    // Sample the first keypair, to prevent lamport loss on repeated solana-bench-tps executions
+    // Sample the first keypair, to prevent lamport loss on repeated gorbagana-bench-tps executions
     let first_key = keypairs[0].pubkey();
     let first_keypair_balance = client.get_balance(&first_key).unwrap_or(0);
 
@@ -1224,12 +1224,12 @@ mod tests {
     use {
         super::*,
         agave_feature_set::FeatureSet,
-        solana_commitment_config::CommitmentConfig,
-        solana_fee_calculator::FeeRateGovernor,
-        solana_genesis_config::{create_genesis_config, GenesisConfig},
-        solana_native_token::sol_to_lamports,
-        solana_nonce::state::State,
-        solana_runtime::{bank::Bank, bank_client::BankClient, bank_forks::BankForks},
+        gorbagana_commitment_config::CommitmentConfig,
+        gorbagana_fee_calculator::FeeRateGovernor,
+        gorbagana_genesis_config::{create_genesis_config, GenesisConfig},
+        gorbagana_native_token::sol_to_lamports,
+        gorbagana_nonce::state::State,
+        gorbagana_runtime::{bank::Bank, bank_client::BankClient, bank_forks::BankForks},
     };
 
     fn bank_with_all_features(

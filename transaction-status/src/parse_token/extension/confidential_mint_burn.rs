@@ -281,15 +281,15 @@ mod test {
     use {
         super::*,
         bytemuck::Zeroable,
-        solana_instruction::{AccountMeta, Instruction},
-        solana_message::Message,
-        solana_pubkey::Pubkey,
+        gorbagana_instruction::{AccountMeta, Instruction},
+        gorbagana_message::Message,
+        gorbagana_pubkey::Pubkey,
         spl_token_2022::{
             extension::confidential_mint_burn::instruction::{
                 confidential_burn_with_split_proofs, confidential_mint_with_split_proofs,
                 initialize_mint,
             },
-            solana_zk_sdk::{
+            gorbagana_zk_sdk::{
                 encryption::pod::{
                     auth_encryption::PodAeCiphertext,
                     elgamal::{PodElGamalCiphertext, PodElGamalPubkey},

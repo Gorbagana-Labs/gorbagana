@@ -1,12 +1,12 @@
 use {
-    crate::solana::wen_restart_proto::HeaviestForkRecord,
+    crate::gorbagana::wen_restart_proto::HeaviestForkRecord,
     anyhow::Result,
     log::*,
-    solana_clock::Slot,
-    solana_gossip::restart_crds_values::RestartHeaviestFork,
-    solana_hash::Hash,
-    solana_pubkey::Pubkey,
-    solana_runtime::epoch_stakes::VersionedEpochStakes,
+    gorbagana_clock::Slot,
+    gorbagana_gossip::restart_crds_values::RestartHeaviestFork,
+    gorbagana_hash::Hash,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_runtime::epoch_stakes::VersionedEpochStakes,
     std::{
         collections::{HashMap, HashSet},
         str::FromStr,
@@ -182,20 +182,20 @@ mod tests {
     use {
         crate::{
             heaviest_fork_aggregate::{HeaviestForkAggregate, HeaviestForkAggregateResult},
-            solana::wen_restart_proto::HeaviestForkRecord,
+            gorbagana::wen_restart_proto::HeaviestForkRecord,
         },
-        solana_clock::Slot,
-        solana_gossip::restart_crds_values::RestartHeaviestFork,
-        solana_hash::Hash,
-        solana_pubkey::Pubkey,
-        solana_runtime::{
+        gorbagana_clock::Slot,
+        gorbagana_gossip::restart_crds_values::RestartHeaviestFork,
+        gorbagana_hash::Hash,
+        gorbagana_pubkey::Pubkey,
+        gorbagana_runtime::{
             bank::Bank,
             genesis_utils::{
                 create_genesis_config_with_vote_accounts, GenesisConfigInfo, ValidatorVoteKeypairs,
             },
         },
-        solana_signer::Signer,
-        solana_time_utils::timestamp,
+        gorbagana_signer::Signer,
+        gorbagana_time_utils::timestamp,
     };
 
     const TOTAL_VALIDATOR_COUNT: u16 = 20;
@@ -210,7 +210,7 @@ mod tests {
     }
 
     fn test_aggregate_init() -> TestAggregateInitResult {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let validator_voting_keypairs: Vec<_> = (0..TOTAL_VALIDATOR_COUNT)
             .map(|_| ValidatorVoteKeypairs::new_rand())
             .collect();

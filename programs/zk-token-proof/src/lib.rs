@@ -2,11 +2,11 @@
 
 use {
     bytemuck::Pod,
-    solana_instruction::{error::InstructionError, TRANSACTION_LEVEL_STACK_HEIGHT},
-    solana_log_collector::ic_msg,
-    solana_program_runtime::{declare_process_instruction, invoke_context::InvokeContext},
-    solana_sdk_ids::system_program,
-    solana_zk_token_sdk::{
+    gorbagana_instruction::{error::InstructionError, TRANSACTION_LEVEL_STACK_HEIGHT},
+    gorbagana_log_collector::ic_msg,
+    gorbagana_program_runtime::{declare_process_instruction, invoke_context::InvokeContext},
+    gorbagana_sdk_ids::system_program,
+    gorbagana_zk_token_sdk::{
         zk_token_proof_instruction::*,
         zk_token_proof_program::id,
         zk_token_proof_state::{ProofContextState, ProofContextStateMeta},

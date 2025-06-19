@@ -1,7 +1,7 @@
 [package]
-name = "solana-transaction-status-client-types"
-description = "Core RPC client types for solana-transaction-status"
-documentation = "https://docs.rs/solana-transaction-status-client-types"
+name = "gorbagana-transaction-status-client-types"
+description = "Core RPC client types for gorbagana-transaction-status"
+documentation = "https://docs.rs/gorbagana-transaction-status-client-types"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -19,12 +19,12 @@ bs58 = { workspace = true }
 serde = { workspace = true }
 serde_derive = { workspace = true }
 serde_json = { workspace = true }
-solana-account-decoder-client-types = { workspace = true }
-solana-commitment-config = { workspace = true }
-solana-message = { workspace = true }
-solana-reward-info = { workspace = true, features = ["serde"] }
-solana-signature = { workspace = true, default-features = false }
-solana-transaction = { workspace = true, features = ["serde"] }
-solana-transaction-context = { workspace = true }
-solana-transaction-error = { workspace = true, features = ["serde"] }
+gorbagana-account-decoder-client-types = { workspace = true }
+gorbagana-commitment-config = { workspace = true }
+gorbagana-message = { workspace = true }
+gorbagana-reward-info = { workspace = true, features = ["serde"] }
+gorbagana-signature = { workspace = true, default-features = false }
+gorbagana-transaction = { workspace = true, features = ["serde"] }
+gorbagana-transaction-context = { workspace = true }
+gorbagana-transaction-error = { workspace = true, features = ["serde"] }
 thiserror = { workspace = true }

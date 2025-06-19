@@ -1,10 +1,10 @@
 use {
     crate::consensus::{BlockhashStatus, Result, SwitchForkDecision, TowerError},
-    solana_clock::Slot,
-    solana_pubkey::Pubkey,
-    solana_signature::Signature,
-    solana_signer::Signer,
-    solana_vote_program::vote_state::{vote_state_1_14_11::VoteState1_14_11, BlockTimestamp, Vote},
+    gorbagana_clock::Slot,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signature::Signature,
+    gorbagana_signer::Signer,
+    gorbagana_vote_program::vote_state::{vote_state_1_14_11::VoteState1_14_11, BlockTimestamp, Vote},
 };
 
 #[cfg_attr(

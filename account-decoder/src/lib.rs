@@ -16,15 +16,15 @@ pub mod parse_token_extension;
 pub mod parse_vote;
 pub mod validator_info;
 
-pub use solana_account_decoder_client_types::{
+pub use gorbagana_account_decoder_client_types::{
     UiAccount, UiAccountData, UiAccountEncoding, UiDataSliceConfig,
 };
 use {
     crate::parse_account_data::{parse_account_data_v3, AccountAdditionalDataV3},
     base64::{prelude::BASE64_STANDARD, Engine},
-    solana_account::ReadableAccount,
-    solana_fee_calculator::FeeCalculator,
-    solana_pubkey::Pubkey,
+    gorbagana_account::ReadableAccount,
+    gorbagana_fee_calculator::FeeCalculator,
+    gorbagana_pubkey::Pubkey,
     std::io::Write,
 };
 
@@ -142,7 +142,7 @@ mod test {
     use {
         super::*,
         assert_matches::assert_matches,
-        solana_account::{Account, AccountSharedData},
+        gorbagana_account::{Account, AccountSharedData},
     };
 
     #[test]

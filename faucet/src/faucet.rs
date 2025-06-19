@@ -1,6 +1,6 @@
-//! The `faucet` module provides an object for launching a Solana Faucet,
+//! The `faucet` module provides an object for launching a Gorbagana Faucet,
 //! which is the custodian of any remaining lamports in a mint.
-//! The Solana Faucet builds and sends airdrop transactions,
+//! The Gorbagana Faucet builds and sends airdrop transactions,
 //! checking requests against a single-request cap and a per-IP limit
 //! for a given time time_slice.
 
@@ -9,17 +9,17 @@ use {
     crossbeam_channel::{unbounded, Sender},
     log::*,
     serde_derive::{Deserialize, Serialize},
-    solana_hash::Hash,
-    solana_instruction::Instruction,
-    solana_keypair::Keypair,
-    solana_message::Message,
-    solana_metrics::datapoint_info,
-    solana_native_token::lamports_to_sol,
-    solana_packet::PACKET_DATA_SIZE,
-    solana_pubkey::Pubkey,
-    solana_signer::Signer,
-    solana_system_interface::instruction::transfer,
-    solana_transaction::Transaction,
+    gorbagana_hash::Hash,
+    gorbagana_instruction::Instruction,
+    gorbagana_keypair::Keypair,
+    gorbagana_message::Message,
+    gorbagana_metrics::datapoint_info,
+    gorbagana_native_token::lamports_to_sol,
+    gorbagana_packet::PACKET_DATA_SIZE,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signer::Signer,
+    gorbagana_system_interface::instruction::transfer,
+    gorbagana_transaction::Transaction,
     std::{
         collections::{HashMap, HashSet},
         io::{Read, Write},
@@ -267,7 +267,7 @@ impl Faucet {
 
 impl Drop for Faucet {
     fn drop(&mut self) {
-        solana_metrics::flush();
+        gorbagana_metrics::flush();
     }
 }
 
@@ -489,7 +489,7 @@ impl LimitByTime for Pubkey {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, solana_system_interface::instruction::SystemInstruction, std::time::Duration};
+    use {super::*, gorbagana_system_interface::instruction::SystemInstruction, std::time::Duration};
 
     #[test]
     fn test_check_time_request_limit() {
@@ -646,7 +646,7 @@ mod tests {
 
     #[test]
     fn test_process_faucet_request() {
-        let to = solana_pubkey::new_rand();
+        let to = gorbagana_pubkey::new_rand();
         let blockhash = Hash::new_from_array(to.to_bytes());
         let lamports = 50;
         let req = FaucetRequest::GetAirdrop {

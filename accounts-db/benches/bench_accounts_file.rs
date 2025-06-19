@@ -1,8 +1,8 @@
 #![allow(clippy::arithmetic_side_effects)]
 use {
     criterion::{criterion_group, criterion_main, BatchSize, BenchmarkId, Criterion, Throughput},
-    solana_account::{AccountSharedData, ReadableAccount},
-    solana_accounts_db::{
+    gorbagana_account::{AccountSharedData, ReadableAccount},
+    gorbagana_accounts_db::{
         accounts_file::StorageAccess,
         append_vec::{self, AppendVec},
         tiered_storage::{
@@ -10,10 +10,10 @@ use {
             hot::{HotStorageReader, HotStorageWriter},
         },
     },
-    solana_clock::Slot,
-    solana_pubkey::Pubkey,
-    solana_rent_collector::RENT_EXEMPT_RENT_EPOCH,
-    solana_system_interface::MAX_PERMITTED_DATA_LENGTH,
+    gorbagana_clock::Slot,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent_collector::RENT_EXEMPT_RENT_EPOCH,
+    gorbagana_system_interface::MAX_PERMITTED_DATA_LENGTH,
     std::mem::ManuallyDrop,
 };
 

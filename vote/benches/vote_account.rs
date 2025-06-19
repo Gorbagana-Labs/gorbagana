@@ -3,10 +3,10 @@ extern crate test;
 
 use {
     rand::Rng,
-    solana_account::AccountSharedData,
-    solana_pubkey::Pubkey,
-    solana_vote::vote_account::VoteAccount,
-    solana_vote_interface::state::{VoteInit, VoteState, VoteStateVersions},
+    gorbagana_account::AccountSharedData,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_vote::vote_account::VoteAccount,
+    gorbagana_vote_interface::state::{VoteInit, VoteState, VoteStateVersions},
     test::Bencher,
 };
 
@@ -20,7 +20,7 @@ fn new_rand_vote_account<R: Rng>(
         authorized_withdrawer: Pubkey::new_unique(),
         commission: rng.gen(),
     };
-    let clock = solana_clock::Clock {
+    let clock = gorbagana_clock::Clock {
         slot: rng.gen(),
         epoch_start_timestamp: rng.gen(),
         epoch: rng.gen(),
@@ -32,7 +32,7 @@ fn new_rand_vote_account<R: Rng>(
     let account = AccountSharedData::new_data(
         rng.gen(), // lamports
         &VoteStateVersions::new_current(vote_state.clone()),
-        &solana_sdk_ids::vote::id(), // owner
+        &gorbagana_sdk_ids::vote::id(), // owner
     )
     .unwrap();
     (account, vote_state)

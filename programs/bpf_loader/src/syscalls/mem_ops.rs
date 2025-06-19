@@ -1,8 +1,8 @@
 use {
     super::*,
     crate::translate_mut,
-    solana_program_runtime::invoke_context::SerializedAccountMetadata,
-    solana_sbpf::{error::EbpfError, memory_region::MemoryRegion},
+    gorbagana_program_runtime::invoke_context::SerializedAccountMetadata,
+    gorbagana_sbpf::{error::EbpfError, memory_region::MemoryRegion},
     std::slice,
 };
 
@@ -674,7 +674,7 @@ mod tests {
     use {
         super::*,
         assert_matches::assert_matches,
-        solana_sbpf::{ebpf::MM_RODATA_START, program::SBPFVersion},
+        gorbagana_sbpf::{ebpf::MM_RODATA_START, program::SBPFVersion},
         test_case::test_case,
     };
 

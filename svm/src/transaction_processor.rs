@@ -20,41 +20,41 @@ use {
     },
     log::debug,
     percentage::Percentage,
-    solana_account::{state_traits::StateMut, AccountSharedData, ReadableAccount, PROGRAM_OWNERS},
-    solana_clock::{Epoch, Slot},
-    solana_hash::Hash,
-    solana_instruction::TRANSACTION_LEVEL_STACK_HEIGHT,
-    solana_log_collector::LogCollector,
-    solana_measure::{measure::Measure, measure_us},
-    solana_message::{
+    gorbagana_account::{state_traits::StateMut, AccountSharedData, ReadableAccount, PROGRAM_OWNERS},
+    gorbagana_clock::{Epoch, Slot},
+    gorbagana_hash::Hash,
+    gorbagana_instruction::TRANSACTION_LEVEL_STACK_HEIGHT,
+    gorbagana_log_collector::LogCollector,
+    gorbagana_measure::{measure::Measure, measure_us},
+    gorbagana_message::{
         compiled_instruction::CompiledInstruction,
         inner_instruction::{InnerInstruction, InnerInstructionsList},
     },
-    solana_nonce::{
+    gorbagana_nonce::{
         state::{DurableNonce, State as NonceState},
         versions::Versions as NonceVersions,
     },
-    solana_program_runtime::{
+    gorbagana_program_runtime::{
         execution_budget::SVMTransactionExecutionCost,
         invoke_context::{EnvironmentConfig, InvokeContext},
         loaded_programs::{
             ForkGraph, ProgramCache, ProgramCacheEntry, ProgramCacheForTxBatch,
             ProgramCacheMatchCriteria, ProgramRuntimeEnvironment,
         },
-        solana_sbpf::{program::BuiltinProgram, vm::Config as VmConfig},
+        gorbagana_sbpf::{program::BuiltinProgram, vm::Config as VmConfig},
         sysvar_cache::SysvarCache,
     },
-    solana_pubkey::Pubkey,
-    solana_rent_collector::RentCollector,
-    solana_sdk_ids::{native_loader, system_program},
-    solana_svm_callback::TransactionProcessingCallback,
-    solana_svm_feature_set::SVMFeatureSet,
-    solana_svm_rent_collector::svm_rent_collector::SVMRentCollector,
-    solana_svm_transaction::{svm_message::SVMMessage, svm_transaction::SVMTransaction},
-    solana_timings::{ExecuteTimingType, ExecuteTimings},
-    solana_transaction_context::{ExecutionRecord, TransactionContext},
-    solana_transaction_error::{TransactionError, TransactionResult},
-    solana_type_overrides::sync::{atomic::Ordering, Arc, RwLock, RwLockReadGuard},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent_collector::RentCollector,
+    gorbagana_sdk_ids::{native_loader, system_program},
+    gorbagana_svm_callback::TransactionProcessingCallback,
+    gorbagana_svm_feature_set::SVMFeatureSet,
+    gorbagana_svm_rent_collector::svm_rent_collector::SVMRentCollector,
+    gorbagana_svm_transaction::{svm_message::SVMMessage, svm_transaction::SVMTransaction},
+    gorbagana_timings::{ExecuteTimingType, ExecuteTimings},
+    gorbagana_transaction_context::{ExecutionRecord, TransactionContext},
+    gorbagana_transaction_error::{TransactionError, TransactionResult},
+    gorbagana_type_overrides::sync::{atomic::Ordering, Arc, RwLock, RwLockReadGuard},
     std::{
         collections::{hash_map::Entry, HashMap, HashSet},
         fmt::{Debug, Formatter},
@@ -299,7 +299,7 @@ impl<FG: ForkGraph> TransactionBatchProcessor<FG> {
     pub fn get_environments_for_epoch(
         &self,
         epoch: Epoch,
-    ) -> Option<solana_program_runtime::loaded_programs::ProgramRuntimeEnvironments> {
+    ) -> Option<gorbagana_program_runtime::loaded_programs::ProgramRuntimeEnvironments> {
         self.program_cache
             .try_read()
             .ok()
@@ -1095,7 +1095,7 @@ impl<FG: ForkGraph> TransactionBatchProcessor<FG> {
 #[cfg(test)]
 mod tests {
     #[allow(deprecated)]
-    use solana_sysvar::fees::Fees;
+    use gorbagana_sysvar::fees::Fees;
     use {
         super::*,
         crate::{
@@ -1107,31 +1107,31 @@ mod tests {
             rollback_accounts::RollbackAccounts,
         },
         agave_reserved_account_keys::ReservedAccountKeys,
-        solana_account::{create_account_shared_data_for_test, WritableAccount},
-        solana_clock::Clock,
-        solana_compute_budget_interface::ComputeBudgetInstruction,
-        solana_epoch_schedule::EpochSchedule,
-        solana_fee_calculator::FeeCalculator,
-        solana_fee_structure::FeeDetails,
-        solana_hash::Hash,
-        solana_keypair::Keypair,
-        solana_message::{LegacyMessage, Message, MessageHeader, SanitizedMessage},
-        solana_nonce as nonce,
-        solana_program_runtime::{
+        gorbagana_account::{create_account_shared_data_for_test, WritableAccount},
+        gorbagana_clock::Clock,
+        gorbagana_compute_budget_interface::ComputeBudgetInstruction,
+        gorbagana_epoch_schedule::EpochSchedule,
+        gorbagana_fee_calculator::FeeCalculator,
+        gorbagana_fee_structure::FeeDetails,
+        gorbagana_hash::Hash,
+        gorbagana_keypair::Keypair,
+        gorbagana_message::{LegacyMessage, Message, MessageHeader, SanitizedMessage},
+        gorbagana_nonce as nonce,
+        gorbagana_program_runtime::{
             execution_budget::{
                 SVMTransactionExecutionAndFeeBudgetLimits, SVMTransactionExecutionBudget,
             },
             loaded_programs::{BlockRelation, ProgramCacheEntryType},
         },
-        solana_rent::Rent,
-        solana_rent_collector::{RentCollector, RENT_EXEMPT_RENT_EPOCH},
-        solana_rent_debits::RentDebits,
-        solana_sdk_ids::{bpf_loader, system_program, sysvar},
-        solana_signature::Signature,
-        solana_svm_callback::{AccountState, InvokeContextCallback},
-        solana_transaction::{sanitized::SanitizedTransaction, Transaction},
-        solana_transaction_context::TransactionContext,
-        solana_transaction_error::{TransactionError, TransactionError::DuplicateInstruction},
+        gorbagana_rent::Rent,
+        gorbagana_rent_collector::{RentCollector, RENT_EXEMPT_RENT_EPOCH},
+        gorbagana_rent_debits::RentDebits,
+        gorbagana_sdk_ids::{bpf_loader, system_program, sysvar},
+        gorbagana_signature::Signature,
+        gorbagana_svm_callback::{AccountState, InvokeContextCallback},
+        gorbagana_transaction::{sanitized::SanitizedTransaction, Transaction},
+        gorbagana_transaction_context::TransactionContext,
+        gorbagana_transaction_error::{TransactionError, TransactionError::DuplicateInstruction},
         test_case::test_case,
     };
 

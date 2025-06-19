@@ -21,9 +21,9 @@ fi
 
 cd "$(dirname "$0")"
 rm -rf usr/
-../ci/docker-run-default-image.sh scripts/cargo-install-all.sh docker-solana/usr
+../ci/docker-run-default-image.sh scripts/cargo-install-all.sh docker-gorbagana/usr
 
-cp -f ../scripts/run.sh usr/bin/solana-run.sh
+cp -f ../scripts/run.sh usr/bin/gorbagana-run.sh
 cp -f ../fetch-core-bpf.sh usr/bin/
 cp -f ../fetch-spl.sh usr/bin/
 cp -f ../fetch-programs.sh usr/bin/

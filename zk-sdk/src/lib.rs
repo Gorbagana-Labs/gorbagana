@@ -1,4 +1,4 @@
-//! The `solana-zk-sdk` crate contains tools to create and verify zero-knowledge proofs on
+//! The `gorbagana-zk-sdk` crate contains tools to create and verify zero-knowledge proofs on
 //! encrypted data.
 
 // The warning `clippy::op_ref` is disabled to allow efficient operator arithmetic of structs that
@@ -24,7 +24,7 @@ pub mod errors;
 pub mod pod;
 mod range_proof;
 mod sigma_proofs;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 mod transcript;
 pub mod zk_elgamal_proof_program;
 

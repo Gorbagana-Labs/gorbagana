@@ -3,11 +3,11 @@ pub mod slot_supporters;
 use {
     cluster_slots::ClusterSlots,
     crossbeam_channel::{Receiver, RecvTimeoutError, Sender},
-    solana_clock::Slot,
-    solana_gossip::{cluster_info::ClusterInfo, epoch_specs::EpochSpecs},
-    solana_ledger::blockstore::Blockstore,
-    solana_measure::measure::Measure,
-    solana_runtime::bank_forks::BankForks,
+    gorbagana_clock::Slot,
+    gorbagana_gossip::{cluster_info::ClusterInfo, epoch_specs::EpochSpecs},
+    gorbagana_ledger::blockstore::Blockstore,
+    gorbagana_measure::measure::Measure,
+    gorbagana_runtime::bank_forks::BankForks,
     std::{
         sync::{
             atomic::{AtomicBool, Ordering},
@@ -198,10 +198,10 @@ impl ClusterSlotsService {
 mod test {
     use {
         super::*,
-        solana_gossip::{cluster_info::Node, crds_data::LowestSlot},
-        solana_keypair::Keypair,
-        solana_signer::Signer,
-        solana_streamer::socket::SocketAddrSpace,
+        gorbagana_gossip::{cluster_info::Node, crds_data::LowestSlot},
+        gorbagana_keypair::Keypair,
+        gorbagana_signer::Signer,
+        gorbagana_streamer::socket::SocketAddrSpace,
     };
 
     #[test]

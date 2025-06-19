@@ -8,11 +8,11 @@ use {
     },
     bincode::serialize,
     serde::Serialize,
-    solana_keypair::signable::Signable,
-    solana_perf::packet::PACKET_DATA_SIZE,
-    solana_pubkey::Pubkey,
-    solana_sanitize::{Sanitize, SanitizeError},
-    solana_signature::Signature,
+    gorbagana_keypair::signable::Signable,
+    gorbagana_perf::packet::PACKET_DATA_SIZE,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sanitize::{Sanitize, SanitizeError},
+    gorbagana_signature::Signature,
     std::{
         borrow::{Borrow, Cow},
         fmt::Debug,
@@ -266,15 +266,15 @@ pub(crate) mod tests {
             duplicate_shred::{self, tests::new_rand_shred, MAX_DUPLICATE_SHREDS},
         },
         rand::Rng,
-        solana_clock::Slot,
-        solana_hash::Hash,
-        solana_keypair::Keypair,
-        solana_ledger::shred::Shredder,
-        solana_perf::packet::Packet,
-        solana_signer::Signer,
-        solana_time_utils::timestamp,
-        solana_transaction::Transaction,
-        solana_vote_program::{vote_instruction, vote_state::Vote},
+        gorbagana_clock::Slot,
+        gorbagana_hash::Hash,
+        gorbagana_keypair::Keypair,
+        gorbagana_ledger::shred::Shredder,
+        gorbagana_perf::packet::Packet,
+        gorbagana_signer::Signer,
+        gorbagana_time_utils::timestamp,
+        gorbagana_transaction::Transaction,
+        gorbagana_vote_program::{vote_instruction, vote_state::Vote},
         std::{
             iter::repeat_with,
             net::{IpAddr, Ipv4Addr, Ipv6Addr, SocketAddr, SocketAddrV4},
@@ -504,7 +504,7 @@ pub(crate) mod tests {
             .collect();
         let splits: Vec<_> =
             split_gossip_messages(PUSH_MESSAGE_MAX_PAYLOAD_SIZE, values.clone()).collect();
-        let self_pubkey = solana_pubkey::new_rand();
+        let self_pubkey = gorbagana_pubkey::new_rand();
         assert!(splits.len() * 2 < NUM_CRDS_VALUES);
         // Assert that all messages are included in the splits.
         assert_eq!(NUM_CRDS_VALUES, splits.iter().map(Vec::len).sum::<usize>());
@@ -541,7 +541,7 @@ pub(crate) mod tests {
             .collect();
         let splits: Vec<_> =
             split_gossip_messages(PULL_RESPONSE_MAX_PAYLOAD_SIZE, values.clone()).collect();
-        let self_pubkey = solana_pubkey::new_rand();
+        let self_pubkey = gorbagana_pubkey::new_rand();
         assert!(splits.len() * 2 < NUM_CRDS_VALUES);
         // Assert that all messages are included in the splits.
         assert_eq!(NUM_CRDS_VALUES, splits.iter().map(Vec::len).sum::<usize>());

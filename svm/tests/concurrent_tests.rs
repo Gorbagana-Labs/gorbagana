@@ -11,17 +11,17 @@ use {
         sync::{Arc, RwLock},
         thread, Runner,
     },
-    solana_account::{AccountSharedData, ReadableAccount, WritableAccount},
-    solana_hash::Hash,
-    solana_instruction::AccountMeta,
-    solana_program_runtime::{
+    gorbagana_account::{AccountSharedData, ReadableAccount, WritableAccount},
+    gorbagana_hash::Hash,
+    gorbagana_instruction::AccountMeta,
+    gorbagana_program_runtime::{
         execution_budget::SVMTransactionExecutionAndFeeBudgetLimits,
         loaded_programs::ProgramCacheEntryType,
     },
-    solana_pubkey::Pubkey,
-    solana_sdk_ids::bpf_loader_upgradeable,
-    solana_signature::Signature,
-    solana_svm::{
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sdk_ids::bpf_loader_upgradeable,
+    gorbagana_signature::Signature,
+    gorbagana_svm::{
         account_loader::{CheckedTransactionDetails, TransactionCheckResult},
         transaction_processing_result::{
             ProcessedTransaction, TransactionProcessingResultExtensions,
@@ -31,7 +31,7 @@ use {
             TransactionProcessingEnvironment,
         },
     },
-    solana_timings::ExecuteTimings,
+    gorbagana_timings::ExecuteTimings,
     std::collections::HashMap,
 };
 
@@ -47,7 +47,7 @@ fn program_cache_execution(threads: usize) {
 
     const LOADER: Pubkey = bpf_loader_upgradeable::id();
     let programs = vec![
-        deploy_program("hello-solana".to_string(), 0, &mut mock_bank),
+        deploy_program("hello-gorbagana".to_string(), 0, &mut mock_bank),
         deploy_program("simple-transfer".to_string(), 0, &mut mock_bank),
         deploy_program("clock-sysvar".to_string(), 0, &mut mock_bank),
     ];

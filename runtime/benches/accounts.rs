@@ -4,20 +4,20 @@
 extern crate test;
 
 use {
-    solana_account::{AccountSharedData, ReadableAccount},
-    solana_accounts_db::epoch_accounts_hash::EpochAccountsHash,
-    solana_genesis_config::create_genesis_config,
-    solana_hash::Hash,
-    solana_instruction::error::LamportsError,
-    solana_pubkey::Pubkey,
-    solana_runtime::bank::*,
+    gorbagana_account::{AccountSharedData, ReadableAccount},
+    gorbagana_accounts_db::epoch_accounts_hash::EpochAccountsHash,
+    gorbagana_genesis_config::create_genesis_config,
+    gorbagana_hash::Hash,
+    gorbagana_instruction::error::LamportsError,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_runtime::bank::*,
     std::{path::PathBuf, sync::Arc},
     test::Bencher,
 };
 
 fn deposit_many(bank: &Bank, pubkeys: &mut Vec<Pubkey>, num: usize) -> Result<(), LamportsError> {
     for t in 0..num {
-        let pubkey = solana_pubkey::new_rand();
+        let pubkey = gorbagana_pubkey::new_rand();
         let account =
             AccountSharedData::new((t + 1) as u64, 0, AccountSharedData::default().owner());
         pubkeys.push(pubkey);

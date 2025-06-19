@@ -1,7 +1,7 @@
 [package]
-name = "solana-genesis-utils"
-description = "Solana Genesis Utils"
-documentation = "https://docs.rs/solana-download-utils"
+name = "gorbagana-genesis-utils"
+description = "Gorbagana Genesis Utils"
+documentation = "https://docs.rs/gorbagana-download-utils"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -14,12 +14,12 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [lib]
 crate-type = ["lib"]
-name = "solana_genesis_utils"
+name = "gorbagana_genesis_utils"
 
 [dependencies]
 log = { workspace = true }
-solana-accounts-db = { workspace = true }
-solana-download-utils = { workspace = true }
-solana-genesis-config = { workspace = true }
-solana-hash = { workspace = true }
-solana-rpc-client = { workspace = true }
+gorbagana-accounts-db = { workspace = true }
+gorbagana-download-utils = { workspace = true }
+gorbagana-genesis-config = { workspace = true }
+gorbagana-hash = { workspace = true }
+gorbagana-rpc-client = { workspace = true }

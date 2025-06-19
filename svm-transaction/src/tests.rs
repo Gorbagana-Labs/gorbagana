@@ -1,17 +1,17 @@
 #![cfg(test)]
 use {
     crate::svm_message::SVMMessage,
-    solana_hash::Hash,
-    solana_message::{
+    gorbagana_hash::Hash,
+    gorbagana_message::{
         compiled_instruction::CompiledInstruction,
         legacy,
         v0::{self, LoadedAddresses, MessageAddressTableLookup},
         MessageHeader, SanitizedMessage, SanitizedVersionedMessage, SimpleAddressLoader,
         VersionedMessage,
     },
-    solana_pubkey::Pubkey,
-    solana_sdk_ids::system_program,
-    solana_system_interface::instruction::SystemInstruction,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sdk_ids::system_program,
+    gorbagana_system_interface::instruction::SystemInstruction,
     std::collections::HashSet,
     test_case::test_case,
 };

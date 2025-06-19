@@ -12,26 +12,26 @@ use {
     agave_feature_set::{self as feature_set, FeatureSet},
     agave_reserved_account_keys::ReservedAccountKeys,
     borsh::{from_slice, to_vec, BorshDeserialize, BorshSerialize},
-    solana_account::{AccountSharedData, ReadableAccount, WritableAccount},
-    solana_account_info::MAX_PERMITTED_DATA_INCREASE,
-    solana_client_traits::SyncClient,
-    solana_clock::{UnixTimestamp, MAX_PROCESSING_AGE},
-    solana_compute_budget::compute_budget::ComputeBudget,
-    solana_compute_budget_instruction::instructions_processor::process_compute_budget_instructions,
-    solana_compute_budget_interface::ComputeBudgetInstruction,
-    solana_fee_calculator::FeeRateGovernor,
-    solana_fee_structure::{FeeBin, FeeBudgetLimits, FeeStructure},
-    solana_genesis_config::ClusterType,
-    solana_hash::Hash,
-    solana_instruction::{error::InstructionError, AccountMeta, Instruction},
-    solana_keypair::Keypair,
-    solana_loader_v3_interface::instruction as loader_v3_instruction,
-    solana_loader_v4_interface::instruction as loader_v4_instruction,
-    solana_message::{Message, SanitizedMessage},
-    solana_program_runtime::invoke_context::mock_process_instruction,
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
-    solana_runtime::{
+    gorbagana_account::{AccountSharedData, ReadableAccount, WritableAccount},
+    gorbagana_account_info::MAX_PERMITTED_DATA_INCREASE,
+    gorbagana_client_traits::SyncClient,
+    gorbagana_clock::{UnixTimestamp, MAX_PROCESSING_AGE},
+    gorbagana_compute_budget::compute_budget::ComputeBudget,
+    gorbagana_compute_budget_instruction::instructions_processor::process_compute_budget_instructions,
+    gorbagana_compute_budget_interface::ComputeBudgetInstruction,
+    gorbagana_fee_calculator::FeeRateGovernor,
+    gorbagana_fee_structure::{FeeBin, FeeBudgetLimits, FeeStructure},
+    gorbagana_genesis_config::ClusterType,
+    gorbagana_hash::Hash,
+    gorbagana_instruction::{error::InstructionError, AccountMeta, Instruction},
+    gorbagana_keypair::Keypair,
+    gorbagana_loader_v3_interface::instruction as loader_v3_instruction,
+    gorbagana_loader_v4_interface::instruction as loader_v4_instruction,
+    gorbagana_message::{Message, SanitizedMessage},
+    gorbagana_program_runtime::invoke_context::mock_process_instruction,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent::Rent,
+    gorbagana_runtime::{
         bank::Bank,
         bank_client::BankClient,
         genesis_utils::{
@@ -43,26 +43,26 @@ use {
             load_program_of_loader_v4, load_upgradeable_buffer,
         },
     },
-    solana_runtime_transaction::runtime_transaction::RuntimeTransaction,
-    solana_sbf_rust_invoke_dep::*,
-    solana_sbf_rust_realloc_dep::*,
-    solana_sbf_rust_realloc_invoke_dep::*,
-    solana_sbpf::vm::ContextObject,
-    solana_sdk_ids::sysvar::{self as sysvar, clock},
-    solana_sdk_ids::{bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable, loader_v4},
-    solana_signer::Signer,
-    solana_stake_interface as stake,
-    solana_svm::{
+    gorbagana_runtime_transaction::runtime_transaction::RuntimeTransaction,
+    gorbagana_sbf_rust_invoke_dep::*,
+    gorbagana_sbf_rust_realloc_dep::*,
+    gorbagana_sbf_rust_realloc_invoke_dep::*,
+    gorbagana_sbpf::vm::ContextObject,
+    gorbagana_sdk_ids::sysvar::{self as sysvar, clock},
+    gorbagana_sdk_ids::{bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable, loader_v4},
+    gorbagana_signer::Signer,
+    gorbagana_stake_interface as stake,
+    gorbagana_svm::{
         transaction_commit_result::{CommittedTransaction, TransactionCommitResult},
         transaction_execution_result::InnerInstruction,
         transaction_processor::ExecutionRecordingConfig,
     },
-    solana_svm_transaction::svm_message::SVMMessage,
-    solana_system_interface::{program as system_program, MAX_PERMITTED_DATA_LENGTH},
-    solana_timings::ExecuteTimings,
-    solana_transaction::Transaction,
-    solana_transaction_error::TransactionError,
-    solana_type_overrides::rand,
+    gorbagana_svm_transaction::svm_message::SVMMessage,
+    gorbagana_system_interface::{program as system_program, MAX_PERMITTED_DATA_LENGTH},
+    gorbagana_timings::ExecuteTimings,
+    gorbagana_transaction::Transaction,
+    gorbagana_transaction_error::TransactionError,
+    gorbagana_type_overrides::rand,
     std::{assert_eq, cell::RefCell, str::FromStr, sync::Arc, time::Duration},
 };
 
@@ -116,7 +116,7 @@ const LOADED_ACCOUNTS_DATA_SIZE_LIMIT_FOR_TEST: u32 = 64 * 1024 * 1024;
 #[test]
 #[cfg(any(feature = "sbf_c", feature = "sbf_rust"))]
 fn test_program_sbf_sanity() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let mut programs = Vec::new();
     #[cfg(feature = "sbf_c")]
@@ -146,27 +146,27 @@ fn test_program_sbf_sanity() {
     #[cfg(feature = "sbf_rust")]
     {
         programs.extend_from_slice(&[
-            ("solana_sbf_rust_128bit", true),
-            ("solana_sbf_rust_alloc", true),
-            ("solana_sbf_rust_alt_bn128", true),
-            ("solana_sbf_rust_alt_bn128_compression", true),
-            ("solana_sbf_rust_curve25519", true),
-            ("solana_sbf_rust_custom_heap", true),
-            ("solana_sbf_rust_dep_crate", true),
-            ("solana_sbf_rust_external_spend", false),
-            ("solana_sbf_rust_iter", true),
-            ("solana_sbf_rust_many_args", true),
-            ("solana_sbf_rust_mem", true),
-            ("solana_sbf_rust_membuiltins", true),
-            ("solana_sbf_rust_noop", true),
-            ("solana_sbf_rust_panic", false),
-            ("solana_sbf_rust_param_passing", true),
-            ("solana_sbf_rust_poseidon", true),
-            ("solana_sbf_rust_rand", true),
-            ("solana_sbf_rust_remaining_compute_units", true),
-            ("solana_sbf_rust_sanity", true),
-            ("solana_sbf_rust_secp256k1_recover", true),
-            ("solana_sbf_rust_sha", true),
+            ("gorbagana_sbf_rust_128bit", true),
+            ("gorbagana_sbf_rust_alloc", true),
+            ("gorbagana_sbf_rust_alt_bn128", true),
+            ("gorbagana_sbf_rust_alt_bn128_compression", true),
+            ("gorbagana_sbf_rust_curve25519", true),
+            ("gorbagana_sbf_rust_custom_heap", true),
+            ("gorbagana_sbf_rust_dep_crate", true),
+            ("gorbagana_sbf_rust_external_spend", false),
+            ("gorbagana_sbf_rust_iter", true),
+            ("gorbagana_sbf_rust_many_args", true),
+            ("gorbagana_sbf_rust_mem", true),
+            ("gorbagana_sbf_rust_membuiltins", true),
+            ("gorbagana_sbf_rust_noop", true),
+            ("gorbagana_sbf_rust_panic", false),
+            ("gorbagana_sbf_rust_param_passing", true),
+            ("gorbagana_sbf_rust_poseidon", true),
+            ("gorbagana_sbf_rust_rand", true),
+            ("gorbagana_sbf_rust_remaining_compute_units", true),
+            ("gorbagana_sbf_rust_sanity", true),
+            ("gorbagana_sbf_rust_secp256k1_recover", true),
+            ("gorbagana_sbf_rust_sha", true),
         ]);
     }
 
@@ -178,7 +178,7 @@ fn test_program_sbf_sanity() {
         let current_dir = env::current_dir().unwrap();
         let mut file = File::create(current_dir.join("sanity_programs.txt")).unwrap();
         for program in programs.iter() {
-            writeln!(file, "{}", program.0.trim_start_matches("solana_sbf_rust_"))
+            writeln!(file, "{}", program.0.trim_start_matches("gorbagana_sbf_rust_"))
                 .expect("Failed to write to file");
         }
     }
@@ -223,7 +223,7 @@ fn test_program_sbf_sanity() {
 #[test]
 #[cfg(any(feature = "sbf_c", feature = "sbf_rust"))]
 fn test_program_sbf_loader_deprecated() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let mut programs = Vec::new();
     #[cfg(feature = "sbf_c")]
@@ -232,7 +232,7 @@ fn test_program_sbf_loader_deprecated() {
     }
     #[cfg(feature = "sbf_rust")]
     {
-        programs.extend_from_slice(&[("solana_sbf_rust_deprecated_loader")]);
+        programs.extend_from_slice(&[("gorbagana_sbf_rust_deprecated_loader")]);
     }
 
     for program in programs.iter() {
@@ -267,7 +267,7 @@ fn test_program_sbf_loader_deprecated() {
     expected = "called `Result::unwrap()` on an `Err` value: TransactionError(InstructionError(0, InvalidAccountData))"
 )]
 fn test_sol_alloc_free_no_longer_deployable_with_upgradeable_loader() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -279,9 +279,9 @@ fn test_sol_alloc_free_no_longer_deployable_with_upgradeable_loader() {
     let mut bank_client = BankClient::new_shared(bank.clone());
     let authority_keypair = Keypair::new();
 
-    // Populate loader account with `solana_sbf_rust_deprecated_loader` elf, which
+    // Populate loader account with `gorbagana_sbf_rust_deprecated_loader` elf, which
     // depends on `sol_alloc_free_` syscall. This can be verified with
-    // $ elfdump solana_sbf_rust_deprecated_loader.so
+    // $ elfdump gorbagana_sbf_rust_deprecated_loader.so
     // : 0000000000001ab8  000000070000000a R_BPF_64_32            0000000000000000 sol_alloc_free_
     // In the symbol table, there is `sol_alloc_free_`.
     // In fact, `sol_alloc_free_` is called from sbf allocator, which is originated from
@@ -297,14 +297,14 @@ fn test_sol_alloc_free_no_longer_deployable_with_upgradeable_loader() {
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_deprecated_loader",
+        "gorbagana_sbf_rust_deprecated_loader",
     );
 }
 
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_duplicate_accounts() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let mut programs = Vec::new();
     #[cfg(feature = "sbf_c")]
@@ -313,7 +313,7 @@ fn test_program_sbf_duplicate_accounts() {
     }
     #[cfg(feature = "sbf_rust")]
     {
-        programs.extend_from_slice(&[("solana_sbf_rust_dup_accounts")]);
+        programs.extend_from_slice(&[("gorbagana_sbf_rust_dup_accounts")]);
     }
 
     for program in programs.iter() {
@@ -411,7 +411,7 @@ fn test_program_sbf_duplicate_accounts() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_error_handling() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let mut programs = Vec::new();
     #[cfg(feature = "sbf_c")]
@@ -420,7 +420,7 @@ fn test_program_sbf_error_handling() {
     }
     #[cfg(feature = "sbf_rust")]
     {
-        programs.extend_from_slice(&[("solana_sbf_rust_error_handling")]);
+        programs.extend_from_slice(&[("gorbagana_sbf_rust_error_handling")]);
     }
 
     for program in programs.iter() {
@@ -523,7 +523,7 @@ fn test_program_sbf_error_handling() {
 #[test]
 #[cfg(any(feature = "sbf_c", feature = "sbf_rust"))]
 fn test_return_data_and_log_data_syscall() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let mut programs = Vec::new();
     #[cfg(feature = "sbf_c")]
@@ -532,7 +532,7 @@ fn test_return_data_and_log_data_syscall() {
     }
     #[cfg(feature = "sbf_rust")]
     {
-        programs.extend_from_slice(&[("solana_sbf_rust_log_data")]);
+        programs.extend_from_slice(&[("gorbagana_sbf_rust_log_data")]);
     }
 
     for program in programs.iter() {
@@ -581,7 +581,7 @@ fn test_return_data_and_log_data_syscall() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_invoke_sanity() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     #[derive(Debug)]
     #[allow(dead_code)]
@@ -598,9 +598,9 @@ fn test_program_sbf_invoke_sanity() {
     {
         programs.push((
             Languages::Rust,
-            "solana_sbf_rust_invoke",
-            "solana_sbf_rust_invoked",
-            "solana_sbf_rust_noop",
+            "gorbagana_sbf_rust_invoke",
+            "gorbagana_sbf_rust_invoked",
+            "gorbagana_sbf_rust_noop",
         ));
     }
     for program in programs.iter() {
@@ -674,7 +674,7 @@ fn test_program_sbf_invoke_sanity() {
             AccountMeta::new_readonly(derived_key3, false),
             AccountMeta::new_readonly(system_program::id(), false),
             AccountMeta::new(from_keypair.pubkey(), true),
-            AccountMeta::new_readonly(solana_sdk_ids::ed25519_program::id(), false),
+            AccountMeta::new_readonly(gorbagana_sdk_ids::ed25519_program::id(), false),
             AccountMeta::new_readonly(invoke_program_id, false),
             AccountMeta::new_readonly(unexecutable_program_keypair.pubkey(), false),
         ];
@@ -1070,14 +1070,14 @@ fn test_program_sbf_program_id_spoofing() {
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_spoof1",
+        "gorbagana_sbf_rust_spoof1",
     );
     let (bank, malicious_system_pubkey) = load_program_of_loader_v4(
         &mut bank_client,
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_spoof1_system",
+        "gorbagana_sbf_rust_spoof1_system",
     );
 
     let from_pubkey = Pubkey::new_unique();
@@ -1124,14 +1124,14 @@ fn test_program_sbf_caller_has_access_to_cpi_program() {
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_caller_access",
+        "gorbagana_sbf_rust_caller_access",
     );
     let (_bank, caller2_pubkey) = load_program_of_loader_v4(
         &mut bank_client,
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_caller_access",
+        "gorbagana_sbf_rust_caller_access",
     );
 
     let account_metas = vec![
@@ -1146,7 +1146,7 @@ fn test_program_sbf_caller_has_access_to_cpi_program() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_ro_modify() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -1163,7 +1163,7 @@ fn test_program_sbf_ro_modify() {
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_ro_modify",
+        "gorbagana_sbf_rust_ro_modify",
     );
 
     let test_keypair = Keypair::new();
@@ -1203,7 +1203,7 @@ fn test_program_sbf_ro_modify() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_call_depth() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -1220,7 +1220,7 @@ fn test_program_sbf_call_depth() {
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_call_depth",
+        "gorbagana_sbf_rust_call_depth",
     );
 
     let instruction = Instruction::new_with_bincode(
@@ -1240,7 +1240,7 @@ fn test_program_sbf_call_depth() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_compute_budget() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -1257,7 +1257,7 @@ fn test_program_sbf_compute_budget() {
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_noop",
+        "gorbagana_sbf_rust_noop",
     );
     let message = Message::new(
         &[
@@ -1275,7 +1275,7 @@ fn test_program_sbf_compute_budget() {
 
 #[test]
 fn assert_instruction_count() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let mut programs = Vec::new();
     #[cfg(feature = "sbf_c")]
@@ -1299,20 +1299,20 @@ fn assert_instruction_count() {
     #[cfg(feature = "sbf_rust")]
     {
         programs.extend_from_slice(&[
-            ("solana_sbf_rust_128bit", 969),
-            ("solana_sbf_rust_alloc", 5077),
-            ("solana_sbf_rust_custom_heap", 304),
-            ("solana_sbf_rust_dep_crate", 2),
-            ("solana_sbf_rust_iter", 1514),
-            ("solana_sbf_rust_many_args", 1290),
-            ("solana_sbf_rust_mem", 1302),
-            ("solana_sbf_rust_membuiltins", 331),
-            ("solana_sbf_rust_noop", 314),
-            ("solana_sbf_rust_param_passing", 108),
-            ("solana_sbf_rust_rand", 278),
-            ("solana_sbf_rust_sanity", 51325),
-            ("solana_sbf_rust_secp256k1_recover", 89388),
-            ("solana_sbf_rust_sha", 22855),
+            ("gorbagana_sbf_rust_128bit", 969),
+            ("gorbagana_sbf_rust_alloc", 5077),
+            ("gorbagana_sbf_rust_custom_heap", 304),
+            ("gorbagana_sbf_rust_dep_crate", 2),
+            ("gorbagana_sbf_rust_iter", 1514),
+            ("gorbagana_sbf_rust_many_args", 1290),
+            ("gorbagana_sbf_rust_mem", 1302),
+            ("gorbagana_sbf_rust_membuiltins", 331),
+            ("gorbagana_sbf_rust_noop", 314),
+            ("gorbagana_sbf_rust_param_passing", 108),
+            ("gorbagana_sbf_rust_rand", 278),
+            ("gorbagana_sbf_rust_sanity", 51325),
+            ("gorbagana_sbf_rust_secp256k1_recover", 89388),
+            ("gorbagana_sbf_rust_sha", 22855),
         ]);
     }
 
@@ -1346,10 +1346,10 @@ fn assert_instruction_count() {
             transaction_accounts,
             instruction_accounts,
             Ok(()),
-            solana_bpf_loader_program::Entrypoint::vm,
+            gorbagana_bpf_loader_program::Entrypoint::vm,
             |invoke_context| {
                 *prev_compute_meter.borrow_mut() = invoke_context.get_remaining();
-                solana_bpf_loader_program::test_utils::load_all_invoked_programs(invoke_context);
+                gorbagana_bpf_loader_program::test_utils::load_all_invoked_programs(invoke_context);
             },
             |invoke_context| {
                 let consumption = prev_compute_meter
@@ -1371,7 +1371,7 @@ fn assert_instruction_count() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_instruction_introspection() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -1388,7 +1388,7 @@ fn test_program_sbf_instruction_introspection() {
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_instruction_introspection",
+        "gorbagana_sbf_rust_instruction_introspection",
     );
 
     // Passing transaction
@@ -1470,7 +1470,7 @@ fn test_program_sbf_invoke_stable_genesis_and_bank() {
     // assert that the resulting bank hash matches with the expected value.
     // The assert check is commented out by default. Please refer to the last few lines
     // of the test to enable the assertion.
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -1504,13 +1504,13 @@ fn test_program_sbf_invoke_stable_genesis_and_bank() {
     );
 
     #[allow(deprecated)]
-    solana_runtime::loader_utils::load_upgradeable_program(
+    gorbagana_runtime::loader_utils::load_upgradeable_program(
         &bank_client,
         &mint_keypair,
         &buffer_keypair,
         &program_keypair,
         &authority_keypair,
-        "solana_sbf_rust_noop",
+        "gorbagana_sbf_rust_noop",
     );
 
     // Deploy indirect invocation program
@@ -1518,13 +1518,13 @@ fn test_program_sbf_invoke_stable_genesis_and_bank() {
         "2BgE4gD5wUCwiAVPYbmWd2xzXSsD9W2fWgNjwmVkm8WL7i51vK9XAXNnX1VB6oKQZmjaUPRd5RzE6RggB9DeKbZC",
     );
     #[allow(deprecated)]
-    solana_runtime::loader_utils::load_upgradeable_program(
+    gorbagana_runtime::loader_utils::load_upgradeable_program(
         &bank_client,
         &mint_keypair,
         &buffer_keypair,
         &indirect_program_keypair,
         &authority_keypair,
-        "solana_sbf_rust_invoke_and_return",
+        "gorbagana_sbf_rust_invoke_and_return",
     );
 
     let invoke_instruction =
@@ -1547,7 +1547,7 @@ fn test_program_sbf_invoke_stable_genesis_and_bank() {
         &mint_keypair,
         &buffer_keypair,
         &authority_keypair,
-        "solana_sbf_rust_panic",
+        "gorbagana_sbf_rust_panic",
     );
     let redeployment_instruction = loader_v3_instruction::upgrade(
         &program_id,
@@ -1646,7 +1646,7 @@ fn test_program_sbf_invoke_stable_genesis_and_bank() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_invoke_in_same_tx_as_deployment() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -1662,7 +1662,7 @@ fn test_program_sbf_invoke_in_same_tx_as_deployment() {
         &bank_client,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_noop",
+        "gorbagana_sbf_rust_noop",
         None,
         None,
     );
@@ -1674,7 +1674,7 @@ fn test_program_sbf_invoke_in_same_tx_as_deployment() {
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_invoke_and_return",
+        "gorbagana_sbf_rust_invoke_and_return",
     );
 
     // Prepare invocations
@@ -1725,7 +1725,7 @@ fn test_program_sbf_invoke_in_same_tx_as_deployment() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_invoke_in_same_tx_as_redeployment() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -1742,14 +1742,14 @@ fn test_program_sbf_invoke_in_same_tx_as_redeployment() {
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_noop",
+        "gorbagana_sbf_rust_noop",
     );
     let (source_program_keypair, mut deployment_instructions) =
         instructions_to_load_program_of_loader_v4(
             &bank_client,
             &mint_keypair,
             &authority_keypair,
-            "solana_sbf_rust_panic",
+            "gorbagana_sbf_rust_panic",
             None,
             Some(&program_id),
         );
@@ -1775,7 +1775,7 @@ fn test_program_sbf_invoke_in_same_tx_as_redeployment() {
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_invoke_and_return",
+        "gorbagana_sbf_rust_invoke_and_return",
     );
 
     // Prepare invocations
@@ -1831,7 +1831,7 @@ fn test_program_sbf_invoke_in_same_tx_as_redeployment() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_invoke_in_same_tx_as_undeployment() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -1848,7 +1848,7 @@ fn test_program_sbf_invoke_in_same_tx_as_undeployment() {
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_noop",
+        "gorbagana_sbf_rust_noop",
     );
 
     // Deploy indirect invocation program
@@ -1857,7 +1857,7 @@ fn test_program_sbf_invoke_in_same_tx_as_undeployment() {
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_invoke_and_return",
+        "gorbagana_sbf_rust_invoke_and_return",
     );
 
     // Prepare invocations
@@ -1911,7 +1911,7 @@ fn test_program_sbf_invoke_in_same_tx_as_undeployment() {
 #[test]
 #[cfg(any(feature = "sbf_c", feature = "sbf_rust"))]
 fn test_program_sbf_disguised_as_sbf_loader() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let mut programs = Vec::new();
     #[cfg(feature = "sbf_c")]
@@ -1920,7 +1920,7 @@ fn test_program_sbf_disguised_as_sbf_loader() {
     }
     #[cfg(feature = "sbf_rust")]
     {
-        programs.extend_from_slice(&[("solana_sbf_rust_noop")]);
+        programs.extend_from_slice(&[("gorbagana_sbf_rust_noop")]);
     }
 
     for program in programs.iter() {
@@ -1956,8 +1956,8 @@ fn test_program_sbf_disguised_as_sbf_loader() {
 #[test]
 #[cfg(feature = "sbf_c")]
 fn test_program_reads_from_program_account() {
-    use solana_loader_v4_interface::state as loader_v4_state;
-    solana_logger::setup();
+    use gorbagana_loader_v4_interface::state as loader_v4_state;
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -1991,7 +1991,7 @@ fn test_program_reads_from_program_account() {
 #[test]
 #[cfg(feature = "sbf_c")]
 fn test_program_sbf_c_dup() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -2027,7 +2027,7 @@ fn test_program_sbf_c_dup() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_upgrade() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -2044,7 +2044,7 @@ fn test_program_sbf_upgrade() {
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_upgradeable",
+        "gorbagana_sbf_rust_upgradeable",
     );
 
     // Call upgradeable program
@@ -2077,7 +2077,7 @@ fn test_program_sbf_upgrade() {
             &bank_client,
             &mint_keypair,
             &new_authority_keypair,
-            "solana_sbf_rust_upgraded",
+            "gorbagana_sbf_rust_upgraded",
             None,
             Some(&program_id),
         );
@@ -2112,7 +2112,7 @@ fn test_program_sbf_upgrade() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_upgrade_via_cpi() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -2129,7 +2129,7 @@ fn test_program_sbf_upgrade_via_cpi() {
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_invoke_and_return",
+        "gorbagana_sbf_rust_invoke_and_return",
     );
 
     // Deploy upgradeable program
@@ -2139,7 +2139,7 @@ fn test_program_sbf_upgrade_via_cpi() {
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_upgradeable",
+        "gorbagana_sbf_rust_upgradeable",
     );
 
     // Call the upgradable program via CPI
@@ -2183,7 +2183,7 @@ fn test_program_sbf_upgrade_via_cpi() {
             &bank_client,
             &mint_keypair,
             &new_authority_keypair,
-            "solana_sbf_rust_upgraded",
+            "gorbagana_sbf_rust_upgraded",
             None,
             Some(&program_id),
         );
@@ -2227,7 +2227,7 @@ fn test_program_sbf_upgrade_via_cpi() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_ro_account_modify() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -2244,7 +2244,7 @@ fn test_program_sbf_ro_account_modify() {
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_ro_account_modify",
+        "gorbagana_sbf_rust_ro_account_modify",
     );
 
     let argument_keypair = Keypair::new();
@@ -2289,7 +2289,7 @@ fn test_program_sbf_ro_account_modify() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_realloc() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     const START_BALANCE: u64 = 100_000_000_000;
 
@@ -2318,7 +2318,7 @@ fn test_program_sbf_realloc() {
             &bank_forks,
             &mint_keypair,
             &authority_keypair,
-            "solana_sbf_rust_realloc",
+            "gorbagana_sbf_rust_realloc",
         );
 
         let mut bump = 0;
@@ -2591,7 +2591,7 @@ fn test_program_sbf_realloc() {
             )
             .unwrap();
         let account = bank.get_account(&pubkey).unwrap();
-        assert_eq!(&solana_system_interface::program::id(), account.owner());
+        assert_eq!(&gorbagana_system_interface::program::id(), account.owner());
         let data = bank_client.get_account_data(&pubkey).unwrap().unwrap();
         assert_eq!(MAX_PERMITTED_DATA_INCREASE, data.len());
 
@@ -2627,7 +2627,7 @@ fn test_program_sbf_realloc() {
                                 &[REALLOC_AND_ASSIGN_TO_SELF_VIA_SYSTEM_PROGRAM],
                                 vec![
                                     AccountMeta::new(pubkey, true),
-                                    AccountMeta::new(solana_system_interface::program::id(), false),
+                                    AccountMeta::new(gorbagana_system_interface::program::id(), false),
                                 ],
                             ),
                             ComputeBudgetInstruction::set_loaded_accounts_data_size_limit(
@@ -2653,7 +2653,7 @@ fn test_program_sbf_realloc() {
                             &[ASSIGN_TO_SELF_VIA_SYSTEM_PROGRAM_AND_REALLOC],
                             vec![
                                 AccountMeta::new(pubkey, true),
-                                AccountMeta::new(solana_system_interface::program::id(), false),
+                                AccountMeta::new(gorbagana_system_interface::program::id(), false),
                             ],
                         ),
                         ComputeBudgetInstruction::set_loaded_accounts_data_size_limit(
@@ -2712,7 +2712,7 @@ fn test_program_sbf_realloc() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_realloc_invoke() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     const START_BALANCE: u64 = 100_000_000_000;
 
@@ -2735,14 +2735,14 @@ fn test_program_sbf_realloc_invoke() {
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_realloc",
+        "gorbagana_sbf_rust_realloc",
     );
     let (bank, realloc_invoke_program_id) = load_program_of_loader_v4(
         &mut bank_client,
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_realloc_invoke",
+        "gorbagana_sbf_rust_realloc_invoke",
     );
 
     let mut bump = 0;
@@ -2899,7 +2899,7 @@ fn test_program_sbf_realloc_invoke() {
         )
         .unwrap();
     let account = bank.get_account(&pubkey).unwrap();
-    assert_eq!(&solana_system_interface::program::id(), account.owner());
+    assert_eq!(&gorbagana_system_interface::program::id(), account.owner());
     let data = bank_client.get_account_data(&pubkey).unwrap().unwrap();
     assert_eq!(MAX_PERMITTED_DATA_INCREASE, data.len());
 
@@ -2937,7 +2937,7 @@ fn test_program_sbf_realloc_invoke() {
                                 AccountMeta::new(pubkey, true),
                                 AccountMeta::new_readonly(realloc_program_id, false),
                                 AccountMeta::new_readonly(
-                                    solana_system_interface::program::id(),
+                                    gorbagana_system_interface::program::id(),
                                     false
                                 ),
                             ],
@@ -2967,7 +2967,7 @@ fn test_program_sbf_realloc_invoke() {
                             AccountMeta::new(pubkey, true),
                             AccountMeta::new_readonly(realloc_program_id, false),
                             AccountMeta::new_readonly(
-                                solana_system_interface::program::id(),
+                                gorbagana_system_interface::program::id(),
                                 false,
                             ),
                         ],
@@ -3056,7 +3056,7 @@ fn test_program_sbf_realloc_invoke() {
                         vec![
                             AccountMeta::new(mint_pubkey, true),
                             AccountMeta::new(new_pubkey, true),
-                            AccountMeta::new(solana_system_interface::program::id(), false),
+                            AccountMeta::new(gorbagana_system_interface::program::id(), false),
                             AccountMeta::new_readonly(realloc_invoke_program_id, false),
                         ],
                     ),
@@ -3337,7 +3337,7 @@ fn test_program_sbf_realloc_invoke() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_processed_inner_instruction() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -3354,28 +3354,28 @@ fn test_program_sbf_processed_inner_instruction() {
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_sibling_instructions",
+        "gorbagana_sbf_rust_sibling_instructions",
     );
     let (_bank, sibling_inner_program_id) = load_program_of_loader_v4(
         &mut bank_client,
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_sibling_inner_instructions",
+        "gorbagana_sbf_rust_sibling_inner_instructions",
     );
     let (_bank, noop_program_id) = load_program_of_loader_v4(
         &mut bank_client,
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_noop",
+        "gorbagana_sbf_rust_noop",
     );
     let (_bank, invoke_and_return_program_id) = load_program_of_loader_v4(
         &mut bank_client,
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_invoke_and_return",
+        "gorbagana_sbf_rust_invoke_and_return",
     );
 
     let instruction2 = Instruction::new_with_bytes(
@@ -3416,7 +3416,7 @@ fn test_program_sbf_processed_inner_instruction() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_fees() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let congestion_multiplier = 1;
 
@@ -3453,7 +3453,7 @@ fn test_program_fees() {
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_noop",
+        "gorbagana_sbf_rust_noop",
     );
 
     let pre_balance = bank_client.get_balance(&mint_keypair.pubkey()).unwrap();
@@ -3474,7 +3474,7 @@ fn test_program_fees() {
         )
         .unwrap_or_default(),
     );
-    let expected_normal_fee = solana_fee::calculate_fee(
+    let expected_normal_fee = gorbagana_fee::calculate_fee(
         &sanitized_message,
         congestion_multiplier == 0,
         fee_structure.lamports_per_signature,
@@ -3507,7 +3507,7 @@ fn test_program_fees() {
         )
         .unwrap_or_default(),
     );
-    let expected_prioritized_fee = solana_fee::calculate_fee(
+    let expected_prioritized_fee = gorbagana_fee::calculate_fee(
         &sanitized_message,
         congestion_multiplier == 0,
         fee_structure.lamports_per_signature,
@@ -3542,7 +3542,7 @@ fn test_get_minimum_delegation() {
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_get_minimum_delegation",
+        "gorbagana_sbf_rust_get_minimum_delegation",
     );
 
     let account_metas = vec![AccountMeta::new_readonly(stake::program::id(), false)];
@@ -3554,7 +3554,7 @@ fn test_get_minimum_delegation() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_inner_instruction_alignment_checks() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -3562,11 +3562,11 @@ fn test_program_sbf_inner_instruction_alignment_checks() {
         ..
     } = create_genesis_config(50);
     let (bank, bank_forks) = Bank::new_with_bank_forks_for_tests(&genesis_config);
-    let noop = create_program(&bank, &bpf_loader_deprecated::id(), "solana_sbf_rust_noop");
+    let noop = create_program(&bank, &bpf_loader_deprecated::id(), "gorbagana_sbf_rust_noop");
     let inner_instruction_alignment_check = create_program(
         &bank,
         &bpf_loader_deprecated::id(),
-        "solana_sbf_rust_inner_instruction_alignment_check",
+        "gorbagana_sbf_rust_inner_instruction_alignment_check",
     );
 
     // invoke unaligned program, which will call aligned program twice,
@@ -3592,7 +3592,7 @@ fn test_program_sbf_inner_instruction_alignment_checks() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_cpi_account_ownership_writability() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     for direct_mapping in [false, true] {
         let GenesisConfigInfo {
@@ -3617,21 +3617,21 @@ fn test_cpi_account_ownership_writability() {
             &bank_forks,
             &mint_keypair,
             &authority_keypair,
-            "solana_sbf_rust_invoke",
+            "gorbagana_sbf_rust_invoke",
         );
         let (_bank, invoked_program_id) = load_program_of_loader_v4(
             &mut bank_client,
             &bank_forks,
             &mint_keypair,
             &authority_keypair,
-            "solana_sbf_rust_invoked",
+            "gorbagana_sbf_rust_invoked",
         );
         let (bank, realloc_program_id) = load_program_of_loader_v4(
             &mut bank_client,
             &bank_forks,
             &mint_keypair,
             &authority_keypair,
-            "solana_sbf_rust_realloc",
+            "gorbagana_sbf_rust_realloc",
         );
 
         let account_keypair = Keypair::new();
@@ -3788,7 +3788,7 @@ fn test_cpi_account_ownership_writability() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_cpi_account_data_updates() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     for (deprecated_callee, deprecated_caller, direct_mapping) in
         [false, true].into_iter().flat_map(move |z| {
@@ -3818,19 +3818,19 @@ fn test_cpi_account_data_updates() {
             &bank_forks,
             &mint_keypair,
             &authority_keypair,
-            "solana_sbf_rust_invoke",
+            "gorbagana_sbf_rust_invoke",
         );
         let (bank, realloc_program_id) = load_program_of_loader_v4(
             &mut bank_client,
             &bank_forks,
             &mint_keypair,
             &authority_keypair,
-            "solana_sbf_rust_realloc",
+            "gorbagana_sbf_rust_realloc",
         );
         let deprecated_program_id = create_program(
             &bank,
             &bpf_loader_deprecated::id(),
-            "solana_sbf_rust_deprecated_loader",
+            "gorbagana_sbf_rust_deprecated_loader",
         );
 
         let account_keypair = Keypair::new();
@@ -4043,9 +4043,9 @@ fn test_cpi_account_data_updates() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_cpi_change_account_data_memory_allocation() {
-    use solana_program_runtime::{declare_process_instruction, loaded_programs::ProgramCacheEntry};
+    use gorbagana_program_runtime::{declare_process_instruction, loaded_programs::ProgramCacheEntry};
 
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -4099,7 +4099,7 @@ fn test_cpi_change_account_data_memory_allocation() {
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_invoke",
+        "gorbagana_sbf_rust_invoke",
     );
 
     let account_keypair = Keypair::new();
@@ -4126,7 +4126,7 @@ fn test_cpi_change_account_data_memory_allocation() {
 #[test]
 #[cfg(any(feature = "sbf_c", feature = "sbf_rust"))]
 fn test_cpi_invalid_account_info_pointers() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -4157,7 +4157,7 @@ fn test_cpi_invalid_account_info_pointers() {
             &bank_forks,
             &mint_keypair,
             &authority_keypair,
-            "solana_sbf_rust_invoke",
+            "gorbagana_sbf_rust_invoke",
         );
         account_metas.push(AccountMeta::new_readonly(invoke_program_id, false));
         program_ids.push(invoke_program_id);
@@ -4214,7 +4214,7 @@ fn test_cpi_invalid_account_info_pointers() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_deplete_cost_meter_with_access_violation() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
     let GenesisConfigInfo {
         genesis_config,
         mint_keypair,
@@ -4230,7 +4230,7 @@ fn test_deplete_cost_meter_with_access_violation() {
         bank_forks.as_ref(),
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_invoke",
+        "gorbagana_sbf_rust_invoke",
     );
 
     let account_keypair = Keypair::new();
@@ -4272,7 +4272,7 @@ fn test_deplete_cost_meter_with_access_violation() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_deplete_cost_meter_with_divide_by_zero() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -4289,7 +4289,7 @@ fn test_program_sbf_deplete_cost_meter_with_divide_by_zero() {
         bank_forks.as_ref(),
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_divide_by_zero",
+        "gorbagana_sbf_rust_divide_by_zero",
     );
 
     let instruction = Instruction::new_with_bytes(program_id, &[], vec![]);
@@ -4317,7 +4317,7 @@ fn test_program_sbf_deplete_cost_meter_with_divide_by_zero() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_deny_executable_write() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -4342,7 +4342,7 @@ fn test_deny_executable_write() {
             &bank_forks,
             &mint_keypair,
             &authority_keypair,
-            "solana_sbf_rust_invoke",
+            "gorbagana_sbf_rust_invoke",
         );
 
         let account_keypair = Keypair::new();
@@ -4372,7 +4372,7 @@ fn test_deny_executable_write() {
 #[test]
 fn test_update_callee_account() {
     // Test that fn update_callee_account() works and we are updating the callee account on CPI.
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -4397,7 +4397,7 @@ fn test_update_callee_account() {
             &bank_forks,
             &mint_keypair,
             &authority_keypair,
-            "solana_sbf_rust_invoke",
+            "gorbagana_sbf_rust_invoke",
         );
 
         let account_keypair = Keypair::new();
@@ -4645,7 +4645,7 @@ fn test_update_callee_account() {
 
 #[test]
 fn test_account_info_in_account() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -4660,7 +4660,7 @@ fn test_account_info_in_account() {
     }
     #[cfg(feature = "sbf_rust")]
     {
-        programs.push("solana_sbf_rust_invoke");
+        programs.push("gorbagana_sbf_rust_invoke");
     }
 
     for program in programs {
@@ -4717,7 +4717,7 @@ fn test_account_info_in_account() {
 
 #[test]
 fn test_account_info_rc_in_account() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -4743,7 +4743,7 @@ fn test_account_info_rc_in_account() {
             &bank_forks,
             &mint_keypair,
             &authority_keypair,
-            "solana_sbf_rust_invoke",
+            "gorbagana_sbf_rust_invoke",
         );
 
         let account_keypair = Keypair::new();
@@ -4810,7 +4810,7 @@ fn test_account_info_rc_in_account() {
 #[test]
 fn test_clone_account_data() {
     // Test cloning account data works as expect with
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -4832,14 +4832,14 @@ fn test_clone_account_data() {
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_invoke",
+        "gorbagana_sbf_rust_invoke",
     );
     let (bank, invoke_program_id2) = load_program_of_loader_v4(
         &mut bank_client,
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_invoke",
+        "gorbagana_sbf_rust_invoke",
     );
 
     let account_keypair = Keypair::new();
@@ -4942,7 +4942,7 @@ fn test_clone_account_data() {
 
 #[test]
 fn test_stack_heap_zeroed() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -4961,7 +4961,7 @@ fn test_stack_heap_zeroed() {
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_invoke",
+        "gorbagana_sbf_rust_invoke",
     );
 
     let account_keypair = Keypair::new();
@@ -5010,7 +5010,7 @@ fn test_stack_heap_zeroed() {
 fn test_function_call_args() {
     // This function tests edge compiler edge cases when calling functions with more than five
     // arguments and passing by value arguments with more than 16 bytes.
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -5027,7 +5027,7 @@ fn test_function_call_args() {
         &bank_forks,
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_call_args",
+        "gorbagana_sbf_rust_call_args",
     );
 
     #[derive(BorshSerialize, BorshDeserialize, PartialEq, Eq, Debug)]
@@ -5152,7 +5152,7 @@ fn test_function_call_args() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_mem_syscalls_overlap_account_begin_or_end() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     for direct_mapping in [false, true] {
         let GenesisConfigInfo {
@@ -5179,13 +5179,13 @@ fn test_mem_syscalls_overlap_account_begin_or_end() {
             &bank_forks,
             &mint_keypair,
             &authority_keypair,
-            "solana_sbf_rust_account_mem",
+            "gorbagana_sbf_rust_account_mem",
         );
 
         let deprecated_program_id = create_program(
             &bank,
             &bpf_loader_deprecated::id(),
-            "solana_sbf_rust_account_mem_deprecated",
+            "gorbagana_sbf_rust_account_mem_deprecated",
         );
 
         let mint_pubkey = mint_keypair.pubkey();

@@ -1,7 +1,7 @@
 [package]
-name = "solana-streamer"
-description = "Solana Streamer"
-documentation = "https://docs.rs/solana-streamer"
+name = "gorbagana-streamer"
+description = "Gorbagana Streamer"
+documentation = "https://docs.rs/gorbagana-streamer"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -14,7 +14,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [lib]
 crate-type = ["lib"]
-name = "solana_streamer"
+name = "gorbagana_streamer"
 
 [features]
 dev-context-only-utils = []
@@ -42,20 +42,20 @@ rand = { workspace = true }
 rustls = { workspace = true }
 smallvec = { workspace = true }
 socket2 = { workspace = true }
-solana-keypair = { workspace = true }
-solana-measure = { workspace = true }
-solana-metrics = { workspace = true }
-solana-net-utils = { workspace = true }
-solana-packet = { workspace = true }
-solana-perf = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-quic-definitions = { workspace = true }
-solana-signature = { workspace = true }
-solana-signer = { workspace = true }
-solana-time-utils = { workspace = true }
-solana-tls-utils = { workspace = true }
-solana-transaction-error = { workspace = true }
-solana-transaction-metrics-tracker = { workspace = true }
+gorbagana-keypair = { workspace = true }
+gorbagana-measure = { workspace = true }
+gorbagana-metrics = { workspace = true }
+gorbagana-net-utils = { workspace = true }
+gorbagana-packet = { workspace = true }
+gorbagana-perf = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-quic-definitions = { workspace = true }
+gorbagana-signature = { workspace = true }
+gorbagana-signer = { workspace = true }
+gorbagana-time-utils = { workspace = true }
+gorbagana-tls-utils = { workspace = true }
+gorbagana-transaction-error = { workspace = true }
+gorbagana-transaction-metrics-tracker = { workspace = true }
 thiserror = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 tokio-util = { workspace = true }
@@ -63,6 +63,6 @@ x509-parser = { workspace = true }
 
 [dev-dependencies]
 assert_matches = { workspace = true }
-solana-logger = { workspace = true }
-solana-net-utils = { workspace = true, features = ["dev-context-only-utils"] }
-solana-streamer = { path = ".", features = ["dev-context-only-utils"] }
+gorbagana-logger = { workspace = true }
+gorbagana-net-utils = { workspace = true, features = ["dev-context-only-utils"] }
+gorbagana-streamer = { path = ".", features = ["dev-context-only-utils"] }

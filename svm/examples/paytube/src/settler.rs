@@ -3,7 +3,7 @@
 //!
 //! When users are finished transacting, the resulting ledger is used to craft
 //! a batch of transactions to settle all state changes to the base chain
-//! (Solana).
+//! (Gorbagana).
 //!
 //! The interesting piece here is that there can be hundreds or thousands of
 //! transactions across a handful of users, but only the resulting difference
@@ -12,18 +12,18 @@
 
 use {
     crate::transaction::PayTubeTransaction,
-    solana_client::{rpc_client::RpcClient, rpc_config::RpcSendTransactionConfig},
-    solana_commitment_config::CommitmentConfig,
-    solana_instruction::Instruction as SolanaInstruction,
-    solana_keypair::Keypair,
-    solana_pubkey::Pubkey,
-    solana_signer::Signer,
-    solana_svm::{
+    gorbagana_client::{rpc_client::RpcClient, rpc_config::RpcSendTransactionConfig},
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_instruction::Instruction as GorbaganaInstruction,
+    gorbagana_keypair::Keypair,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signer::Signer,
+    gorbagana_svm::{
         transaction_processing_result::TransactionProcessingResultExtensions,
         transaction_processor::LoadAndExecuteSanitizedTransactionsOutput,
     },
-    solana_system_interface::instruction as system_instruction,
-    solana_transaction::Transaction as SolanaTransaction,
+    gorbagana_system_interface::instruction as system_instruction,
+    gorbagana_transaction::Transaction as GorbaganaTransaction,
     spl_associated_token_account::get_associated_token_address,
     std::collections::HashMap,
 };
@@ -91,7 +91,7 @@ impl Ledger {
         Self { ledger }
     }
 
-    fn generate_base_chain_instructions(&self) -> Vec<SolanaInstruction> {
+    fn generate_base_chain_instructions(&self) -> Vec<GorbaganaInstruction> {
         self.ledger
             .iter()
             .map(|(key, amount)| {
@@ -123,7 +123,7 @@ const CHUNK_SIZE: usize = 10;
 
 /// PayTube final transaction settler.
 pub struct PayTubeSettler<'a> {
-    instructions: Vec<SolanaInstruction>,
+    instructions: Vec<GorbaganaInstruction>,
     keys: &'a [Keypair],
     rpc_client: &'a RpcClient,
 }
@@ -140,7 +140,7 @@ impl<'a> PayTubeSettler<'a> {
         // Build the ledger from the processed PayTube transactions.
         let ledger = Ledger::new(paytube_transactions, svm_output);
 
-        // Build the Solana instructions from the ledger.
+        // Build the Gorbagana instructions from the ledger.
         let instructions = ledger.generate_base_chain_instructions();
 
         Self {
@@ -155,11 +155,11 @@ impl<'a> PayTubeSettler<'a> {
         self.instructions.len().div_ceil(CHUNK_SIZE)
     }
 
-    /// Settle the payment channel results to the Solana blockchain.
+    /// Settle the payment channel results to the Gorbagana blockchain.
     pub fn process_settle(&self) {
         let recent_blockhash = self.rpc_client.get_latest_blockhash().unwrap();
         self.instructions.chunks(CHUNK_SIZE).for_each(|chunk| {
-            let transaction = SolanaTransaction::new_signed_with_payer(
+            let transaction = GorbaganaTransaction::new_signed_with_payer(
                 chunk,
                 Some(&self.keys[0].pubkey()),
                 self.keys,

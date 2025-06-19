@@ -11,10 +11,10 @@
 use {
     async_trait::async_trait,
     log::*,
-    solana_clock::NUM_CONSECUTIVE_LEADER_SLOTS,
-    solana_connection_cache::connection_cache::Protocol,
-    solana_rpc_client::nonblocking::rpc_client::RpcClient,
-    solana_tpu_client::nonblocking::tpu_client::LeaderTpuService,
+    gorbagana_clock::NUM_CONSECUTIVE_LEADER_SLOTS,
+    gorbagana_connection_cache::connection_cache::Protocol,
+    gorbagana_rpc_client::nonblocking::rpc_client::RpcClient,
+    gorbagana_tpu_client::nonblocking::tpu_client::LeaderTpuService,
     std::{
         fmt,
         net::SocketAddr,
@@ -95,7 +95,7 @@ pub async fn create_leader_updater(
 
 /// `LeaderUpdaterService` is an implementation of the [`LeaderUpdater`] trait
 /// that dynamically retrieves the current and upcoming leaders by communicating
-/// with the Solana network using [`LeaderTpuService`].
+/// with the Gorbagana network using [`LeaderTpuService`].
 struct LeaderUpdaterService {
     leader_tpu_service: LeaderTpuService,
     exit: Arc<AtomicBool>,

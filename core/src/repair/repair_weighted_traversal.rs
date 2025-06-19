@@ -3,9 +3,9 @@ use {
         consensus::{heaviest_subtree_fork_choice::HeaviestSubtreeForkChoice, tree_diff::TreeDiff},
         repair::{repair_service::RepairService, serve_repair::ShredRepairType},
     },
-    solana_clock::Slot,
-    solana_hash::Hash,
-    solana_ledger::{blockstore::Blockstore, blockstore_meta::SlotMeta},
+    gorbagana_clock::Slot,
+    gorbagana_hash::Hash,
+    gorbagana_ledger::{blockstore::Blockstore, blockstore_meta::SlotMeta},
     std::collections::{HashMap, HashSet},
 };
 
@@ -141,12 +141,12 @@ pub mod test {
     use {
         super::*,
         crate::repair::repair_service::sleep_shred_deferment_period,
-        solana_hash::Hash,
-        solana_ledger::{
+        gorbagana_hash::Hash,
+        gorbagana_ledger::{
             get_tmp_ledger_path,
             shred::{Shred, ShredFlags},
         },
-        solana_runtime::bank_utils,
+        gorbagana_runtime::bank_utils,
         trees::tr,
     };
 

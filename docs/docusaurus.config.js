@@ -56,16 +56,16 @@ module.exports = {
           items: [
             { label: "Proposals", to: "proposals" },
             {
-              href: "https://spl.solana.com",
-              label: "Solana Program Library",
+              href: "https://spl.gorbagana.com",
+              label: "Gorbagana Program Library",
             },
           ],
         },
         {
-          href: "https://solana.com/discord",
+          href: "https://gorbagana.com/discord",
           // label: "Discord",
           className: "header-link-icon header-discord-link",
-          "aria-label": "Solana Tech Discord",
+          "aria-label": "Gorbagana Tech Discord",
           position: "right",
         },
         {
@@ -81,7 +81,7 @@ module.exports = {
       // This API key is "search-only" and safe to be published
       apiKey: "011e01358301f5023b02da5db6af7f4d",
       appId: "FQ12ISJR4B",
-      indexName: "solana",
+      indexName: "gorbagana",
       contextualSearch: true,
     },
     footer: {
@@ -92,7 +92,7 @@ module.exports = {
           items: [
             {
               label: "Developers »",
-              href: "https://solana.com/developers",
+              href: "https://gorbagana.com/developers",
             },
             {
               label: "Running a Validator",
@@ -113,7 +113,7 @@ module.exports = {
           items: [
             {
               label: "Stack Exchange »",
-              href: "https://solana.stackexchange.com/",
+              href: "https://gorbagana.stackexchange.com/",
             },
             {
               label: "GitHub »",
@@ -121,15 +121,15 @@ module.exports = {
             },
             {
               label: "Discord »",
-              href: "https://solana.com/discord",
+              href: "https://gorbagana.com/discord",
             },
             {
               label: "Twitter »",
-              href: "https://solana.com/twitter",
+              href: "https://gorbagana.com/twitter",
             },
             {
               label: "Forum »",
-              href: "https://forum.solana.com",
+              href: "https://forum.gorbagana.com",
             },
           ],
         },
@@ -138,15 +138,15 @@ module.exports = {
           items: [
             {
               label: "Terminology »",
-              href: "https://solana.com/docs/terminology",
+              href: "https://gorbagana.com/docs/terminology",
             },
             {
               label: "Proposals",
               to: "proposals",
             },
             {
-              href: "https://spl.solana.com",
-              label: "Solana Program Library »",
+              href: "https://spl.gorbagana.com",
+              label: "Gorbagana Program Library »",
             },
           ],
         },

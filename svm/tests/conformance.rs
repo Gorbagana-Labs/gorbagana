@@ -5,29 +5,29 @@ use {
     },
     agave_feature_set::{FeatureSet, FEATURE_NAMES},
     prost::Message,
-    solana_account::{AccountSharedData, ReadableAccount, WritableAccount},
-    solana_bpf_loader_program::syscalls::create_program_runtime_environment_v1,
-    solana_clock::Clock,
-    solana_epoch_schedule::EpochSchedule,
-    solana_hash::Hash,
-    solana_instruction::AccountMeta,
-    solana_log_collector::LogCollector,
-    solana_message::SanitizedMessage,
-    solana_program_runtime::{
+    gorbagana_account::{AccountSharedData, ReadableAccount, WritableAccount},
+    gorbagana_bpf_loader_program::syscalls::create_program_runtime_environment_v1,
+    gorbagana_clock::Clock,
+    gorbagana_epoch_schedule::EpochSchedule,
+    gorbagana_hash::Hash,
+    gorbagana_instruction::AccountMeta,
+    gorbagana_log_collector::LogCollector,
+    gorbagana_message::SanitizedMessage,
+    gorbagana_program_runtime::{
         execution_budget::{SVMTransactionExecutionBudget, SVMTransactionExecutionCost},
         invoke_context::{EnvironmentConfig, InvokeContext},
         loaded_programs::{ProgramCacheEntry, ProgramCacheForTxBatch},
     },
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
-    solana_signature::Signature,
-    solana_svm::{program_loader, transaction_processor::TransactionBatchProcessor},
-    solana_svm_callback::TransactionProcessingCallback,
-    solana_svm_conformance::proto::{AcctState, InstrEffects, InstrFixture},
-    solana_sysvar::last_restart_slot,
-    solana_sysvar_id::SysvarId,
-    solana_timings::ExecuteTimings,
-    solana_transaction_context::{
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent::Rent,
+    gorbagana_signature::Signature,
+    gorbagana_svm::{program_loader, transaction_processor::TransactionBatchProcessor},
+    gorbagana_svm_callback::TransactionProcessingCallback,
+    gorbagana_svm_conformance::proto::{AcctState, InstrEffects, InstrFixture},
+    gorbagana_sysvar::last_restart_slot,
+    gorbagana_sysvar_id::SysvarId,
+    gorbagana_timings::ExecuteTimings,
+    gorbagana_transaction_context::{
         ExecutionRecord, IndexOfAccount, InstructionAccount, TransactionAccount, TransactionContext,
     },
     std::{
@@ -330,11 +330,11 @@ fn execute_fixture_as_instr(
 
     loaded_programs.replenish(program_id, loaded_program);
     loaded_programs.replenish(
-        solana_system_program::id(),
+        gorbagana_system_program::id(),
         Arc::new(ProgramCacheEntry::new_builtin(
             0u64,
             0usize,
-            solana_system_program::system_processor::Entrypoint::vm,
+            gorbagana_system_program::system_processor::Entrypoint::vm,
         )),
     );
 

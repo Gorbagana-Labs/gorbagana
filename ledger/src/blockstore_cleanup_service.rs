@@ -10,8 +10,8 @@ use {
         column::{columns, ColumnName},
         Blockstore, PurgeType,
     },
-    solana_clock::{Slot, DEFAULT_MS_PER_SLOT},
-    solana_measure::measure::Measure,
+    gorbagana_clock::{Slot, DEFAULT_MS_PER_SLOT},
+    gorbagana_measure::measure::Measure,
     std::{
         string::ToString,
         sync::{
@@ -280,7 +280,7 @@ mod tests {
     fn test_find_slots_to_clean() {
         // BlockstoreCleanupService::find_slots_to_clean() does not modify the
         // Blockstore, so we can make repeated calls on the same slots
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let ledger_path = get_tmp_ledger_path_auto_delete!();
         let blockstore = Blockstore::open(ledger_path.path()).unwrap();
 
@@ -353,7 +353,7 @@ mod tests {
 
     #[test]
     fn test_cleanup() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let ledger_path = get_tmp_ledger_path_auto_delete!();
         let blockstore = Blockstore::open(ledger_path.path()).unwrap();
         let (shreds, _) = make_many_slot_entries(0, 50, 5);
@@ -377,7 +377,7 @@ mod tests {
 
     #[test]
     fn test_cleanup_speed() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let ledger_path = get_tmp_ledger_path_auto_delete!();
         let blockstore = Arc::new(Blockstore::open(ledger_path.path()).unwrap());
 

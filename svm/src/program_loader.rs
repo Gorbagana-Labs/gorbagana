@@ -1,19 +1,19 @@
 use {
-    solana_account::{state_traits::StateMut, AccountSharedData, ReadableAccount},
-    solana_clock::Slot,
-    solana_instruction::error::InstructionError,
-    solana_loader_v3_interface::state::UpgradeableLoaderState,
-    solana_loader_v4_interface::state::{LoaderV4State, LoaderV4Status},
-    solana_program_runtime::loaded_programs::{
+    gorbagana_account::{state_traits::StateMut, AccountSharedData, ReadableAccount},
+    gorbagana_clock::Slot,
+    gorbagana_instruction::error::InstructionError,
+    gorbagana_loader_v3_interface::state::UpgradeableLoaderState,
+    gorbagana_loader_v4_interface::state::{LoaderV4State, LoaderV4Status},
+    gorbagana_program_runtime::loaded_programs::{
         LoadProgramMetrics, ProgramCacheEntry, ProgramCacheEntryOwner, ProgramCacheEntryType,
         ProgramRuntimeEnvironment, ProgramRuntimeEnvironments, DELAY_VISIBILITY_SLOT_OFFSET,
     },
-    solana_pubkey::Pubkey,
-    solana_sdk_ids::{bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable, loader_v4},
-    solana_svm_callback::TransactionProcessingCallback,
-    solana_timings::ExecuteTimings,
-    solana_transaction_error::{TransactionError, TransactionResult},
-    solana_type_overrides::sync::Arc,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sdk_ids::{bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable, loader_v4},
+    gorbagana_svm_callback::TransactionProcessingCallback,
+    gorbagana_timings::ExecuteTimings,
+    gorbagana_transaction_error::{TransactionError, TransactionResult},
+    gorbagana_type_overrides::sync::Arc,
 };
 
 #[derive(Debug)]
@@ -68,7 +68,7 @@ pub(crate) fn load_program_accounts<CB: TransactionProcessingCallback>(
 
     if loader_v4::check_id(program_account.owner()) {
         return Some(
-            solana_loader_v4_program::get_state(program_account.data())
+            gorbagana_loader_v4_program::get_state(program_account.data())
                 .ok()
                 .and_then(|state| {
                     (!matches!(state.status, LoaderV4Status::Retracted)).then_some(state.slot)
@@ -238,7 +238,7 @@ pub(crate) fn get_program_modification_slot<CB: TransactionProcessingCallback>(
         }
         Err(TransactionError::ProgramAccountNotFound)
     } else if loader_v4::check_id(program.owner()) {
-        let state = solana_loader_v4_program::get_state(program.data())
+        let state = gorbagana_loader_v4_program::get_state(program.data())
             .map_err(|_| TransactionError::ProgramAccountNotFound)?;
         Ok(state.slot)
     } else {
@@ -251,13 +251,13 @@ mod tests {
     use {
         super::*,
         crate::transaction_processor::TransactionBatchProcessor,
-        solana_account::WritableAccount,
-        solana_program_runtime::{
+        gorbagana_account::WritableAccount,
+        gorbagana_program_runtime::{
             loaded_programs::{BlockRelation, ForkGraph, ProgramRuntimeEnvironments},
-            solana_sbpf::program::BuiltinProgram,
+            gorbagana_sbpf::program::BuiltinProgram,
         },
-        solana_sdk_ids::{bpf_loader, bpf_loader_upgradeable},
-        solana_svm_callback::InvokeContextCallback,
+        gorbagana_sdk_ids::{bpf_loader, bpf_loader_upgradeable},
+        gorbagana_svm_callback::InvokeContextCallback,
         std::{
             cell::RefCell,
             collections::HashMap,
@@ -470,8 +470,8 @@ mod tests {
         let mut dir = env::current_dir().unwrap();
         dir.push("tests");
         dir.push("example-programs");
-        dir.push("hello-solana");
-        dir.push("hello_solana_program.so");
+        dir.push("hello-gorbagana");
+        dir.push("hello_gorbagana_program.so");
         let mut file = File::open(dir.clone()).expect("file not found");
         let metadata = fs::metadata(dir).expect("Unable to read metadata");
         let mut buffer = vec![0; metadata.len() as usize];

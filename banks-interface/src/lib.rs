@@ -2,20 +2,20 @@
 
 use {
     serde_derive::{Deserialize, Serialize},
-    solana_account::Account,
-    solana_clock::Slot,
-    solana_commitment_config::CommitmentLevel,
-    solana_hash::Hash,
-    solana_message::{inner_instruction::InnerInstructions, Message},
-    solana_pubkey::Pubkey,
-    solana_signature::Signature,
-    solana_transaction::versioned::VersionedTransaction,
-    solana_transaction_context::TransactionReturnData,
-    solana_transaction_error::TransactionError,
+    gorbagana_account::Account,
+    gorbagana_clock::Slot,
+    gorbagana_commitment_config::CommitmentLevel,
+    gorbagana_hash::Hash,
+    gorbagana_message::{inner_instruction::InnerInstructions, Message},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signature::Signature,
+    gorbagana_transaction::versioned::VersionedTransaction,
+    gorbagana_transaction_context::TransactionReturnData,
+    gorbagana_transaction_error::TransactionError,
 };
 
 mod transaction {
-    pub use solana_transaction_error::TransactionResult as Result;
+    pub use gorbagana_transaction_error::TransactionResult as Result;
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]

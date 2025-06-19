@@ -3,18 +3,18 @@
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 
 #[cfg(all(
-    not(target_os = "solana"),
+    not(target_os = "gorbagana"),
     feature = "debug-signature",
     debug_assertions
 ))]
-use solana_signature::Signature;
-#[cfg(not(target_os = "solana"))]
-use {solana_account::WritableAccount, solana_rent::Rent, std::mem::MaybeUninit};
+use gorbagana_signature::Signature;
+#[cfg(not(target_os = "gorbagana"))]
+use {gorbagana_account::WritableAccount, gorbagana_rent::Rent, std::mem::MaybeUninit};
 use {
-    solana_account::{AccountSharedData, ReadableAccount},
-    solana_instruction::error::InstructionError,
-    solana_instructions_sysvar as instructions,
-    solana_pubkey::Pubkey,
+    gorbagana_account::{AccountSharedData, ReadableAccount},
+    gorbagana_instruction::error::InstructionError,
+    gorbagana_instructions_sysvar as instructions,
+    gorbagana_pubkey::Pubkey,
     std::{
         cell::{Ref, RefCell, RefMut},
         collections::HashSet,
@@ -23,32 +23,32 @@ use {
     },
 };
 
-// Inlined to avoid solana_system_interface dep
-#[cfg(not(target_os = "solana"))]
+// Inlined to avoid gorbagana_system_interface dep
+#[cfg(not(target_os = "gorbagana"))]
 const MAX_PERMITTED_DATA_LENGTH: u64 = 10 * 1024 * 1024;
 #[cfg(test)]
 static_assertions::const_assert_eq!(
     MAX_PERMITTED_DATA_LENGTH,
-    solana_system_interface::MAX_PERMITTED_DATA_LENGTH
+    gorbagana_system_interface::MAX_PERMITTED_DATA_LENGTH
 );
 
-// Inlined to avoid solana_system_interface dep
-#[cfg(not(target_os = "solana"))]
+// Inlined to avoid gorbagana_system_interface dep
+#[cfg(not(target_os = "gorbagana"))]
 const MAX_PERMITTED_ACCOUNTS_DATA_ALLOCATIONS_PER_TRANSACTION: i64 =
     MAX_PERMITTED_DATA_LENGTH as i64 * 2;
 #[cfg(test)]
 static_assertions::const_assert_eq!(
     MAX_PERMITTED_ACCOUNTS_DATA_ALLOCATIONS_PER_TRANSACTION,
-    solana_system_interface::MAX_PERMITTED_ACCOUNTS_DATA_ALLOCATIONS_PER_TRANSACTION
+    gorbagana_system_interface::MAX_PERMITTED_ACCOUNTS_DATA_ALLOCATIONS_PER_TRANSACTION
 );
 
-// Inlined to avoid solana_account_info dep
-#[cfg(not(target_os = "solana"))]
+// Inlined to avoid gorbagana_account_info dep
+#[cfg(not(target_os = "gorbagana"))]
 const MAX_PERMITTED_DATA_INCREASE: usize = 1_024 * 10;
 #[cfg(test)]
 static_assertions::const_assert_eq!(
     MAX_PERMITTED_DATA_INCREASE,
-    solana_account_info::MAX_PERMITTED_DATA_INCREASE
+    gorbagana_account_info::MAX_PERMITTED_DATA_INCREASE
 );
 
 /// Index of an account inside of the TransactionContext or an InstructionContext.
@@ -86,7 +86,7 @@ pub struct TransactionAccounts {
 }
 
 impl TransactionAccounts {
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     fn new(accounts: Vec<RefCell<AccountSharedData>>) -> TransactionAccounts {
         let touched_flags = vec![false; accounts.len()].into_boxed_slice();
         TransactionAccounts {
@@ -104,7 +104,7 @@ impl TransactionAccounts {
         self.accounts.get(index as usize)
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn touch(&self, index: IndexOfAccount) -> Result<(), InstructionError> {
         *self
             .touched_flags
@@ -173,13 +173,13 @@ pub struct TransactionContext {
     instruction_trace: Vec<InstructionContext>,
     top_level_instruction_index: usize,
     return_data: TransactionReturnData,
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     remove_accounts_executable_flag_checks: bool,
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     rent: Rent,
     /// Useful for debugging to filter by or to look it up on the explorer
     #[cfg(all(
-        not(target_os = "solana"),
+        not(target_os = "gorbagana"),
         feature = "debug-signature",
         debug_assertions
     ))]
@@ -188,7 +188,7 @@ pub struct TransactionContext {
 
 impl TransactionContext {
     /// Constructs a new TransactionContext
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn new(
         transaction_accounts: Vec<TransactionAccount>,
         rent: Rent,
@@ -211,7 +211,7 @@ impl TransactionContext {
             remove_accounts_executable_flag_checks: true,
             rent,
             #[cfg(all(
-                not(target_os = "solana"),
+                not(target_os = "gorbagana"),
                 feature = "debug-signature",
                 debug_assertions
             ))]
@@ -219,13 +219,13 @@ impl TransactionContext {
         }
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn set_remove_accounts_executable_flag_checks(&mut self, enabled: bool) {
         self.remove_accounts_executable_flag_checks = enabled;
     }
 
     /// Used in mock_process_instruction
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn deconstruct_without_keys(self) -> Result<Vec<AccountSharedData>, InstructionError> {
         if !self.instruction_stack.is_empty() {
             return Err(InstructionError::CallDepth);
@@ -239,14 +239,14 @@ impl TransactionContext {
             .collect())
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn accounts(&self) -> &Rc<TransactionAccounts> {
         &self.accounts
     }
 
     /// Stores the signature of the current transaction
     #[cfg(all(
-        not(target_os = "solana"),
+        not(target_os = "gorbagana"),
         feature = "debug-signature",
         debug_assertions
     ))]
@@ -256,7 +256,7 @@ impl TransactionContext {
 
     /// Returns the signature of the current transaction
     #[cfg(all(
-        not(target_os = "solana"),
+        not(target_os = "gorbagana"),
         feature = "debug-signature",
         debug_assertions
     ))]
@@ -281,7 +281,7 @@ impl TransactionContext {
 
     /// Searches for an account by its key
     #[cfg(all(
-        not(target_os = "solana"),
+        not(target_os = "gorbagana"),
         any(test, feature = "dev-context-only-utils")
     ))]
     pub fn get_account_at_index(
@@ -352,7 +352,7 @@ impl TransactionContext {
     }
 
     /// Gets instruction stack height, top-level instructions are height
-    /// `solana_instruction::TRANSACTION_LEVEL_STACK_HEIGHT`
+    /// `gorbagana_instruction::TRANSACTION_LEVEL_STACK_HEIGHT`
     pub fn get_instruction_context_stack_height(&self) -> usize {
         self.instruction_stack.len()
     }
@@ -378,7 +378,7 @@ impl TransactionContext {
     }
 
     /// Pushes the next InstructionContext
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn push(&mut self) -> Result<(), InstructionError> {
         let nesting_level = self.get_instruction_context_stack_height();
         let caller_instruction_context = self
@@ -421,7 +421,7 @@ impl TransactionContext {
                 .ok_or(InstructionError::NotEnoughAccountKeys)?
                 .try_borrow_mut()
                 .map_err(|_| InstructionError::AccountBorrowFailed)?;
-            if mut_account_ref.owner() != &solana_sdk_ids::sysvar::id() {
+            if mut_account_ref.owner() != &gorbagana_sdk_ids::sysvar::id() {
                 return Err(InstructionError::InvalidAccountOwner);
             }
             instructions::store_current_index_checked(
@@ -433,7 +433,7 @@ impl TransactionContext {
     }
 
     /// Pops the current InstructionContext
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn pop(&mut self) -> Result<(), InstructionError> {
         if self.instruction_stack.is_empty() {
             return Err(InstructionError::CallDepth);
@@ -484,7 +484,7 @@ impl TransactionContext {
     }
 
     /// Calculates the sum of all lamports within an instruction
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     fn instruction_accounts_lamport_sum(
         &self,
         instruction_context: &InstructionContext,
@@ -574,7 +574,7 @@ pub struct InstructionContext {
 
 impl InstructionContext {
     /// Used together with TransactionContext::get_next_instruction_context()
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn configure(
         &mut self,
         program_accounts: &[IndexOfAccount],
@@ -852,7 +852,7 @@ impl BorrowedAccount<'_> {
     }
 
     /// Assignes the owner of this account (transaction wide)
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn set_owner(&mut self, pubkey: &[u8]) -> Result<(), InstructionError> {
         // Only the owner can assign a new owner
         if !self.is_owned_by_current_program() {
@@ -886,7 +886,7 @@ impl BorrowedAccount<'_> {
     }
 
     /// Overwrites the number of lamports of this account (transaction wide)
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn set_lamports(&mut self, lamports: u64) -> Result<(), InstructionError> {
         // An account not owned by the program cannot have its balance decrease
         if !self.is_owned_by_current_program() && lamports < self.get_lamports() {
@@ -910,7 +910,7 @@ impl BorrowedAccount<'_> {
     }
 
     /// Adds lamports to this account (transaction wide)
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn checked_add_lamports(&mut self, lamports: u64) -> Result<(), InstructionError> {
         self.set_lamports(
             self.get_lamports()
@@ -920,7 +920,7 @@ impl BorrowedAccount<'_> {
     }
 
     /// Subtracts lamports from this account (transaction wide)
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn checked_sub_lamports(&mut self, lamports: u64) -> Result<(), InstructionError> {
         self.set_lamports(
             self.get_lamports()
@@ -936,7 +936,7 @@ impl BorrowedAccount<'_> {
     }
 
     /// Returns a writable slice of the account data (transaction wide)
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn get_data_mut(&mut self) -> Result<&mut [u8], InstructionError> {
         self.can_data_be_changed()?;
         self.touch()?;
@@ -948,7 +948,7 @@ impl BorrowedAccount<'_> {
     ///
     /// This method should only ever be used during CPI, where after a shrinking
     /// realloc we want to zero the spare capacity.
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn spare_data_capacity_mut(&mut self) -> Result<&mut [MaybeUninit<u8>], InstructionError> {
         debug_assert!(!self.account.is_shared());
         Ok(self.account.spare_data_capacity_mut())
@@ -960,7 +960,7 @@ impl BorrowedAccount<'_> {
     /// currently safe but requires some special casing during CPI when direct
     /// account mapping is enabled.
     #[cfg(all(
-        not(target_os = "solana"),
+        not(target_os = "gorbagana"),
         any(test, feature = "dev-context-only-utils")
     ))]
     pub fn set_data(&mut self, data: Vec<u8>) -> Result<(), InstructionError> {
@@ -976,7 +976,7 @@ impl BorrowedAccount<'_> {
     ///
     /// Call this when you have a slice of data you do not own and want to
     /// replace the account data with it.
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn set_data_from_slice(&mut self, data: &[u8]) -> Result<(), InstructionError> {
         self.can_data_be_resized(data.len())?;
         self.touch()?;
@@ -993,7 +993,7 @@ impl BorrowedAccount<'_> {
     /// Resizes the account data (transaction wide)
     ///
     /// Fills it with zeros at the end if is extended or truncates at the end otherwise.
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn set_data_length(&mut self, new_length: usize) -> Result<(), InstructionError> {
         self.can_data_be_resized(new_length)?;
         // don't touch the account if the length does not change
@@ -1007,7 +1007,7 @@ impl BorrowedAccount<'_> {
     }
 
     /// Appends all elements in a slice to the account
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn extend_from_slice(&mut self, data: &[u8]) -> Result<(), InstructionError> {
         let new_len = self.get_data().len().saturating_add(data.len());
         self.can_data_be_resized(new_len)?;
@@ -1028,7 +1028,7 @@ impl BorrowedAccount<'_> {
 
     /// Reserves capacity for at least additional more elements to be inserted
     /// in the given account. Does nothing if capacity is already sufficient.
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn reserve(&mut self, additional: usize) -> Result<(), InstructionError> {
         // Note that we don't need to call can_data_be_changed() here nor
         // touch() the account. reserve() only changes the capacity of the
@@ -1041,7 +1041,7 @@ impl BorrowedAccount<'_> {
     }
 
     /// Returns the number of bytes the account can hold without reallocating.
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn capacity(&self) -> usize {
         self.account.capacity()
     }
@@ -1053,12 +1053,12 @@ impl BorrowedAccount<'_> {
     ///
     /// During account serialization, if an account is shared it'll get mapped as CoW, else it'll
     /// get mapped directly as writable.
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn is_shared(&self) -> bool {
         self.account.is_shared()
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     fn make_data_mut(&mut self) {
         // if the account is still shared, it means this is the first time we're
         // about to write into it. Make the account mutable by copying it in a
@@ -1074,7 +1074,7 @@ impl BorrowedAccount<'_> {
     }
 
     /// Deserializes the account data into a state
-    #[cfg(all(not(target_os = "solana"), feature = "bincode"))]
+    #[cfg(all(not(target_os = "gorbagana"), feature = "bincode"))]
     pub fn get_state<T: serde::de::DeserializeOwned>(&self) -> Result<T, InstructionError> {
         self.account
             .deserialize_data()
@@ -1082,7 +1082,7 @@ impl BorrowedAccount<'_> {
     }
 
     /// Serializes a state into the account data
-    #[cfg(all(not(target_os = "solana"), feature = "bincode"))]
+    #[cfg(all(not(target_os = "gorbagana"), feature = "bincode"))]
     pub fn set_state<T: serde::Serialize>(&mut self, state: &T) -> Result<(), InstructionError> {
         let data = self.get_data_mut()?;
         let serialized_size =
@@ -1096,7 +1096,7 @@ impl BorrowedAccount<'_> {
 
     // Returns whether or the lamports currently in the account is sufficient for rent exemption should the
     // data be resized to the given size
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn is_rent_exempt_at_data_length(&self, data_length: usize) -> bool {
         self.transaction_context
             .rent
@@ -1111,7 +1111,7 @@ impl BorrowedAccount<'_> {
     }
 
     /// Feature gating to remove `is_executable` flag related checks
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     #[inline]
     fn is_executable_internal(&self) -> bool {
         !self
@@ -1121,7 +1121,7 @@ impl BorrowedAccount<'_> {
     }
 
     /// Configures whether this account is executable (transaction wide)
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn set_executable(&mut self, is_executable: bool) -> Result<(), InstructionError> {
         // To become executable an account must be rent exempt
         if !self
@@ -1154,7 +1154,7 @@ impl BorrowedAccount<'_> {
     }
 
     /// Returns the rent epoch of this account (transaction wide)
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     #[inline]
     pub fn get_rent_epoch(&self) -> u64 {
         self.account.rent_epoch()
@@ -1195,7 +1195,7 @@ impl BorrowedAccount<'_> {
     }
 
     /// Returns an error if the account data can not be mutated by the current program
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn can_data_be_changed(&self) -> Result<(), InstructionError> {
         // Only non-executable accounts data can be changed
         if self.is_executable_internal() {
@@ -1213,7 +1213,7 @@ impl BorrowedAccount<'_> {
     }
 
     /// Returns an error if the account data can not be resized to the given length
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn can_data_be_resized(&self, new_len: usize) -> Result<(), InstructionError> {
         let old_len = self.get_data().len();
         // Only the owner can change the length of the data
@@ -1226,14 +1226,14 @@ impl BorrowedAccount<'_> {
         self.can_data_be_changed()
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     fn touch(&self) -> Result<(), InstructionError> {
         self.transaction_context
             .accounts
             .touch(self.index_in_transaction)
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     fn update_accounts_resize_delta(&mut self, new_len: usize) -> Result<(), InstructionError> {
         self.transaction_context
             .accounts
@@ -1242,7 +1242,7 @@ impl BorrowedAccount<'_> {
 }
 
 /// Everything that needs to be recorded from a TransactionContext after execution
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 pub struct ExecutionRecord {
     pub accounts: Vec<TransactionAccount>,
     pub return_data: TransactionReturnData,
@@ -1251,7 +1251,7 @@ pub struct ExecutionRecord {
 }
 
 /// Used by the bank in the runtime to write back the processed accounts and recorded instructions
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<TransactionContext> for ExecutionRecord {
     fn from(context: TransactionContext) -> Self {
         let TransactionAccounts {
@@ -1279,7 +1279,7 @@ impl From<TransactionContext> for ExecutionRecord {
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 fn is_zeroed(buf: &[u8]) -> bool {
     const ZEROS_LEN: usize = 1024;
     const ZEROS: [u8; ZEROS_LEN] = [0; ZEROS_LEN];
@@ -1323,7 +1323,7 @@ mod tests {
 
         // Now with the wrong data length.
         let account =
-            AccountSharedData::new(rent_exempt_lamports, 0, &solana_sdk_ids::sysvar::id());
+            AccountSharedData::new(rent_exempt_lamports, 0, &gorbagana_sdk_ids::sysvar::id());
         assert_eq!(
             build_transaction_context(account).push(),
             Err(InstructionError::AccountDataTooSmall),
@@ -1333,7 +1333,7 @@ mod tests {
         let account = AccountSharedData::new(
             rent_exempt_lamports,
             correct_space,
-            &solana_sdk_ids::sysvar::id(),
+            &gorbagana_sdk_ids::sysvar::id(),
         );
         assert_eq!(build_transaction_context(account).push(), Ok(()),);
     }

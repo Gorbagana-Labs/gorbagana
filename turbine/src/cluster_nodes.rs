@@ -5,9 +5,9 @@ use {
     lazy_lru::LruCache,
     rand::{seq::SliceRandom, Rng, SeedableRng},
     rand_chacha::ChaChaRng,
-    solana_clock::{Epoch, Slot},
-    solana_cluster_type::ClusterType,
-    solana_gossip::{
+    gorbagana_clock::{Epoch, Slot},
+    gorbagana_cluster_type::ClusterType,
+    gorbagana_gossip::{
         cluster_info::ClusterInfo,
         contact_info::{ContactInfo as GossipContactInfo, Protocol},
         crds::GossipRoute,
@@ -16,14 +16,14 @@ use {
         crds_value::CrdsValue,
         weighted_shuffle::WeightedShuffle,
     },
-    solana_keypair::Keypair,
-    solana_ledger::shred::ShredId,
-    solana_native_token::LAMPORTS_PER_SOL,
-    solana_pubkey::Pubkey,
-    solana_runtime::bank::Bank,
-    solana_signer::Signer,
-    solana_streamer::socket::SocketAddrSpace,
-    solana_time_utils::timestamp,
+    gorbagana_keypair::Keypair,
+    gorbagana_ledger::shred::ShredId,
+    gorbagana_native_token::LAMPORTS_PER_SOL,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_runtime::bank::Bank,
+    gorbagana_signer::Signer,
+    gorbagana_streamer::socket::SocketAddrSpace,
+    gorbagana_time_utils::timestamp,
     std::{
         any::TypeId,
         cell::RefCell,
@@ -630,7 +630,7 @@ pub fn make_test_cluster<R: Rng>(
 ) {
     let (unstaked_numerator, unstaked_denominator) = unstaked_ratio.unwrap_or((1, 7));
     let mut nodes: Vec<_> = repeat_with(|| {
-        let pubkey = solana_pubkey::new_rand();
+        let pubkey = gorbagana_pubkey::new_rand();
         GossipContactInfo::new_localhost(&pubkey, /*wallclock:*/ timestamp())
     })
     .take(num_nodes)

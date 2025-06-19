@@ -1,5 +1,5 @@
 [package]
-name = "solana-sbf-rust-curve25519"
+name = "gorbagana-sbf-rust-curve25519"
 version = { workspace = true }
 description = { workspace = true }
 authors = { workspace = true }
@@ -12,9 +12,9 @@ edition = { workspace = true }
 crate-type = ["cdylib"]
 
 [dependencies]
-solana-curve25519 = { workspace = true }
-solana-msg = { workspace = true }
-solana-program-entrypoint = { workspace = true }
+gorbagana-curve25519 = { workspace = true }
+gorbagana-msg = { workspace = true }
+gorbagana-program-entrypoint = { workspace = true }
 
 [lints]
 workspace = true

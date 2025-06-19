@@ -1,21 +1,21 @@
 use crate::zk_token_elgamal::pod::{
     GroupedElGamalCiphertext2Handles, GroupedElGamalCiphertext3Handles, PodU16, PodU64,
 };
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use crate::{errors::ElGamalError, instruction::transfer as decoded};
 
 #[derive(Clone, Copy, bytemuck_derive::Pod, bytemuck_derive::Zeroable)]
 #[repr(C)]
 pub struct TransferAmountCiphertext(pub GroupedElGamalCiphertext3Handles);
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<decoded::TransferAmountCiphertext> for TransferAmountCiphertext {
     fn from(decoded_ciphertext: decoded::TransferAmountCiphertext) -> Self {
         Self(decoded_ciphertext.0.into())
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TryFrom<TransferAmountCiphertext> for decoded::TransferAmountCiphertext {
     type Error = ElGamalError;
 
@@ -28,14 +28,14 @@ impl TryFrom<TransferAmountCiphertext> for decoded::TransferAmountCiphertext {
 #[repr(C)]
 pub struct FeeEncryption(pub GroupedElGamalCiphertext2Handles);
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<decoded::FeeEncryption> for FeeEncryption {
     fn from(decoded_ciphertext: decoded::FeeEncryption) -> Self {
         Self(decoded_ciphertext.0.into())
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TryFrom<FeeEncryption> for decoded::FeeEncryption {
     type Error = ElGamalError;
 
@@ -53,7 +53,7 @@ pub struct FeeParameters {
     pub maximum_fee: PodU64,
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<decoded::FeeParameters> for FeeParameters {
     fn from(decoded_fee_parameters: decoded::FeeParameters) -> Self {
         FeeParameters {
@@ -63,7 +63,7 @@ impl From<decoded::FeeParameters> for FeeParameters {
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<FeeParameters> for decoded::FeeParameters {
     fn from(pod_fee_parameters: FeeParameters) -> Self {
         decoded::FeeParameters {

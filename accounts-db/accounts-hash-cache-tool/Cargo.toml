@@ -19,7 +19,7 @@ bytemuck = { workspace = true }
 clap = { workspace = true }
 memmap2 = { workspace = true }
 rayon = { workspace = true }
-solana-accounts-db = { workspace = true }
-solana-clap-utils = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-version = { workspace = true }
+gorbagana-accounts-db = { workspace = true }
+gorbagana-clap-utils = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-version = { workspace = true }

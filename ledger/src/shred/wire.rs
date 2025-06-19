@@ -6,18 +6,18 @@ use {
         self, merkle_tree::SIZE_OF_MERKLE_ROOT, traits::Shred, Error, Nonce, ShredFlags, ShredId,
         ShredType, ShredVariant, SignedData, SIZE_OF_COMMON_SHRED_HEADER,
     },
-    solana_clock::Slot,
-    solana_hash::Hash,
-    solana_keypair::Keypair,
-    solana_perf::packet::{PacketRef, PacketRefMut},
-    solana_signature::{Signature, SIGNATURE_BYTES},
-    solana_signer::Signer,
+    gorbagana_clock::Slot,
+    gorbagana_hash::Hash,
+    gorbagana_keypair::Keypair,
+    gorbagana_perf::packet::{PacketRef, PacketRefMut},
+    gorbagana_signature::{Signature, SIGNATURE_BYTES},
+    gorbagana_signer::Signer,
     std::ops::Range,
 };
 #[cfg(test)]
 use {
     rand::{seq::SliceRandom, Rng},
-    solana_perf::packet::Packet,
+    gorbagana_perf::packet::Packet,
     std::collections::HashMap,
 };
 
@@ -445,7 +445,7 @@ mod tests {
         crate::shred::{tests::make_merkle_shreds_for_tests, traits::ShredData},
         assert_matches::assert_matches,
         rand::Rng,
-        solana_perf::packet::PacketFlags,
+        gorbagana_perf::packet::PacketFlags,
         std::io::{Cursor, Write},
         test_case::test_case,
     };

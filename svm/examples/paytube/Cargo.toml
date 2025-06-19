@@ -1,6 +1,6 @@
 [package]
-name = "solana-svm-example-paytube"
-description = "Reference example using Solana SVM API"
+name = "gorbagana-svm-example-paytube"
+description = "Reference example using Gorbagana SVM API"
 version = { workspace = true }
 edition = { workspace = true }
 publish = false
@@ -11,34 +11,34 @@ frozen-abi = []
 
 [dependencies]
 agave-feature-set = { workspace = true }
-solana-account = { workspace = true }
-solana-bpf-loader-program = { workspace = true }
-solana-client = { workspace = true }
-solana-clock = { workspace = true }
-solana-commitment-config = { workspace = true }
-solana-compute-budget = { workspace = true }
-solana-epoch-schedule = { workspace = true }
-solana-fee-structure = "=2.3.0"
-solana-hash = { workspace = true }
-solana-instruction = { workspace = true }
-solana-keypair = { workspace = true }
-solana-logger = { workspace = true }
-solana-program-pack = { workspace = true }
-solana-program-runtime = { workspace = true, features = ["dev-context-only-utils"] }
-solana-pubkey = { workspace = true }
-solana-rent-collector = { workspace = true }
-solana-sdk-ids = { workspace = true }
-solana-signer = { workspace = true }
-solana-svm = { workspace = true }
-solana-svm-callback = { workspace = true }
-solana-svm-feature-set = { workspace = true }
-solana-system-interface = { workspace = true }
-solana-system-program = { workspace = true }
-solana-transaction = { workspace = true, features = ["blake3"] }
-solana-transaction-error = { workspace = true }
+gorbagana-account = { workspace = true }
+gorbagana-bpf-loader-program = { workspace = true }
+gorbagana-client = { workspace = true }
+gorbagana-clock = { workspace = true }
+gorbagana-commitment-config = { workspace = true }
+gorbagana-compute-budget = { workspace = true }
+gorbagana-epoch-schedule = { workspace = true }
+gorbagana-fee-structure = "=2.3.0"
+gorbagana-hash = { workspace = true }
+gorbagana-instruction = { workspace = true }
+gorbagana-keypair = { workspace = true }
+gorbagana-logger = { workspace = true }
+gorbagana-program-pack = { workspace = true }
+gorbagana-program-runtime = { workspace = true, features = ["dev-context-only-utils"] }
+gorbagana-pubkey = { workspace = true }
+gorbagana-rent-collector = { workspace = true }
+gorbagana-sdk-ids = { workspace = true }
+gorbagana-signer = { workspace = true }
+gorbagana-svm = { workspace = true }
+gorbagana-svm-callback = { workspace = true }
+gorbagana-svm-feature-set = { workspace = true }
+gorbagana-system-interface = { workspace = true }
+gorbagana-system-program = { workspace = true }
+gorbagana-transaction = { workspace = true, features = ["blake3"] }
+gorbagana-transaction-error = { workspace = true }
 spl-associated-token-account = { workspace = true }
 spl-token = { workspace = true }
 termcolor = { workspace = true }
 
 [dev-dependencies]
-solana-test-validator = { workspace = true }
+gorbagana-test-validator = { workspace = true }

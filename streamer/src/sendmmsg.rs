@@ -12,7 +12,7 @@ use {
     },
 };
 use {
-    solana_transaction_error::TransportError,
+    gorbagana_transaction_error::TransportError,
     std::{
         borrow::Borrow,
         io,
@@ -247,8 +247,8 @@ mod tests {
             sendmmsg::{batch_send, multi_target_send, SendPktsError},
         },
         assert_matches::assert_matches,
-        solana_net_utils::{bind_to_localhost, bind_to_unspecified},
-        solana_packet::PACKET_DATA_SIZE,
+        gorbagana_net_utils::{bind_to_localhost, bind_to_unspecified},
+        gorbagana_packet::PACKET_DATA_SIZE,
         std::{
             io::ErrorKind,
             net::{IpAddr, Ipv4Addr, Ipv6Addr, SocketAddr},

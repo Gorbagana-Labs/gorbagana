@@ -6,7 +6,7 @@
 
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use {
     crate::{
         encryption::elgamal::{ElGamalCiphertext, ElGamalKeypair},
@@ -56,7 +56,7 @@ pub struct ZeroCiphertextProofContext {
     pub ciphertext: PodElGamalCiphertext, // 64 bytes
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 #[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
 impl ZeroCiphertextProofData {
     pub fn new(
@@ -87,7 +87,7 @@ impl ZkProofData<ZeroCiphertextProofContext> for ZeroCiphertextProofData {
         &self.context
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     fn verify_proof(&self) -> Result<(), ProofVerificationError> {
         let mut transcript = self.context.new_transcript();
         let pubkey = self.context.pubkey.try_into()?;
@@ -100,7 +100,7 @@ impl ZkProofData<ZeroCiphertextProofContext> for ZeroCiphertextProofData {
 }
 
 #[allow(non_snake_case)]
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl ZeroCiphertextProofContext {
     fn new_transcript(&self) -> Transcript {
         let mut transcript = Transcript::new(b"zero-ciphertext-instruction");

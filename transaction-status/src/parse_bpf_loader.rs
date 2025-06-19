@@ -5,9 +5,9 @@ use {
     base64::{prelude::BASE64_STANDARD, Engine},
     bincode::deserialize,
     serde_json::json,
-    solana_loader_v2_interface::LoaderInstruction,
-    solana_loader_v3_interface::instruction::UpgradeableLoaderInstruction,
-    solana_message::{compiled_instruction::CompiledInstruction, AccountKeys},
+    gorbagana_loader_v2_interface::LoaderInstruction,
+    gorbagana_loader_v3_interface::instruction::UpgradeableLoaderInstruction,
+    gorbagana_message::{compiled_instruction::CompiledInstruction, AccountKeys},
 };
 
 pub fn parse_bpf_loader(
@@ -239,10 +239,10 @@ mod test {
     use {
         super::*,
         serde_json::Value,
-        solana_loader_v3_interface::instruction as bpf_loader_upgradeable,
-        solana_message::Message,
-        solana_pubkey::{self as pubkey, Pubkey},
-        solana_sdk_ids::{system_program, sysvar},
+        gorbagana_loader_v3_interface::instruction as bpf_loader_upgradeable,
+        gorbagana_message::Message,
+        gorbagana_pubkey::{self as pubkey, Pubkey},
+        gorbagana_sdk_ids::{system_program, sysvar},
     };
 
     #[test]
@@ -257,7 +257,7 @@ mod test {
 
         #[allow(deprecated)]
         let instruction =
-            solana_loader_v2_interface::write(&account_pubkey, &program_id, offset, bytes.clone());
+            gorbagana_loader_v2_interface::write(&account_pubkey, &program_id, offset, bytes.clone());
         let mut message = Message::new(&[instruction], Some(&fee_payer));
         assert_eq!(
             parse_bpf_loader(
@@ -287,7 +287,7 @@ mod test {
         .is_err());
 
         #[allow(deprecated)]
-        let instruction = solana_loader_v2_interface::finalize(&account_pubkey, &program_id);
+        let instruction = gorbagana_loader_v2_interface::finalize(&account_pubkey, &program_id);
         let mut message = Message::new(&[instruction], Some(&fee_payer));
         assert_eq!(
             parse_bpf_loader(
@@ -436,7 +436,7 @@ mod test {
         let upgrade_authority_address = Pubkey::new_unique();
         let programdata_address = Pubkey::find_program_address(
             &[program_address.as_ref()],
-            &solana_sdk_ids::bpf_loader_upgradeable::id(),
+            &gorbagana_sdk_ids::bpf_loader_upgradeable::id(),
         )
         .0;
         #[allow(deprecated)]
@@ -493,7 +493,7 @@ mod test {
         let spill_address = Pubkey::new_unique();
         let programdata_address = Pubkey::find_program_address(
             &[program_address.as_ref()],
-            &solana_sdk_ids::bpf_loader_upgradeable::id(),
+            &gorbagana_sdk_ids::bpf_loader_upgradeable::id(),
         )
         .0;
         let instruction = bpf_loader_upgradeable::upgrade(
@@ -617,7 +617,7 @@ mod test {
         let new_authority_address = Pubkey::new_unique();
         let (programdata_address, _) = Pubkey::find_program_address(
             &[program_address.as_ref()],
-            &solana_sdk_ids::bpf_loader_upgradeable::id(),
+            &gorbagana_sdk_ids::bpf_loader_upgradeable::id(),
         );
         let instruction = bpf_loader_upgradeable::set_upgrade_authority(
             &program_address,
@@ -696,7 +696,7 @@ mod test {
         let new_authority_address = Pubkey::new_unique();
         let (programdata_address, _) = Pubkey::find_program_address(
             &[program_address.as_ref()],
-            &solana_sdk_ids::bpf_loader_upgradeable::id(),
+            &gorbagana_sdk_ids::bpf_loader_upgradeable::id(),
         );
         let instruction = bpf_loader_upgradeable::set_upgrade_authority_checked(
             &program_address,

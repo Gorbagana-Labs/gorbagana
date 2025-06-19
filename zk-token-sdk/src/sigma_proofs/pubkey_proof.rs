@@ -3,7 +3,7 @@
 //! The protocol guarantees computational soundness (by the hardness of discrete log) and perfect
 //! zero-knowledge in the random oracle model.
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use {
     crate::{
         encryption::{
@@ -43,7 +43,7 @@ pub struct PubkeyValidityProof {
 }
 
 #[allow(non_snake_case)]
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl PubkeyValidityProof {
     /// Creates a public key validity proof.
     ///
@@ -138,7 +138,7 @@ impl PubkeyValidityProof {
 
 #[cfg(test)]
 mod test {
-    use {super::*, solana_keypair::Keypair, solana_pubkey::Pubkey};
+    use {super::*, gorbagana_keypair::Keypair, gorbagana_pubkey::Pubkey};
 
     #[test]
     fn test_pubkey_proof_correctness() {

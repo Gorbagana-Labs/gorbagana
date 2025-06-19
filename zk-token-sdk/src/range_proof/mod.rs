@@ -10,7 +10,7 @@
 //!   the original Bulletproofs [paper](https://eprint.iacr.org/2017/1066) (Section 4.3).
 //!
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use {
     crate::encryption::pedersen::{Pedersen, PedersenCommitment, PedersenOpening},
     crate::{
@@ -35,15 +35,15 @@ use {
 };
 
 pub mod errors;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 pub mod generators;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 pub mod inner_product;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 pub mod util;
 
 #[allow(non_snake_case)]
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 #[derive(Clone)]
 pub struct RangeProof {
     pub A: CompressedRistretto,       // 32 bytes
@@ -57,7 +57,7 @@ pub struct RangeProof {
 }
 
 #[allow(non_snake_case)]
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl RangeProof {
     /// Create an aggregated range proof.
     ///
@@ -69,7 +69,7 @@ impl RangeProof {
     ///
     /// The sum of the bit-lengths of the commitments amounts must be a power-of-two
     #[allow(clippy::many_single_char_names)]
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn new(
         amounts: Vec<u64>,
         bit_lengths: Vec<usize>,
@@ -416,7 +416,7 @@ impl RangeProof {
 /// \\[
 /// \delta(y,z) = (z - z^{2}) \langle \mathbf{1}, {\mathbf{y}}^{n \cdot m} \rangle - \sum_{j=0}^{m-1} z^{j+3} \cdot \langle \mathbf{1}, {\mathbf{2}}^{n \cdot m} \rangle
 /// \\]
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 fn delta(bit_lengths: &[usize], y: &Scalar, z: &Scalar) -> Scalar {
     let nm: usize = bit_lengths.iter().sum();
     let sum_y = util::sum_of_powers(y, nm);

@@ -10,10 +10,10 @@ use {
         seq::{IteratorRandom, SliceRandom},
         thread_rng, Rng,
     },
-    solana_account::{AccountSharedData, ReadableAccount},
-    solana_clock::Slot,
-    solana_measure::{measure::Measure, measure_us},
-    solana_pubkey::Pubkey,
+    gorbagana_account::{AccountSharedData, ReadableAccount},
+    gorbagana_clock::Slot,
+    gorbagana_measure::{measure::Measure, measure_us},
+    gorbagana_pubkey::Pubkey,
     std::{
         mem::ManuallyDrop,
         sync::{
@@ -451,7 +451,7 @@ mod tests {
         super::*,
         rand::{Rng, SeedableRng},
         rand_chacha::ChaChaRng,
-        solana_account::Account,
+        gorbagana_account::Account,
         std::{
             collections::HashMap,
             iter::repeat_with,

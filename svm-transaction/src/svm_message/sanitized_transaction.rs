@@ -3,10 +3,10 @@ use {
         instruction::SVMInstruction, message_address_table_lookup::SVMMessageAddressTableLookup,
         svm_message::SVMMessage,
     },
-    solana_hash::Hash,
-    solana_message::AccountKeys,
-    solana_pubkey::Pubkey,
-    solana_transaction::sanitized::SanitizedTransaction,
+    gorbagana_hash::Hash,
+    gorbagana_message::AccountKeys,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_transaction::sanitized::SanitizedTransaction,
 };
 
 impl SVMMessage for SanitizedTransaction {

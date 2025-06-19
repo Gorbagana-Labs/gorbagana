@@ -1,13 +1,13 @@
 use {
-    solana_instruction::{AccountMeta, Instruction},
-    solana_keypair::Keypair,
-    solana_program_test::{programs::spl_programs, ProgramTest},
-    solana_pubkey::Pubkey,
-    solana_sdk_ids::{bpf_loader, bpf_loader_upgradeable},
-    solana_signer::Signer,
-    solana_system_interface::instruction as system_instruction,
-    solana_sysvar::rent,
-    solana_transaction::Transaction,
+    gorbagana_instruction::{AccountMeta, Instruction},
+    gorbagana_keypair::Keypair,
+    gorbagana_program_test::{programs::spl_programs, ProgramTest},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sdk_ids::{bpf_loader, bpf_loader_upgradeable},
+    gorbagana_signer::Signer,
+    gorbagana_system_interface::instruction as system_instruction,
+    gorbagana_sysvar::rent,
+    gorbagana_transaction::Transaction,
 };
 
 #[tokio::test]

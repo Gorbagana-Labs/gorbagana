@@ -1,7 +1,7 @@
-pub use solana_transaction_status_client_types::{ParsedAccount, ParsedAccountSource};
+pub use gorbagana_transaction_status_client_types::{ParsedAccount, ParsedAccountSource};
 use {
     agave_reserved_account_keys::ReservedAccountKeys,
-    solana_message::{v0::LoadedMessage, Message},
+    gorbagana_message::{v0::LoadedMessage, Message},
 };
 
 pub fn parse_legacy_message_accounts(message: &Message) -> Vec<ParsedAccount> {
@@ -41,8 +41,8 @@ mod test {
     use {
         super::*,
         agave_reserved_account_keys::ReservedAccountKeys,
-        solana_message::{v0, v0::LoadedAddresses, MessageHeader},
-        solana_pubkey::Pubkey,
+        gorbagana_message::{v0, v0::LoadedAddresses, MessageHeader},
+        gorbagana_pubkey::Pubkey,
     };
 
     #[test]

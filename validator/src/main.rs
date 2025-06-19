@@ -7,7 +7,7 @@ use {
         commands,
     },
     log::error,
-    solana_streamer::socket::SocketAddrSpace,
+    gorbagana_streamer::socket::SocketAddrSpace,
     std::{path::PathBuf, process::exit},
 };
 
@@ -17,8 +17,8 @@ static GLOBAL: Jemalloc = Jemalloc;
 
 pub fn main() {
     let default_args = DefaultArgs::new();
-    let solana_version = solana_version::version!();
-    let cli_app = app(solana_version, &default_args);
+    let gorbagana_version = gorbagana_version::version!();
+    let cli_app = app(gorbagana_version, &default_args);
     let matches = cli_app.get_matches();
     warn_for_deprecated_arguments(&matches);
 
@@ -28,7 +28,7 @@ pub fn main() {
     match matches.subcommand() {
         ("init", _) => commands::run::execute(
             &matches,
-            solana_version,
+            gorbagana_version,
             socket_addr_space,
             &ledger_path,
             commands::run::execute::Operation::Initialize,
@@ -37,7 +37,7 @@ pub fn main() {
         .map_err(commands::Error::Dynamic),
         ("", _) | ("run", _) => commands::run::execute(
             &matches,
-            solana_version,
+            gorbagana_version,
             socket_addr_space,
             &ledger_path,
             commands::run::execute::Operation::Run,

@@ -1,7 +1,7 @@
 use {
     base64::{prelude::BASE64_STANDARD, Engine},
     serde::Deserialize,
-    solana_account::{AccountSharedData, ReadableAccount},
+    gorbagana_account::{AccountSharedData, ReadableAccount},
     spl_generic_token::{token::GenericTokenAccount, token_2022::Account},
     std::borrow::Cow,
     thiserror::Error,
@@ -62,7 +62,7 @@ impl RpcFilterType {
 
     #[deprecated(
         since = "2.0.0",
-        note = "Use solana_rpc::filter::filter_allows instead"
+        note = "Use gorbagana_rpc::filter::filter_allows instead"
     )]
     pub fn allows(&self, account: &AccountSharedData) -> bool {
         match self {
@@ -210,7 +210,7 @@ impl Memcmp {
     }
 
     /// Returns reference to bytes if variant is MemcmpEncodedBytes::Bytes;
-    /// otherwise returns None. Used exclusively by solana-rpc to check
+    /// otherwise returns None. Used exclusively by gorbagana-rpc to check
     /// SPL-token filters.
     pub fn raw_bytes_as_ref(&self) -> Option<&[u8]> {
         use MemcmpEncodedBytes::*;

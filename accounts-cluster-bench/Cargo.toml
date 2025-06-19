@@ -1,5 +1,5 @@
 [package]
-name = "solana-accounts-cluster-bench"
+name = "gorbagana-accounts-cluster-bench"
 publish = false
 version = { workspace = true }
 authors = { workspace = true }
@@ -16,40 +16,40 @@ clap = { workspace = true }
 log = { workspace = true }
 rand = { workspace = true }
 rayon = { workspace = true }
-solana-account-decoder = { workspace = true }
-solana-clap-utils = { workspace = true }
-solana-cli-config = { workspace = true }
-solana-client = { workspace = true }
-solana-clock = { workspace = true }
-solana-commitment-config = { workspace = true }
-solana-gossip = { workspace = true }
-solana-hash = { workspace = true }
-solana-instruction = { workspace = true }
-solana-keypair = { workspace = true }
-solana-logger = { workspace = true }
-solana-measure = { workspace = true }
-solana-message = { workspace = true, features = ["serde", "bincode", "blake3"] }
-solana-net-utils = { workspace = true }
-solana-program-pack = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-rpc-client = { workspace = true, features = ["default"] }
-solana-rpc-client-api = { workspace = true }
-solana-signature = { workspace = true }
-solana-signer = { workspace = true }
-solana-streamer = { workspace = true }
-solana-system-interface = { workspace = true, features = ["bincode"] }
-solana-transaction = { workspace = true }
-solana-transaction-status = { workspace = true }
-solana-version = { workspace = true }
+gorbagana-account-decoder = { workspace = true }
+gorbagana-clap-utils = { workspace = true }
+gorbagana-cli-config = { workspace = true }
+gorbagana-client = { workspace = true }
+gorbagana-clock = { workspace = true }
+gorbagana-commitment-config = { workspace = true }
+gorbagana-gossip = { workspace = true }
+gorbagana-hash = { workspace = true }
+gorbagana-instruction = { workspace = true }
+gorbagana-keypair = { workspace = true }
+gorbagana-logger = { workspace = true }
+gorbagana-measure = { workspace = true }
+gorbagana-message = { workspace = true, features = ["serde", "bincode", "blake3"] }
+gorbagana-net-utils = { workspace = true }
+gorbagana-program-pack = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-rpc-client = { workspace = true, features = ["default"] }
+gorbagana-rpc-client-api = { workspace = true }
+gorbagana-signature = { workspace = true }
+gorbagana-signer = { workspace = true }
+gorbagana-streamer = { workspace = true }
+gorbagana-system-interface = { workspace = true, features = ["bincode"] }
+gorbagana-transaction = { workspace = true }
+gorbagana-transaction-status = { workspace = true }
+gorbagana-version = { workspace = true }
 spl-generic-token = { workspace = true }
 spl-token = { workspace = true, features = ["no-entrypoint"] }
 
 [dev-dependencies]
-solana-accounts-db = { workspace = true }
-solana-core = { workspace = true, features = ["dev-context-only-utils"] }
-solana-faucet = { workspace = true }
-solana-local-cluster = { workspace = true }
-solana-native-token = { workspace = true }
-solana-poh-config = { workspace = true }
-solana-runtime = { workspace = true, features = ["dev-context-only-utils"] }
-solana-test-validator = { workspace = true }
+gorbagana-accounts-db = { workspace = true }
+gorbagana-core = { workspace = true, features = ["dev-context-only-utils"] }
+gorbagana-faucet = { workspace = true }
+gorbagana-local-cluster = { workspace = true }
+gorbagana-native-token = { workspace = true }
+gorbagana-poh-config = { workspace = true }
+gorbagana-runtime = { workspace = true, features = ["dev-context-only-utils"] }
+gorbagana-test-validator = { workspace = true }

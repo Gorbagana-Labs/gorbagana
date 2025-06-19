@@ -1,4 +1,4 @@
-use solana_pubkey::Pubkey;
+use gorbagana_pubkey::Pubkey;
 
 #[derive(Debug)]
 pub struct PubkeyBinCalculator24 {

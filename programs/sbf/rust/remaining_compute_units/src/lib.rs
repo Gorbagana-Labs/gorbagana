@@ -1,11 +1,11 @@
 //! @brief Example Rust-based BPF program that exercises the sol_remaining_compute_units syscall
 
 use {
-    solana_account_info::AccountInfo, solana_msg::msg,
-    solana_program::compute_units::sol_remaining_compute_units,
-    solana_program_error::ProgramResult, solana_pubkey::Pubkey,
+    gorbagana_account_info::AccountInfo, gorbagana_msg::msg,
+    gorbagana_program::compute_units::sol_remaining_compute_units,
+    gorbagana_program_error::ProgramResult, gorbagana_pubkey::Pubkey,
 };
-solana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
+gorbagana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
 pub fn process_instruction(
     _program_id: &Pubkey,
     _accounts: &[AccountInfo],

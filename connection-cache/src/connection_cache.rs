@@ -8,9 +8,9 @@ use {
     indexmap::map::IndexMap,
     log::*,
     rand::{thread_rng, Rng},
-    solana_keypair::Keypair,
-    solana_measure::measure::Measure,
-    solana_time_utils::AtomicInterval,
+    gorbagana_keypair::Keypair,
+    gorbagana_measure::measure::Measure,
+    gorbagana_time_utils::AtomicInterval,
     std::{
         net::SocketAddr,
         sync::{atomic::Ordering, Arc, RwLock},
@@ -514,8 +514,8 @@ mod tests {
         async_trait::async_trait,
         rand::{Rng, SeedableRng},
         rand_chacha::ChaChaRng,
-        solana_net_utils::SocketConfig,
-        solana_transaction_error::TransportResult,
+        gorbagana_net_utils::SocketConfig,
+        gorbagana_transaction_error::TransportResult,
         std::{
             net::{IpAddr, Ipv4Addr, SocketAddr, UdpSocket},
             sync::Arc,
@@ -572,7 +572,7 @@ mod tests {
         fn default() -> Self {
             Self {
                 udp_socket: Arc::new(
-                    solana_net_utils::bind_with_any_port_with_config(
+                    gorbagana_net_utils::bind_with_any_port_with_config(
                         IpAddr::V4(Ipv4Addr::UNSPECIFIED),
                         SocketConfig::default(),
                     )
@@ -586,7 +586,7 @@ mod tests {
         fn new() -> Result<Self, ClientError> {
             Ok(Self {
                 udp_socket: Arc::new(
-                    solana_net_utils::bind_with_any_port_with_config(
+                    gorbagana_net_utils::bind_with_any_port_with_config(
                         IpAddr::V4(Ipv4Addr::UNSPECIFIED),
                         SocketConfig::default(),
                     )
@@ -697,7 +697,7 @@ mod tests {
 
     #[test]
     fn test_connection_cache() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         // Allow the test to run deterministically
         // with the same pseudorandom sequence between runs
         // and on different platforms - the cryptographic security

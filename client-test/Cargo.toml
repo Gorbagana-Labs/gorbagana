@@ -1,7 +1,7 @@
 [package]
-name = "solana-client-test"
-description = "Solana RPC Test"
-documentation = "https://docs.rs/solana-client-test"
+name = "gorbagana-client-test"
+description = "Gorbagana RPC Test"
+documentation = "https://docs.rs/gorbagana-client-test"
 publish = false
 version = { workspace = true }
 authors = { workspace = true }
@@ -16,36 +16,36 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 futures-util = { workspace = true }
 serde_json = { workspace = true }
-solana-client = { workspace = true }
-solana-clock = { workspace = true }
-solana-commitment-config = { workspace = true }
-solana-keypair = { workspace = true }
-solana-ledger = { workspace = true }
-solana-measure = { workspace = true }
-solana-merkle-tree = { workspace = true }
-solana-message = { workspace = true }
-solana-native-token = { workspace = true }
-solana-perf = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-pubsub-client = { workspace = true }
-solana-rayon-threadlimit = { workspace = true }
-solana-rpc = { workspace = true }
-solana-rpc-client = { workspace = true }
-solana-rpc-client-api = { workspace = true }
-solana-runtime = { workspace = true }
-solana-signer = { workspace = true }
-solana-streamer = { workspace = true }
-solana-system-interface = { workspace = true }
-solana-system-transaction = { workspace = true }
-solana-test-validator = { workspace = true }
-solana-transaction-status = { workspace = true }
-solana-version = { workspace = true }
+gorbagana-client = { workspace = true }
+gorbagana-clock = { workspace = true }
+gorbagana-commitment-config = { workspace = true }
+gorbagana-keypair = { workspace = true }
+gorbagana-ledger = { workspace = true }
+gorbagana-measure = { workspace = true }
+gorbagana-merkle-tree = { workspace = true }
+gorbagana-message = { workspace = true }
+gorbagana-native-token = { workspace = true }
+gorbagana-perf = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-pubsub-client = { workspace = true }
+gorbagana-rayon-threadlimit = { workspace = true }
+gorbagana-rpc = { workspace = true }
+gorbagana-rpc-client = { workspace = true }
+gorbagana-rpc-client-api = { workspace = true }
+gorbagana-runtime = { workspace = true }
+gorbagana-signer = { workspace = true }
+gorbagana-streamer = { workspace = true }
+gorbagana-system-interface = { workspace = true }
+gorbagana-system-transaction = { workspace = true }
+gorbagana-test-validator = { workspace = true }
+gorbagana-transaction-status = { workspace = true }
+gorbagana-version = { workspace = true }
 systemstat = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 tungstenite = { workspace = true, features = ["rustls-tls-webpki-roots"] }
 
 [dev-dependencies]
-solana-logger = { workspace = true }
-solana-net-utils = { workspace = true }
-solana-rpc = { workspace = true, features = ["dev-context-only-utils"] }
-solana-runtime = { workspace = true, features = ["dev-context-only-utils"] }
+gorbagana-logger = { workspace = true }
+gorbagana-net-utils = { workspace = true }
+gorbagana-rpc = { workspace = true, features = ["dev-context-only-utils"] }
+gorbagana-runtime = { workspace = true, features = ["dev-context-only-utils"] }

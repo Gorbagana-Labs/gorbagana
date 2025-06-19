@@ -3,7 +3,7 @@ use {
         MAX_CALL_DEPTH, MAX_HEAP_FRAME_BYTES, MAX_INSTRUCTION_STACK_DEPTH, MIN_HEAP_FRAME_BYTES,
         STACK_FRAME_SIZE,
     },
-    solana_sbpf::{aligned_memory::AlignedMemory, ebpf::HOST_ALIGN},
+    gorbagana_sbpf::{aligned_memory::AlignedMemory, ebpf::HOST_ALIGN},
     std::array,
 };
 

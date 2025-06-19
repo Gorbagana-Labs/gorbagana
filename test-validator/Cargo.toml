@@ -1,5 +1,5 @@
 [package]
-name = "solana-test-validator"
+name = "gorbagana-test-validator"
 description = "Blockchain, Rebuilt for Scale"
 readme = "../README.md"
 version = { workspace = true }
@@ -20,41 +20,41 @@ crossbeam-channel = { workspace = true }
 log = { workspace = true }
 serde_derive = { workspace = true }
 serde_json = { workspace = true }
-solana-account = { workspace = true }
-solana-accounts-db = { workspace = true }
-solana-cli-output = { workspace = true }
-solana-clock = { workspace = true }
-solana-cluster-type = { workspace = true }
-solana-commitment-config = { workspace = true }
-solana-compute-budget = { workspace = true }
-solana-core = { workspace = true }
-solana-epoch-schedule = { workspace = true }
-solana-feature-gate-interface = { workspace = true }
-solana-fee-calculator = { workspace = true }
-solana-geyser-plugin-manager = { workspace = true }
-solana-gossip = { workspace = true }
-solana-instruction = { workspace = true }
-solana-keypair = { workspace = true }
-solana-ledger = { workspace = true }
-solana-loader-v3-interface = { workspace = true }
-solana-logger = "=2.3.1"
-solana-message = { workspace = true }
-solana-native-token = { workspace = true }
-solana-net-utils = { workspace = true }
-solana-program-test = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-rent = { workspace = true }
-solana-rpc = { workspace = true }
-solana-rpc-client = { workspace = true }
-solana-rpc-client-api = { workspace = true }
-solana-runtime = { workspace = true }
-solana-sdk-ids = { workspace = true }
-solana-signer = { workspace = true }
-solana-streamer = { workspace = true }
-solana-tpu-client = { workspace = true }
-solana-transaction = { workspace = true }
-solana-validator-exit = { workspace = true }
+gorbagana-account = { workspace = true }
+gorbagana-accounts-db = { workspace = true }
+gorbagana-cli-output = { workspace = true }
+gorbagana-clock = { workspace = true }
+gorbagana-cluster-type = { workspace = true }
+gorbagana-commitment-config = { workspace = true }
+gorbagana-compute-budget = { workspace = true }
+gorbagana-core = { workspace = true }
+gorbagana-epoch-schedule = { workspace = true }
+gorbagana-feature-gate-interface = { workspace = true }
+gorbagana-fee-calculator = { workspace = true }
+gorbagana-geyser-plugin-manager = { workspace = true }
+gorbagana-gossip = { workspace = true }
+gorbagana-instruction = { workspace = true }
+gorbagana-keypair = { workspace = true }
+gorbagana-ledger = { workspace = true }
+gorbagana-loader-v3-interface = { workspace = true }
+gorbagana-logger = "=2.3.1"
+gorbagana-message = { workspace = true }
+gorbagana-native-token = { workspace = true }
+gorbagana-net-utils = { workspace = true }
+gorbagana-program-test = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-rent = { workspace = true }
+gorbagana-rpc = { workspace = true }
+gorbagana-rpc-client = { workspace = true }
+gorbagana-rpc-client-api = { workspace = true }
+gorbagana-runtime = { workspace = true }
+gorbagana-sdk-ids = { workspace = true }
+gorbagana-signer = { workspace = true }
+gorbagana-streamer = { workspace = true }
+gorbagana-tpu-client = { workspace = true }
+gorbagana-transaction = { workspace = true }
+gorbagana-validator-exit = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 
 [dev-dependencies]
-solana-sdk-ids = { workspace = true }
+gorbagana-sdk-ids = { workspace = true }

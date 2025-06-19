@@ -7,11 +7,11 @@ use {
     ahash::HashMap,
     itertools::Itertools,
     rand::{thread_rng, Rng},
-    solana_account::from_account,
-    solana_clock::Epoch,
-    solana_pubkey::Pubkey,
-    solana_runtime::{bank::Bank, epoch_stakes::VersionedEpochStakes},
-    solana_sysvar::{self as sysvar, slot_hashes::SlotHashes},
+    gorbagana_account::from_account,
+    gorbagana_clock::Epoch,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_runtime::{bank::Bank, epoch_stakes::VersionedEpochStakes},
+    gorbagana_sysvar::{self as sysvar, slot_hashes::SlotHashes},
     std::{cmp, sync::Arc},
 };
 
@@ -62,7 +62,7 @@ impl VoteStorage {
 
     #[cfg(test)]
     pub fn new_for_tests(vote_pubkeys_to_stake: &[Pubkey]) -> Self {
-        use solana_vote::vote_account::VoteAccount;
+        use gorbagana_vote::vote_account::VoteAccount;
 
         let vote_accounts = vote_pubkeys_to_stake
             .iter()
@@ -322,14 +322,14 @@ impl VoteStorage {
     }
 
     #[cfg(test)]
-    pub fn get_latest_vote_slot(&self, pubkey: Pubkey) -> Option<solana_clock::Slot> {
+    pub fn get_latest_vote_slot(&self, pubkey: Pubkey) -> Option<gorbagana_clock::Slot> {
         self.latest_vote_per_vote_pubkey
             .get(&pubkey)
             .map(|l| l.slot())
     }
 
     #[cfg(test)]
-    fn get_latest_timestamp(&self, pubkey: Pubkey) -> Option<solana_clock::UnixTimestamp> {
+    fn get_latest_timestamp(&self, pubkey: Pubkey) -> Option<gorbagana_clock::UnixTimestamp> {
         self.latest_vote_per_vote_pubkey
             .get(&pubkey)
             .and_then(|l| l.timestamp())
@@ -340,16 +340,16 @@ impl VoteStorage {
 mod tests {
     use {
         super::*,
-        solana_clock::UnixTimestamp,
-        solana_epoch_schedule::MINIMUM_SLOTS_PER_EPOCH,
-        solana_genesis_config::GenesisConfig,
-        solana_hash::Hash,
-        solana_keypair::Keypair,
-        solana_perf::packet::{BytesPacket, PacketFlags},
-        solana_runtime::genesis_utils::{self, ValidatorVoteKeypairs},
-        solana_signer::Signer,
-        solana_vote::vote_transaction::new_tower_sync_transaction,
-        solana_vote_program::vote_state::TowerSync,
+        gorbagana_clock::UnixTimestamp,
+        gorbagana_epoch_schedule::MINIMUM_SLOTS_PER_EPOCH,
+        gorbagana_genesis_config::GenesisConfig,
+        gorbagana_hash::Hash,
+        gorbagana_keypair::Keypair,
+        gorbagana_perf::packet::{BytesPacket, PacketFlags},
+        gorbagana_runtime::genesis_utils::{self, ValidatorVoteKeypairs},
+        gorbagana_signer::Signer,
+        gorbagana_vote::vote_transaction::new_tower_sync_transaction,
+        gorbagana_vote_program::vote_state::TowerSync,
         std::error::Error,
     };
 

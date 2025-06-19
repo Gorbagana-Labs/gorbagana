@@ -1,10 +1,10 @@
 use {
-    solana_account_decoder::{
+    gorbagana_account_decoder::{
         parse_account_data::SplTokenAdditionalDataV2, parse_token::token_amount_to_ui_amount_v3,
     },
-    solana_runtime::bank::TransactionBalancesSet,
-    solana_svm::transaction_balances::{BalanceCollector, SvmTokenInfo},
-    solana_transaction_status::{
+    gorbagana_runtime::bank::TransactionBalancesSet,
+    gorbagana_svm::transaction_balances::{BalanceCollector, SvmTokenInfo},
+    gorbagana_transaction_status::{
         token_balances::TransactionTokenBalancesSet, TransactionTokenBalance,
     },
 };
@@ -66,8 +66,8 @@ fn svm_token_info_to_token_balance(svm_info: SvmTokenInfo) -> TransactionTokenBa
 mod tests {
     use {
         super::*,
-        solana_account_decoder::parse_token::UiTokenAmount,
-        solana_pubkey::Pubkey,
+        gorbagana_account_decoder::parse_token::UiTokenAmount,
+        gorbagana_pubkey::Pubkey,
         spl_generic_token::{token, token_2022},
     };
 

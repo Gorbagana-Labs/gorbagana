@@ -5,10 +5,10 @@ use {
         is_zero_lamport::IsZeroLamport,
         storable_accounts::{AccountForStorage, StorableAccounts},
     },
-    solana_account::{AccountSharedData, ReadableAccount},
-    solana_clock::Slot,
-    solana_pubkey::Pubkey,
-    solana_reward_info::RewardInfo,
+    gorbagana_account::{AccountSharedData, ReadableAccount},
+    gorbagana_clock::Slot,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_reward_info::RewardInfo,
 };
 
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
@@ -64,8 +64,8 @@ impl<'a> StorableAccounts<'a> for (Slot, &'a [StakeReward]) {
 
 #[cfg(feature = "dev-context-only-utils")]
 use {
-    rand::Rng, solana_account::WritableAccount, solana_keypair::Keypair, solana_rent::Rent,
-    solana_signer::Signer, solana_stake_program::stake_state, solana_vote_program::vote_state,
+    rand::Rng, gorbagana_account::WritableAccount, gorbagana_keypair::Keypair, gorbagana_rent::Rent,
+    gorbagana_signer::Signer, gorbagana_stake_program::stake_state, gorbagana_vote_program::vote_state,
 };
 
 // These functions/fields are only usable from a dev context (i.e. tests and benches)
@@ -76,7 +76,7 @@ impl StakeReward {
 
         let rent = Rent::free();
 
-        let validator_pubkey = solana_pubkey::new_rand();
+        let validator_pubkey = gorbagana_pubkey::new_rand();
         let validator_stake_lamports = 20;
         let validator_staking_keypair = Keypair::new();
         let validator_voting_keypair = Keypair::new();
@@ -100,7 +100,7 @@ impl StakeReward {
         Self {
             stake_pubkey: Pubkey::new_unique(),
             stake_reward_info: RewardInfo {
-                reward_type: solana_reward_info::RewardType::Staking,
+                reward_type: gorbagana_reward_info::RewardType::Staking,
                 lamports: reward_lamports,
                 post_balance: 0,     /* unused atm */
                 commission: Some(0), /* unused but tests require some value */

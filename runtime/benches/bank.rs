@@ -5,21 +5,21 @@ extern crate test;
 
 use {
     log::*,
-    solana_client_traits::{AsyncClient, SyncClient},
-    solana_clock::MAX_RECENT_BLOCKHASHES,
-    solana_genesis_config::create_genesis_config,
-    solana_keypair::Keypair,
-    solana_message::Message,
-    solana_program_runtime::declare_process_instruction,
-    solana_pubkey::Pubkey,
-    solana_runtime::{
+    gorbagana_client_traits::{AsyncClient, SyncClient},
+    gorbagana_clock::MAX_RECENT_BLOCKHASHES,
+    gorbagana_genesis_config::create_genesis_config,
+    gorbagana_keypair::Keypair,
+    gorbagana_message::Message,
+    gorbagana_program_runtime::declare_process_instruction,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_runtime::{
         bank::{test_utils::goto_end_of_slot, *},
         bank_client::BankClient,
         loader_utils::create_invoke_instruction,
     },
-    solana_signer::Signer,
-    solana_svm::transaction_processing_callback::TransactionProcessingCallback,
-    solana_transaction::Transaction,
+    gorbagana_signer::Signer,
+    gorbagana_svm::transaction_processing_callback::TransactionProcessingCallback,
+    gorbagana_transaction::Transaction,
     std::{sync::Arc, thread::sleep, time::Duration},
     test::Bencher,
 };
@@ -116,7 +116,7 @@ fn do_bench_transactions(
     bench_work: &dyn Fn(&Bank, &BankClient, &[Transaction]),
     create_transactions: &dyn Fn(&BankClient, &Keypair) -> Vec<Transaction>,
 ) {
-    solana_logger::setup();
+    gorbagana_logger::setup();
     let ns_per_s = 1_000_000_000;
     let (mut genesis_config, mint_keypair) = create_genesis_config(100_000_000_000_000);
     genesis_config.ticks_per_slot = 100;
@@ -132,7 +132,7 @@ fn do_bench_transactions(
 
     let mut bank = Bank::new_from_parent(Arc::new(bank), &Pubkey::default(), 1);
     bank.add_mockup_builtin(Pubkey::from(BUILTIN_PROGRAM_ID), MockBuiltin::vm);
-    bank.add_builtin_account("solana_noop_program", &Pubkey::from(NOOP_PROGRAM_ID));
+    bank.add_builtin_account("gorbagana_noop_program", &Pubkey::from(NOOP_PROGRAM_ID));
     let bank = Arc::new(bank);
     let bank_client = BankClient::new_shared(bank.clone());
     let transactions = create_transactions(&bank_client, &mint_keypair);

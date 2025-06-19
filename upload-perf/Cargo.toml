@@ -1,5 +1,5 @@
 [package]
-name = "solana-upload-perf"
+name = "gorbagana-upload-perf"
 description = "Metrics Upload Utility"
 publish = false
 version = { workspace = true }
@@ -13,9 +13,9 @@ edition = { workspace = true }
 targets = ["x86_64-unknown-linux-gnu"]
 
 [[bin]]
-name = "solana-upload-perf"
+name = "gorbagana-upload-perf"
 path = "src/upload-perf.rs"
 
 [dependencies]
 serde_json = { workspace = true }
-solana-metrics = { workspace = true }
+gorbagana-metrics = { workspace = true }

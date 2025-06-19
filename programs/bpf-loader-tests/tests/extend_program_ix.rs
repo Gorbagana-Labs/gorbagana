@@ -1,22 +1,22 @@
 use {
     assert_matches::assert_matches,
     common::{add_upgradeable_loader_account, assert_ix_error, setup_test_context},
-    solana_account::{AccountSharedData, ReadableAccount, WritableAccount},
-    solana_instruction::error::InstructionError,
-    solana_keypair::Keypair,
-    solana_loader_v3_interface::{
+    gorbagana_account::{AccountSharedData, ReadableAccount, WritableAccount},
+    gorbagana_instruction::error::InstructionError,
+    gorbagana_keypair::Keypair,
+    gorbagana_loader_v3_interface::{
         instruction::extend_program_checked, state::UpgradeableLoaderState,
     },
-    solana_program_test::*,
-    solana_pubkey::Pubkey,
-    solana_sdk_ids::bpf_loader_upgradeable::id,
-    solana_signer::Signer,
-    solana_system_interface::{
+    gorbagana_program_test::*,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sdk_ids::bpf_loader_upgradeable::id,
+    gorbagana_signer::Signer,
+    gorbagana_system_interface::{
         error::SystemError, instruction as system_instruction, program as system_program,
         MAX_PERMITTED_DATA_LENGTH,
     },
-    solana_transaction::Transaction,
-    solana_transaction_error::TransactionError,
+    gorbagana_transaction::Transaction,
+    gorbagana_transaction_error::TransactionError,
 };
 
 mod common;

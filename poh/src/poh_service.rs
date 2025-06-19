@@ -4,10 +4,10 @@ use {
     crate::poh_recorder::{PohRecorder, Record},
     crossbeam_channel::Receiver,
     log::*,
-    solana_clock::DEFAULT_HASHES_PER_SECOND,
-    solana_entry::poh::Poh,
-    solana_measure::{measure::Measure, measure_us},
-    solana_poh_config::PohConfig,
+    gorbagana_clock::DEFAULT_HASHES_PER_SECOND,
+    gorbagana_entry::poh::Poh,
+    gorbagana_measure::{measure::Measure, measure_us},
+    gorbagana_poh_config::PohConfig,
     std::{
         sync::{
             atomic::{AtomicBool, Ordering},
@@ -382,25 +382,25 @@ mod tests {
         crate::poh_recorder::PohRecorderError::MaxHeightReached,
         crossbeam_channel::unbounded,
         rand::{thread_rng, Rng},
-        solana_clock::{DEFAULT_HASHES_PER_TICK, DEFAULT_MS_PER_SLOT},
-        solana_ledger::{
+        gorbagana_clock::{DEFAULT_HASHES_PER_TICK, DEFAULT_MS_PER_SLOT},
+        gorbagana_ledger::{
             blockstore::Blockstore,
             genesis_utils::{create_genesis_config, GenesisConfigInfo},
             get_tmp_ledger_path_auto_delete,
             leader_schedule_cache::LeaderScheduleCache,
         },
-        solana_measure::measure::Measure,
-        solana_perf::test_tx::test_tx,
-        solana_runtime::bank::Bank,
-        solana_sha256_hasher::hash,
-        solana_transaction::versioned::VersionedTransaction,
+        gorbagana_measure::measure::Measure,
+        gorbagana_perf::test_tx::test_tx,
+        gorbagana_runtime::bank::Bank,
+        gorbagana_sha256_hasher::hash,
+        gorbagana_transaction::versioned::VersionedTransaction,
         std::{thread::sleep, time::Duration},
     };
 
     #[test]
     #[ignore]
     fn test_poh_service() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let GenesisConfigInfo {
             mut genesis_config, ..
         } = create_genesis_config(2);
@@ -477,7 +477,7 @@ mod tests {
                                 .reset(bank.clone(), next_leader_slot);
                             bank = Arc::new(Bank::new_from_parent(
                                 bank.clone(),
-                                &solana_pubkey::new_rand(),
+                                &gorbagana_pubkey::new_rand(),
                                 bank.slot() + 1,
                             ));
                             poh_recorder

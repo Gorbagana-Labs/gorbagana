@@ -6,21 +6,21 @@ use {
     bincode::serialize,
     dashmap::DashMap,
     futures_util::future::join_all,
-    solana_hash::Hash,
-    solana_message::Message,
-    solana_quic_client::{QuicConfig, QuicConnectionManager, QuicPool},
-    solana_rpc_client::spinner::{self, SendTransactionProgress},
-    solana_rpc_client_api::{
+    gorbagana_hash::Hash,
+    gorbagana_message::Message,
+    gorbagana_quic_client::{QuicConfig, QuicConnectionManager, QuicPool},
+    gorbagana_rpc_client::spinner::{self, SendTransactionProgress},
+    gorbagana_rpc_client_api::{
         client_error::ErrorKind,
         config::RpcSendTransactionConfig,
         request::{RpcError, RpcResponseErrorData, MAX_GET_SIGNATURE_STATUSES_QUERY_ITEMS},
         response::RpcSimulateTransactionResult,
     },
-    solana_signature::Signature,
-    solana_signer::{signers::Signers, SignerError},
-    solana_tpu_client::tpu_client::{Result, TpuSenderError},
-    solana_transaction::Transaction,
-    solana_transaction_error::TransactionError,
+    gorbagana_signature::Signature,
+    gorbagana_signer::{signers::Signers, SignerError},
+    gorbagana_tpu_client::tpu_client::{Result, TpuSenderError},
+    gorbagana_transaction::Transaction,
+    gorbagana_transaction_error::TransactionError,
     std::{
         sync::{
             atomic::{AtomicU64, AtomicUsize, Ordering},
@@ -35,7 +35,7 @@ const BLOCKHASH_REFRESH_RATE: Duration = Duration::from_secs(5);
 const SEND_INTERVAL: Duration = Duration::from_millis(10);
 // This is a "reasonable" constant for how long it should
 // take to fan the transactions out, taken from
-// `solana_tpu_client::nonblocking::tpu_client::send_wire_transaction_futures`
+// `gorbagana_tpu_client::nonblocking::tpu_client::send_wire_transaction_futures`
 const SEND_TIMEOUT_INTERVAL: Duration = Duration::from_secs(5);
 
 type QuicTpuClient = TpuClient<QuicPool, QuicConnectionManager, QuicConfig>;

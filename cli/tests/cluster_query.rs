@@ -1,18 +1,18 @@
 use {
-    solana_cli::{
+    gorbagana_cli::{
         check_balance,
         cli::{process_command, request_and_confirm_airdrop, CliCommand, CliConfig},
         test_utils::check_ready,
     },
-    solana_commitment_config::CommitmentConfig,
-    solana_faucet::faucet::run_local_faucet,
-    solana_fee_structure::FeeStructure,
-    solana_keypair::Keypair,
-    solana_native_token::sol_to_lamports,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_signer::Signer,
-    solana_streamer::socket::SocketAddrSpace,
-    solana_test_validator::TestValidator,
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_faucet::faucet::run_local_faucet,
+    gorbagana_fee_structure::FeeStructure,
+    gorbagana_keypair::Keypair,
+    gorbagana_native_token::sol_to_lamports,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_signer::Signer,
+    gorbagana_streamer::socket::SocketAddrSpace,
+    gorbagana_test_validator::TestValidator,
     std::time::Duration,
     test_case::test_case,
 };
@@ -20,7 +20,7 @@ use {
 #[test_case(None; "base")]
 #[test_case(Some(1_000_000); "with_compute_unit_price")]
 fn test_ping(compute_unit_price: Option<u64>) {
-    solana_logger::setup();
+    gorbagana_logger::setup();
     let fee = FeeStructure::default().get_max_fee(1, 0);
     let mint_keypair = Keypair::new();
     let mint_pubkey = mint_keypair.pubkey();

@@ -1,4 +1,4 @@
-use {crate::rolling_bit_field::RollingBitField, solana_clock::Slot};
+use {crate::rolling_bit_field::RollingBitField, gorbagana_clock::Slot};
 
 #[derive(Debug)]
 pub struct RootsTracker {

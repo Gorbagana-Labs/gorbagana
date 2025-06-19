@@ -1,6 +1,6 @@
 //! Plain Old Data types for the AES128-GCM-SIV authenticated encryption scheme.
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use crate::{encryption::auth_encryption as decoded, errors::AuthenticatedEncryptionError};
 use {
     crate::zk_token_elgamal::pod::impl_from_str,
@@ -50,14 +50,14 @@ impl Default for AeCiphertext {
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<decoded::AeCiphertext> for AeCiphertext {
     fn from(decoded_ciphertext: decoded::AeCiphertext) -> Self {
         Self(decoded_ciphertext.to_bytes())
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TryFrom<AeCiphertext> for decoded::AeCiphertext {
     type Error = AuthenticatedEncryptionError;
 

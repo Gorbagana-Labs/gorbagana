@@ -11,7 +11,7 @@
 //! handle. Furthermore, the first grouped ciphertext is referred to as the "lo" ciphertext and the
 //! second grouped ciphertext is referred to as the "hi" ciphertext.
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use {
     crate::{
         encryption::{
@@ -59,7 +59,7 @@ pub struct BatchedGroupedCiphertext3HandlesValidityProofContext {
     pub grouped_ciphertext_hi: pod::GroupedElGamalCiphertext3Handles, // 128 bytes
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl BatchedGroupedCiphertext3HandlesValidityProofData {
     pub fn new(
         source_pubkey: &ElGamalPubkey,
@@ -113,7 +113,7 @@ impl ZkProofData<BatchedGroupedCiphertext3HandlesValidityProofContext>
         &self.context
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     fn verify_proof(&self) -> Result<(), ProofVerificationError> {
         let mut transcript = self.context.new_transcript();
 
@@ -154,7 +154,7 @@ impl ZkProofData<BatchedGroupedCiphertext3HandlesValidityProofContext>
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl BatchedGroupedCiphertext3HandlesValidityProofContext {
     fn new_transcript(&self) -> Transcript {
         let mut transcript = Transcript::new(b"BatchedGroupedCiphertext3HandlesValidityProof");

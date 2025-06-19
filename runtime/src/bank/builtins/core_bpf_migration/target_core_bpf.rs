@@ -1,10 +1,10 @@
 use {
     super::error::CoreBpfMigrationError,
     crate::bank::Bank,
-    solana_account::{AccountSharedData, ReadableAccount},
-    solana_loader_v3_interface::{get_program_data_address, state::UpgradeableLoaderState},
-    solana_pubkey::Pubkey,
-    solana_sdk_ids::bpf_loader_upgradeable,
+    gorbagana_account::{AccountSharedData, ReadableAccount},
+    gorbagana_loader_v3_interface::{get_program_data_address, state::UpgradeableLoaderState},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sdk_ids::bpf_loader_upgradeable,
 };
 
 /// The account details of a Core BPF program slated to be upgraded.
@@ -96,7 +96,7 @@ impl TargetCoreBpf {
 mod tests {
     use {
         super::*, crate::bank::tests::create_simple_test_bank, assert_matches::assert_matches,
-        solana_account::WritableAccount, solana_sdk_ids::bpf_loader_upgradeable,
+        gorbagana_account::WritableAccount, gorbagana_sdk_ids::bpf_loader_upgradeable,
     };
 
     fn store_account(bank: &Bank, address: &Pubkey, data: &[u8], owner: &Pubkey, executable: bool) {

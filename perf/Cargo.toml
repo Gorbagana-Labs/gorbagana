@@ -1,7 +1,7 @@
 [package]
-name = "solana-perf"
-description = "Solana Performance APIs"
-documentation = "https://docs.rs/solana-perf"
+name = "gorbagana-perf"
+description = "Gorbagana Performance APIs"
+documentation = "https://docs.rs/gorbagana-perf"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -13,24 +13,24 @@ edition = { workspace = true }
 targets = ["x86_64-unknown-linux-gnu"]
 
 [lib]
-name = "solana_perf"
+name = "gorbagana_perf"
 
 [features]
 dev-context-only-utils = [
-    "dep:solana-clock",
-    "dep:solana-keypair",
-    "dep:solana-signer",
-    "dep:solana-system-interface",
-    "dep:solana-system-transaction",
-    "dep:solana-transaction",
-    "dep:solana-vote-program",
-    "dep:solana-vote",
+    "dep:gorbagana-clock",
+    "dep:gorbagana-keypair",
+    "dep:gorbagana-signer",
+    "dep:gorbagana-system-interface",
+    "dep:gorbagana-system-transaction",
+    "dep:gorbagana-transaction",
+    "dep:gorbagana-vote-program",
+    "dep:gorbagana-vote",
 ]
 frozen-abi = [
-    "dep:solana-frozen-abi",
-    "dep:solana-frozen-abi-macro",
-    "solana-short-vec/frozen-abi",
-    "solana-vote-program/frozen-abi",
+    "dep:gorbagana-frozen-abi",
+    "dep:gorbagana-frozen-abi-macro",
+    "gorbagana-short-vec/frozen-abi",
+    "gorbagana-vote-program/frozen-abi",
 ]
 
 [dependencies]
@@ -45,30 +45,30 @@ log = { workspace = true }
 rand = { workspace = true }
 rayon = { workspace = true }
 serde = { workspace = true }
-solana-clock = { workspace = true, optional = true }
-solana-frozen-abi = { workspace = true, optional = true, features = [
+gorbagana-clock = { workspace = true, optional = true }
+gorbagana-frozen-abi = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
-solana-frozen-abi-macro = { workspace = true, optional = true, features = [
+gorbagana-frozen-abi-macro = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
-solana-hash = { workspace = true }
-solana-keypair = { workspace = true, optional = true }
-solana-message = { workspace = true }
-solana-metrics = { workspace = true }
-solana-packet = { workspace = true, features = ["bincode"] }
-solana-pubkey = { workspace = true, default-features = false }
-solana-rayon-threadlimit = { workspace = true }
-solana-sdk-ids = { workspace = true }
-solana-short-vec = { workspace = true }
-solana-signature = { workspace = true, features = ["verify"] }
-solana-signer = { workspace = true, optional = true }
-solana-system-interface = { workspace = true, optional = true }
-solana-system-transaction = { workspace = true, optional = true }
-solana-time-utils = { workspace = true }
-solana-transaction = { workspace = true, optional = true }
-solana-vote = { workspace = true, optional = true }
-solana-vote-program = { workspace = true, optional = true }
+gorbagana-hash = { workspace = true }
+gorbagana-keypair = { workspace = true, optional = true }
+gorbagana-message = { workspace = true }
+gorbagana-metrics = { workspace = true }
+gorbagana-packet = { workspace = true, features = ["bincode"] }
+gorbagana-pubkey = { workspace = true, default-features = false }
+gorbagana-rayon-threadlimit = { workspace = true }
+gorbagana-sdk-ids = { workspace = true }
+gorbagana-short-vec = { workspace = true }
+gorbagana-signature = { workspace = true, features = ["verify"] }
+gorbagana-signer = { workspace = true, optional = true }
+gorbagana-system-interface = { workspace = true, optional = true }
+gorbagana-system-transaction = { workspace = true, optional = true }
+gorbagana-time-utils = { workspace = true }
+gorbagana-transaction = { workspace = true, optional = true }
+gorbagana-vote = { workspace = true, optional = true }
+gorbagana-vote-program = { workspace = true, optional = true }
 
 [target."cfg(target_os = \"linux\")".dependencies]
 caps = { workspace = true }
@@ -78,8 +78,8 @@ nix = { workspace = true, features = ["user"] }
 [dev-dependencies]
 assert_matches = { workspace = true }
 rand_chacha = { workspace = true }
-solana-logger = { workspace = true }
-solana-perf = { path = ".", features = ["dev-context-only-utils"] }
+gorbagana-logger = { workspace = true }
+gorbagana-perf = { path = ".", features = ["dev-context-only-utils"] }
 test-case = { workspace = true }
 
 [[bench]]

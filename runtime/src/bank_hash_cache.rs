@@ -9,8 +9,8 @@
 
 use {
     crate::{bank::Bank, bank_forks::BankForks, root_bank_cache::RootBankCache},
-    solana_clock::Slot,
-    solana_hash::Hash,
+    gorbagana_clock::Slot,
+    gorbagana_hash::Hash,
     std::{
         collections::BTreeMap,
         sync::{Arc, Mutex, MutexGuard, RwLock},

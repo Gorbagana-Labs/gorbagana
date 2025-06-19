@@ -3,12 +3,12 @@ mod snapshot_gossip_manager;
 pub use pending_snapshot_packages::PendingSnapshotPackages;
 use {
     snapshot_gossip_manager::SnapshotGossipManager,
-    solana_accounts_db::accounts_db::AccountStorageEntry,
-    solana_clock::Slot,
-    solana_gossip::cluster_info::ClusterInfo,
-    solana_measure::{meas_dur, measure::Measure, measure_us},
-    solana_perf::thread::renice_this_thread,
-    solana_runtime::{
+    gorbagana_accounts_db::accounts_db::AccountStorageEntry,
+    gorbagana_clock::Slot,
+    gorbagana_gossip::cluster_info::ClusterInfo,
+    gorbagana_measure::{meas_dur, measure::Measure, measure_us},
+    gorbagana_perf::thread::renice_this_thread,
+    gorbagana_runtime::{
         snapshot_config::SnapshotConfig, snapshot_controller::SnapshotController,
         snapshot_hash::StartingSnapshotHashes, snapshot_package::SnapshotPackage, snapshot_utils,
     },

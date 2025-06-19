@@ -10,7 +10,7 @@
 //! threads.
 //!
 //! Aside from some limited abstraction leakage to make `select!` work at the
-//! solana-unified-scheduler-pool crate, almost all of these preprocessing are intentionally
+//! gorbagana-unified-scheduler-pool crate, almost all of these preprocessing are intentionally
 //! encapsulated into this module, at the cost of dynamic dispatch per each BankingPacketBatch to
 //! retain the unified scheduler agnostic scheduler over scheduling mode (block verification vs
 //! block production) as much as possible.
@@ -34,9 +34,9 @@ use {
     },
     crate::banking_trace::Channels,
     agave_banking_stage_ingress_types::BankingPacketBatch,
-    solana_poh::{poh_recorder::PohRecorder, transaction_recorder::TransactionRecorder},
-    solana_runtime::{bank_forks::BankForks, root_bank_cache::RootBankCache},
-    solana_unified_scheduler_pool::{BankingStageHelper, DefaultSchedulerPool},
+    gorbagana_poh::{poh_recorder::PohRecorder, transaction_recorder::TransactionRecorder},
+    gorbagana_runtime::{bank_forks::BankForks, root_bank_cache::RootBankCache},
+    gorbagana_unified_scheduler_pool::{BankingStageHelper, DefaultSchedulerPool},
     std::sync::{Arc, RwLock},
 };
 

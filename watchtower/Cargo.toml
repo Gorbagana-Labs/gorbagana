@@ -16,15 +16,15 @@ targets = ["x86_64-unknown-linux-gnu"]
 clap = { workspace = true }
 humantime = { workspace = true }
 log = { workspace = true }
-solana-clap-utils = { workspace = true }
-solana-cli-config = { workspace = true }
-solana-cli-output = { workspace = true }
-solana-hash = "=2.3.0"
-solana-logger = "=2.3.1"
-solana-metrics = { workspace = true }
-solana-native-token = "=2.2.2"
-solana-notifier = { workspace = true }
-solana-pubkey = { version = "=2.4.0", default-features = false }
-solana-rpc-client = { workspace = true }
-solana-rpc-client-api = { workspace = true }
-solana-version = { workspace = true }
+gorbagana-clap-utils = { workspace = true }
+gorbagana-cli-config = { workspace = true }
+gorbagana-cli-output = { workspace = true }
+gorbagana-hash = "=2.3.0"
+gorbagana-logger = "=2.3.1"
+gorbagana-metrics = { workspace = true }
+gorbagana-native-token = "=2.2.2"
+gorbagana-notifier = { workspace = true }
+gorbagana-pubkey = { version = "=2.4.0", default-features = false }
+gorbagana-rpc-client = { workspace = true }
+gorbagana-rpc-client-api = { workspace = true }
+gorbagana-version = { workspace = true }

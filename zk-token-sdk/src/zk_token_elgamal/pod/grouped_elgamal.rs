@@ -1,6 +1,6 @@
 //! Plain Old Data types for the Grouped ElGamal encryption scheme.
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use crate::encryption::grouped_elgamal::GroupedElGamalCiphertext;
 use {
     crate::{
@@ -76,14 +76,14 @@ impl Default for GroupedElGamalCiphertext2Handles {
         Self::zeroed()
     }
 }
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<GroupedElGamalCiphertext<2>> for GroupedElGamalCiphertext2Handles {
     fn from(decoded_ciphertext: GroupedElGamalCiphertext<2>) -> Self {
         Self(decoded_ciphertext.to_bytes().try_into().unwrap())
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TryFrom<GroupedElGamalCiphertext2Handles> for GroupedElGamalCiphertext<2> {
     type Error = ElGamalError;
 
@@ -111,14 +111,14 @@ impl Default for GroupedElGamalCiphertext3Handles {
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<GroupedElGamalCiphertext<3>> for GroupedElGamalCiphertext3Handles {
     fn from(decoded_ciphertext: GroupedElGamalCiphertext<3>) -> Self {
         Self(decoded_ciphertext.to_bytes().try_into().unwrap())
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TryFrom<GroupedElGamalCiphertext3Handles> for GroupedElGamalCiphertext<3> {
     type Error = ElGamalError;
 

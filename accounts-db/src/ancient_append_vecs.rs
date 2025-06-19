@@ -17,8 +17,8 @@ use {
     },
     rand::{thread_rng, Rng},
     rayon::prelude::{IntoParallelRefIterator, ParallelIterator},
-    solana_clock::Slot,
-    solana_measure::measure_us,
+    gorbagana_clock::Slot,
+    gorbagana_measure::measure_us,
     std::{
         collections::{HashMap, VecDeque},
         num::{NonZeroU64, Saturating},
@@ -1114,8 +1114,8 @@ pub mod tests {
             storable_accounts::StorableAccountsBySlot,
         },
         rand::seq::SliceRandom as _,
-        solana_account::{AccountSharedData, ReadableAccount, WritableAccount},
-        solana_pubkey::Pubkey,
+        gorbagana_account::{AccountSharedData, ReadableAccount, WritableAccount},
+        gorbagana_pubkey::Pubkey,
         std::{collections::HashSet, ops::Range},
         strum::IntoEnumIterator,
         strum_macros::EnumIter,
@@ -1267,7 +1267,7 @@ pub mod tests {
         // n slots
         // m accounts per slot
         // divide into different ideal sizes so that we combine multiple slots sometimes and combine partial slots
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let total_accounts_per_storage = 10;
         let account_size = 184;
         for num_slots in 0..4 {
@@ -1293,7 +1293,7 @@ pub mod tests {
                     .map(|storage| {
                         (0..(total_accounts_per_storage - 1))
                             .map(|_| {
-                                let pk = solana_pubkey::new_rand();
+                                let pk = gorbagana_pubkey::new_rand();
                                 let mut account = account_template.clone();
                                 account.set_lamports(lamports);
                                 lamports += 1;
@@ -1371,7 +1371,7 @@ pub mod tests {
         // each account has different size
         // divide into different ideal sizes so that we combine multiple slots sometimes and combine partial slots
         // compare at end that all accounts are in result exactly once
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let total_accounts_per_storage = 10;
         let account_size = 184;
         for num_slots in 0..4 {
@@ -1400,7 +1400,7 @@ pub mod tests {
                     .map(|storage| {
                         (0..(total_accounts_per_storage - 1))
                             .map(|_| {
-                                let pk = solana_pubkey::new_rand();
+                                let pk = gorbagana_pubkey::new_rand();
                                 let mut account = account_template.clone();
                                 account.set_data((0..data_size).map(|x| (x % 256) as u8).collect());
                                 data_size += 1;
@@ -1610,7 +1610,7 @@ pub mod tests {
         // n storages
         // 1 account each
         // all accounts have 1 ref or all accounts have 2 refs
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let alive_bytes_per_slot = 2;
 
@@ -1746,7 +1746,7 @@ pub mod tests {
 
                                 if add_dead_account {
                                     storages.iter().for_each(|storage| {
-                                        let pk = solana_pubkey::new_rand();
+                                        let pk = gorbagana_pubkey::new_rand();
                                         let alive = false;
                                         append_single_account_with_default_hash(
                                             storage,
@@ -1917,7 +1917,7 @@ pub mod tests {
                 .iter()
                 .map(|store| db.get_unique_accounts_from_storage(store))
                 .collect::<Vec<_>>();
-            let pk_with_1_ref = solana_pubkey::new_rand();
+            let pk_with_1_ref = gorbagana_pubkey::new_rand();
             let slot1 = slots.start;
             let account_with_2_refs = original_results
                 .first()
@@ -2097,7 +2097,7 @@ pub mod tests {
 
     #[test]
     fn test_calc_accounts_to_combine_opposite() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         // 1 storage
         // 2 accounts
         // 1 with 1 ref
@@ -2111,7 +2111,7 @@ pub mod tests {
                 .map(|store| db.get_unique_accounts_from_storage(store))
                 .collect::<Vec<_>>();
             let storage = storages.first().unwrap().clone();
-            let pk_with_1_ref = solana_pubkey::new_rand();
+            let pk_with_1_ref = gorbagana_pubkey::new_rand();
             let slot1 = slots.start;
             let account_with_2_refs = original_results
                 .first()
@@ -2828,7 +2828,7 @@ pub mod tests {
 
     #[test]
     fn test_truncate_to_max_storages() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         for filter in [false, true] {
             let ideal_storage_size_large = get_ancient_append_vec_capacity();
             let mut infos = create_test_infos(1);
@@ -3434,7 +3434,7 @@ pub mod tests {
         // NOTE: The recycler has been removed.  Creating this many extra storages is no longer
         // necessary, but also does no harm either.
         const MAX_RECYCLE_STORES: usize = 1000;
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         // When we pack ancient append vecs, the packed append vecs are recycled first if possible. This means they aren't dropped directly.
         // This test tests that we are releasing Arc refcounts for storages when we pack them into ancient append vecs.
@@ -3686,7 +3686,7 @@ pub mod tests {
         let empty_account = AccountSharedData::default();
         for count in 0..3 {
             let pubkeys_to_unref = (0..count)
-                .map(|_| solana_pubkey::new_rand())
+                .map(|_| gorbagana_pubkey::new_rand())
                 .collect::<Vec<_>>();
             // how many of `many_ref_accounts` should be found in the index with ref_count=1
             let mut expected_ref_counts_before_unref = HashMap::<Pubkey, u64>::default();

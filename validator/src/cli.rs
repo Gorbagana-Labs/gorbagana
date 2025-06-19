@@ -2,41 +2,41 @@ use {
     crate::commands,
     clap::{crate_description, crate_name, App, AppSettings, Arg, ArgMatches, SubCommand},
     log::warn,
-    solana_accounts_db::{
+    gorbagana_accounts_db::{
         accounts_db::{
             DEFAULT_ACCOUNTS_SHRINK_OPTIMIZE_TOTAL_SPACE, DEFAULT_ACCOUNTS_SHRINK_RATIO,
         },
         hardened_unpack::MAX_GENESIS_ARCHIVE_UNPACKED_SIZE,
     },
-    solana_clap_utils::{
+    gorbagana_clap_utils::{
         hidden_unless_forced,
         input_validators::{
             is_parsable, is_pubkey, is_pubkey_or_keypair, is_slot, is_url_or_moniker,
         },
     },
-    solana_clock::Slot,
-    solana_core::banking_trace::BANKING_TRACE_DIR_DEFAULT_BYTE_LIMIT,
-    solana_epoch_schedule::MINIMUM_SLOTS_PER_EPOCH,
-    solana_faucet::faucet::{self, FAUCET_PORT},
-    solana_hash::Hash,
-    solana_net_utils::{MINIMUM_VALIDATOR_PORT_RANGE_WIDTH, VALIDATOR_PORT_RANGE},
-    solana_quic_definitions::QUIC_PORT_OFFSET,
-    solana_rayon_threadlimit::get_thread_count,
-    solana_rpc::{rpc::MAX_REQUEST_BODY_SIZE, rpc_pubsub_service::PubSubConfig},
-    solana_rpc_client_api::request::{DELINQUENT_VALIDATOR_SLOT_DISTANCE, MAX_MULTIPLE_ACCOUNTS},
-    solana_runtime::snapshot_utils::{
+    gorbagana_clock::Slot,
+    gorbagana_core::banking_trace::BANKING_TRACE_DIR_DEFAULT_BYTE_LIMIT,
+    gorbagana_epoch_schedule::MINIMUM_SLOTS_PER_EPOCH,
+    gorbagana_faucet::faucet::{self, FAUCET_PORT},
+    gorbagana_hash::Hash,
+    gorbagana_net_utils::{MINIMUM_VALIDATOR_PORT_RANGE_WIDTH, VALIDATOR_PORT_RANGE},
+    gorbagana_quic_definitions::QUIC_PORT_OFFSET,
+    gorbagana_rayon_threadlimit::get_thread_count,
+    gorbagana_rpc::{rpc::MAX_REQUEST_BODY_SIZE, rpc_pubsub_service::PubSubConfig},
+    gorbagana_rpc_client_api::request::{DELINQUENT_VALIDATOR_SLOT_DISTANCE, MAX_MULTIPLE_ACCOUNTS},
+    gorbagana_runtime::snapshot_utils::{
         SnapshotVersion, DEFAULT_ARCHIVE_COMPRESSION, DEFAULT_FULL_SNAPSHOT_ARCHIVE_INTERVAL_SLOTS,
         DEFAULT_INCREMENTAL_SNAPSHOT_ARCHIVE_INTERVAL_SLOTS,
         DEFAULT_MAX_FULL_SNAPSHOT_ARCHIVES_TO_RETAIN,
         DEFAULT_MAX_INCREMENTAL_SNAPSHOT_ARCHIVES_TO_RETAIN,
     },
-    solana_send_transaction_service::send_transaction_service::{self},
-    solana_streamer::quic::{
+    gorbagana_send_transaction_service::send_transaction_service::{self},
+    gorbagana_streamer::quic::{
         DEFAULT_MAX_CONNECTIONS_PER_IPADDR_PER_MINUTE, DEFAULT_MAX_QUIC_CONNECTIONS_PER_PEER,
         DEFAULT_MAX_STAKED_CONNECTIONS, DEFAULT_MAX_STREAMS_PER_MS,
         DEFAULT_MAX_UNSTAKED_CONNECTIONS, DEFAULT_QUIC_ENDPOINTS,
     },
-    solana_tpu_client::tpu_client::{DEFAULT_TPU_CONNECTION_POOL_SIZE, DEFAULT_VOTE_USE_QUIC},
+    gorbagana_tpu_client::tpu_client::{DEFAULT_TPU_CONNECTION_POOL_SIZE, DEFAULT_VOTE_USE_QUIC},
     std::{path::PathBuf, str::FromStr},
 };
 
@@ -289,10 +289,10 @@ impl DefaultArgs {
             rpc_blocking_threads: 1.max(num_cpus::get() / 4).to_string(),
             rpc_niceness_adjustment: "0".to_string(),
             rpc_bigtable_timeout: "30".to_string(),
-            rpc_bigtable_instance_name: solana_storage_bigtable::DEFAULT_INSTANCE_NAME.to_string(),
-            rpc_bigtable_app_profile_id: solana_storage_bigtable::DEFAULT_APP_PROFILE_ID
+            rpc_bigtable_instance_name: gorbagana_storage_bigtable::DEFAULT_INSTANCE_NAME.to_string(),
+            rpc_bigtable_app_profile_id: gorbagana_storage_bigtable::DEFAULT_APP_PROFILE_ID
                 .to_string(),
-            rpc_bigtable_max_message_size: solana_storage_bigtable::DEFAULT_MAX_MESSAGE_SIZE
+            rpc_bigtable_max_message_size: gorbagana_storage_bigtable::DEFAULT_MAX_MESSAGE_SIZE
                 .to_string(),
             rpc_pubsub_worker_threads: "4".to_string(),
             rpc_pubsub_notification_threads: get_thread_count().to_string(),
@@ -354,7 +354,7 @@ pub fn port_validator(port: String) -> Result<(), String> {
 }
 
 pub fn port_range_validator(port_range: String) -> Result<(), String> {
-    if let Some((start, end)) = solana_net_utils::parse_port_range(&port_range) {
+    if let Some((start, end)) = gorbagana_net_utils::parse_port_range(&port_range) {
         if end - start < MINIMUM_VALIDATOR_PORT_RANGE_WIDTH {
             Err(format!(
                 "Port range is too small.  Try --dynamic-port-range {}-{}",
@@ -379,7 +379,7 @@ pub(crate) fn hash_validator(hash: String) -> Result<(), String> {
 
 /// Test validator
 pub fn test_app<'a>(version: &'a str, default_args: &'a DefaultTestArgs) -> App<'a, 'a> {
-    App::new("solana-test-validator")
+    App::new("gorbagana-test-validator")
         .about("Test Validator")
         .version(version)
         .arg({
@@ -389,7 +389,7 @@ pub fn test_app<'a>(version: &'a str, default_args: &'a DefaultTestArgs) -> App<
                 .value_name("PATH")
                 .takes_value(true)
                 .help("Configuration file to use");
-            if let Some(ref config_file) = *solana_cli_config::CONFIG_FILE {
+            if let Some(ref config_file) = *gorbagana_cli_config::CONFIG_FILE {
                 arg.default_value(config_file)
             } else {
                 arg
@@ -403,7 +403,7 @@ pub fn test_app<'a>(version: &'a str, default_args: &'a DefaultTestArgs) -> App<
                 .takes_value(true)
                 .validator(is_url_or_moniker)
                 .help(
-                    "URL for Solana's JSON RPC or moniker (or their first letter): \
+                    "URL for Gorbagana's JSON RPC or moniker (or their first letter): \
                      [mainnet-beta, testnet, devnet, localhost]",
                 ),
         )
@@ -504,7 +504,7 @@ pub fn test_app<'a>(version: &'a str, default_args: &'a DefaultTestArgs) -> App<
                 .value_name("INSTANCE_NAME")
                 .takes_value(true)
                 .hidden(hidden_unless_forced())
-                .default_value("solana-ledger")
+                .default_value("gorbagana-ledger")
                 .help("Name of BigTable instance to target"),
         )
         .arg(
@@ -513,7 +513,7 @@ pub fn test_app<'a>(version: &'a str, default_args: &'a DefaultTestArgs) -> App<
                 .value_name("APP_PROFILE_ID")
                 .takes_value(true)
                 .hidden(hidden_unless_forced())
-                .default_value(solana_storage_bigtable::DEFAULT_APP_PROFILE_ID)
+                .default_value(gorbagana_storage_bigtable::DEFAULT_APP_PROFILE_ID)
                 .help("Application profile id to use in Bigtable requests"),
         )
         .arg(
@@ -564,7 +564,7 @@ pub fn test_app<'a>(version: &'a str, default_args: &'a DefaultTestArgs) -> App<
                 .allow_hyphen_values(true)
                 .multiple(true)
                 .help(
-                    "Load an account from the provided JSON file (see `solana account --help` on \
+                    "Load an account from the provided JSON file (see `gorbagana account --help` on \
                      how to dump an account to file). Files are searched for relatively to CWD \
                      and tests/fixtures. If ADDRESS is omitted via the `-` placeholder, the one \
                      in the file will be used. If the ledger already exists then this parameter \
@@ -650,7 +650,7 @@ pub fn test_app<'a>(version: &'a str, default_args: &'a DefaultTestArgs) -> App<
                 .long("gossip-host")
                 .value_name("HOST")
                 .takes_value(true)
-                .validator(solana_net_utils::is_host)
+                .validator(gorbagana_net_utils::is_host)
                 .hidden(hidden_unless_forced())
                 .help("DEPRECATED: Use --bind-address instead."),
         )
@@ -667,7 +667,7 @@ pub fn test_app<'a>(version: &'a str, default_args: &'a DefaultTestArgs) -> App<
                 .long("bind-address")
                 .value_name("HOST")
                 .takes_value(true)
-                .validator(solana_net_utils::is_host)
+                .validator(gorbagana_net_utils::is_host)
                 .default_value("127.0.0.1")
                 .help("IP address to bind the validator ports [default: 127.0.0.1]"),
         )
@@ -859,7 +859,7 @@ impl DefaultTestArgs {
             faucet_port: FAUCET_PORT.to_string(),
             /* 10,000 was derived empirically by watching the size
              * of the rocksdb/ directory self-limit itself to the
-             * 40MB-150MB range when running `solana-test-validator`
+             * 40MB-150MB range when running `gorbagana-test-validator`
              */
             limit_ledger_size: 10_000.to_string(),
             faucet_sol: (1_000_000.).to_string(),

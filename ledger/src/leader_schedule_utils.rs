@@ -2,9 +2,9 @@ use {
     crate::leader_schedule::{
         IdentityKeyedLeaderSchedule, LeaderSchedule, VoteKeyedLeaderSchedule,
     },
-    solana_clock::{Epoch, Slot, NUM_CONSECUTIVE_LEADER_SLOTS},
-    solana_pubkey::Pubkey,
-    solana_runtime::bank::Bank,
+    gorbagana_clock::{Epoch, Slot, NUM_CONSECUTIVE_LEADER_SLOTS},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_runtime::bank::Bank,
     std::collections::HashMap,
 };
 
@@ -74,7 +74,7 @@ pub fn first_of_consecutive_leader_slots(slot: Slot) -> Slot {
 mod tests {
     use {
         super::*,
-        solana_runtime::genesis_utils::{
+        gorbagana_runtime::genesis_utils::{
             bootstrap_validator_stake_lamports, create_genesis_config_with_leader,
             deactivate_features,
         },
@@ -84,7 +84,7 @@ mod tests {
     #[test_case(true; "vote keyed leader schedule")]
     #[test_case(false; "identity keyed leader schedule")]
     fn test_leader_schedule_via_bank(use_vote_keyed_leader_schedule: bool) {
-        let pubkey = solana_pubkey::new_rand();
+        let pubkey = gorbagana_pubkey::new_rand();
         let mut genesis_config =
             create_genesis_config_with_leader(0, &pubkey, bootstrap_validator_stake_lamports())
                 .genesis_config;
@@ -111,7 +111,7 @@ mod tests {
 
     #[test]
     fn test_leader_scheduler1_basic() {
-        let pubkey = solana_pubkey::new_rand();
+        let pubkey = gorbagana_pubkey::new_rand();
         let genesis_config =
             create_genesis_config_with_leader(42, &pubkey, bootstrap_validator_stake_lamports())
                 .genesis_config;

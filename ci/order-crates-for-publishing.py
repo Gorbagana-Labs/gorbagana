@@ -82,12 +82,12 @@ def is_path_dev_dep(dependency):
     )
 
 def should_add(package, dependency, wrong_self_dev_dependencies):
-    related_to_solana = dependency['name'].startswith(('solana','agave'))
+    related_to_gorbagana = dependency['name'].startswith(('gorbagana','agave'))
     self_dev_dep_with_dev_context_only_utils = is_self_dev_dep_with_dev_context_only_utils(
         package, dependency, wrong_self_dev_dependencies
     )
     return (
-        related_to_solana
+        related_to_gorbagana
         and not self_dev_dep_with_dev_context_only_utils
         and not is_path_dev_dep(dependency)
     )
@@ -97,7 +97,7 @@ def get_packages():
 
     manifest_path = dict()
 
-    # Build dictionary of packages and their immediate solana-only dependencies
+    # Build dictionary of packages and their immediate gorbagana-only dependencies
     dependency_graph = dict()
     wrong_self_dev_dependencies = list()
 

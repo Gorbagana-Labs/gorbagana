@@ -1,11 +1,11 @@
 use {
     criterion::{black_box, criterion_group, criterion_main, Criterion, Throughput},
     itertools::iproduct,
-    solana_accounts_db::{accounts::Accounts, accounts_db::AccountsDb},
-    solana_instruction::{AccountMeta, Instruction},
-    solana_pubkey::Pubkey,
-    solana_sdk_ids::system_program,
-    solana_transaction::{
+    gorbagana_accounts_db::{accounts::Accounts, accounts_db::AccountsDb},
+    gorbagana_instruction::{AccountMeta, Instruction},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sdk_ids::system_program,
+    gorbagana_transaction::{
         sanitized::{SanitizedTransaction, MAX_TX_ACCOUNT_LOCKS},
         Transaction,
     },

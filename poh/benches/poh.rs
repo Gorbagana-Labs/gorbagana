@@ -1,23 +1,23 @@
-// This bench attempts to justify the value of `solana_core::poh_service::NUM_HASHES_PER_BATCH`
+// This bench attempts to justify the value of `gorbagana_core::poh_service::NUM_HASHES_PER_BATCH`
 
 #![feature(test)]
 extern crate test;
 
 use {
-    solana_entry::poh::Poh,
-    solana_hash::Hash,
-    solana_ledger::{
+    gorbagana_entry::poh::Poh,
+    gorbagana_hash::Hash,
+    gorbagana_ledger::{
         blockstore::Blockstore,
         genesis_utils::{create_genesis_config, GenesisConfigInfo},
         get_tmp_ledger_path_auto_delete,
         leader_schedule_cache::LeaderScheduleCache,
     },
-    solana_perf::test_tx::test_tx,
-    solana_poh::{poh_recorder::PohRecorder, poh_service::DEFAULT_HASHES_PER_BATCH},
-    solana_poh_config::PohConfig,
-    solana_runtime::bank::Bank,
-    solana_sha256_hasher::hash,
-    solana_transaction::sanitized::SanitizedTransaction,
+    gorbagana_perf::test_tx::test_tx,
+    gorbagana_poh::{poh_recorder::PohRecorder, poh_service::DEFAULT_HASHES_PER_BATCH},
+    gorbagana_poh_config::PohConfig,
+    gorbagana_runtime::bank::Bank,
+    gorbagana_sha256_hasher::hash,
+    gorbagana_transaction::sanitized::SanitizedTransaction,
     std::sync::{
         atomic::{AtomicBool, Ordering},
         Arc, Mutex,

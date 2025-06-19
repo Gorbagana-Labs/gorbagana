@@ -1,4 +1,4 @@
-use {solana_hash::Hash, solana_sha256_hasher::hashv};
+use {gorbagana_hash::Hash, gorbagana_sha256_hasher::hashv};
 
 // We need to discern between leaf and intermediate nodes to prevent trivial second
 // pre-image attacks.
@@ -179,7 +179,7 @@ impl MerkleTree {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, solana_hash::HASH_BYTES};
+    use {super::*, gorbagana_hash::HASH_BYTES};
 
     const TEST: &[&[u8]] = &[
         b"my", b"very", b"eager", b"mother", b"just", b"served", b"us", b"nine", b"pizzas",

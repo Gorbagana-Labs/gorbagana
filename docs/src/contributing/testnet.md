@@ -39,9 +39,9 @@ Metrics collection relies on 2 environment variables that are patched to the rem
 > [!NOTE]
 > Anza employees should follow the guide in notion to set up the influxDB account.
 
- * Ensure that `${host}` is the host name of the InfluxDB you can access, for example `https://internal-metrics.solana.com:8086`
+ * Ensure that `${host}` is the host name of the InfluxDB you can access, for example `https://internal-metrics.gorbagana.com:8086`
  * Ensure that `${user}` is the name of an InfluxDB user account with enough
-rights to create a new InfluxDB database, for example `solana`.
+rights to create a new InfluxDB database, for example `gorbagana`.
 
 ### To set up the metrics
 You will normally only need to do this once. Once this is done, you will be able to save the metrics configuration and load it later from the environment.
@@ -62,7 +62,7 @@ You will normally only need to do this once. Once this is done, you will be able
   * You can manually write `SOLANA_METRICS_CONFIG` in the `./net/config/config` file
 * By default, metrics are only logged by agave if `RUST_LOG` is set to `info` or higher. You can provide it as environment for `./net.sh start` command, or set this in your shell environment.
   ```bash
-  RUST_LOG="solana_metrics=info"
+  RUST_LOG="gorbagana_metrics=info"
   ```
 
 ### To validate that your database and metrics environment variables are set up 100% correctly
@@ -72,9 +72,9 @@ Note: this only works if you store `SOLANA_METRICS_CONFIG` in your shell environ
 ```bash
   cd ./scripts/
   source  ./configure-metrics.sh
-    INFLUX_HOST=https://internal-metrics.solana.com:8086
-    INFLUX_DATABASE=testnet-dev-solana
-    INFLUX_USERNAME=solana
+    INFLUX_HOST=https://internal-metrics.gorbagana.com:8086
+    INFLUX_DATABASE=testnet-dev-gorbagana
+    INFLUX_USERNAME=gorbagana
     INFLUX_PASSWORD=********
   ./metrics-write-datapoint.sh "testnet-deploy net-create-begin=1"
 
@@ -114,7 +114,7 @@ RUST_LOG=info ./net.sh start
 * If you expect metrics to work, make sure you have configured them before proceeding
 * Go to `./net/` directory in agave repo
 * `./gce.sh` command controls creation and destruction of the nodes in the test net. It does not actually run any software.
-  * `./gce.sh create \-n 4 \-c 2` creates cluster with 4 validators and 1 node for load generation, this is minimal viable setup for all solana features to work
+  * `./gce.sh create \-n 4 \-c 2` creates cluster with 4 validators and 1 node for load generation, this is minimal viable setup for all gorbagana features to work
     * If the creation succeeds, `net/config/config` will contain the config file of the testnet just created
     * If you do not have `SOLANA_METRICS_CONFIG` set in your shell env, `gce.sh` may complain about metrics not being configured, this is perfectly fine
   * `./gce.sh info`  lists active test cluster nodes, this allows you to get their IP addresses for SSH access and/or debugging
@@ -145,22 +145,22 @@ RUST_LOG=info ./net.sh start
   * `./ssh.sh <IP> ` to get a shell on the node
   * `sudo su` will give you root access on the nodes
   * Nodes run latest ubuntu LTS image
-* You can also interact with the nodes using solana cli:
+* You can also interact with the nodes using gorbagana cli:
 ```bash
 # source ip list  use as ${validatorIpList[4]}
 source net/config/config
 
 # airdrop
-../target/release/solana -u http://${validatorIpList[1]}:8899 airdrop 1
+../target/release/gorbagana -u http://${validatorIpList[1]}:8899 airdrop 1
 
 # check feature
-../target/release/solana -u http://${validatorIpList[1]}:8899 feature status
+../target/release/gorbagana -u http://${validatorIpList[1]}:8899 feature status
 
 # activate a feature
-../target/release/solana -u http://${validatorIpList[1]}:8899 feature activate <path to .json>
+../target/release/gorbagana -u http://${validatorIpList[1]}:8899 feature activate <path to .json>
 
 # check the stakes on current validators
-../target/release/solana --url http://${validatorIpList[0]}:8899 validators
+../target/release/gorbagana --url http://${validatorIpList[0]}:8899 validators
 ```
 
 ## Tips

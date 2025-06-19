@@ -4,18 +4,18 @@ extern crate test;
 
 use {
     agave_feature_set::{deprecate_legacy_vote_ixs, FeatureSet},
-    solana_account::{create_account_for_test, Account, AccountSharedData},
-    solana_clock::{Clock, Slot},
-    solana_hash::Hash,
-    solana_instruction::AccountMeta,
-    solana_program_runtime::invoke_context::{
+    gorbagana_account::{create_account_for_test, Account, AccountSharedData},
+    gorbagana_clock::{Clock, Slot},
+    gorbagana_hash::Hash,
+    gorbagana_instruction::AccountMeta,
+    gorbagana_program_runtime::invoke_context::{
         mock_process_instruction, mock_process_instruction_with_feature_set,
     },
-    solana_pubkey::Pubkey,
-    solana_sdk_ids::sysvar,
-    solana_slot_hashes::{SlotHashes, MAX_ENTRIES},
-    solana_transaction_context::TransactionAccount,
-    solana_vote_program::{
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sdk_ids::sysvar,
+    gorbagana_slot_hashes::{SlotHashes, MAX_ENTRIES},
+    gorbagana_transaction_context::TransactionAccount,
+    gorbagana_vote_program::{
         vote_instruction::VoteInstruction,
         vote_state::{
             TowerSync, Vote, VoteInit, VoteState, VoteStateUpdate, VoteStateVersions,
@@ -59,14 +59,14 @@ fn create_accounts() -> (Slot, SlotHashes, Vec<TransactionAccount>, Vec<AccountM
         Account {
             lamports: 1,
             data: vote_account_data,
-            owner: solana_vote_program::id(),
+            owner: gorbagana_vote_program::id(),
             executable: false,
             rent_epoch: 0,
         }
     };
 
     let transaction_accounts = vec![
-        (solana_vote_program::id(), AccountSharedData::default()),
+        (gorbagana_vote_program::id(), AccountSharedData::default()),
         (vote_pubkey, AccountSharedData::from(vote_account)),
         (
             sysvar::slot_hashes::id(),
@@ -106,13 +106,13 @@ fn bench_process_deprecated_vote_instruction(
     deprecated_feature_set.deactivate(&deprecate_legacy_vote_ixs::id());
     bencher.iter(|| {
         mock_process_instruction_with_feature_set(
-            &solana_vote_program::id(),
+            &gorbagana_vote_program::id(),
             Vec::new(),
             &instruction_data,
             transaction_accounts.clone(),
             instruction_account_metas.clone(),
             Ok(()),
-            solana_vote_program::vote_processor::Entrypoint::vm,
+            gorbagana_vote_program::vote_processor::Entrypoint::vm,
             |_invoke_context| {},
             |_invoke_context| {},
             &deprecated_feature_set.runtime_features(),
@@ -128,13 +128,13 @@ fn bench_process_vote_instruction(
 ) {
     bencher.iter(|| {
         mock_process_instruction(
-            &solana_vote_program::id(),
+            &gorbagana_vote_program::id(),
             Vec::new(),
             &instruction_data,
             transaction_accounts.clone(),
             instruction_account_metas.clone(),
             Ok(()),
-            solana_vote_program::vote_processor::Entrypoint::vm,
+            gorbagana_vote_program::vote_processor::Entrypoint::vm,
             |_invoke_context| {},
             |_invoke_context| {},
         );

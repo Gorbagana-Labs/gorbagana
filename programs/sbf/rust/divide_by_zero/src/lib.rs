@@ -3,11 +3,11 @@
 #![feature(asm_experimental_arch)]
 
 use {
-    solana_account_info::AccountInfo, solana_program_error::ProgramResult, solana_pubkey::Pubkey,
+    gorbagana_account_info::AccountInfo, gorbagana_program_error::ProgramResult, gorbagana_pubkey::Pubkey,
     std::arch::asm,
 };
 
-solana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
+gorbagana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
 fn process_instruction(
     _program_id: &Pubkey,
     _accounts: &[AccountInfo],

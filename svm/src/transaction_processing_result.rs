@@ -3,8 +3,8 @@ use {
         account_loader::FeesOnlyTransaction,
         transaction_execution_result::{ExecutedTransaction, TransactionExecutionDetails},
     },
-    solana_fee_structure::FeeDetails,
-    solana_transaction_error::{TransactionError, TransactionResult},
+    gorbagana_fee_structure::FeeDetails,
+    gorbagana_transaction_error::{TransactionError, TransactionResult},
 };
 
 pub type TransactionProcessingResult = TransactionResult<ProcessedTransaction>;

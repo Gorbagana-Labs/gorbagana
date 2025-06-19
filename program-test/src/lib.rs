@@ -1,4 +1,4 @@
-//! The solana-program-test provides a BanksClient-based test framework SBF programs
+//! The gorbagana-program-test provides a BanksClient-based test framework SBF programs
 #![allow(clippy::arithmetic_side_effects)]
 
 // Export tokio for test clients
@@ -9,33 +9,33 @@ use {
     base64::{prelude::BASE64_STANDARD, Engine},
     chrono_humanize::{Accuracy, HumanTime, Tense},
     log::*,
-    solana_account::{create_account_shared_data_for_test, Account, AccountSharedData},
-    solana_account_info::AccountInfo,
-    solana_accounts_db::epoch_accounts_hash::EpochAccountsHash,
-    solana_banks_client::start_client,
-    solana_banks_server::banks_server::start_local_server,
-    solana_clock::{Epoch, Slot},
-    solana_compute_budget::compute_budget::ComputeBudget,
-    solana_fee_calculator::{FeeRateGovernor, DEFAULT_TARGET_LAMPORTS_PER_SIGNATURE},
-    solana_genesis_config::{ClusterType, GenesisConfig},
-    solana_hash::Hash,
-    solana_instruction::{
+    gorbagana_account::{create_account_shared_data_for_test, Account, AccountSharedData},
+    gorbagana_account_info::AccountInfo,
+    gorbagana_accounts_db::epoch_accounts_hash::EpochAccountsHash,
+    gorbagana_banks_client::start_client,
+    gorbagana_banks_server::banks_server::start_local_server,
+    gorbagana_clock::{Epoch, Slot},
+    gorbagana_compute_budget::compute_budget::ComputeBudget,
+    gorbagana_fee_calculator::{FeeRateGovernor, DEFAULT_TARGET_LAMPORTS_PER_SIGNATURE},
+    gorbagana_genesis_config::{ClusterType, GenesisConfig},
+    gorbagana_hash::Hash,
+    gorbagana_instruction::{
         error::{InstructionError, UNSUPPORTED_SYSVAR},
         Instruction,
     },
-    solana_keypair::Keypair,
-    solana_log_collector::ic_msg,
-    solana_native_token::sol_to_lamports,
-    solana_poh_config::PohConfig,
-    solana_program_entrypoint::{deserialize, SUCCESS},
-    solana_program_error::{ProgramError, ProgramResult},
-    solana_program_runtime::{
+    gorbagana_keypair::Keypair,
+    gorbagana_log_collector::ic_msg,
+    gorbagana_native_token::sol_to_lamports,
+    gorbagana_poh_config::PohConfig,
+    gorbagana_program_entrypoint::{deserialize, SUCCESS},
+    gorbagana_program_error::{ProgramError, ProgramResult},
+    gorbagana_program_runtime::{
         invoke_context::BuiltinFunctionWithContext, loaded_programs::ProgramCacheEntry,
         serialization::serialize_parameters, stable_log,
     },
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
-    solana_runtime::{
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent::Rent,
+    gorbagana_runtime::{
         accounts_background_service::SnapshotRequestKind,
         bank::Bank,
         bank_forks::BankForks,
@@ -45,12 +45,12 @@ use {
         snapshot_config::SnapshotConfig,
         snapshot_controller::SnapshotController,
     },
-    solana_signer::Signer,
-    solana_stable_layout::stable_instruction::StableInstruction,
-    solana_sysvar::Sysvar,
-    solana_sysvar_id::SysvarId,
-    solana_timings::ExecuteTimings,
-    solana_vote_program::vote_state::{self, VoteState, VoteStateVersions},
+    gorbagana_signer::Signer,
+    gorbagana_stable_layout::stable_instruction::StableInstruction,
+    gorbagana_sysvar::Sysvar,
+    gorbagana_sysvar_id::SysvarId,
+    gorbagana_timings::ExecuteTimings,
+    gorbagana_vote_program::vote_state::{self, VoteState, VoteStateVersions},
     std::{
         cell::RefCell,
         collections::{HashMap, HashSet},
@@ -69,16 +69,16 @@ use {
     thiserror::Error,
     tokio::task::JoinHandle,
 };
-// Export types so test clients can limit their solana crate dependencies
+// Export types so test clients can limit their gorbagana crate dependencies
 pub use {
-    solana_banks_client::{BanksClient, BanksClientError},
-    solana_banks_interface::BanksTransactionResultWithMetadata,
-    solana_program_runtime::invoke_context::InvokeContext,
-    solana_sbpf::{
+    gorbagana_banks_client::{BanksClient, BanksClientError},
+    gorbagana_banks_interface::BanksTransactionResultWithMetadata,
+    gorbagana_program_runtime::invoke_context::InvokeContext,
+    gorbagana_sbpf::{
         error::EbpfError,
         vm::{get_runtime_environment_key, EbpfVm},
     },
-    solana_transaction_context::IndexOfAccount,
+    gorbagana_transaction_context::IndexOfAccount,
 };
 
 pub mod programs;
@@ -108,7 +108,7 @@ fn get_invoke_context<'a, 'b>() -> &'a mut InvokeContext<'b> {
 }
 
 pub fn invoke_builtin_function(
-    builtin_function: solana_program_entrypoint::ProcessInstruction,
+    builtin_function: gorbagana_program_entrypoint::ProcessInstruction,
     invoke_context: &mut InvokeContext,
 ) -> Result<u64, Box<dyn std::error::Error>> {
     set_invoke_context(invoke_context);
@@ -202,7 +202,7 @@ pub fn invoke_builtin_function(
     Ok(0)
 }
 
-/// Converts a `solana-program`-style entrypoint into the runtime's entrypoint style, for
+/// Converts a `gorbagana-program`-style entrypoint into the runtime's entrypoint style, for
 /// use with `ProgramTest::add_program`
 #[macro_export]
 macro_rules! processor {
@@ -242,7 +242,7 @@ fn get_sysvar<T: Default + Sysvar + Sized + serde::de::DeserializeOwned + Clone>
 }
 
 struct SyscallStubs {}
-impl solana_sysvar::program_stubs::SyscallStubs for SyscallStubs {
+impl gorbagana_sysvar::program_stubs::SyscallStubs for SyscallStubs {
     fn sol_log(&self, message: &str) {
         let invoke_context = get_invoke_context();
         ic_msg!(invoke_context, "Program log: {}", message);
@@ -501,11 +501,11 @@ impl Default for ProgramTest {
     /// * the current working directory
     ///
     fn default() -> Self {
-        solana_logger::setup_with_default(
-            "solana_sbpf::vm=debug,\
-             solana_runtime::message_processor=debug,\
-             solana_runtime::system_instruction_processor=trace,\
-             solana_program_test=info",
+        gorbagana_logger::setup_with_default(
+            "gorbagana_sbpf::vm=debug,\
+             gorbagana_runtime::message_processor=debug,\
+             gorbagana_runtime::system_instruction_processor=trace,\
+             gorbagana_program_test=info",
         );
         let prefer_bpf =
             std::env::var("BPF_OUT_DIR").is_ok() || std::env::var("SBF_OUT_DIR").is_ok();
@@ -690,7 +690,7 @@ impl ProgramTest {
                 Account {
                     lamports: Rent::default().minimum_balance(data.len()).max(1),
                     data,
-                    owner: solana_sdk_ids::bpf_loader::id(),
+                    owner: gorbagana_sdk_ids::bpf_loader::id(),
                     executable: true,
                     rent_epoch: 0,
                 },
@@ -794,7 +794,7 @@ impl ProgramTest {
             static ONCE: Once = Once::new();
 
             ONCE.call_once(|| {
-                solana_sysvar::program_stubs::set_syscall_stubs(Box::new(SyscallStubs {}));
+                gorbagana_sysvar::program_stubs::set_syscall_stubs(Box::new(SyscallStubs {}));
             });
         }
 
@@ -1167,7 +1167,7 @@ impl ProgramTestContext {
                     &Pubkey::default(),
                     pre_warp_slot,
                     // some warping tests cannot use the append vecs because of the sequence of adding roots and flushing
-                    solana_accounts_db::accounts_db::CalcAccountsHashDataSource::IndexForTests,
+                    gorbagana_accounts_db::accounts_db::CalcAccountsHashDataSource::IndexForTests,
                 ))
                 .clone_without_scheduler()
         };

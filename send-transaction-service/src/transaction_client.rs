@@ -2,12 +2,12 @@ use {
     crate::{send_transaction_service_stats::SendTransactionServiceStats, tpu_info::TpuInfo},
     async_trait::async_trait,
     log::warn,
-    solana_client::connection_cache::{ConnectionCache, Protocol},
-    solana_connection_cache::client_connection::ClientConnection as TpuConnection,
-    solana_keypair::Keypair,
-    solana_measure::measure::Measure,
-    solana_quic_definitions::NotifyKeyUpdate,
-    solana_tpu_client_next::{
+    gorbagana_client::connection_cache::{ConnectionCache, Protocol},
+    gorbagana_connection_cache::client_connection::ClientConnection as TpuConnection,
+    gorbagana_keypair::Keypair,
+    gorbagana_measure::measure::Measure,
+    gorbagana_quic_definitions::NotifyKeyUpdate,
+    gorbagana_tpu_client_next::{
         connection_workers_scheduler::{
             BindTarget, ConnectionWorkersSchedulerConfig, Fanout, StakeIdentity,
         },

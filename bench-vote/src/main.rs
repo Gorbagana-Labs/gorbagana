@@ -3,22 +3,22 @@
 use {
     clap::{crate_description, crate_name, value_t, value_t_or_exit, App, Arg},
     crossbeam_channel::unbounded,
-    solana_clap_utils::{input_parsers::keypair_of, input_validators::is_keypair_or_ask_keyword},
-    solana_client::connection_cache::ConnectionCache,
-    solana_connection_cache::client_connection::ClientConnection,
-    solana_hash::Hash,
-    solana_keypair::Keypair,
-    solana_message::Message,
-    solana_net_utils::{bind_to_unspecified, SocketConfig},
-    solana_pubkey::Pubkey,
-    solana_signer::Signer,
-    solana_streamer::{
+    gorbagana_clap_utils::{input_parsers::keypair_of, input_validators::is_keypair_or_ask_keyword},
+    gorbagana_client::connection_cache::ConnectionCache,
+    gorbagana_connection_cache::client_connection::ClientConnection,
+    gorbagana_hash::Hash,
+    gorbagana_keypair::Keypair,
+    gorbagana_message::Message,
+    gorbagana_net_utils::{bind_to_unspecified, SocketConfig},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signer::Signer,
+    gorbagana_streamer::{
         packet::PacketBatchRecycler,
         quic::{spawn_server_multi, QuicServerParams},
         streamer::{receiver, PacketBatchReceiver, StakedNodes, StreamerReceiveStats},
     },
-    solana_transaction::Transaction,
-    solana_vote_program::{vote_instruction, vote_state::Vote},
+    gorbagana_transaction::Transaction,
+    gorbagana_vote_program::{vote_instruction, vote_state::Vote},
     std::{
         cmp::max,
         collections::HashMap,
@@ -65,7 +65,7 @@ const TRANSACTIONS_PER_THREAD: u64 = 1_000_000; // Number of transactions per th
 fn main() -> Result<()> {
     let matches = App::new(crate_name!())
         .about(crate_description!())
-        .version(solana_version::version!())
+        .version(gorbagana_version::version!())
         .arg(
             Arg::with_name("identity")
                 .short("i")
@@ -108,7 +108,7 @@ fn main() -> Result<()> {
                 .long("server-address")
                 .value_name("HOST:PORT")
                 .takes_value(true)
-                .validator(|arg| solana_net_utils::is_host_port(arg.to_string()))
+                .validator(|arg| gorbagana_net_utils::is_host_port(arg.to_string()))
                 .help("The destination streamer address to which the client will send transactions to"),
         )
         .arg(
@@ -133,7 +133,7 @@ fn main() -> Result<()> {
         )
         .get_matches();
 
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let mut num_sockets = 1usize;
     if let Some(n) = matches.value_of("num-recv-sockets") {
@@ -151,7 +151,7 @@ fn main() -> Result<()> {
         let addr = matches
             .value_of("server-address")
             .expect("Server address must be set when --client-only is used");
-        solana_net_utils::parse_host_port(addr).expect("Expecting a valid server address")
+        gorbagana_net_utils::parse_host_port(addr).expect("Expecting a valid server address")
     });
 
     let port = destination.map_or(0, |addr| addr.port());
@@ -188,7 +188,7 @@ fn main() -> Result<()> {
         let mut read_threads = Vec::new();
         let recycler = PacketBatchRecycler::default();
         let config = SocketConfig::default().reuseport(true);
-        let (port, read_sockets) = solana_net_utils::multi_bind_in_range_with_config(
+        let (port, read_sockets) = gorbagana_net_utils::multi_bind_in_range_with_config(
             ip_addr,
             (port, port + num_sockets as u16),
             config,

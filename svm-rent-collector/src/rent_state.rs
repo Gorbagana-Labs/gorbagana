@@ -1,6 +1,6 @@
 //! Account rent state.
 
-/// Rent state of a Solana account.
+/// Rent state of a Gorbagana account.
 #[derive(Debug, PartialEq, Eq)]
 pub enum RentState {
     /// account.lamports == 0

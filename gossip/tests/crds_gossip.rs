@@ -5,7 +5,7 @@ use {
     log::*,
     rayon::{prelude::*, ThreadPool, ThreadPoolBuilder},
     serial_test::serial,
-    solana_gossip::{
+    gorbagana_gossip::{
         cluster_info_metrics::GossipStats,
         contact_info::ContactInfo,
         crds::GossipRoute,
@@ -18,13 +18,13 @@ use {
         crds_gossip_push::CRDS_GOSSIP_PUSH_MSG_TIMEOUT_MS,
         crds_value::{CrdsValue, CrdsValueLabel},
     },
-    solana_keypair::Keypair,
-    solana_pubkey::Pubkey,
-    solana_rayon_threadlimit::get_thread_count,
-    solana_sha256_hasher::hash,
-    solana_signer::Signer,
-    solana_streamer::socket::SocketAddrSpace,
-    solana_time_utils::timestamp,
+    gorbagana_keypair::Keypair,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rayon_threadlimit::get_thread_count,
+    gorbagana_sha256_hasher::hash,
+    gorbagana_signer::Signer,
+    gorbagana_streamer::socket::SocketAddrSpace,
+    gorbagana_time_utils::timestamp,
     std::{
         collections::{HashMap, HashSet},
         net::{Ipv4Addr, SocketAddr},
@@ -34,7 +34,7 @@ use {
     },
 };
 
-type PingCache = solana_gossip::ping_pong::PingCache<32>;
+type PingCache = gorbagana_gossip::ping_pong::PingCache<32>;
 
 #[derive(Clone)]
 struct Node {
@@ -738,7 +738,7 @@ fn test_star_network_push_ring_200() {
 #[ignore]
 #[serial]
 fn test_connected_staked_network() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
     let thread_pool = build_gossip_thread_pool();
     let stakes = [
         [1000; 2].to_vec(),
@@ -767,7 +767,7 @@ fn test_connected_staked_network() {
 #[test]
 #[ignore]
 fn test_star_network_large_pull() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
     let network = star_network_create(2000);
     let thread_pool = build_gossip_thread_pool();
     network_simulator_pull_only(&thread_pool, &network);
@@ -775,7 +775,7 @@ fn test_star_network_large_pull() {
 #[test]
 #[ignore]
 fn test_rstar_network_large_push() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
     let mut network = rstar_network_create(4000);
     let thread_pool = build_gossip_thread_pool();
     network_simulator(&thread_pool, &mut network, 0.9);
@@ -783,7 +783,7 @@ fn test_rstar_network_large_push() {
 #[test]
 #[ignore]
 fn test_ring_network_large_push() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
     let mut network = ring_network_create(4001);
     let thread_pool = build_gossip_thread_pool();
     network_simulator(&thread_pool, &mut network, 0.9);
@@ -791,7 +791,7 @@ fn test_ring_network_large_push() {
 #[test]
 #[ignore]
 fn test_star_network_large_push() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
     let mut network = star_network_create(4002);
     let thread_pool = build_gossip_thread_pool();
     network_simulator(&thread_pool, &mut network, 0.9);

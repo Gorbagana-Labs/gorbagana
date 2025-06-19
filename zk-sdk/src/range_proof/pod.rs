@@ -1,6 +1,6 @@
 //! Plain Old Data types for range proofs.
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use crate::{
     range_proof::{errors::RangeProofVerificationError, RangeProof},
     UNIT_LEN,
@@ -20,7 +20,7 @@ use {
 #[repr(transparent)]
 pub struct PodRangeProofU64(pub(crate) [u8; RANGE_PROOF_U64_LEN]);
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TryFrom<RangeProof> for PodRangeProofU64 {
     type Error = RangeProofVerificationError;
 
@@ -37,7 +37,7 @@ impl TryFrom<RangeProof> for PodRangeProofU64 {
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TryFrom<PodRangeProofU64> for RangeProof {
     type Error = RangeProofVerificationError;
 
@@ -67,7 +67,7 @@ impl_from_bytes!(TYPE = PodRangeProofU64, BYTES_LEN = RANGE_PROOF_U64_LEN);
 #[repr(transparent)]
 pub struct PodRangeProofU128(pub(crate) [u8; RANGE_PROOF_U128_LEN]);
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TryFrom<RangeProof> for PodRangeProofU128 {
     type Error = RangeProofVerificationError;
 
@@ -84,7 +84,7 @@ impl TryFrom<RangeProof> for PodRangeProofU128 {
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TryFrom<PodRangeProofU128> for RangeProof {
     type Error = RangeProofVerificationError;
 
@@ -114,7 +114,7 @@ impl_from_bytes!(TYPE = PodRangeProofU128, BYTES_LEN = RANGE_PROOF_U128_LEN);
 #[repr(transparent)]
 pub struct PodRangeProofU256(pub(crate) [u8; RANGE_PROOF_U256_LEN]);
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TryFrom<RangeProof> for PodRangeProofU256 {
     type Error = RangeProofVerificationError;
 
@@ -131,7 +131,7 @@ impl TryFrom<RangeProof> for PodRangeProofU256 {
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TryFrom<PodRangeProofU256> for RangeProof {
     type Error = RangeProofVerificationError;
 
@@ -156,7 +156,7 @@ impl_from_str!(
 
 impl_from_bytes!(TYPE = PodRangeProofU256, BYTES_LEN = RANGE_PROOF_U256_LEN);
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 fn copy_range_proof_modulo_inner_product_proof(proof: &RangeProof, buf: &mut [u8]) {
     let mut chunks = buf.chunks_mut(UNIT_LEN);
     chunks.next().unwrap().copy_from_slice(proof.A.as_bytes());

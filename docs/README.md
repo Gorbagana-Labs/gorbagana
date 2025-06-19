@@ -1,20 +1,20 @@
-# Solana Validator Docs Readme
+# Gorbagana Validator Docs Readme
 
 This validator's documentation is built using [Docusaurus v2](https://v2.docusaurus.io/) with `npm`.
 Static content delivery is handled using `vercel`.
 
 > Note: The documentation within this repo is specifically focused on the
-> Solana validator client maintained by Solana Labs. The more "common"
-> documentation, which is generalized to the Solana protocol as a whole and applies
-> to all Solana validator implementations, is maintained within the
-> [`developer-content`](https://github.com/solana-foundation/developer-content/)
-> repo. Those "common docs" are managed by the Solana Foundation within their
+> Gorbagana validator client maintained by Gorbagana Labs. The more "common"
+> documentation, which is generalized to the Gorbagana protocol as a whole and applies
+> to all Gorbagana validator implementations, is maintained within the
+> [`developer-content`](https://github.com/gorbagana-foundation/developer-content/)
+> repo. Those "common docs" are managed by the Gorbagana Foundation within their
 > GitHub organization and are publicly accessible via
-> [solana.com/docs](https://solana.com/docs)
+> [gorbagana.com/docs](https://gorbagana.com/docs)
 
 ## Local Development
 
-To set up the Solana Validator Docs site locally:
+To set up the Gorbagana Validator Docs site locally:
 
 - install dependencies using `npm`
 - build locally via `./build.sh`
@@ -39,11 +39,11 @@ The build script generates static content into the `build` directory and can be 
 ./build.sh
 ```
 
-Running this build script requires **Docker**, and will auto fetch the [solanalabs/rust](https://hub.docker.com/r/solanalabs/rust) image from Docker hub to compile the desired version of the [Solana CLI](https://docs.solanalabs.com/cli) from source.
+Running this build script requires **Docker**, and will auto fetch the [gorbaganalabs/rust](https://hub.docker.com/r/gorbaganalabs/rust) image from Docker hub to compile the desired version of the [Gorbagana CLI](https://docs.gorbaganalabs.com/cli) from source.
 
 This build script will also:
 
-- generate the `cli/usage.md` document from the output of each of the Solana CLI commands and sub-commands
+- generate the `cli/usage.md` document from the output of each of the Gorbagana CLI commands and sub-commands
 - convert each of the `art/*.bob` files into SVG images used throughout the docs
 
 > Note: Running this build script is **required** before being able to run the site locally via the `npm run start` command since it will generate the `cli/usage.md` document.
@@ -66,9 +66,9 @@ The docs are built and published in Github Actions with the `docs.yml` workflow.
 
 In each post-commit build, docs are built and published using `vercel` to their respective domain depending on the build branch.
 
-- Master branch docs are published to `edge.docs.solanalabs.com`
-- Beta branch docs are published to `beta.docs.solanalabs.com`
-- Latest release tag docs are published to `docs.solanalabs.com`
+- Master branch docs are published to `edge.docs.gorbaganalabs.com`
+- Beta branch docs are published to `beta.docs.gorbaganalabs.com`
+- Latest release tag docs are published to `docs.gorbaganalabs.com`
 
 ## Common Issues
 

@@ -1,8 +1,8 @@
 use {
     rayon::prelude::*,
-    solana_bucket_map::bucket_map::{BucketMap, BucketMapConfig},
-    solana_measure::measure::Measure,
-    solana_pubkey::Pubkey,
+    gorbagana_bucket_map::bucket_map::{BucketMap, BucketMapConfig},
+    gorbagana_measure::measure::Measure,
+    gorbagana_pubkey::Pubkey,
     std::path::PathBuf,
 };
 #[test]

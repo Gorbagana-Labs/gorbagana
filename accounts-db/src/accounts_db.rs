@@ -83,18 +83,18 @@ use {
     rayon::{prelude::*, ThreadPool},
     seqlock::SeqLock,
     smallvec::SmallVec,
-    solana_account::{Account, AccountSharedData, ReadableAccount},
-    solana_clock::{BankId, Epoch, Slot},
-    solana_epoch_schedule::EpochSchedule,
-    solana_genesis_config::GenesisConfig,
-    solana_hash::Hash,
-    solana_lattice_hash::lt_hash::LtHash,
-    solana_measure::{meas_dur, measure::Measure, measure_us},
-    solana_nohash_hasher::{BuildNoHashHasher, IntMap, IntSet},
-    solana_pubkey::Pubkey,
-    solana_rayon_threadlimit::get_thread_count,
-    solana_rent_collector::RentCollector,
-    solana_transaction::sanitized::SanitizedTransaction,
+    gorbagana_account::{Account, AccountSharedData, ReadableAccount},
+    gorbagana_clock::{BankId, Epoch, Slot},
+    gorbagana_epoch_schedule::EpochSchedule,
+    gorbagana_genesis_config::GenesisConfig,
+    gorbagana_hash::Hash,
+    gorbagana_lattice_hash::lt_hash::LtHash,
+    gorbagana_measure::{meas_dur, measure::Measure, measure_us},
+    gorbagana_nohash_hasher::{BuildNoHashHasher, IntMap, IntSet},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rayon_threadlimit::get_thread_count,
+    gorbagana_rent_collector::RentCollector,
+    gorbagana_transaction::sanitized::SanitizedTransaction,
     std::{
         borrow::Cow,
         boxed::Box,
@@ -1745,7 +1745,7 @@ pub fn default_num_foreground_threads() -> usize {
 }
 
 #[cfg(feature = "frozen-abi")]
-impl solana_frozen_abi::abi_example::AbiExample for AccountsDb {
+impl gorbagana_frozen_abi::abi_example::AbiExample for AccountsDb {
     fn example() -> Self {
         let accounts_db = AccountsDb::new_single_for_tests();
         let key = Pubkey::default();
@@ -8827,7 +8827,7 @@ impl AccountsDb {
     ) {
         let ancestors = vec![(slot, 0)].into_iter().collect();
         for t in 0..num {
-            let pubkey = solana_pubkey::new_rand();
+            let pubkey = gorbagana_pubkey::new_rand();
             let account =
                 AccountSharedData::new((t + 1) as u64, space, AccountSharedData::default().owner());
             pubkeys.push(pubkey);
@@ -8835,9 +8835,9 @@ impl AccountsDb {
             self.store_for_tests(slot, &[(&pubkey, &account)]);
         }
         for t in 0..num_vote {
-            let pubkey = solana_pubkey::new_rand();
+            let pubkey = gorbagana_pubkey::new_rand();
             let account =
-                AccountSharedData::new((num + t + 1) as u64, space, &solana_vote_program::id());
+                AccountSharedData::new((num + t + 1) as u64, space, &gorbagana_vote_program::id());
             pubkeys.push(pubkey);
             let ancestors = vec![(slot, 0)].into_iter().collect();
             assert!(self.load_without_fixed_root(&ancestors, &pubkey).is_none());
@@ -8955,7 +8955,7 @@ pub mod test_utils {
         let data_size = 0;
 
         for t in 0..num {
-            let pubkey = solana_pubkey::new_rand();
+            let pubkey = gorbagana_pubkey::new_rand();
             let account = AccountSharedData::new(
                 (t + 1) as u64,
                 data_size,

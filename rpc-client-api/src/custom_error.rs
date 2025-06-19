@@ -2,12 +2,12 @@
 use {
     crate::response::RpcSimulateTransactionResult,
     jsonrpc_core::{Error, ErrorCode},
-    solana_clock::Slot,
-    solana_transaction_status_client_types::EncodeError,
+    gorbagana_clock::Slot,
+    gorbagana_transaction_status_client_types::EncodeError,
     thiserror::Error,
 };
 
-// Keep in sync with https://github.com/solana-labs/solana-web3.js/blob/master/src/errors.ts
+// Keep in sync with https://github.com/gorbagana-labs/gorbagana-web3.js/blob/master/src/errors.ts
 pub const JSON_RPC_SERVER_ERROR_BLOCK_CLEANED_UP: i64 = -32001;
 pub const JSON_RPC_SERVER_ERROR_SEND_TRANSACTION_PREFLIGHT_FAILURE: i64 = -32002;
 pub const JSON_RPC_SERVER_ERROR_TRANSACTION_SIGNATURE_VERIFICATION_FAILURE: i64 = -32003;
@@ -47,7 +47,7 @@ pub enum RpcCustomError {
     #[error("NodeUnhealthy")]
     NodeUnhealthy { num_slots_behind: Option<Slot> },
     #[error("TransactionPrecompileVerificationFailure")]
-    TransactionPrecompileVerificationFailure(solana_transaction_error::TransactionError),
+    TransactionPrecompileVerificationFailure(gorbagana_transaction_error::TransactionError),
     #[error("SlotSkipped")]
     SlotSkipped { slot: Slot },
     #[error("NoSnapshot")]

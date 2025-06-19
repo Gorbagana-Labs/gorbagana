@@ -1,7 +1,7 @@
 [package]
-name = "solana-svm-transaction"
-description = "Solana SVM Transaction"
-documentation = "https://docs.rs/solana-svm-transaction"
+name = "gorbagana-svm-transaction"
+description = "Gorbagana SVM Transaction"
+documentation = "https://docs.rs/gorbagana-svm-transaction"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -10,16 +10,16 @@ license = { workspace = true }
 edition = { workspace = true }
 
 [dependencies]
-solana-hash = { workspace = true }
-solana-message = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-sdk-ids = { workspace = true }
-solana-signature = { workspace = true }
-solana-transaction = { workspace = true }
+gorbagana-hash = { workspace = true }
+gorbagana-message = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-sdk-ids = { workspace = true }
+gorbagana-signature = { workspace = true }
+gorbagana-transaction = { workspace = true }
 
 [dev-dependencies]
-solana-message = { workspace = true, features = ["bincode"] }
-solana-nonce = { workspace = true }
-solana-system-interface = { workspace = true }
+gorbagana-message = { workspace = true, features = ["bincode"] }
+gorbagana-nonce = { workspace = true }
+gorbagana-system-interface = { workspace = true }
 static_assertions = { workspace = true }
 test-case = { workspace = true }

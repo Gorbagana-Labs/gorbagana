@@ -1,7 +1,7 @@
 [package]
-name = "solana-pubsub-client"
-description = "Solana Pubsub Client"
-documentation = "https://docs.rs/solana-pubsub-client"
+name = "gorbagana-pubsub-client"
+description = "Gorbagana Pubsub Client"
+documentation = "https://docs.rs/gorbagana-pubsub-client"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -21,11 +21,11 @@ semver = { workspace = true }
 serde = { workspace = true }
 serde_derive = { workspace = true }
 serde_json = { workspace = true }
-solana-account-decoder-client-types = { workspace = true }
-solana-clock = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-rpc-client-types = { workspace = true }
-solana-signature = { workspace = true }
+gorbagana-account-decoder-client-types = { workspace = true }
+gorbagana-clock = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-rpc-client-types = { workspace = true }
+gorbagana-signature = { workspace = true }
 thiserror = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 tokio-stream = { workspace = true }
@@ -35,5 +35,5 @@ url = { workspace = true }
 
 [dev-dependencies]
 anyhow = { workspace = true }
-solana-commitment-config = { workspace = true }
-solana-pubkey = { workspace = true, features = ["rand"] }
+gorbagana-commitment-config = { workspace = true }
+gorbagana-pubkey = { workspace = true, features = ["rand"] }

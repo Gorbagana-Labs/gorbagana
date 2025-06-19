@@ -1,6 +1,6 @@
 use {
     crossbeam_channel::Receiver,
-    solana_rpc::{
+    gorbagana_rpc::{
         optimistically_confirmed_bank_tracker::SlotNotification,
         slot_status_notifier::SlotStatusNotifier,
     },

@@ -1,6 +1,6 @@
 use {
     serde::{Deserialize, Serialize},
-    solana_short_vec as short_vec,
+    gorbagana_short_vec as short_vec,
 };
 
 /// Type-Length-Value encoding wrapper for bincode

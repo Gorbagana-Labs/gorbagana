@@ -1,13 +1,13 @@
 #![allow(unused)]
 
 use {
-    solana_account::{Account, AccountSharedData, ReadableAccount},
-    solana_epoch_schedule::EpochSchedule,
-    solana_keypair::Keypair,
-    solana_program_pack::Pack,
-    solana_pubkey::Pubkey,
-    solana_system_interface::program as system_program,
-    solana_test_validator::{TestValidator, TestValidatorGenesis},
+    gorbagana_account::{Account, AccountSharedData, ReadableAccount},
+    gorbagana_epoch_schedule::EpochSchedule,
+    gorbagana_keypair::Keypair,
+    gorbagana_program_pack::Pack,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_system_interface::program as system_program,
+    gorbagana_test_validator::{TestValidator, TestValidatorGenesis},
     spl_token::state::{Account as TokenAccount, Mint},
 };
 

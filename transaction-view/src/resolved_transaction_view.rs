@@ -9,12 +9,12 @@ use {
         fmt::{Debug, Formatter},
         ops::Deref,
     },
-    solana_hash::Hash,
-    solana_message::{v0::LoadedAddresses, AccountKeys},
-    solana_pubkey::Pubkey,
-    solana_sdk_ids::bpf_loader_upgradeable,
-    solana_signature::Signature,
-    solana_svm_transaction::{
+    gorbagana_hash::Hash,
+    gorbagana_message::{v0::LoadedAddresses, AccountKeys},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sdk_ids::bpf_loader_upgradeable,
+    gorbagana_signature::Signature,
+    gorbagana_svm_transaction::{
         instruction::SVMInstruction, message_address_table_lookup::SVMMessageAddressTableLookup,
         svm_message::SVMMessage, svm_transaction::SVMTransaction,
     },
@@ -180,8 +180,8 @@ impl<D: TransactionData> SVMMessage for ResolvedTransactionView<D> {
         &self,
     ) -> impl Iterator<
         Item = (
-            &solana_pubkey::Pubkey,
-            solana_svm_transaction::instruction::SVMInstruction,
+            &gorbagana_pubkey::Pubkey,
+            gorbagana_svm_transaction::instruction::SVMInstruction,
         ),
     > + Clone {
         self.view.program_instructions_iter()
@@ -251,14 +251,14 @@ mod tests {
     use {
         super::*,
         crate::transaction_view::SanitizedTransactionView,
-        solana_message::{
+        gorbagana_message::{
             compiled_instruction::CompiledInstruction,
             v0::{self, MessageAddressTableLookup},
             MessageHeader, VersionedMessage,
         },
-        solana_sdk_ids::{system_program, sysvar},
-        solana_signature::Signature,
-        solana_transaction::versioned::VersionedTransaction,
+        gorbagana_sdk_ids::{system_program, sysvar},
+        gorbagana_signature::Signature,
+        gorbagana_transaction::versioned::VersionedTransaction,
     };
 
     #[test]

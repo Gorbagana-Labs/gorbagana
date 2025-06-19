@@ -1,4 +1,4 @@
-//! Core RPC client types for solana-account-decoder
+//! Core RPC client types for gorbagana-account-decoder
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 #[cfg(feature = "zstd")]
 use std::io::Read;
@@ -7,8 +7,8 @@ use {
     core::str::FromStr,
     serde_derive::{Deserialize, Serialize},
     serde_json::Value,
-    solana_account::WritableAccount,
-    solana_pubkey::Pubkey,
+    gorbagana_account::WritableAccount,
+    gorbagana_pubkey::Pubkey,
 };
 pub mod token;
 

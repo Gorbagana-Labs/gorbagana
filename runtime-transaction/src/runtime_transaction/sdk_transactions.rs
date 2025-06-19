@@ -5,15 +5,15 @@ use {
         transaction_meta::{StaticMeta, TransactionMeta},
         transaction_with_meta::TransactionWithMeta,
     },
-    solana_message::{AddressLoader, TransactionSignatureDetails},
-    solana_pubkey::Pubkey,
-    solana_svm_transaction::instruction::SVMInstruction,
-    solana_transaction::{
+    gorbagana_message::{AddressLoader, TransactionSignatureDetails},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_svm_transaction::instruction::SVMInstruction,
+    gorbagana_transaction::{
         sanitized::{MessageHash, SanitizedTransaction},
         simple_vote_transaction_checker::is_simple_vote_transaction,
         versioned::{sanitized::SanitizedVersionedTransaction, VersionedTransaction},
     },
-    solana_transaction_error::TransactionResult as Result,
+    gorbagana_transaction_error::TransactionResult as Result,
     std::{borrow::Cow, collections::HashSet},
 };
 
@@ -140,13 +140,13 @@ impl TransactionWithMeta for RuntimeTransaction<SanitizedTransaction> {
 
 #[cfg(feature = "dev-context-only-utils")]
 impl RuntimeTransaction<SanitizedTransaction> {
-    pub fn from_transaction_for_tests(transaction: solana_transaction::Transaction) -> Self {
+    pub fn from_transaction_for_tests(transaction: gorbagana_transaction::Transaction) -> Self {
         let versioned_transaction = VersionedTransaction::from(transaction);
         Self::try_create(
             versioned_transaction,
             MessageHash::Compute,
             None,
-            solana_message::SimpleAddressLoader::Disabled,
+            gorbagana_message::SimpleAddressLoader::Disabled,
             &HashSet::new(),
         )
         .expect("failed to create RuntimeTransaction from Transaction")
@@ -159,15 +159,15 @@ mod tests {
         super::*,
         agave_feature_set::FeatureSet,
         agave_reserved_account_keys::ReservedAccountKeys,
-        solana_compute_budget_interface::ComputeBudgetInstruction,
-        solana_hash::Hash,
-        solana_instruction::Instruction,
-        solana_keypair::Keypair,
-        solana_message::{Message, SimpleAddressLoader},
-        solana_signer::Signer,
-        solana_system_interface::instruction as system_instruction,
-        solana_transaction::{versioned::VersionedTransaction, Transaction},
-        solana_vote_interface::{self as vote, state::Vote},
+        gorbagana_compute_budget_interface::ComputeBudgetInstruction,
+        gorbagana_hash::Hash,
+        gorbagana_instruction::Instruction,
+        gorbagana_keypair::Keypair,
+        gorbagana_message::{Message, SimpleAddressLoader},
+        gorbagana_signer::Signer,
+        gorbagana_system_interface::instruction as system_instruction,
+        gorbagana_transaction::{versioned::VersionedTransaction, Transaction},
+        gorbagana_vote_interface::{self as vote, state::Vote},
     };
 
     fn vote_sanitized_versioned_transaction() -> SanitizedVersionedTransaction {
@@ -203,7 +203,7 @@ mod tests {
             let from_keypair = Keypair::new();
             let instructions = vec![system_instruction::transfer(
                 &from_keypair.pubkey(),
-                &solana_pubkey::new_rand(),
+                &gorbagana_pubkey::new_rand(),
                 1,
             )];
             TestTransaction {

@@ -1,13 +1,13 @@
 #[cfg(test)]
-use solana_perf::packet::PacketRef;
+use gorbagana_perf::packet::PacketRef;
 use {
     super::immutable_deserialized_packet::{DeserializedPacketError, ImmutableDeserializedPacket},
-    solana_bincode::limited_deserialize,
-    solana_clock::{Slot, UnixTimestamp},
-    solana_hash::Hash,
-    solana_packet::PACKET_DATA_SIZE,
-    solana_pubkey::Pubkey,
-    solana_vote_program::vote_instruction::VoteInstruction,
+    gorbagana_bincode::limited_deserialize,
+    gorbagana_clock::{Slot, UnixTimestamp},
+    gorbagana_hash::Hash,
+    gorbagana_packet::PACKET_DATA_SIZE,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_vote_program::vote_instruction::VoteInstruction,
     std::sync::Arc,
 };
 
@@ -131,13 +131,13 @@ mod tests {
     use {
         super::*,
         itertools::Itertools,
-        solana_packet::PacketFlags,
-        solana_perf::packet::{BytesPacket, PacketBatch},
-        solana_runtime::genesis_utils::ValidatorVoteKeypairs,
-        solana_signer::Signer,
-        solana_system_transaction::transfer,
-        solana_vote::vote_transaction::new_tower_sync_transaction,
-        solana_vote_program::vote_state::TowerSync,
+        gorbagana_packet::PacketFlags,
+        gorbagana_perf::packet::{BytesPacket, PacketBatch},
+        gorbagana_runtime::genesis_utils::ValidatorVoteKeypairs,
+        gorbagana_signer::Signer,
+        gorbagana_system_transaction::transfer,
+        gorbagana_vote::vote_transaction::new_tower_sync_transaction,
+        gorbagana_vote_program::vote_state::TowerSync,
     };
 
     fn deserialize_packets(

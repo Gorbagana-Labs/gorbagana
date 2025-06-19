@@ -1,5 +1,5 @@
 //! Errors related to proving and verifying proofs.
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use crate::range_proof::errors::RangeProofGenerationError;
 use {
     crate::{range_proof::errors::RangeProofVerificationError, sigma_proofs::errors::*},
@@ -36,7 +36,7 @@ pub enum AuthenticatedEncryptionError {
     Deserialization,
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 #[derive(Error, Clone, Debug, Eq, PartialEq)]
 pub enum ProofGenerationError {
     #[error("not enough funds in account")]
@@ -86,35 +86,35 @@ pub enum TranscriptError {
     ValidationError,
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<EqualityProofVerificationError> for ProofVerificationError {
     fn from(err: EqualityProofVerificationError) -> Self {
         Self::SigmaProof(SigmaProofType::EqualityProof, err.0)
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<FeeSigmaProofVerificationError> for ProofVerificationError {
     fn from(err: FeeSigmaProofVerificationError) -> Self {
         Self::SigmaProof(SigmaProofType::FeeSigmaProof, err.0)
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<ZeroBalanceProofVerificationError> for ProofVerificationError {
     fn from(err: ZeroBalanceProofVerificationError) -> Self {
         Self::SigmaProof(SigmaProofType::ZeroBalanceProof, err.0)
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<ValidityProofVerificationError> for ProofVerificationError {
     fn from(err: ValidityProofVerificationError) -> Self {
         Self::SigmaProof(SigmaProofType::ValidityProof, err.0)
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<PubkeyValidityProofVerificationError> for ProofVerificationError {
     fn from(err: PubkeyValidityProofVerificationError) -> Self {
         Self::SigmaProof(SigmaProofType::PubkeyValidityProof, err.0)

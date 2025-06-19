@@ -28,7 +28,7 @@ use {
         IteratorMode as RocksIteratorMode, LiveFile, Options, WriteBatch as RWriteBatch, DB,
     },
     serde::de::DeserializeOwned,
-    solana_clock::Slot,
+    gorbagana_clock::Slot,
     std::{
         collections::HashSet,
         ffi::{CStr, CString},
@@ -125,7 +125,7 @@ impl Rocks {
                 DB::open_cf_descriptors(&db_options, &path, cf_descriptors)?
             }
             AccessType::Secondary => {
-                let secondary_path = path.join("solana-secondary");
+                let secondary_path = path.join("gorbagana-secondary");
                 info!(
                     "Opening Rocks with secondary (read only) access at: {secondary_path:?}. This \
                      secondary access could temporarily degrade other accesses, such as by \
@@ -1335,7 +1335,7 @@ pub mod tests {
 
     #[test]
     fn test_open_unknown_columns() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let temp_dir = tempdir().unwrap();
         let db_path = temp_dir.path();
@@ -1378,7 +1378,7 @@ pub mod tests {
 
     #[test]
     fn test_remove_deprecated_progam_costs_column_compat() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         fn is_program_costs_column_present(path: &Path) -> bool {
             DB::list_cf(&Options::default(), path)

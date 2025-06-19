@@ -1,7 +1,7 @@
 [package]
-name = "solana-tokens"
+name = "gorbagana-tokens"
 description = "Blockchain, Rebuilt for Scale"
-documentation = "https://docs.rs/solana-tokens"
+documentation = "https://docs.rs/gorbagana-tokens"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -20,27 +20,27 @@ indicatif = { workspace = true }
 pickledb = { workspace = true, features = ["yaml"] }
 serde = { workspace = true }
 serde_derive = { workspace = true }
-solana-account-decoder = { workspace = true }
-solana-clap-utils = { workspace = true }
-solana-cli-config = { workspace = true }
-solana-clock = { workspace = true }
-solana-commitment-config = { workspace = true }
-solana-hash = { workspace = true }
-solana-instruction = { workspace = true }
-solana-keypair = { workspace = true }
-solana-message = { workspace = true }
-solana-native-token = { workspace = true }
-solana-pubkey = { workspace = true, features = ["rand"] }
-solana-remote-wallet = { workspace = true, features = ["default"] }
-solana-rpc-client = { workspace = true, features = ["default"] }
-solana-rpc-client-api = { workspace = true }
-solana-signature = { workspace = true }
-solana-signer = { workspace = true }
-solana-stake-interface = { workspace = true }
-solana-system-interface = { workspace = true }
-solana-transaction = { workspace = true }
-solana-transaction-status = { workspace = true }
-solana-version = { workspace = true }
+gorbagana-account-decoder = { workspace = true }
+gorbagana-clap-utils = { workspace = true }
+gorbagana-cli-config = { workspace = true }
+gorbagana-clock = { workspace = true }
+gorbagana-commitment-config = { workspace = true }
+gorbagana-hash = { workspace = true }
+gorbagana-instruction = { workspace = true }
+gorbagana-keypair = { workspace = true }
+gorbagana-message = { workspace = true }
+gorbagana-native-token = { workspace = true }
+gorbagana-pubkey = { workspace = true, features = ["rand"] }
+gorbagana-remote-wallet = { workspace = true, features = ["default"] }
+gorbagana-rpc-client = { workspace = true, features = ["default"] }
+gorbagana-rpc-client-api = { workspace = true }
+gorbagana-signature = { workspace = true }
+gorbagana-signer = { workspace = true }
+gorbagana-stake-interface = { workspace = true }
+gorbagana-system-interface = { workspace = true }
+gorbagana-transaction = { workspace = true }
+gorbagana-transaction-status = { workspace = true }
+gorbagana-version = { workspace = true }
 spl-associated-token-account = { version = "=7.0.0", features = ["no-entrypoint"] }
 spl-token = { version = "=8.0.0", features = ["no-entrypoint"] }
 tempfile = { workspace = true }
@@ -49,7 +49,7 @@ thiserror = { workspace = true }
 [dev-dependencies]
 assert_matches = { workspace = true }
 bincode = { workspace = true }
-solana-logger = { workspace = true }
-solana-streamer = { workspace = true }
-solana-test-validator = { workspace = true }
-solana-transaction-error = { workspace = true }
+gorbagana-logger = { workspace = true }
+gorbagana-streamer = { workspace = true }
+gorbagana-test-validator = { workspace = true }
+gorbagana-transaction-error = { workspace = true }

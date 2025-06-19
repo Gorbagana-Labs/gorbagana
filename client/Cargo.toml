@@ -1,7 +1,7 @@
 [package]
-name = "solana-client"
-description = "Solana Client"
-documentation = "https://docs.rs/solana-client"
+name = "gorbagana-client"
+description = "Gorbagana Client"
+documentation = "https://docs.rs/gorbagana-client"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -23,35 +23,35 @@ indicatif = { workspace = true }
 log = { workspace = true }
 quinn = { workspace = true }
 rayon = { workspace = true }
-solana-account = { workspace = true }
-solana-client-traits = { workspace = true }
-solana-commitment-config = { workspace = true }
-solana-connection-cache = { workspace = true }
-solana-epoch-info = { workspace = true }
-solana-hash = { workspace = true }
-solana-instruction = { workspace = true }
-solana-keypair = { workspace = true }
-solana-measure = { workspace = true }
-solana-message = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-pubsub-client = { workspace = true }
-solana-quic-client = { workspace = true }
-solana-quic-definitions = { workspace = true }
-solana-rpc-client = { workspace = true, features = ["default"] }
-solana-rpc-client-api = { workspace = true }
-solana-rpc-client-nonce-utils = { workspace = true }
-solana-signature = { workspace = true }
-solana-signer = { workspace = true }
-solana-streamer = { workspace = true }
-solana-thin-client = { workspace = true }
-solana-time-utils = { workspace = true }
-solana-tpu-client = { workspace = true, features = ["default"] }
-solana-transaction = { workspace = true }
-solana-transaction-error = { workspace = true }
-solana-udp-client = { workspace = true }
+gorbagana-account = { workspace = true }
+gorbagana-client-traits = { workspace = true }
+gorbagana-commitment-config = { workspace = true }
+gorbagana-connection-cache = { workspace = true }
+gorbagana-epoch-info = { workspace = true }
+gorbagana-hash = { workspace = true }
+gorbagana-instruction = { workspace = true }
+gorbagana-keypair = { workspace = true }
+gorbagana-measure = { workspace = true }
+gorbagana-message = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-pubsub-client = { workspace = true }
+gorbagana-quic-client = { workspace = true }
+gorbagana-quic-definitions = { workspace = true }
+gorbagana-rpc-client = { workspace = true, features = ["default"] }
+gorbagana-rpc-client-api = { workspace = true }
+gorbagana-rpc-client-nonce-utils = { workspace = true }
+gorbagana-signature = { workspace = true }
+gorbagana-signer = { workspace = true }
+gorbagana-streamer = { workspace = true }
+gorbagana-thin-client = { workspace = true }
+gorbagana-time-utils = { workspace = true }
+gorbagana-tpu-client = { workspace = true, features = ["default"] }
+gorbagana-transaction = { workspace = true }
+gorbagana-transaction-error = { workspace = true }
+gorbagana-udp-client = { workspace = true }
 thiserror = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 
 [dev-dependencies]
 crossbeam-channel = { workspace = true }
-solana-net-utils = { workspace = true, features = ["dev-context-only-utils"] }
+gorbagana-net-utils = { workspace = true, features = ["dev-context-only-utils"] }

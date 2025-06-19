@@ -1,12 +1,12 @@
 //! Information about points calculation based on stake state.
 
 use {
-    solana_clock::Epoch,
-    solana_instruction::error::InstructionError,
-    solana_pubkey::Pubkey,
-    solana_stake_program::stake_state::{Delegation, Stake, StakeStateV2},
-    solana_sysvar::stake_history::StakeHistory,
-    solana_vote::vote_state_view::VoteStateView,
+    gorbagana_clock::Epoch,
+    gorbagana_instruction::error::InstructionError,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_stake_program::stake_state::{Delegation, Stake, StakeStateV2},
+    gorbagana_sysvar::stake_history::StakeHistory,
+    gorbagana_vote::vote_state_view::VoteStateView,
     std::cmp::Ordering,
 };
 
@@ -207,7 +207,7 @@ pub(crate) fn calculate_stake_points_and_credits(
 #[cfg(test)]
 mod tests {
     use {
-        super::*, solana_native_token::sol_to_lamports, solana_vote_program::vote_state::VoteState,
+        super::*, gorbagana_native_token::sol_to_lamports, gorbagana_vote_program::vote_state::VoteState,
     };
 
     fn new_stake(

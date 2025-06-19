@@ -20,7 +20,7 @@ pub mod svm_bridge;
 
 fn main() {
     env_logger::init();
-    let matches = App::new("solana-json-rpc")
+    let matches = App::new("gorbagana-json-rpc")
         .version("0.1.0")
         .author("Agave Team <hello@anza.xyz>")
         .about("JSON-RPC Simulation server")

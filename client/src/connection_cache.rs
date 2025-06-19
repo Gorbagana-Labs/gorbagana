@@ -1,19 +1,19 @@
-pub use solana_connection_cache::connection_cache::Protocol;
+pub use gorbagana_connection_cache::connection_cache::Protocol;
 use {
-    solana_connection_cache::{
+    gorbagana_connection_cache::{
         client_connection::ClientConnection,
         connection_cache::{
             BaseClientConnection, ConnectionCache as BackendConnectionCache, ConnectionPool,
             NewConnectionConfig,
         },
     },
-    solana_keypair::Keypair,
-    solana_pubkey::Pubkey,
-    solana_quic_client::{QuicConfig, QuicConnectionManager, QuicPool},
-    solana_quic_definitions::NotifyKeyUpdate,
-    solana_streamer::streamer::StakedNodes,
-    solana_transaction_error::TransportResult,
-    solana_udp_client::{UdpConfig, UdpConnectionManager, UdpPool},
+    gorbagana_keypair::Keypair,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_quic_client::{QuicConfig, QuicConnectionManager, QuicPool},
+    gorbagana_quic_definitions::NotifyKeyUpdate,
+    gorbagana_streamer::streamer::StakedNodes,
+    gorbagana_transaction_error::TransportResult,
+    gorbagana_udp_client::{UdpConfig, UdpConnectionManager, UdpPool},
     std::{
         net::{IpAddr, Ipv4Addr, SocketAddr, UdpSocket},
         sync::{Arc, RwLock},
@@ -174,7 +174,7 @@ impl ClientConnection for BlockingClientConnection {
 }
 
 #[async_trait::async_trait]
-impl solana_connection_cache::nonblocking::client_connection::ClientConnection
+impl gorbagana_connection_cache::nonblocking::client_connection::ClientConnection
     for NonblockingClientConnection
 {
     dispatch!(fn server_addr(&self) -> &SocketAddr);
@@ -199,7 +199,7 @@ mod tests {
     use {
         super::*,
         crate::connection_cache::ConnectionCache,
-        solana_net_utils::bind_to_localhost,
+        gorbagana_net_utils::bind_to_localhost,
         std::net::{IpAddr, Ipv4Addr, SocketAddr},
     };
 

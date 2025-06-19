@@ -9,13 +9,13 @@ use {
     },
     rand::Rng,
     serde::de::{Deserialize, Deserializer},
-    solana_clock::Slot,
-    solana_hash::Hash,
-    solana_pubkey::{self, Pubkey},
-    solana_sanitize::{Sanitize, SanitizeError},
-    solana_time_utils::timestamp,
-    solana_transaction::Transaction,
-    solana_vote::vote_parser,
+    gorbagana_clock::Slot,
+    gorbagana_hash::Hash,
+    gorbagana_pubkey::{self, Pubkey},
+    gorbagana_sanitize::{Sanitize, SanitizeError},
+    gorbagana_time_utils::timestamp,
+    gorbagana_transaction::Transaction,
+    gorbagana_vote::vote_parser,
     std::{cmp::Ordering, collections::BTreeSet},
 };
 
@@ -244,7 +244,7 @@ impl AccountsHashes {
         .take(num_hashes)
         .collect();
         Self {
-            from: pubkey.unwrap_or_else(solana_pubkey::new_rand),
+            from: pubkey.unwrap_or_else(gorbagana_pubkey::new_rand),
             hashes,
             wallclock: new_rand_timestamp(rng),
         }
@@ -306,7 +306,7 @@ impl LowestSlot {
     /// New random LowestSlot for tests and benchmarks.
     fn new_rand<R: Rng>(rng: &mut R, pubkey: Option<Pubkey>) -> Self {
         Self {
-            from: pubkey.unwrap_or_else(solana_pubkey::new_rand),
+            from: pubkey.unwrap_or_else(gorbagana_pubkey::new_rand),
             root: rng.gen(),
             lowest: rng.gen(),
             slots: BTreeSet::default(),
@@ -367,7 +367,7 @@ impl Vote {
     /// New random Vote for tests and benchmarks.
     fn new_rand<R: Rng>(rng: &mut R, pubkey: Option<Pubkey>) -> Self {
         Self {
-            from: pubkey.unwrap_or_else(solana_pubkey::new_rand),
+            from: pubkey.unwrap_or_else(gorbagana_pubkey::new_rand),
             transaction: Transaction::default(),
             wallclock: new_rand_timestamp(rng),
             slot: None,
@@ -408,7 +408,7 @@ impl<'de> Deserialize<'de> for Vote {
 pub(crate) struct LegacyVersion {
     from: Pubkey,
     wallclock: u64,
-    version: solana_version::LegacyVersion1,
+    version: gorbagana_version::LegacyVersion1,
 }
 
 impl Sanitize for LegacyVersion {
@@ -424,7 +424,7 @@ impl Sanitize for LegacyVersion {
 pub(crate) struct Version {
     from: Pubkey,
     wallclock: u64,
-    version: solana_version::LegacyVersion2,
+    version: gorbagana_version::LegacyVersion2,
 }
 
 impl Sanitize for Version {
@@ -502,11 +502,11 @@ mod test {
         super::*,
         crate::crds_value::CrdsValue,
         bincode::Options,
-        solana_keypair::Keypair,
-        solana_perf::test_tx::new_test_vote_tx,
-        solana_signer::Signer,
-        solana_time_utils::timestamp,
-        solana_vote_program::{vote_instruction, vote_state},
+        gorbagana_keypair::Keypair,
+        gorbagana_perf::test_tx::new_test_vote_tx,
+        gorbagana_signer::Signer,
+        gorbagana_time_utils::timestamp,
+        gorbagana_vote_program::{vote_instruction, vote_state},
     };
 
     #[test]

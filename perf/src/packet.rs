@@ -20,7 +20,7 @@ use {
 };
 pub use {
     bytes,
-    solana_packet::{self, Meta, Packet, PacketFlags, PACKET_DATA_SIZE},
+    gorbagana_packet::{self, Meta, Packet, PacketFlags, PACKET_DATA_SIZE},
 };
 
 pub const NUM_PACKETS: usize = 1024 * 8;
@@ -65,7 +65,7 @@ impl BytesPacket {
     #[cfg(feature = "dev-context-only-utils")]
     pub fn from_data<T>(dest: Option<&SocketAddr>, data: T) -> bincode::Result<Self>
     where
-        T: solana_packet::Encode,
+        T: gorbagana_packet::Encode,
     {
         let buffer = BytesMut::with_capacity(PACKET_DATA_SIZE);
         let mut writer = buffer.writer();
@@ -670,7 +670,7 @@ impl PinnedPacketBatch {
     ) -> Self
     where
         S: Borrow<SocketAddr>,
-        T: solana_packet::Encode,
+        T: gorbagana_packet::Encode,
     {
         let dests_and_data = dests_and_data.into_iter();
         let mut batch = Self::new_unpinned_with_recycler(recycler, dests_and_data.len(), name);
@@ -894,8 +894,8 @@ where
 #[cfg(test)]
 mod tests {
     use {
-        super::*, solana_hash::Hash, solana_keypair::Keypair, solana_signer::Signer,
-        solana_system_transaction::transfer,
+        super::*, gorbagana_hash::Hash, gorbagana_keypair::Keypair, gorbagana_signer::Signer,
+        gorbagana_system_transaction::transfer,
     };
 
     #[test]

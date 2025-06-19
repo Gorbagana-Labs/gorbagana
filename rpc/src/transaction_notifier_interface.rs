@@ -1,7 +1,7 @@
 use {
-    solana_clock::Slot, solana_hash::Hash, solana_signature::Signature,
-    solana_transaction::versioned::VersionedTransaction,
-    solana_transaction_status::TransactionStatusMeta, std::sync::Arc,
+    gorbagana_clock::Slot, gorbagana_hash::Hash, gorbagana_signature::Signature,
+    gorbagana_transaction::versioned::VersionedTransaction,
+    gorbagana_transaction_status::TransactionStatusMeta, std::sync::Arc,
 };
 
 pub trait TransactionNotifier {

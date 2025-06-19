@@ -6,36 +6,36 @@ use {
     agave_feature_set::enable_alt_bn128_syscall,
     assert_matches::assert_matches,
     serde_json::Value,
-    solana_account::{state_traits::StateMut, ReadableAccount},
-    solana_borsh::v1::try_from_slice_unchecked,
-    solana_cli::{
+    gorbagana_account::{state_traits::StateMut, ReadableAccount},
+    gorbagana_borsh::v1::try_from_slice_unchecked,
+    gorbagana_cli::{
         cli::{process_command, CliCommand, CliConfig},
         program::{ProgramCliCommand, CLOSE_PROGRAM_WARNING},
         program_v4::{AdditionalCliConfig, ProgramV4CliCommand},
         test_utils::wait_n_slots,
     },
-    solana_cli_output::{parse_sign_only_reply_string, OutputFormat},
-    solana_client::rpc_config::RpcSendTransactionConfig,
-    solana_commitment_config::CommitmentConfig,
-    solana_compute_budget_interface::ComputeBudgetInstruction,
-    solana_faucet::faucet::run_local_faucet,
-    solana_fee_calculator::FeeRateGovernor,
-    solana_keypair::Keypair,
-    solana_loader_v3_interface::state::UpgradeableLoaderState,
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
-    solana_rpc::rpc::JsonRpcConfig,
-    solana_rpc_client::rpc_client::{GetConfirmedSignaturesForAddress2Config, RpcClient},
-    solana_rpc_client_api::config::RpcTransactionConfig,
-    solana_rpc_client_nonce_utils::blockhash_query::BlockhashQuery,
-    solana_sdk_ids::{bpf_loader_upgradeable, compute_budget, loader_v4},
-    solana_signature::Signature,
-    solana_signer::{null_signer::NullSigner, Signer},
-    solana_streamer::socket::SocketAddrSpace,
-    solana_system_interface::program as system_program,
-    solana_test_validator::TestValidatorGenesis,
-    solana_transaction::Transaction,
-    solana_transaction_status::UiTransactionEncoding,
+    gorbagana_cli_output::{parse_sign_only_reply_string, OutputFormat},
+    gorbagana_client::rpc_config::RpcSendTransactionConfig,
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_compute_budget_interface::ComputeBudgetInstruction,
+    gorbagana_faucet::faucet::run_local_faucet,
+    gorbagana_fee_calculator::FeeRateGovernor,
+    gorbagana_keypair::Keypair,
+    gorbagana_loader_v3_interface::state::UpgradeableLoaderState,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent::Rent,
+    gorbagana_rpc::rpc::JsonRpcConfig,
+    gorbagana_rpc_client::rpc_client::{GetConfirmedSignaturesForAddress2Config, RpcClient},
+    gorbagana_rpc_client_api::config::RpcTransactionConfig,
+    gorbagana_rpc_client_nonce_utils::blockhash_query::BlockhashQuery,
+    gorbagana_sdk_ids::{bpf_loader_upgradeable, compute_budget, loader_v4},
+    gorbagana_signature::Signature,
+    gorbagana_signer::{null_signer::NullSigner, Signer},
+    gorbagana_streamer::socket::SocketAddrSpace,
+    gorbagana_system_interface::program as system_program,
+    gorbagana_test_validator::TestValidatorGenesis,
+    gorbagana_transaction::Transaction,
+    gorbagana_transaction_status::UiTransactionEncoding,
     std::{
         env,
         fs::File,
@@ -85,7 +85,7 @@ fn expect_account_absent(rpc_client: &RpcClient, pubkey: Pubkey, absent_because:
 
 #[test]
 fn test_cli_program_deploy_non_upgradeable() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let mut noop_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     noop_path.push("tests");
@@ -290,7 +290,7 @@ fn test_cli_program_deploy_non_upgradeable() {
 
 #[test]
 fn test_cli_program_deploy_no_authority() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let mut noop_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     noop_path.push("tests");
@@ -393,7 +393,7 @@ fn test_cli_program_deploy_no_authority() {
 #[test_case(false, true; "Feature disabled, skip preflight")]
 #[test_case(false, false; "Feature disabled, don't skip preflight")]
 fn test_cli_program_deploy_feature(enable_feature: bool, skip_preflight: bool) {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let mut program_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     program_path.push("tests");
@@ -512,7 +512,7 @@ fn test_cli_program_deploy_feature(enable_feature: bool, skip_preflight: bool) {
 #[test_case(true; "Feature enabled")]
 #[test_case(false; "Feature disabled")]
 fn test_cli_program_upgrade_with_feature(enable_feature: bool) {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let mut noop_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     noop_path.push("tests");
@@ -673,7 +673,7 @@ fn test_cli_program_upgrade_with_feature(enable_feature: bool) {
 
 #[test]
 fn test_cli_program_deploy_with_authority() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let mut noop_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     noop_path.push("tests");
@@ -1069,7 +1069,7 @@ fn test_cli_program_deploy_with_authority() {
 #[test_case(true; "Skip preflight")]
 #[test_case(false; "Dont skip preflight")]
 fn test_cli_program_upgrade_auto_extend(skip_preflight: bool) {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let mut noop_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     noop_path.push("tests");
@@ -1237,7 +1237,7 @@ fn test_cli_program_upgrade_auto_extend(skip_preflight: bool) {
 
 #[test]
 fn test_cli_program_close_program() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let mut noop_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     noop_path.push("tests");
@@ -1350,7 +1350,7 @@ fn test_cli_program_close_program() {
 
 #[test]
 fn test_cli_program_extend_program() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let mut noop_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     noop_path.push("tests");
@@ -1528,7 +1528,7 @@ fn test_cli_program_extend_program() {
 
 #[test]
 fn test_cli_program_migrate_program() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let mut noop_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     noop_path.push("tests");
@@ -1607,7 +1607,7 @@ fn test_cli_program_migrate_program() {
 
 #[test]
 fn test_cli_program_write_buffer() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let mut noop_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     noop_path.push("tests");
@@ -1996,7 +1996,7 @@ fn test_cli_program_write_buffer() {
 #[test_case(true; "Feature enabled")]
 #[test_case(false; "Feature disabled")]
 fn test_cli_program_write_buffer_feature(enable_feature: bool) {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let mut program_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     program_path.push("tests");
@@ -2090,7 +2090,7 @@ fn test_cli_program_write_buffer_feature(enable_feature: bool) {
 
 #[test]
 fn test_cli_program_set_buffer_authority() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let mut noop_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     noop_path.push("tests");
@@ -2262,7 +2262,7 @@ fn test_cli_program_set_buffer_authority() {
 
 #[test]
 fn test_cli_program_mismatch_buffer_authority() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let mut noop_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     noop_path.push("tests");
@@ -2382,7 +2382,7 @@ fn test_cli_program_mismatch_buffer_authority() {
 #[test_case(true; "offline signer will be fee payer")]
 #[test_case(false; "online signer will be fee payer")]
 fn test_cli_program_deploy_with_offline_signing(use_offline_signer_as_fee_payer: bool) {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let mut noop_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     noop_path.push("tests");
@@ -2581,7 +2581,7 @@ fn test_cli_program_deploy_with_offline_signing(use_offline_signer_as_fee_payer:
 
 #[test]
 fn test_cli_program_show() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let mut noop_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     noop_path.push("tests");
@@ -2778,7 +2778,7 @@ fn test_cli_program_show() {
 
 #[test]
 fn test_cli_program_dump() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let mut noop_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     noop_path.push("tests");

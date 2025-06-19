@@ -3,9 +3,9 @@ use {
         instruction::SVMInstruction, message_address_table_lookup::SVMMessageAddressTableLookup,
         svm_message::SVMMessage,
     },
-    solana_hash::Hash,
-    solana_message::{AccountKeys, SanitizedMessage},
-    solana_pubkey::Pubkey,
+    gorbagana_hash::Hash,
+    gorbagana_message::{AccountKeys, SanitizedMessage},
+    gorbagana_pubkey::Pubkey,
 };
 
 // Implement for the "reference" `SanitizedMessage` type.

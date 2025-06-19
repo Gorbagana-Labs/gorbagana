@@ -12,7 +12,7 @@
 //! associated with the proof is referred to as the "source" handle, the second as the
 //! "destination" handle, and the third as the "auditor" handle.
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use {
     crate::{
         encryption::{
@@ -57,7 +57,7 @@ pub struct GroupedCiphertext3HandlesValidityProof {
 }
 
 #[allow(non_snake_case)]
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl GroupedCiphertext3HandlesValidityProof {
     /// Creates a grouped ciphertext with 3 handles validity proof.
     ///

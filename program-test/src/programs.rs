@@ -1,42 +1,42 @@
 use {
-    solana_account::{Account, AccountSharedData},
-    solana_loader_v3_interface::{get_program_data_address, state::UpgradeableLoaderState},
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
-    solana_sdk_ids::{bpf_loader, bpf_loader_upgradeable},
+    gorbagana_account::{Account, AccountSharedData},
+    gorbagana_loader_v3_interface::{get_program_data_address, state::UpgradeableLoaderState},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent::Rent,
+    gorbagana_sdk_ids::{bpf_loader, bpf_loader_upgradeable},
 };
 
 mod spl_memo_1_0 {
-    solana_pubkey::declare_id!("Memo1UhkJRfHyvLMcVucJwxXeuD728EqVDDwQDxFMNo");
+    gorbagana_pubkey::declare_id!("Memo1UhkJRfHyvLMcVucJwxXeuD728EqVDDwQDxFMNo");
 }
 mod spl_memo_3_0 {
-    solana_pubkey::declare_id!("MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr");
+    gorbagana_pubkey::declare_id!("MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr");
 }
 
 static SPL_PROGRAMS: &[(Pubkey, Pubkey, &[u8])] = &[
     (
         spl_generic_token::token::ID,
-        solana_sdk_ids::bpf_loader::ID,
+        gorbagana_sdk_ids::bpf_loader::ID,
         include_bytes!("programs/spl_token-3.5.0.so"),
     ),
     (
         spl_generic_token::token_2022::ID,
-        solana_sdk_ids::bpf_loader_upgradeable::ID,
+        gorbagana_sdk_ids::bpf_loader_upgradeable::ID,
         include_bytes!("programs/spl_token_2022-8.0.0.so"),
     ),
     (
         spl_memo_1_0::ID,
-        solana_sdk_ids::bpf_loader::ID,
+        gorbagana_sdk_ids::bpf_loader::ID,
         include_bytes!("programs/spl_memo-1.0.0.so"),
     ),
     (
         spl_memo_3_0::ID,
-        solana_sdk_ids::bpf_loader::ID,
+        gorbagana_sdk_ids::bpf_loader::ID,
         include_bytes!("programs/spl_memo-3.0.0.so"),
     ),
     (
         spl_generic_token::associated_token_account::ID,
-        solana_sdk_ids::bpf_loader::ID,
+        gorbagana_sdk_ids::bpf_loader::ID,
         include_bytes!("programs/spl_associated_token_account-1.1.1.so"),
     ),
 ];
@@ -47,17 +47,17 @@ static SPL_PROGRAMS: &[(Pubkey, Pubkey, &[u8])] = &[
 // activation on all clusters, therefore no feature gate.
 static CORE_BPF_PROGRAMS: &[(Pubkey, Option<Pubkey>, &[u8])] = &[
     (
-        solana_sdk_ids::address_lookup_table::ID,
+        gorbagana_sdk_ids::address_lookup_table::ID,
         None,
         include_bytes!("programs/core_bpf_address_lookup_table-3.0.0.so"),
     ),
     (
-        solana_sdk_ids::config::ID,
+        gorbagana_sdk_ids::config::ID,
         None,
         include_bytes!("programs/core_bpf_config-3.0.0.so"),
     ),
     (
-        solana_sdk_ids::feature::ID,
+        gorbagana_sdk_ids::feature::ID,
         None,
         include_bytes!("programs/core_bpf_feature_gate-0.0.1.so"),
     ),
@@ -135,7 +135,7 @@ pub fn spl_programs(rent: &Rent) -> Vec<(Pubkey, AccountSharedData)> {
         .iter()
         .flat_map(|(program_id, loader_id, elf)| {
             let mut accounts = vec![];
-            if loader_id.eq(&solana_sdk_ids::bpf_loader_upgradeable::ID) {
+            if loader_id.eq(&gorbagana_sdk_ids::bpf_loader_upgradeable::ID) {
                 for (key, account) in bpf_loader_upgradeable_program_accounts(program_id, elf, rent)
                 {
                     accounts.push((key, AccountSharedData::from(account)));

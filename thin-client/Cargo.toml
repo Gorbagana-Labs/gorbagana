@@ -1,7 +1,7 @@
 [package]
-name = "solana-thin-client"
-description = "Solana Thin Client"
-documentation = "https://docs.rs/solana-thin-client"
+name = "gorbagana-thin-client"
+description = "Gorbagana Thin Client"
+documentation = "https://docs.rs/gorbagana-thin-client"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -16,24 +16,24 @@ targets = ["x86_64-unknown-linux-gnu"]
 bincode = { workspace = true }
 log = { workspace = true }
 rayon = { workspace = true }
-solana-account = { workspace = true }
-solana-client-traits = { workspace = true }
-solana-clock = { workspace = true }
-solana-commitment-config = { workspace = true }
-solana-connection-cache = { workspace = true }
-solana-epoch-info = { workspace = true }
-solana-hash = { workspace = true }
-solana-instruction = { workspace = true }
-solana-keypair = { workspace = true }
-solana-message = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-rpc-client = { workspace = true }
-solana-rpc-client-api = { workspace = true }
-solana-signature = { workspace = true }
-solana-signer = { workspace = true }
-solana-system-interface = { workspace = true, features = ["bincode"] }
-solana-transaction = { workspace = true }
-solana-transaction-error = { workspace = true }
+gorbagana-account = { workspace = true }
+gorbagana-client-traits = { workspace = true }
+gorbagana-clock = { workspace = true }
+gorbagana-commitment-config = { workspace = true }
+gorbagana-connection-cache = { workspace = true }
+gorbagana-epoch-info = { workspace = true }
+gorbagana-hash = { workspace = true }
+gorbagana-instruction = { workspace = true }
+gorbagana-keypair = { workspace = true }
+gorbagana-message = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-rpc-client = { workspace = true }
+gorbagana-rpc-client-api = { workspace = true }
+gorbagana-signature = { workspace = true }
+gorbagana-signer = { workspace = true }
+gorbagana-system-interface = { workspace = true, features = ["bincode"] }
+gorbagana-transaction = { workspace = true }
+gorbagana-transaction-error = { workspace = true }
 
 [dev-dependencies]
-solana-logger = { workspace = true }
+gorbagana-logger = { workspace = true }

@@ -8,15 +8,15 @@ use {
         nonblocking::udp_client::UdpClientConnection as NonblockingUdpConnection,
         udp_client::UdpClientConnection as BlockingUdpConnection,
     },
-    solana_connection_cache::{
+    gorbagana_connection_cache::{
         connection_cache::{
             BaseClientConnection, ClientError, ConnectionManager, ConnectionPool,
             ConnectionPoolError, NewConnectionConfig, Protocol,
         },
         connection_cache_stats::ConnectionCacheStats,
     },
-    solana_keypair::Keypair,
-    solana_net_utils::SocketConfig,
+    gorbagana_keypair::Keypair,
+    gorbagana_net_utils::SocketConfig,
     std::{
         net::{IpAddr, Ipv4Addr, SocketAddr, UdpSocket},
         sync::Arc,
@@ -63,7 +63,7 @@ pub struct UdpConfig {
 
 impl NewConnectionConfig for UdpConfig {
     fn new() -> Result<Self, ClientError> {
-        let socket = solana_net_utils::bind_with_any_port_with_config(
+        let socket = gorbagana_net_utils::bind_with_any_port_with_config(
             IpAddr::V4(Ipv4Addr::UNSPECIFIED),
             SocketConfig::default(),
         )

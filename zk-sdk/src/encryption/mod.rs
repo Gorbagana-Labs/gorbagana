@@ -1,4 +1,4 @@
-//! Collection of encryption-related data structures and algorithms used in the Solana zk-token
+//! Collection of encryption-related data structures and algorithms used in the Gorbagana zk-token
 //! protocol.
 //!
 //! The module contains implementations of the following cryptographic objects:
@@ -12,18 +12,18 @@
 
 use crate::{RISTRETTO_POINT_LEN, SCALAR_LEN};
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 #[macro_use]
 pub(crate) mod macros;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 pub mod auth_encryption;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 pub mod discrete_log;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 pub mod elgamal;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 pub mod grouped_elgamal;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 pub mod pedersen;
 pub mod pod;
 

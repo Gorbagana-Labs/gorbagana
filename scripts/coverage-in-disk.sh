@@ -27,7 +27,7 @@ cargo="$(readlink -f "./cargo")"
 reportName="lcov-${CI_COMMIT:0:9}"
 
 if [[ -z $1 ]]; then
-  packages=(--lib --all --exclude solana-local-cluster)
+  packages=(--lib --all --exclude gorbagana-local-cluster)
 else
   packages=("$@")
 fi
@@ -72,8 +72,8 @@ fi
 #shellcheck source=ci/common/limit-threads.sh
 source ci/common/limit-threads.sh
 
-RUST_LOG=solana=trace _ "$cargo" nightly test --features frozen-abi --jobs "$JOBS" --target-dir target/cov --no-run "${packages[@]}"
-if RUST_LOG=solana=trace _ "$cargo" nightly test --features frozen-abi --jobs "$JOBS" --target-dir target/cov "${packages[@]}" 2> target/cov/coverage-stderr.log; then
+RUST_LOG=gorbagana=trace _ "$cargo" nightly test --features frozen-abi --jobs "$JOBS" --target-dir target/cov --no-run "${packages[@]}"
+if RUST_LOG=gorbagana=trace _ "$cargo" nightly test --features frozen-abi --jobs "$JOBS" --target-dir target/cov "${packages[@]}" 2> target/cov/coverage-stderr.log; then
   test_status=0
 else
   test_status=$?

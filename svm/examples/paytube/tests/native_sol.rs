@@ -2,9 +2,9 @@ mod setup;
 
 use {
     setup::{system_account, TestValidatorContext},
-    solana_keypair::Keypair,
-    solana_signer::Signer,
-    solana_svm_example_paytube::{transaction::PayTubeTransaction, PayTubeChannel},
+    gorbagana_keypair::Keypair,
+    gorbagana_signer::Signer,
+    gorbagana_svm_example_paytube::{transaction::PayTubeTransaction, PayTubeChannel},
 };
 
 #[test]

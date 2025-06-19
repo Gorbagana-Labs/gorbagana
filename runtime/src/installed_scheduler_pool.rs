@@ -14,8 +14,8 @@
 //! Dynamic dispatch was inevitable due to the desire to piggyback on
 //! [BankForks](crate::bank_forks::BankForks)'s pruning for scheduler lifecycle management as the
 //! common place both for `ReplayStage` and `BankingStage` and the resultant need of invoking
-//! actual implementations provided by the dependent crate (`solana-unified-scheduler-pool`, which
-//! in turn depends on `solana-ledger`, which in turn depends on `solana-runtime`), avoiding a
+//! actual implementations provided by the dependent crate (`gorbagana-unified-scheduler-pool`, which
+//! in turn depends on `gorbagana-ledger`, which in turn depends on `gorbagana-runtime`), avoiding a
 //! cyclic dependency.
 //!
 //! See [InstalledScheduler] for visualized interaction.
@@ -24,13 +24,13 @@ use {
     crate::bank::Bank,
     assert_matches::assert_matches,
     log::*,
-    solana_clock::Slot,
-    solana_hash::Hash,
-    solana_runtime_transaction::runtime_transaction::RuntimeTransaction,
-    solana_timings::ExecuteTimings,
-    solana_transaction::sanitized::SanitizedTransaction,
-    solana_transaction_error::{TransactionError, TransactionResult as Result},
-    solana_unified_scheduler_logic::SchedulingMode,
+    gorbagana_clock::Slot,
+    gorbagana_hash::Hash,
+    gorbagana_runtime_transaction::runtime_transaction::RuntimeTransaction,
+    gorbagana_timings::ExecuteTimings,
+    gorbagana_transaction::sanitized::SanitizedTransaction,
+    gorbagana_transaction_error::{TransactionError, TransactionResult as Result},
+    gorbagana_unified_scheduler_logic::SchedulingMode,
     std::{
         fmt::{self, Debug},
         mem,
@@ -105,7 +105,7 @@ impl Debug for TimeoutListener {
 /// graph TD
 ///     Bank["Arc#lt;Bank#gt;"]
 ///
-///     subgraph solana-runtime[<span style="font-size: 70%">solana-runtime</span>]
+///     subgraph gorbagana-runtime[<span style="font-size: 70%">gorbagana-runtime</span>]
 ///         BankForks;
 ///         BankWithScheduler;
 ///         Bank;
@@ -115,13 +115,13 @@ impl Debug for TimeoutListener {
 ///         InstalledScheduler{{InstalledScheduler}};
 ///     end
 ///
-///     subgraph solana-unified-scheduler-pool[<span style="font-size: 70%">solana-unified-scheduler-pool</span>]
+///     subgraph gorbagana-unified-scheduler-pool[<span style="font-size: 70%">gorbagana-unified-scheduler-pool</span>]
 ///         SchedulerPool;
 ///         PooledScheduler;
 ///         ScheduleExecution(["schedule_execution()"]);
 ///     end
 ///
-///     subgraph solana-ledger[<span style="font-size: 60%">solana-ledger</span>]
+///     subgraph gorbagana-ledger[<span style="font-size: 60%">gorbagana-ledger</span>]
 ///         ExecuteBatch(["execute_batch()"]);
 ///     end
 ///
@@ -351,7 +351,7 @@ pub enum SchedulerStatus {
     Unavailable,
     /// Scheduler is installed into a bank; could be running or just be waiting for additional
     /// transactions. This will be transitioned to [`Self::Stale`] after certain time (i.e.
-    /// `solana_unified_scheduler_pool::DEFAULT_TIMEOUT_DURATION`) has passed if its bank hasn't
+    /// `gorbagana_unified_scheduler_pool::DEFAULT_TIMEOUT_DURATION`) has passed if its bank hasn't
     /// been frozen since installed.
     Active(InstalledSchedulerBox),
     /// Scheduler has yet to freeze its associated bank even after it's taken too long since
@@ -658,7 +658,7 @@ impl BankWithSchedulerInner {
             scheduler.maybe_transition_from_active_to_stale(|scheduler| {
                 // Return the installed scheduler back to the scheduler pool as soon as the
                 // scheduler indicates the completion of all currently-scheduled transaction
-                // executions by `solana_unified_scheduler_pool::ThreadManager::end_session()`
+                // executions by `gorbagana_unified_scheduler_pool::ThreadManager::end_session()`
                 // internally.
 
                 let id = scheduler.id();
@@ -797,7 +797,7 @@ mod tests {
             genesis_utils::{create_genesis_config, GenesisConfigInfo},
         },
         mockall::Sequence,
-        solana_system_transaction as system_transaction,
+        gorbagana_system_transaction as system_transaction,
         std::sync::Mutex,
     };
 
@@ -854,7 +854,7 @@ mod tests {
 
     #[test]
     fn test_scheduler_normal_termination() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let bank = Arc::new(Bank::default_for_tests());
         let bank = BankWithScheduler::new(
@@ -872,7 +872,7 @@ mod tests {
 
     #[test]
     fn test_no_scheduler_termination() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let bank = Arc::new(Bank::default_for_tests());
         let bank = BankWithScheduler::new_without_scheduler(bank);
@@ -884,7 +884,7 @@ mod tests {
 
     #[test]
     fn test_scheduler_termination_from_drop() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let bank = Arc::new(Bank::default_for_tests());
         let bank = BankWithScheduler::new(
@@ -896,7 +896,7 @@ mod tests {
 
     #[test]
     fn test_scheduler_pause() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let bank = Arc::new(crate::bank::tests::create_simple_test_bank(42));
         let bank = BankWithScheduler::new(
@@ -917,7 +917,7 @@ mod tests {
     }
 
     fn do_test_schedule_execution(should_succeed: bool) {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let GenesisConfigInfo {
             genesis_config,
@@ -926,7 +926,7 @@ mod tests {
         } = create_genesis_config(10_000);
         let tx0 = RuntimeTransaction::from_transaction_for_tests(system_transaction::transfer(
             &mint_keypair,
-            &solana_pubkey::new_rand(),
+            &gorbagana_pubkey::new_rand(),
             2,
             genesis_config.hash(),
         ));

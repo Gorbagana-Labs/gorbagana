@@ -10,30 +10,30 @@ use {
     clap::{value_t_or_exit, App, AppSettings, Arg, ArgMatches, SubCommand},
     console::style,
     serde::{Deserialize, Serialize},
-    solana_account::Account,
-    solana_clap_utils::{
+    gorbagana_account::Account,
+    gorbagana_clap_utils::{
         compute_budget::ComputeUnitLimit, fee_payer::*, hidden_unless_forced, input_parsers::*,
         input_validators::*, keypair::*,
     },
-    solana_cli_output::{cli_version::CliVersion, QuietDisplay, VerboseDisplay},
-    solana_clock::{Epoch, Slot},
-    solana_cluster_type::ClusterType,
-    solana_epoch_schedule::EpochSchedule,
-    solana_feature_gate_client::{
-        errors::SolanaFeatureGateError, instructions::RevokePendingActivation,
+    gorbagana_cli_output::{cli_version::CliVersion, QuietDisplay, VerboseDisplay},
+    gorbagana_clock::{Epoch, Slot},
+    gorbagana_cluster_type::ClusterType,
+    gorbagana_epoch_schedule::EpochSchedule,
+    gorbagana_feature_gate_client::{
+        errors::GorbaganaFeatureGateError, instructions::RevokePendingActivation,
     },
-    solana_feature_gate_interface::{activate_with_lamports, from_account, Feature},
-    solana_message::Message,
-    solana_pubkey::Pubkey,
-    solana_remote_wallet::remote_wallet::RemoteWalletManager,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_api::{
+    gorbagana_feature_gate_interface::{activate_with_lamports, from_account, Feature},
+    gorbagana_message::Message,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_remote_wallet::remote_wallet::RemoteWalletManager,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_rpc_client_api::{
         client_error::Error as ClientError, request::MAX_MULTIPLE_ACCOUNTS,
         response::RpcVoteAccountInfo,
     },
-    solana_sdk_ids::{incinerator, system_program},
-    solana_system_interface::error::SystemError,
-    solana_transaction::Transaction,
+    gorbagana_sdk_ids::{incinerator, system_program},
+    gorbagana_system_interface::error::SystemError,
+    gorbagana_transaction::Transaction,
     std::{cmp::Ordering, collections::HashMap, fmt, rc::Rc, str::FromStr},
 };
 
@@ -790,7 +790,7 @@ fn feature_activation_allowed(
     let cluster_info_stats = cluster_info_stats(rpc_client)?;
     let feature_set_stats = cluster_info_stats.aggregate_by_feature_set();
 
-    let tool_version = solana_version::Version::default();
+    let tool_version = gorbagana_version::Version::default();
     let tool_feature_set = tool_version.feature_set;
     let tool_software_version = CliVersion::from(semver::Version::new(
         tool_version.major as u64,
@@ -1110,5 +1110,5 @@ fn process_revoke(
         config.commitment,
         config.send_transaction_config,
     );
-    log_instruction_custom_error::<SolanaFeatureGateError>(result, config)
+    log_instruction_custom_error::<GorbaganaFeatureGateError>(result, config)
 }

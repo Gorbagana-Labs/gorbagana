@@ -1,7 +1,7 @@
 use {
-    solana_account_info::AccountInfo, solana_program_entrypoint::entrypoint,
-    solana_program_error::ProgramResult, solana_pubkey::Pubkey,
-    solana_sysvar::{clock::Clock, Sysvar}, solana_program::program::set_return_data
+    gorbagana_account_info::AccountInfo, gorbagana_program_entrypoint::entrypoint,
+    gorbagana_program_error::ProgramResult, gorbagana_pubkey::Pubkey,
+    gorbagana_sysvar::{clock::Clock, Sysvar}, gorbagana_program::program::set_return_data
 };
 
 entrypoint!(process_instruction);

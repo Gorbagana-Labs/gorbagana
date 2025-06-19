@@ -1,6 +1,6 @@
 use {
-    solana_clock::Slot,
-    solana_runtime::bank::Bank,
+    gorbagana_clock::Slot,
+    gorbagana_runtime::bank::Bank,
     std::{
         sync::{
             atomic::{AtomicU64, Ordering},

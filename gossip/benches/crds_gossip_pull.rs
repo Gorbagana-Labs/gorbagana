@@ -5,12 +5,12 @@ extern crate test;
 use {
     rand::{thread_rng, Rng},
     rayon::ThreadPoolBuilder,
-    solana_gossip::{
+    gorbagana_gossip::{
         crds::{Crds, GossipRoute},
         crds_gossip_pull::{CrdsFilter, CrdsGossipPull},
         crds_value::CrdsValue,
     },
-    solana_hash::Hash,
+    gorbagana_hash::Hash,
     std::sync::RwLock,
     test::Bencher,
 };

@@ -12,8 +12,8 @@ use {
     crossbeam_channel::{Receiver, RecvTimeoutError, SendError, Sender, TrySendError},
     histogram::Histogram,
     itertools::Itertools,
-    solana_pubkey::Pubkey,
-    solana_time_utils::timestamp,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_time_utils::timestamp,
     std::{
         cmp::Reverse,
         collections::HashMap,
@@ -516,8 +516,8 @@ mod test {
             streamer::{receiver, responder},
         },
         crossbeam_channel::unbounded,
-        solana_net_utils::bind_to_localhost,
-        solana_perf::recycler::Recycler,
+        gorbagana_net_utils::bind_to_localhost,
+        gorbagana_perf::recycler::Recycler,
         std::{
             io,
             io::Write,

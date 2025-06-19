@@ -1,9 +1,9 @@
 //! Creates the initial empty EpochRewards sysvar
 use {
-    solana_account::{AccountSharedData, WritableAccount},
-    solana_genesis_config::GenesisConfig,
-    solana_sdk_ids::sysvar,
-    solana_sysvar::{
+    gorbagana_account::{AccountSharedData, WritableAccount},
+    gorbagana_genesis_config::GenesisConfig,
+    gorbagana_sdk_ids::sysvar,
+    gorbagana_sysvar::{
         epoch_rewards::{self, EpochRewards},
         Sysvar,
     },

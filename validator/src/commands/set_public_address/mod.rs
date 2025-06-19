@@ -24,7 +24,7 @@ impl FromClapArgMatches for SetPublicAddressArgs {
             Box<dyn std::error::Error>,
         > {
             Ok(matches.value_of(arg_name).map(|host_port| {
-                solana_net_utils::parse_host_port(host_port).map_err(|err| {
+                gorbagana_net_utils::parse_host_port(host_port).map_err(|err| {
                     format!(
                         "failed to parse --{arg_long} address. It must be in the HOST:PORT format. {err}"
                     )
@@ -47,7 +47,7 @@ pub fn command<'a>() -> App<'a, 'a> {
                 .long("tpu")
                 .value_name("HOST:PORT")
                 .takes_value(true)
-                .validator(solana_net_utils::is_host_port)
+                .validator(gorbagana_net_utils::is_host_port)
                 .help("TPU address to advertise in gossip"),
         )
         .arg(
@@ -55,7 +55,7 @@ pub fn command<'a>() -> App<'a, 'a> {
                 .long("tpu-forwards")
                 .value_name("HOST:PORT")
                 .takes_value(true)
-                .validator(solana_net_utils::is_host_port)
+                .validator(gorbagana_net_utils::is_host_port)
                 .help("TPU Forwards address to advertise in gossip"),
         )
         .group(

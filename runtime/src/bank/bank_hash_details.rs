@@ -9,17 +9,17 @@ use {
         de::{self, Deserialize, Deserializer},
         ser::{Serialize, SerializeSeq, Serializer},
     },
-    solana_account::{Account, AccountSharedData, ReadableAccount},
-    solana_accounts_db::{accounts_db::PubkeyHashAccount, accounts_hash::AccountHash},
-    solana_clock::{Epoch, Slot},
-    solana_fee_structure::FeeDetails,
-    solana_hash::Hash,
-    solana_message::inner_instruction::InnerInstructionsList,
-    solana_pubkey::Pubkey,
-    solana_svm::transaction_commit_result::CommittedTransaction,
-    solana_transaction_context::TransactionReturnData,
-    solana_transaction_error::TransactionResult,
-    solana_transaction_status_client_types::UiInstruction,
+    gorbagana_account::{Account, AccountSharedData, ReadableAccount},
+    gorbagana_accounts_db::{accounts_db::PubkeyHashAccount, accounts_hash::AccountHash},
+    gorbagana_clock::{Epoch, Slot},
+    gorbagana_fee_structure::FeeDetails,
+    gorbagana_hash::Hash,
+    gorbagana_message::inner_instruction::InnerInstructionsList,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_svm::transaction_commit_result::CommittedTransaction,
+    gorbagana_transaction_context::TransactionReturnData,
+    gorbagana_transaction_error::TransactionResult,
+    gorbagana_transaction_status_client_types::UiInstruction,
     std::str::FromStr,
 };
 
@@ -36,7 +36,7 @@ pub struct BankHashDetails {
 impl BankHashDetails {
     pub fn new(bank_hash_details: Vec<SlotDetails>) -> Self {
         Self {
-            version: solana_version::version!().to_string(),
+            version: gorbagana_version::version!().to_string(),
             account_data_encoding: "base64".to_string(),
             bank_hash_details,
         }
@@ -332,7 +332,7 @@ pub mod tests {
                     rent_epoch: 123,
                 });
                 let account_pubkey = Pubkey::new_unique();
-                let account_hash = AccountHash(solana_sha256_hasher::hash("account".as_bytes()));
+                let account_hash = AccountHash(gorbagana_sha256_hasher::hash("account".as_bytes()));
                 let accounts = AccountsDetails {
                     accounts: vec![PubkeyHashAccount {
                         pubkey: account_pubkey,

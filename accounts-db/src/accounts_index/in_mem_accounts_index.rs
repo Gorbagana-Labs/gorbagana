@@ -12,10 +12,10 @@ use {
         waitable_condvar::WaitableCondvar,
     },
     rand::{thread_rng, Rng},
-    solana_bucket_map::bucket_api::BucketApi,
-    solana_clock::Slot,
-    solana_measure::measure::Measure,
-    solana_pubkey::Pubkey,
+    gorbagana_bucket_map::bucket_api::BucketApi,
+    gorbagana_clock::Slot,
+    gorbagana_measure::measure::Measure,
+    gorbagana_pubkey::Pubkey,
     std::{
         collections::{hash_map::Entry, HashMap, HashSet},
         fmt::Debug,
@@ -1678,7 +1678,7 @@ mod tests {
 
     #[test]
     fn test_gather_possible_evictions() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let startup = false;
         let ref_count = 1;
         let pks = (0..=255)
@@ -1735,7 +1735,7 @@ mod tests {
 
     #[test]
     fn test_should_evict_from_mem() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let bucket = new_for_test::<u64>();
         let mut startup = false;
         let mut current_age = 0;
@@ -1918,7 +1918,7 @@ mod tests {
 
     #[test]
     fn test_age() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let test = new_for_test::<u64>();
         assert!(test.get_should_age(test.storage.current_age()));
         assert_eq!(test.storage.count_buckets_flushed(), 0);
@@ -1941,7 +1941,7 @@ mod tests {
 
     #[test]
     fn test_update_slot_list_other() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let reclaim = UpsertReclaim::PopulateReclaims;
         let new_slot = 0;
         let info = 1;
@@ -2143,8 +2143,8 @@ mod tests {
 
     #[test]
     fn test_remove_if_slot_list_empty_entry() {
-        let key = solana_pubkey::new_rand();
-        let unknown_key = solana_pubkey::new_rand();
+        let key = gorbagana_pubkey::new_rand();
+        let unknown_key = gorbagana_pubkey::new_rand();
 
         let test = new_for_test::<u64>();
 

@@ -1,7 +1,7 @@
 [package]
-name = "solana-tpu-client"
-description = "Solana TPU Client"
-documentation = "https://docs.rs/solana-tpu-client"
+name = "gorbagana-tpu-client"
+description = "Gorbagana TPU Client"
+documentation = "https://docs.rs/gorbagana-tpu-client"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -18,8 +18,8 @@ default = ["spinner"]
 # command-line interfaces
 spinner = [
     "dep:indicatif",
-    "dep:solana-message",
-    "solana-rpc-client/spinner",
+    "dep:gorbagana-message",
+    "gorbagana-rpc-client/spinner",
 ]
 
 [dependencies]
@@ -30,22 +30,22 @@ indexmap = { workspace = true }
 indicatif = { workspace = true, optional = true }
 log = { workspace = true }
 rayon = { workspace = true }
-solana-client-traits = { workspace = true }
-solana-clock = { workspace = true }
-solana-commitment-config = { workspace = true }
-solana-connection-cache = { workspace = true }
-solana-epoch-info = { workspace = true }
-solana-measure = { workspace = true }
-solana-message = { workspace = true, optional = true }
-solana-net-utils = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-pubsub-client = { workspace = true }
-solana-quic-definitions = { workspace = true }
-solana-rpc-client = { workspace = true }
-solana-rpc-client-api = { workspace = true }
-solana-signature = { workspace = true }
-solana-signer = { workspace = true }
-solana-transaction = { workspace = true }
-solana-transaction-error = { workspace = true }
+gorbagana-client-traits = { workspace = true }
+gorbagana-clock = { workspace = true }
+gorbagana-commitment-config = { workspace = true }
+gorbagana-connection-cache = { workspace = true }
+gorbagana-epoch-info = { workspace = true }
+gorbagana-measure = { workspace = true }
+gorbagana-message = { workspace = true, optional = true }
+gorbagana-net-utils = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-pubsub-client = { workspace = true }
+gorbagana-quic-definitions = { workspace = true }
+gorbagana-rpc-client = { workspace = true }
+gorbagana-rpc-client-api = { workspace = true }
+gorbagana-signature = { workspace = true }
+gorbagana-signer = { workspace = true }
+gorbagana-transaction = { workspace = true }
+gorbagana-transaction-error = { workspace = true }
 thiserror = { workspace = true }
 tokio = { workspace = true, features = ["full"] }

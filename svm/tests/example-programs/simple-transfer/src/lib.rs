@@ -1,10 +1,10 @@
 use {
-    solana_account_info::{AccountInfo, next_account_info},
-    solana_program_entrypoint::entrypoint,
-    solana_program_error::ProgramResult,
-    solana_pubkey::Pubkey,
-    solana_program::program::invoke,
-    solana_system_interface::instruction as system_instruction,
+    gorbagana_account_info::{AccountInfo, next_account_info},
+    gorbagana_program_entrypoint::entrypoint,
+    gorbagana_program_error::ProgramResult,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_program::program::invoke,
+    gorbagana_system_interface::instruction as system_instruction,
 };
 
 entrypoint!(process_instruction);

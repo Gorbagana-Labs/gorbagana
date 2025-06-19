@@ -1,13 +1,13 @@
 //! Test mem functions
 
 use {
-    solana_account_info::AccountInfo,
-    solana_program_error::{ProgramError, ProgramResult},
-    solana_program_memory::{sol_memcmp, sol_memcpy, sol_memmove, sol_memset},
-    solana_pubkey::Pubkey,
+    gorbagana_account_info::AccountInfo,
+    gorbagana_program_error::{ProgramError, ProgramResult},
+    gorbagana_program_memory::{sol_memcmp, sol_memcpy, sol_memmove, sol_memset},
+    gorbagana_pubkey::Pubkey,
 };
 
-solana_program::entrypoint_deprecated!(process_instruction);
+gorbagana_program::entrypoint_deprecated!(process_instruction);
 pub fn process_instruction(
     _program_id: &Pubkey,
     accounts: &[AccountInfo],

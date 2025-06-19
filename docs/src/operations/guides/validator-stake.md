@@ -15,7 +15,7 @@ to the cluster. It may take some time to catch up after your validator boots.
 Use the `catchup` command to monitor your validator through this process:
 
 ```bash
-solana catchup ~/validator-keypair.json
+gorbagana catchup ~/validator-keypair.json
 ```
 
 Until your validator has caught up, it will not be able to vote successfully and
@@ -28,11 +28,11 @@ your validator and the rest of the cluster.
 ## Create Stake Keypair
 
 If you haven’t already done so, create a staking keypair. If you have completed
-this step, you should see the “validator-stake-keypair.json” in your Solana
+this step, you should see the “validator-stake-keypair.json” in your Gorbagana
 runtime directory.
 
 ```bash
-solana-keygen new -o ~/validator-stake-keypair.json
+gorbagana-keygen new -o ~/validator-stake-keypair.json
 ```
 
 ## Delegate Stake
@@ -40,13 +40,13 @@ solana-keygen new -o ~/validator-stake-keypair.json
 Now delegate 1 SOL to your validator by first creating your stake account:
 
 ```bash
-solana create-stake-account ~/validator-stake-keypair.json 1
+gorbagana create-stake-account ~/validator-stake-keypair.json 1
 ```
 
 and then delegating that stake to your validator:
 
 ```bash
-solana delegate-stake ~/validator-stake-keypair.json ~/vote-account-keypair.json
+gorbagana delegate-stake ~/validator-stake-keypair.json ~/vote-account-keypair.json
 ```
 
 > Don’t delegate your remaining SOL, as your validator will use those tokens to
@@ -56,29 +56,29 @@ Stakes can be re-delegated to another node at any time with the same command,
 but only one re-delegation is permitted per epoch:
 
 ```bash
-solana delegate-stake ~/validator-stake-keypair.json ~/some-other-vote-account-keypair.json
+gorbagana delegate-stake ~/validator-stake-keypair.json ~/some-other-vote-account-keypair.json
 ```
 
 ## Validator Stake Warm-up
 
 To combat various attacks on consensus, new stake delegations are subject to a
-[warm-up](https://solana.com/docs/economics/staking/stake-accounts#delegation-warmup-and-cooldown) period.
+[warm-up](https://gorbagana.com/docs/economics/staking/stake-accounts#delegation-warmup-and-cooldown) period.
 
 Monitor a validator's stake during warmup by:
 
-- View your vote account:`solana vote-account ~/vote-account-keypair.json` This
+- View your vote account:`gorbagana vote-account ~/vote-account-keypair.json` This
   displays the current state of all the votes the validator has submitted to the
   network.
 - View your stake account, the delegation preference and details of your
-  stake:`solana stake-account ~/validator-stake-keypair.json`
-- `solana validators` displays the current active stake of all validators,
+  stake:`gorbagana stake-account ~/validator-stake-keypair.json`
+- `gorbagana validators` displays the current active stake of all validators,
   including yours
-- `solana stake-history` shows the history of stake warming up and cooling down
+- `gorbagana stake-history` shows the history of stake warming up and cooling down
   over recent epochs
 - Look for log messages on your validator indicating your next leader slot:
-  `[2019-09-27T20:16:00.319721164Z INFO solana_core::replay_stage] <VALIDATOR_IDENTITY_PUBKEY> voted and reset PoH at tick height ####. My next leader slot is ####`
+  `[2019-09-27T20:16:00.319721164Z INFO gorbagana_core::replay_stage] <VALIDATOR_IDENTITY_PUBKEY> voted and reset PoH at tick height ####. My next leader slot is ####`
 - Once your stake is warmed up, you will see a stake balance listed for your
-  validator by running `solana validators`
+  validator by running `gorbagana validators`
 
 ## Validator Rewards
 
@@ -99,7 +99,7 @@ account.
 This is a normal transaction so the standard transaction fee will apply. The
 transaction fee range is defined by the genesis block. The actual fee will
 fluctuate based on transaction load. You can determine the current fee via the
-[RPC API “getRecentBlockhash”](https://solana.com/docs/rpc/deprecated/getrecentblockhash) before submitting
+[RPC API “getRecentBlockhash”](https://gorbagana.com/docs/rpc/deprecated/getrecentblockhash) before submitting
 a transaction.
 
 Learn more about
@@ -108,12 +108,12 @@ Learn more about
 ## Monitor Your Staked Validator
 
 Confirm your validator becomes a
-[leader](https://solana.com/docs/terminology#leader)
+[leader](https://gorbagana.com/docs/terminology#leader)
 
-- After your validator is caught up, use the `solana balance` command to monitor
+- After your validator is caught up, use the `gorbagana balance` command to monitor
   the earnings as your validator is selected as leader and collects transaction
   fees
-- Solana nodes offer a number of useful JSON-RPC methods to return information
+- Gorbagana nodes offer a number of useful JSON-RPC methods to return information
   about the network and your validator's participation. Make a request by using
   curl \(or another http client of your choosing\), specifying the desired
   method in JSON-RPC-formatted data. For example:
@@ -128,14 +128,14 @@ Confirm your validator becomes a
 
 Helpful JSON-RPC methods:
 
-- `getEpochInfo`[An epoch](https://solana.com/docs/terminology#epoch) is the
-  time, i.e. number of [slots](https://solana.com/docs/terminology#slot), for
-  which a [leader schedule](https://solana.com/docs/terminology#leader-schedule)
+- `getEpochInfo`[An epoch](https://gorbagana.com/docs/terminology#epoch) is the
+  time, i.e. number of [slots](https://gorbagana.com/docs/terminology#slot), for
+  which a [leader schedule](https://gorbagana.com/docs/terminology#leader-schedule)
   is valid. This will tell you what the current epoch is and how far into it the
   cluster is.
 - `getVoteAccounts` This will tell you how much active stake your validator
   currently has. A % of the validator's stake is activated on an epoch boundary.
-  You can learn more about staking on Solana
+  You can learn more about staking on Gorbagana
   [here](../../consensus/stake-delegation-and-rewards.md).
 - `getLeaderSchedule` At any given moment, the network expects only one
   validator to produce ledger entries. The
@@ -150,7 +150,7 @@ Before detaching your validator from the cluster, you should deactivate the
 stake that was previously delegated by running:
 
 ```bash
-solana deactivate-stake ~/validator-stake-keypair.json
+gorbagana deactivate-stake ~/validator-stake-keypair.json
 ```
 
 Stake is not deactivated immediately and instead cools down in a similar fashion

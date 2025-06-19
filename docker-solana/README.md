@@ -1,4 +1,4 @@
-## Minimal Solana Docker image
+## Minimal Gorbagana Docker image
 This image is automatically updated by CI
 
 https://hub.docker.com/r/anzaxyz/agave/

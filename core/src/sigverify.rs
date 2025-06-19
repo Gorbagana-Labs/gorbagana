@@ -4,7 +4,7 @@
 //! to the GPU.
 //!
 
-pub use solana_perf::sigverify::{
+pub use gorbagana_perf::sigverify::{
     count_packets_in_batches, ed25519_verify_cpu, ed25519_verify_disabled, init, TxOffset,
 };
 use {
@@ -14,7 +14,7 @@ use {
     },
     agave_banking_stage_ingress_types::BankingPacketBatch,
     crossbeam_channel::Sender,
-    solana_perf::{cuda_runtime::PinnedVec, packet::PacketBatch, recycler::Recycler, sigverify},
+    gorbagana_perf::{cuda_runtime::PinnedVec, packet::PacketBatch, recycler::Recycler, sigverify},
 };
 
 pub struct TransactionSigVerifier {

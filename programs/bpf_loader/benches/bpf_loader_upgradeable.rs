@@ -1,14 +1,14 @@
 use {
     criterion::{criterion_group, criterion_main, Criterion},
-    solana_account::{state_traits::StateMut, AccountSharedData},
-    solana_bpf_loader_program::Entrypoint,
-    solana_instruction::AccountMeta,
-    solana_loader_v3_interface::{
+    gorbagana_account::{state_traits::StateMut, AccountSharedData},
+    gorbagana_bpf_loader_program::Entrypoint,
+    gorbagana_instruction::AccountMeta,
+    gorbagana_loader_v3_interface::{
         instruction::UpgradeableLoaderInstruction, state::UpgradeableLoaderState,
     },
-    solana_program_runtime::invoke_context::mock_process_instruction,
-    solana_pubkey::Pubkey,
-    solana_sdk_ids::bpf_loader_upgradeable,
+    gorbagana_program_runtime::invoke_context::mock_process_instruction,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sdk_ids::bpf_loader_upgradeable,
 };
 
 #[derive(Default)]

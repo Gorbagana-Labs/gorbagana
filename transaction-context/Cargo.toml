@@ -1,7 +1,7 @@
 [package]
-name = "solana-transaction-context"
-description = "Solana data shared between program runtime and built-in programs as well as SBF programs."
-documentation = "https://docs.rs/solana-transaction-context"
+name = "gorbagana-transaction-context"
+description = "Gorbagana data shared between program runtime and built-in programs as well as SBF programs."
+documentation = "https://docs.rs/gorbagana-transaction-context"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -15,33 +15,33 @@ all-features = true
 rustdoc-args = ["--cfg=docsrs"]
 
 [features]
-bincode = ["dep:bincode", "serde", "solana-account/bincode"]
-debug-signature = ["dep:solana-signature"]
+bincode = ["dep:bincode", "serde", "gorbagana-account/bincode"]
+debug-signature = ["dep:gorbagana-signature"]
 dev-context-only-utils = [
     "bincode",
     "debug-signature",
-    "solana-account/dev-context-only-utils",
+    "gorbagana-account/dev-context-only-utils",
 ]
 serde = ["dep:serde", "dep:serde_derive"]
 
 [dependencies]
 serde = { workspace = true, optional = true }
 serde_derive = { workspace = true, optional = true }
-solana-account = { workspace = true }
-solana-instruction = { workspace = true, features = ["std"] }
-solana-instructions-sysvar = { workspace = true }
-solana-pubkey = { workspace = true }
+gorbagana-account = { workspace = true }
+gorbagana-instruction = { workspace = true, features = ["std"] }
+gorbagana-instructions-sysvar = { workspace = true }
+gorbagana-pubkey = { workspace = true }
 
-[target.'cfg(not(target_os = "solana"))'.dependencies]
+[target.'cfg(not(target_os = "gorbagana"))'.dependencies]
 bincode = { workspace = true, optional = true }
-solana-rent = { workspace = true }
-solana-sdk-ids = { workspace = true }
-solana-signature = { workspace = true, optional = true }
+gorbagana-rent = { workspace = true }
+gorbagana-sdk-ids = { workspace = true }
+gorbagana-signature = { workspace = true, optional = true }
 
 [dev-dependencies]
-solana-account-info = { workspace = true }
-solana-system-interface = { workspace = true }
-solana-transaction-context = { path = ".", features = [
+gorbagana-account-info = { workspace = true }
+gorbagana-system-interface = { workspace = true }
+gorbagana-transaction-context = { path = ".", features = [
     "dev-context-only-utils",
 ] }
 static_assertions = { workspace = true }

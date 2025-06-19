@@ -1,11 +1,11 @@
 use {
     agave_feature_set::{ed25519_precompile_verify_strict, FeatureSet},
     ed25519_dalek::{ed25519::signature::Signature, Verifier},
-    solana_ed25519_program::{
+    gorbagana_ed25519_program::{
         Ed25519SignatureOffsets, PUBKEY_SERIALIZED_SIZE, SIGNATURE_OFFSETS_SERIALIZED_SIZE,
         SIGNATURE_OFFSETS_START, SIGNATURE_SERIALIZED_SIZE,
     },
-    solana_precompile_error::PrecompileError,
+    gorbagana_precompile_error::PrecompileError,
 };
 
 pub fn verify(
@@ -120,10 +120,10 @@ pub mod tests {
         ed25519_dalek::Signer as EdSigner,
         hex,
         rand0_7::{thread_rng, Rng},
-        solana_ed25519_program::{
+        gorbagana_ed25519_program::{
             new_ed25519_instruction_with_signature, offsets_to_ed25519_instruction, DATA_START,
         },
-        solana_instruction::Instruction,
+        gorbagana_instruction::Instruction,
         std::vec,
     };
 
@@ -175,7 +175,7 @@ pub mod tests {
         instruction_data.extend_from_slice(message);
 
         Instruction {
-            program_id: solana_sdk_ids::ed25519_program::id(),
+            program_id: gorbagana_sdk_ids::ed25519_program::id(),
             accounts: vec![],
             data: instruction_data,
         }
@@ -204,7 +204,7 @@ pub mod tests {
 
     #[test]
     fn test_invalid_offsets() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let mut instruction_data = vec![0u8; DATA_START];
         let offsets = Ed25519SignatureOffsets::default();
@@ -337,7 +337,7 @@ pub mod tests {
 
     #[test]
     fn test_ed25519() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let privkey = ed25519_dalek::Keypair::generate(&mut thread_rng());
         let message_arr = b"hello";
@@ -375,7 +375,7 @@ pub mod tests {
 
     #[test]
     fn test_offsets_to_ed25519_instruction() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let privkey = ed25519_dalek::Keypair::generate(&mut thread_rng());
         let messages: [&[u8]; 3] = [b"hello", b"IBRL", b"goodbye"];
@@ -444,7 +444,7 @@ pub mod tests {
 
     #[test]
     fn test_ed25519_malleability() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         // sig created via ed25519_dalek: both pass
         let privkey = ed25519_dalek::Keypair::generate(&mut thread_rng());

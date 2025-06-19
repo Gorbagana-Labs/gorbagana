@@ -16,12 +16,12 @@ fn log_magenta(msg: &str) {
     stdout.reset().unwrap();
 }
 
-pub(crate) fn setup_solana_logging() {
+pub(crate) fn setup_gorbagana_logging() {
     #[rustfmt::skip]
-    solana_logger::setup_with_default(
-        "solana_sbpf::vm=debug,\
-            solana_runtime::message_processor=debug,\
-            solana_runtime::system_instruction_processor=trace",
+    gorbagana_logger::setup_with_default(
+        "gorbagana_sbpf::vm=debug,\
+            gorbagana_runtime::message_processor=debug,\
+            gorbagana_runtime::system_instruction_processor=trace",
     );
 }
 

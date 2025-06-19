@@ -1,14 +1,14 @@
 use {
     serde::{Deserialize, Serialize},
-    solana_account_decoder::{
+    gorbagana_account_decoder::{
         parse_token::{real_number_string_trimmed, UiTokenAmount},
         StringAmount,
     },
-    solana_message::v0::LoadedAddresses,
-    solana_serde::default_on_eof,
-    solana_transaction_context::TransactionReturnData,
-    solana_transaction_error::{TransactionError, TransactionResult as Result},
-    solana_transaction_status::{
+    gorbagana_message::v0::LoadedAddresses,
+    gorbagana_serde::default_on_eof,
+    gorbagana_transaction_context::TransactionReturnData,
+    gorbagana_transaction_error::{TransactionError, TransactionResult as Result},
+    gorbagana_transaction_status::{
         InnerInstructions, Reward, RewardType, TransactionStatusMeta, TransactionTokenBalance,
     },
     std::str::FromStr,
@@ -285,8 +285,8 @@ impl TryFrom<TransactionStatusMeta> for StoredTransactionStatusMeta {
 #[cfg(test)]
 mod tests {
     use {
-        crate::StoredTransactionError, solana_instruction::error::InstructionError,
-        solana_transaction_error::TransactionError, test_case::test_case,
+        crate::StoredTransactionError, gorbagana_instruction::error::InstructionError,
+        gorbagana_transaction_error::TransactionError, test_case::test_case,
     };
 
     #[test_case(TransactionError::InsufficientFundsForFee; "Named variant error")]

@@ -1,8 +1,8 @@
 use {
-    solana_clock::Slot,
-    solana_gossip::cluster_info::ClusterInfo,
-    solana_hash::Hash,
-    solana_runtime::{
+    gorbagana_clock::Slot,
+    gorbagana_gossip::cluster_info::ClusterInfo,
+    gorbagana_hash::Hash,
+    gorbagana_runtime::{
         snapshot_hash::{
             FullSnapshotHash, IncrementalSnapshotHash, SnapshotHash, StartingSnapshotHashes,
         },

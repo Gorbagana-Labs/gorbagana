@@ -1,7 +1,7 @@
 //! Stats for Accounts Background Services
 
 use {
-    solana_metrics::datapoint_info,
+    gorbagana_metrics::datapoint_info,
     std::time::{Duration, Instant},
 };
 

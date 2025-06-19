@@ -1,8 +1,8 @@
 use {
     crate::compute_budget_instruction_details::*, agave_feature_set::FeatureSet,
-    solana_compute_budget::compute_budget_limits::*, solana_pubkey::Pubkey,
-    solana_svm_transaction::instruction::SVMInstruction,
-    solana_transaction_error::TransactionError,
+    gorbagana_compute_budget::compute_budget_limits::*, gorbagana_pubkey::Pubkey,
+    gorbagana_svm_transaction::instruction::SVMInstruction,
+    gorbagana_transaction_error::TransactionError,
 };
 
 /// Processing compute_budget could be part of tx sanitizing, failed to process
@@ -22,17 +22,17 @@ pub fn process_compute_budget_instructions<'a>(
 mod tests {
     use {
         super::*,
-        solana_compute_budget_interface::ComputeBudgetInstruction,
-        solana_hash::Hash,
-        solana_instruction::{error::InstructionError, Instruction},
-        solana_keypair::Keypair,
-        solana_message::Message,
-        solana_pubkey::Pubkey,
-        solana_signer::Signer,
-        solana_svm_transaction::svm_message::SVMMessage,
-        solana_system_interface::instruction::transfer,
-        solana_transaction::{sanitized::SanitizedTransaction, Transaction},
-        solana_transaction_error::TransactionError,
+        gorbagana_compute_budget_interface::ComputeBudgetInstruction,
+        gorbagana_hash::Hash,
+        gorbagana_instruction::{error::InstructionError, Instruction},
+        gorbagana_keypair::Keypair,
+        gorbagana_message::Message,
+        gorbagana_pubkey::Pubkey,
+        gorbagana_signer::Signer,
+        gorbagana_svm_transaction::svm_message::SVMMessage,
+        gorbagana_system_interface::instruction::transfer,
+        gorbagana_transaction::{sanitized::SanitizedTransaction, Transaction},
+        gorbagana_transaction_error::TransactionError,
         std::num::NonZeroU32,
     };
 

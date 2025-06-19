@@ -1,4 +1,4 @@
-use {solana_message::v0, solana_pubkey::Pubkey};
+use {gorbagana_message::v0, gorbagana_pubkey::Pubkey};
 
 /// A non-owning version of [`v0::MessageAddressTableLookup`].
 /// This simply references the data in the original message.

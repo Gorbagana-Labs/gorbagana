@@ -4,7 +4,7 @@ use {
         MAX_THREAD_NAME_CHARS,
     },
     serde::{Deserialize, Serialize},
-    solana_metrics::datapoint_info,
+    gorbagana_metrics::datapoint_info,
     std::{
         ops::Deref,
         sync::{

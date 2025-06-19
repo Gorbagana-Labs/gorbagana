@@ -4,7 +4,7 @@ use {
         accounts_db::AccountStorageEntry,
         accounts_file::{AccountsFile, InternalsForArchive},
     },
-    solana_clock::Slot,
+    gorbagana_clock::Slot,
     std::{
         fs::File,
         io::{self, Read, Seek, SeekFrom},
@@ -138,8 +138,8 @@ mod tests {
         },
         log::*,
         rand::{rngs::StdRng, seq::SliceRandom, SeedableRng},
-        solana_account::AccountSharedData,
-        solana_pubkey::Pubkey,
+        gorbagana_account::AccountSharedData,
+        gorbagana_pubkey::Pubkey,
         std::iter,
         test_case::test_case,
     };
@@ -219,7 +219,7 @@ mod tests {
         number_of_accounts_to_remove: usize,
         storage_access: StorageAccess,
     ) {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let (storage, _temp_dirs) =
             create_storage_for_storage_reader(0, AccountsFileProvider::AppendVec);
 

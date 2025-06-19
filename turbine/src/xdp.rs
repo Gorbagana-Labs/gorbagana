@@ -12,7 +12,7 @@ use {
 };
 use {
     crossbeam_channel::{Sender, TrySendError},
-    solana_ledger::shred,
+    gorbagana_ledger::shred,
     std::{error::Error, net::SocketAddr, thread},
 };
 

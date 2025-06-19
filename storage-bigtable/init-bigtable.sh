@@ -5,7 +5,7 @@
 
 set -e
 
-instance=solana-ledger
+instance=gorbagana-ledger
 
 cbt=(
   cbt

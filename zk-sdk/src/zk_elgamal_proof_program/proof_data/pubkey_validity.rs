@@ -7,7 +7,7 @@
 
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use {
     crate::{
         encryption::elgamal::ElGamalKeypair,
@@ -55,7 +55,7 @@ pub struct PubkeyValidityProofContext {
     pub pubkey: PodElGamalPubkey, // 32 bytes
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 #[cfg_attr(target_arch = "wasm32", wasm_bindgen)]
 impl PubkeyValidityProofData {
     pub fn new(keypair: &ElGamalKeypair) -> Result<Self, ProofGenerationError> {
@@ -79,7 +79,7 @@ impl ZkProofData<PubkeyValidityProofContext> for PubkeyValidityProofData {
         &self.context
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     fn verify_proof(&self) -> Result<(), ProofVerificationError> {
         let mut transcript = self.context.new_transcript();
         let pubkey = self.context.pubkey.try_into()?;
@@ -89,7 +89,7 @@ impl ZkProofData<PubkeyValidityProofContext> for PubkeyValidityProofData {
 }
 
 #[allow(non_snake_case)]
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl PubkeyValidityProofContext {
     fn new_transcript(&self) -> Transcript {
         let mut transcript = Transcript::new(b"pubkey-validity-instruction");

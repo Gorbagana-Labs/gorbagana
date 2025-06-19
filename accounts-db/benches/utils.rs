@@ -8,10 +8,10 @@ use {
         Rng, SeedableRng,
     },
     rand_chacha::ChaChaRng,
-    solana_account::AccountSharedData,
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
-    solana_rent_collector::RENT_EXEMPT_RENT_EPOCH,
+    gorbagana_account::AccountSharedData,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent::Rent,
+    gorbagana_rent_collector::RENT_EXEMPT_RENT_EPOCH,
     std::iter,
 };
 

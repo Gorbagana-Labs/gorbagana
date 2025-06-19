@@ -1,27 +1,27 @@
 #![cfg(test)]
 use {
-    solana_account::Account,
-    solana_clock::{Slot, MAX_PROCESSING_AGE},
-    solana_compute_budget::compute_budget_limits::MAX_BUILTIN_ALLOCATION_COMPUTE_UNIT_LIMIT,
-    solana_compute_budget_interface::ComputeBudgetInstruction,
-    solana_cost_model::cost_model::CostModel,
-    solana_genesis_config::{create_genesis_config, GenesisConfig},
-    solana_instruction::{error::InstructionError, AccountMeta, Instruction},
-    solana_keypair::Keypair,
-    solana_loader_v3_interface::state::UpgradeableLoaderState,
-    solana_message::Message,
-    solana_native_token::sol_to_lamports,
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
-    solana_runtime::{bank::Bank, bank_forks::BankForks},
-    solana_runtime_transaction::runtime_transaction::RuntimeTransaction,
-    solana_sdk_ids::{bpf_loader, bpf_loader_upgradeable, secp256k1_program},
-    solana_signer::Signer,
-    solana_svm::transaction_processor::ExecutionRecordingConfig,
-    solana_system_interface::instruction as system_instruction,
-    solana_timings::ExecuteTimings,
-    solana_transaction::Transaction,
-    solana_transaction_error::{TransactionError, TransactionResult as Result},
+    gorbagana_account::Account,
+    gorbagana_clock::{Slot, MAX_PROCESSING_AGE},
+    gorbagana_compute_budget::compute_budget_limits::MAX_BUILTIN_ALLOCATION_COMPUTE_UNIT_LIMIT,
+    gorbagana_compute_budget_interface::ComputeBudgetInstruction,
+    gorbagana_cost_model::cost_model::CostModel,
+    gorbagana_genesis_config::{create_genesis_config, GenesisConfig},
+    gorbagana_instruction::{error::InstructionError, AccountMeta, Instruction},
+    gorbagana_keypair::Keypair,
+    gorbagana_loader_v3_interface::state::UpgradeableLoaderState,
+    gorbagana_message::Message,
+    gorbagana_native_token::sol_to_lamports,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent::Rent,
+    gorbagana_runtime::{bank::Bank, bank_forks::BankForks},
+    gorbagana_runtime_transaction::runtime_transaction::RuntimeTransaction,
+    gorbagana_sdk_ids::{bpf_loader, bpf_loader_upgradeable, secp256k1_program},
+    gorbagana_signer::Signer,
+    gorbagana_svm::transaction_processor::ExecutionRecordingConfig,
+    gorbagana_system_interface::instruction as system_instruction,
+    gorbagana_timings::ExecuteTimings,
+    gorbagana_transaction::Transaction,
+    gorbagana_transaction_error::{TransactionError, TransactionResult as Result},
     std::sync::{Arc, RwLock},
 };
 
@@ -206,7 +206,7 @@ impl TestSetup {
             );
         }
 
-        solana_loader_v3_interface::instruction::deploy_with_max_program_len(
+        gorbagana_loader_v3_interface::instruction::deploy_with_max_program_len(
             &payer_address,
             &program_address,
             &buffer_address,
@@ -256,8 +256,8 @@ fn test_builtin_ix_cost_adjustment_with_cu_limit_high() {
     // Result: adjustment = 500_000 - 150 -150
     let expected = TestResult {
         cost_adjustment: cu_limit as i64
-            - solana_system_program::system_processor::DEFAULT_COMPUTE_UNITS as i64
-            - solana_compute_budget_program::DEFAULT_COMPUTE_UNITS as i64,
+            - gorbagana_system_program::system_processor::DEFAULT_COMPUTE_UNITS as i64
+            - gorbagana_compute_budget_program::DEFAULT_COMPUTE_UNITS as i64,
         execution_status: Ok(()),
     };
 
@@ -301,8 +301,8 @@ fn test_builtin_ix_cost_adjustment_with_memo_and_cu_limit() {
     let (memo_ix, memo_ix_cost) = test_setup.memo_ix();
     // request exact amount CUs needed to execute a transafer, compute_budget and a memo ix
     let cu_limit = memo_ix_cost
-        + solana_system_program::system_processor::DEFAULT_COMPUTE_UNITS as u32
-        + solana_compute_budget_program::DEFAULT_COMPUTE_UNITS as u32;
+        + gorbagana_system_program::system_processor::DEFAULT_COMPUTE_UNITS as u32
+        + gorbagana_compute_budget_program::DEFAULT_COMPUTE_UNITS as u32;
 
     // A simple transfer ix, and a bpf ix (memo_ix) that needs 356_963 CUs,
     // and a compute-budget instruction that requests exact amount CUs.
@@ -332,8 +332,8 @@ fn test_builtin_ix_cost_adjustment_with_bpf_v3_no_cu_limit() {
     // Result: adjustment = 3_000 - 2_370 - 150 = 480
     let expected = TestResult {
         cost_adjustment: MAX_BUILTIN_ALLOCATION_COMPUTE_UNIT_LIMIT as i64
-            - solana_bpf_loader_program::UPGRADEABLE_LOADER_COMPUTE_UNITS as i64
-            - solana_system_program::system_processor::DEFAULT_COMPUTE_UNITS as i64,
+            - gorbagana_bpf_loader_program::UPGRADEABLE_LOADER_COMPUTE_UNITS as i64
+            - gorbagana_system_program::system_processor::DEFAULT_COMPUTE_UNITS as i64,
         execution_status: Ok(()),
     };
 
@@ -345,9 +345,9 @@ fn test_builtin_ix_cost_adjustment_with_bpf_v3_no_cu_limit() {
 #[test]
 fn test_builtin_ix_cost_adjustment_with_bpf_v3_and_cu_limit_high() {
     let cu_limit = 500_000;
-    let tx_execution_cost = solana_bpf_loader_program::UPGRADEABLE_LOADER_COMPUTE_UNITS
-        + solana_system_program::system_processor::DEFAULT_COMPUTE_UNITS
-        + solana_compute_budget_program::DEFAULT_COMPUTE_UNITS;
+    let tx_execution_cost = gorbagana_bpf_loader_program::UPGRADEABLE_LOADER_COMPUTE_UNITS
+        + gorbagana_system_program::system_processor::DEFAULT_COMPUTE_UNITS
+        + gorbagana_compute_budget_program::DEFAULT_COMPUTE_UNITS;
 
     // A BPF Loader v3 ix only, that CPIs into System instructions; and a compute-budget
     // instruction requests enough CU Limit
@@ -378,7 +378,7 @@ fn test_builtin_ix_set_cu_price_only() {
     // Result: adjustment = 3_000 - 150 = 2_850
     let expected = TestResult {
         cost_adjustment: MAX_BUILTIN_ALLOCATION_COMPUTE_UNIT_LIMIT as i64
-            - solana_compute_budget_program::DEFAULT_COMPUTE_UNITS as i64,
+            - gorbagana_compute_budget_program::DEFAULT_COMPUTE_UNITS as i64,
         execution_status: Ok(()),
     };
     assert_eq!(

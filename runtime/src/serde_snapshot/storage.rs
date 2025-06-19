@@ -1,7 +1,7 @@
 use {
     serde::{Deserialize, Serialize},
-    solana_accounts_db::accounts_db::AccountStorageEntry,
-    solana_clock::Slot,
+    gorbagana_accounts_db::accounts_db::AccountStorageEntry,
+    gorbagana_clock::Slot,
 };
 
 /// The serialized AccountsFileId type is fixed as usize
@@ -48,4 +48,4 @@ impl SerializableStorage for SerializableAccountStorageEntry {
 }
 
 #[cfg(feature = "frozen-abi")]
-impl solana_frozen_abi::abi_example::TransparentAsHelper for SerializableAccountStorageEntry {}
+impl gorbagana_frozen_abi::abi_example::TransparentAsHelper for SerializableAccountStorageEntry {}

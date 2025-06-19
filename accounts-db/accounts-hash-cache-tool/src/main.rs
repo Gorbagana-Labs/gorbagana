@@ -8,13 +8,13 @@ use {
     },
     memmap2::Mmap,
     rayon::prelude::*,
-    solana_accounts_db::{
+    gorbagana_accounts_db::{
         accounts_hash::AccountHash, parse_cache_hash_data_filename,
         pubkey_bins::PubkeyBinCalculator24, CacheHashDataFileEntry, CacheHashDataFileHeader,
         ParsedCacheHashDataFilename,
     },
-    solana_clap_utils::input_parsers::values_of,
-    solana_pubkey::Pubkey,
+    gorbagana_clap_utils::input_parsers::values_of,
+    gorbagana_pubkey::Pubkey,
     std::{
         cmp::{self, Ordering},
         fs::{self, File, Metadata},
@@ -42,7 +42,7 @@ const DEFAULT_BINS: &str = "8192";
 fn main() -> Result<()> {
     let matches = App::new(crate_name!())
         .about(crate_description!())
-        .version(solana_version::version!())
+        .version(gorbagana_version::version!())
         .global_setting(AppSettings::ArgRequiredElseHelp)
         .global_setting(AppSettings::ColoredHelp)
         .global_setting(AppSettings::InferSubcommands)

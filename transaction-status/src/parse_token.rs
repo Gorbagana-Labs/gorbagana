@@ -10,12 +10,12 @@ use {
         token_metadata::*, transfer_fee::*, transfer_hook::*,
     },
     serde_json::{json, Map, Value},
-    solana_account_decoder::{
+    gorbagana_account_decoder::{
         parse_account_data::SplTokenAdditionalDataV2, parse_token::token_amount_to_ui_amount_v3,
     },
-    solana_message::{compiled_instruction::CompiledInstruction, AccountKeys},
-    solana_program_option::COption,
-    solana_pubkey::Pubkey,
+    gorbagana_message::{compiled_instruction::CompiledInstruction, AccountKeys},
+    gorbagana_program_option::COption,
+    gorbagana_pubkey::Pubkey,
     spl_token_2022::{
         extension::ExtensionType,
         instruction::{AuthorityType, TokenInstruction},
@@ -886,7 +886,7 @@ fn map_coption_pubkey(pubkey: COption<Pubkey>) -> Option<String> {
 #[cfg(test)]
 mod test {
     use {
-        super::*, solana_message::Message, solana_pubkey::Pubkey, spl_token_2022::instruction::*,
+        super::*, gorbagana_message::Message, gorbagana_pubkey::Pubkey, spl_token_2022::instruction::*,
         std::iter::repeat_with,
     };
 
@@ -894,7 +894,7 @@ mod test {
         let mint_pubkey = Pubkey::new_unique();
         let mint_authority = Pubkey::new_unique();
         let freeze_authority = Pubkey::new_unique();
-        let rent_sysvar = solana_sdk_ids::sysvar::rent::id();
+        let rent_sysvar = gorbagana_sdk_ids::sysvar::rent::id();
 
         // Test InitializeMint variations
         let initialize_mint_ix = initialize_mint(
@@ -1796,14 +1796,14 @@ mod test {
                 info: json!({
                    "payer": payer.to_string(),
                    "nativeMint": spl_token_2022::native_mint::id().to_string(),
-                   "systemProgram": solana_sdk_ids::system_program::id().to_string(),
+                   "systemProgram": gorbagana_sdk_ids::system_program::id().to_string(),
                 })
             }
         );
     }
 
     fn test_token_ix_not_enough_keys(program_id: &Pubkey) {
-        let keys: Vec<Pubkey> = repeat_with(solana_pubkey::new_rand).take(10).collect();
+        let keys: Vec<Pubkey> = repeat_with(gorbagana_pubkey::new_rand).take(10).collect();
 
         // Test InitializeMint variations
         let initialize_mint_ix =

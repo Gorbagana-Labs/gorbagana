@@ -1,24 +1,24 @@
 #![allow(clippy::arithmetic_side_effects)]
 use {
     log::*,
-    solana_bench_tps::{
+    gorbagana_bench_tps::{
         bench::{do_bench_tps, max_lamports_for_prioritization},
         cli::{self, ExternalClientType},
         keypairs::get_keypairs,
         send_batch::{generate_durable_nonce_accounts, generate_keypairs},
     },
-    solana_client::connection_cache::ConnectionCache,
-    solana_commitment_config::CommitmentConfig,
-    solana_fee_calculator::FeeRateGovernor,
-    solana_genesis::Base64Account,
-    solana_keypair::Keypair,
-    solana_pubkey::Pubkey,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_signer::Signer,
-    solana_streamer::streamer::StakedNodes,
-    solana_system_interface::program as system_program,
-    solana_tps_client::TpsClient,
-    solana_tpu_client::tpu_client::{TpuClient, TpuClientConfig},
+    gorbagana_client::connection_cache::ConnectionCache,
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_fee_calculator::FeeRateGovernor,
+    gorbagana_genesis::Base64Account,
+    gorbagana_keypair::Keypair,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_signer::Signer,
+    gorbagana_streamer::streamer::StakedNodes,
+    gorbagana_system_interface::program as system_program,
+    gorbagana_tps_client::TpsClient,
+    gorbagana_tpu_client::tpu_client::{TpuClient, TpuClientConfig},
     std::{
         collections::HashMap,
         fs::File,
@@ -165,10 +165,10 @@ fn create_client(
 }
 
 fn main() {
-    solana_logger::setup_with_default_filter();
-    solana_metrics::set_panic_hook("bench-tps", /*version:*/ None);
+    gorbagana_logger::setup_with_default_filter();
+    gorbagana_metrics::set_panic_hook("bench-tps", /*version:*/ None);
 
-    let matches = cli::build_args(solana_version::version!()).get_matches();
+    let matches = cli::build_args(gorbagana_version::version!()).get_matches();
     let cli_config = match cli::parse_args(&matches) {
         Ok(config) => config,
         Err(error) => {
@@ -255,7 +255,7 @@ fn main() {
         );
         client
             .get_account(&instruction_padding_config.program_id)
-            .expect("Instruction padding program must be deployed to this cluster. Deploy the program using `solana program deploy ./bench-tps/tests/fixtures/spl_instruction_padding.so` and pass the resulting program id with `--instruction-padding-program-id`");
+            .expect("Instruction padding program must be deployed to this cluster. Deploy the program using `gorbagana program deploy ./bench-tps/tests/fixtures/spl_instruction_padding.so` and pass the resulting program id with `--instruction-padding-program-id`");
     }
     let keypairs = get_keypairs(
         client.clone(),

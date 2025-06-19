@@ -5,14 +5,14 @@
 /// records if stake information is not available (can happen for very short epochs).
 use {
     crate::{cluster_slots_service::slot_supporters::SlotSupporters, consensus::Stake},
-    solana_clock::{Epoch, Slot},
-    solana_epoch_schedule::EpochSchedule,
-    solana_gossip::{
+    gorbagana_clock::{Epoch, Slot},
+    gorbagana_epoch_schedule::EpochSchedule,
+    gorbagana_gossip::{
         cluster_info::ClusterInfo, contact_info::ContactInfo, crds::Cursor, epoch_slots::EpochSlots,
     },
-    solana_pubkey::Pubkey,
-    solana_runtime::{bank::Bank, epoch_stakes::VersionedEpochStakes},
-    solana_time_utils::AtomicInterval,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_runtime::{bank::Bank, epoch_stakes::VersionedEpochStakes},
+    gorbagana_time_utils::AtomicInterval,
     std::{
         collections::{HashMap, VecDeque},
         hash::RandomState,
@@ -30,7 +30,7 @@ use {
 // if we are really really far behind.
 const CLUSTER_SLOTS_TRIM_SIZE: usize = 50000;
 
-//This is intended to be switched to solana_pubkey::PubkeyHasherBuilder
+//This is intended to be switched to gorbagana_pubkey::PubkeyHasherBuilder
 type PubkeyHasherBuilder = RandomState;
 pub(crate) type ValidatorStakesMap = HashMap<Pubkey, Stake, PubkeyHasherBuilder>;
 
@@ -695,7 +695,7 @@ mod tests {
 
     #[test]
     fn test_best_peer_3() {
-        solana_logger::setup_with_default("info");
+        gorbagana_logger::setup_with_default("info");
         let cs = ClusterSlots::default();
         let pk1 = Pubkey::new_unique();
         let pk2 = Pubkey::new_unique();

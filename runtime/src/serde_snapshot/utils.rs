@@ -3,7 +3,7 @@ use serde::{
     Serialize, Serializer,
 };
 #[cfg(all(test, feature = "frozen-abi"))]
-use solana_frozen_abi::abi_example::TransparentAsHelper;
+use gorbagana_frozen_abi::abi_example::TransparentAsHelper;
 
 // consumes an iterator and returns an object that will serialize as a serde seq
 #[allow(dead_code)]

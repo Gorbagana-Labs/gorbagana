@@ -2,7 +2,7 @@
 use {crate::io_uring::dir_remover::RingDirRemover, agave_io_uring::io_uring_supported};
 use {
     log::*,
-    solana_measure::measure_time,
+    gorbagana_measure::measure_time,
     std::{
         collections::HashSet,
         fs, io,

@@ -1,14 +1,14 @@
 use {
     crate::crds_data::sanitize_wallclock,
     itertools::Itertools,
-    solana_clock::Slot,
-    solana_ledger::{
+    gorbagana_clock::Slot,
+    gorbagana_ledger::{
         blockstore::BlockstoreError,
         blockstore_meta::{DuplicateSlotProof, ErasureMeta},
         shred::{self, Shred, ShredType},
     },
-    solana_pubkey::Pubkey,
-    solana_sanitize::{Sanitize, SanitizeError},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sanitize::{Sanitize, SanitizeError},
     std::{
         collections::{hash_map::Entry, HashMap},
         convert::TryFrom,
@@ -193,7 +193,7 @@ where
     // erasure sets. However this is not technically exhaustive, as any 2 shreds with
     // different but overlapping erasure sets can be considered duplicate and need not be
     // a part of the same fec set. Further work to enhance detection is planned in
-    // https://github.com/solana-labs/solana/issues/33037
+    // https://github.com/gorbagana-labs/gorbagana/issues/33037
     if shred1.fec_set_index() == shred2.fec_set_index()
         && !ErasureMeta::check_erasure_consistency(shred1, shred2)
     {
@@ -337,13 +337,13 @@ pub(crate) mod tests {
     use {
         super::*,
         rand::Rng,
-        solana_entry::entry::Entry,
-        solana_hash::Hash,
-        solana_keypair::Keypair,
-        solana_ledger::shred::{ProcessShredsStats, ReedSolomonCache, Shredder},
-        solana_signature::Signature,
-        solana_signer::Signer,
-        solana_system_transaction::transfer,
+        gorbagana_entry::entry::Entry,
+        gorbagana_hash::Hash,
+        gorbagana_keypair::Keypair,
+        gorbagana_ledger::shred::{ProcessShredsStats, ReedSolomonCache, Shredder},
+        gorbagana_signature::Signature,
+        gorbagana_signer::Signer,
+        gorbagana_system_transaction::transfer,
         std::sync::Arc,
         test_case::test_case,
     };

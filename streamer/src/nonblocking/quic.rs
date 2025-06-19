@@ -19,21 +19,21 @@ use {
     quinn_proto::VarIntBoundsExceeded,
     rand::{thread_rng, Rng},
     smallvec::SmallVec,
-    solana_keypair::Keypair,
-    solana_measure::measure::Measure,
-    solana_packet::{Meta, PACKET_DATA_SIZE},
-    solana_perf::packet::{BytesPacket, BytesPacketBatch, PacketBatch, PACKETS_PER_BATCH},
-    solana_pubkey::Pubkey,
-    solana_quic_definitions::{
+    gorbagana_keypair::Keypair,
+    gorbagana_measure::measure::Measure,
+    gorbagana_packet::{Meta, PACKET_DATA_SIZE},
+    gorbagana_perf::packet::{BytesPacket, BytesPacketBatch, PacketBatch, PACKETS_PER_BATCH},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_quic_definitions::{
         QUIC_CONNECTION_HANDSHAKE_TIMEOUT, QUIC_MAX_STAKED_CONCURRENT_STREAMS,
         QUIC_MAX_STAKED_RECEIVE_WINDOW_RATIO, QUIC_MAX_UNSTAKED_CONCURRENT_STREAMS,
         QUIC_MIN_STAKED_CONCURRENT_STREAMS, QUIC_MIN_STAKED_RECEIVE_WINDOW_RATIO,
         QUIC_TOTAL_STAKED_CONCURRENT_STREAMS, QUIC_UNSTAKED_RECEIVE_WINDOW_RATIO,
     },
-    solana_signature::Signature,
-    solana_time_utils as timing,
-    solana_tls_utils::get_pubkey_from_tls_certificate,
-    solana_transaction_metrics_tracker::signature_if_should_track_packet,
+    gorbagana_signature::Signature,
+    gorbagana_time_utils as timing,
+    gorbagana_tls_utils::get_pubkey_from_tls_certificate,
+    gorbagana_transaction_metrics_tracker::signature_if_should_track_packet,
     std::{
         array,
         fmt,
@@ -68,7 +68,7 @@ use {
 
 pub const DEFAULT_WAIT_FOR_CHUNK_TIMEOUT: Duration = Duration::from_secs(2);
 
-pub const ALPN_TPU_PROTOCOL_ID: &[u8] = b"solana-tpu";
+pub const ALPN_TPU_PROTOCOL_ID: &[u8] = b"gorbagana-tpu";
 
 const CONNECTION_CLOSE_CODE_DROPPED_ENTRY: u32 = 1;
 const CONNECTION_CLOSE_REASON_DROPPED_ENTRY: &[u8] = b"dropped";
@@ -90,13 +90,13 @@ const CONNECTION_CLOSE_REASON_INVALID_STREAM: &[u8] = b"invalid_stream";
 /// per IP address. Might be adjusted later.
 #[deprecated(
     since = "2.2.0",
-    note = "Use solana_streamer::quic::DEFAULT_MAX_CONNECTIONS_PER_IPADDR_PER_MINUTE"
+    note = "Use gorbagana_streamer::quic::DEFAULT_MAX_CONNECTIONS_PER_IPADDR_PER_MINUTE"
 )]
 pub use crate::quic::DEFAULT_MAX_CONNECTIONS_PER_IPADDR_PER_MINUTE;
 /// Limit to 250K PPS
 #[deprecated(
     since = "2.2.0",
-    note = "Use solana_streamer::quic::DEFAULT_MAX_STREAMS_PER_MS"
+    note = "Use gorbagana_streamer::quic::DEFAULT_MAX_STREAMS_PER_MS"
 )]
 pub use crate::quic::DEFAULT_MAX_STREAMS_PER_MS;
 
@@ -1571,9 +1571,9 @@ pub mod test {
         assert_matches::assert_matches,
         crossbeam_channel::{unbounded, Receiver},
         quinn::{ApplicationClose, ConnectionError},
-        solana_keypair::Keypair,
-        solana_net_utils::bind_to_localhost,
-        solana_signer::Signer,
+        gorbagana_keypair::Keypair,
+        gorbagana_net_utils::bind_to_localhost,
+        gorbagana_signer::Signer,
         std::collections::HashMap,
         tokio::time::sleep,
     };
@@ -1694,7 +1694,7 @@ pub mod test {
 
     #[tokio::test(flavor = "multi_thread")]
     async fn test_quic_timeout() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let SpawnTestServerResult {
             join_handle,
             exit,
@@ -1710,7 +1710,7 @@ pub mod test {
 
     #[tokio::test(flavor = "multi_thread")]
     async fn test_packet_batcher() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let (pkt_batch_sender, pkt_batch_receiver) = unbounded();
         let (ptk_sender, pkt_receiver) = unbounded();
         let exit = Arc::new(AtomicBool::new(false));
@@ -1761,7 +1761,7 @@ pub mod test {
 
     #[tokio::test(flavor = "multi_thread")]
     async fn test_quic_stream_timeout() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let SpawnTestServerResult {
             join_handle,
             exit,
@@ -1796,7 +1796,7 @@ pub mod test {
 
     #[tokio::test(flavor = "multi_thread")]
     async fn test_quic_server_block_multiple_connections() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let SpawnTestServerResult {
             join_handle,
             exit,
@@ -1811,7 +1811,7 @@ pub mod test {
 
     #[tokio::test(flavor = "multi_thread")]
     async fn test_quic_server_multiple_connections_on_single_client_endpoint() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let SpawnTestServerResult {
             join_handle,
@@ -1887,7 +1887,7 @@ pub mod test {
 
     #[tokio::test(flavor = "multi_thread")]
     async fn test_quic_server_multiple_writes() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let SpawnTestServerResult {
             join_handle,
             exit,
@@ -1902,7 +1902,7 @@ pub mod test {
 
     #[tokio::test(flavor = "multi_thread")]
     async fn test_quic_server_staked_connection_removal() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let client_keypair = Keypair::new();
         let stakes = HashMap::from([(client_keypair.pubkey(), 100_000)]);
@@ -1934,7 +1934,7 @@ pub mod test {
     #[tokio::test(flavor = "multi_thread")]
     async fn test_quic_server_zero_staked_connection_removal() {
         // In this test, the client has a pubkey, but is not in stake table.
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let client_keypair = Keypair::new();
         let stakes = HashMap::from([(client_keypair.pubkey(), 0)]);
@@ -1965,7 +1965,7 @@ pub mod test {
 
     #[tokio::test(flavor = "multi_thread")]
     async fn test_quic_server_unstaked_connection_removal() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let SpawnTestServerResult {
             join_handle,
             exit,
@@ -1989,7 +1989,7 @@ pub mod test {
 
     #[tokio::test(flavor = "multi_thread")]
     async fn test_quic_server_unstaked_node_connect_failure() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let s = bind_to_localhost().unwrap();
         let exit = Arc::new(AtomicBool::new(false));
         let (sender, _) = unbounded();
@@ -2022,7 +2022,7 @@ pub mod test {
 
     #[tokio::test(flavor = "multi_thread")]
     async fn test_quic_server_multiple_streams() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let s = bind_to_localhost().unwrap();
         let exit = Arc::new(AtomicBool::new(false));
         let (sender, receiver) = unbounded();
@@ -2062,7 +2062,7 @@ pub mod test {
     #[test]
     fn test_prune_table_with_ip() {
         use std::net::Ipv4Addr;
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let mut table = ConnectionTable::new();
         let mut num_entries = 5;
         let max_connections_per_peer = 10;
@@ -2115,7 +2115,7 @@ pub mod test {
 
     #[test]
     fn test_prune_table_with_unique_pubkeys() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let mut table = ConnectionTable::new();
 
         // We should be able to add more entries than max_connections_per_peer, since each entry is
@@ -2153,7 +2153,7 @@ pub mod test {
 
     #[test]
     fn test_prune_table_with_non_unique_pubkeys() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let mut table = ConnectionTable::new();
 
         let max_connections_per_peer = 10;
@@ -2219,7 +2219,7 @@ pub mod test {
     #[test]
     fn test_prune_table_random() {
         use std::net::Ipv4Addr;
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let mut table = ConnectionTable::new();
         let num_entries = 5;
         let max_connections_per_peer = 10;
@@ -2261,7 +2261,7 @@ pub mod test {
     #[test]
     fn test_remove_connections() {
         use std::net::Ipv4Addr;
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let mut table = ConnectionTable::new();
         let num_ips = 5;
         let max_connections_per_peer = 10;
@@ -2387,7 +2387,7 @@ pub mod test {
 
     #[tokio::test(flavor = "multi_thread")]
     async fn test_throttling_check_no_packet_drop() {
-        solana_logger::setup_with_default_filter();
+        gorbagana_logger::setup_with_default_filter();
 
         let SpawnTestServerResult {
             join_handle,

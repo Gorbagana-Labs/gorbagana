@@ -5,7 +5,7 @@ pub use target_arch::*;
 #[repr(transparent)]
 pub struct PodRistrettoPoint(pub [u8; 32]);
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 mod target_arch {
     use {
         super::*,
@@ -103,7 +103,7 @@ mod target_arch {
             Some((&result).into())
         }
 
-        #[cfg(not(target_os = "solana"))]
+        #[cfg(not(target_os = "gorbagana"))]
         fn multiply(scalar: &PodScalar, point: &Self) -> Option<Self> {
             let scalar: Scalar = scalar.try_into().ok()?;
             let point: RistrettoPoint = point.try_into().ok()?;
@@ -134,7 +134,7 @@ mod target_arch {
     }
 }
 
-#[cfg(target_os = "solana")]
+#[cfg(target_os = "gorbagana")]
 #[allow(unused_variables)]
 mod target_arch {
     use {
@@ -149,7 +149,7 @@ mod target_arch {
     pub fn validate_ristretto(point: &PodRistrettoPoint) -> bool {
         let mut validate_result = 0u8;
         let result = unsafe {
-            solana_define_syscall::definitions::sol_curve_validate_point(
+            gorbagana_define_syscall::definitions::sol_curve_validate_point(
                 CURVE25519_RISTRETTO,
                 &point.0 as *const u8,
                 &mut validate_result,
@@ -165,7 +165,7 @@ mod target_arch {
     ) -> Option<PodRistrettoPoint> {
         let mut result_point = PodRistrettoPoint::zeroed();
         let result = unsafe {
-            solana_define_syscall::definitions::sol_curve_group_op(
+            gorbagana_define_syscall::definitions::sol_curve_group_op(
                 CURVE25519_RISTRETTO,
                 ADD,
                 &left_point.0 as *const u8,
@@ -187,7 +187,7 @@ mod target_arch {
     ) -> Option<PodRistrettoPoint> {
         let mut result_point = PodRistrettoPoint::zeroed();
         let result = unsafe {
-            solana_define_syscall::definitions::sol_curve_group_op(
+            gorbagana_define_syscall::definitions::sol_curve_group_op(
                 CURVE25519_RISTRETTO,
                 SUB,
                 &left_point.0 as *const u8,
@@ -209,7 +209,7 @@ mod target_arch {
     ) -> Option<PodRistrettoPoint> {
         let mut result_point = PodRistrettoPoint::zeroed();
         let result = unsafe {
-            solana_define_syscall::definitions::sol_curve_group_op(
+            gorbagana_define_syscall::definitions::sol_curve_group_op(
                 CURVE25519_RISTRETTO,
                 MUL,
                 &scalar.0 as *const u8,
@@ -231,7 +231,7 @@ mod target_arch {
     ) -> Option<PodRistrettoPoint> {
         let mut result_point = PodRistrettoPoint::zeroed();
         let result = unsafe {
-            solana_define_syscall::definitions::sol_curve_multiscalar_mul(
+            gorbagana_define_syscall::definitions::sol_curve_multiscalar_mul(
                 CURVE25519_RISTRETTO,
                 scalars.as_ptr() as *const u8,
                 points.as_ptr() as *const u8,

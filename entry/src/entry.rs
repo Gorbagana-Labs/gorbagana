@@ -10,24 +10,24 @@ use {
     rand::{thread_rng, Rng},
     rayon::{prelude::*, ThreadPool},
     serde::{Deserialize, Serialize},
-    solana_hash::Hash,
-    solana_measure::measure::Measure,
-    solana_merkle_tree::MerkleTree,
-    solana_metrics::*,
-    solana_packet::Meta,
-    solana_perf::{
+    gorbagana_hash::Hash,
+    gorbagana_measure::measure::Measure,
+    gorbagana_merkle_tree::MerkleTree,
+    gorbagana_metrics::*,
+    gorbagana_packet::Meta,
+    gorbagana_perf::{
         cuda_runtime::PinnedVec,
         packet::{Packet, PacketBatch, PacketBatchRecycler, PinnedPacketBatch, PACKETS_PER_BATCH},
         perf_libs,
         recycler::Recycler,
         sigverify,
     },
-    solana_rayon_threadlimit::get_max_thread_count,
-    solana_runtime_transaction::transaction_with_meta::TransactionWithMeta,
-    solana_transaction::{
+    gorbagana_rayon_threadlimit::get_max_thread_count,
+    gorbagana_runtime_transaction::transaction_with_meta::TransactionWithMeta,
+    gorbagana_transaction::{
         versioned::VersionedTransaction, Transaction, TransactionVerificationMode,
     },
-    solana_transaction_error::{TransactionError, TransactionResult as Result},
+    gorbagana_transaction_error::{TransactionError, TransactionResult as Result},
     std::{
         cmp,
         ffi::OsStr,
@@ -53,8 +53,8 @@ fn init(name: &OsStr) {
     info!("Loading {:?}", name);
     INIT_HOOK.call_once(|| {
         let path;
-        let lib_name = if let Some(perf_libs_path) = solana_perf::perf_libs::locate_perf_libs() {
-            solana_perf::perf_libs::append_to_ld_library_path(
+        let lib_name = if let Some(perf_libs_path) = gorbagana_perf::perf_libs::locate_perf_libs() {
+            gorbagana_perf::perf_libs::append_to_ld_library_path(
                 perf_libs_path.to_str().unwrap_or("").to_string(),
             );
             path = perf_libs_path.join(name);
@@ -106,17 +106,17 @@ pub struct Api<'a> {
 /// a Verifiable Delay Function (VDF) and a Proof of Work (not to be confused with Proof of
 /// Work consensus!)
 ///
-/// The solana core protocol currently requires an `Entry` to contain `transactions` that are
+/// The gorbagana core protocol currently requires an `Entry` to contain `transactions` that are
 /// executable in parallel. Implemented in:
 ///
-/// * For TPU: `solana_core::banking_stage::BankingStage::process_and_record_transactions()`
-/// * For TVU: `solana_core::replay_stage::ReplayStage::replay_blockstore_into_bank()`
+/// * For TPU: `gorbagana_core::banking_stage::BankingStage::process_and_record_transactions()`
+/// * For TVU: `gorbagana_core::replay_stage::ReplayStage::replay_blockstore_into_bank()`
 ///
 /// All transactions in the `transactions` field have to follow the read/write locking restrictions
 /// with regard to the accounts they reference. A single account can be either written by a single
 /// transaction, or read by one or more transactions, but not both.
 ///
-/// This enforcement is done via a call to `solana_runtime::accounts::Accounts::lock_accounts()`
+/// This enforcement is done via a call to `gorbagana_runtime::accounts::Accounts::lock_accounts()`
 /// with the `txs` argument holding all the `transactions` in the `Entry`.
 #[derive(Serialize, Deserialize, Debug, Default, PartialEq, Eq, Clone)]
 pub struct Entry {
@@ -679,7 +679,7 @@ impl EntrySlice for [Entry] {
         simd_len: usize,
         thread_pool: &ThreadPool,
     ) -> EntryVerificationState {
-        use solana_hash::HASH_BYTES;
+        use gorbagana_hash::HASH_BYTES;
         let now = Instant::now();
         let genesis = [Entry {
             num_hashes: 0,
@@ -972,20 +972,20 @@ mod tests {
     use {
         super::*,
         agave_reserved_account_keys::ReservedAccountKeys,
-        solana_hash::Hash,
-        solana_keypair::Keypair,
-        solana_message::SimpleAddressLoader,
-        solana_perf::test_tx::{test_invalid_tx, test_tx},
-        solana_pubkey::Pubkey,
-        solana_runtime_transaction::runtime_transaction::RuntimeTransaction,
-        solana_sha256_hasher::hash,
-        solana_signer::Signer,
-        solana_system_transaction as system_transaction,
-        solana_transaction::{
+        gorbagana_hash::Hash,
+        gorbagana_keypair::Keypair,
+        gorbagana_message::SimpleAddressLoader,
+        gorbagana_perf::test_tx::{test_invalid_tx, test_tx},
+        gorbagana_pubkey::Pubkey,
+        gorbagana_runtime_transaction::runtime_transaction::RuntimeTransaction,
+        gorbagana_sha256_hasher::hash,
+        gorbagana_signer::Signer,
+        gorbagana_system_transaction as system_transaction,
+        gorbagana_transaction::{
             sanitized::{MessageHash, SanitizedTransaction},
             versioned::VersionedTransaction,
         },
-        solana_transaction_error::TransactionResult as Result,
+        gorbagana_transaction_error::TransactionResult as Result,
     };
 
     #[test]
@@ -1139,7 +1139,7 @@ mod tests {
     fn test_transaction_signing() {
         let thread_pool = thread_pool_for_tests();
 
-        use solana_signature::Signature;
+        use gorbagana_signature::Signature;
         let zero = Hash::default();
 
         let keypair = Keypair::new();
@@ -1200,7 +1200,7 @@ mod tests {
 
     #[test]
     fn test_verify_slice1() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let thread_pool = thread_pool_for_tests();
 
         let zero = Hash::default();
@@ -1222,7 +1222,7 @@ mod tests {
 
     #[test]
     fn test_verify_slice_with_hashes1() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let thread_pool = thread_pool_for_tests();
 
         let zero = Hash::default();
@@ -1249,7 +1249,7 @@ mod tests {
 
     #[test]
     fn test_verify_slice_with_hashes_and_transactions() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let thread_pool = thread_pool_for_tests();
 
         let zero = Hash::default();
@@ -1402,7 +1402,7 @@ mod tests {
 
     #[test]
     fn test_poh_verify_fuzz() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         for _ in 0..100 {
             let mut time = Measure::start("ticks");
             let num_ticks = thread_rng().gen_range(1..100);

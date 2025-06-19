@@ -2,10 +2,10 @@
 
 use {
     num_derive::FromPrimitive,
-    solana_account_info::AccountInfo,
-    solana_msg::msg,
-    solana_program_error::{ProgramError, ProgramResult, ToStr},
-    solana_pubkey::{Pubkey, PubkeyError},
+    gorbagana_account_info::AccountInfo,
+    gorbagana_msg::msg,
+    gorbagana_program_error::{ProgramError, ProgramResult, ToStr},
+    gorbagana_pubkey::{Pubkey, PubkeyError},
     thiserror::Error,
 };
 
@@ -34,7 +34,7 @@ impl ToStr for MyError {
     }
 }
 
-solana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
+gorbagana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
 fn process_instruction(
     _program_id: &Pubkey,
     accounts: &[AccountInfo],

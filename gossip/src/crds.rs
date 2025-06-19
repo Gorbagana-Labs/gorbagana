@@ -42,9 +42,9 @@ use {
     },
     lru::LruCache,
     rayon::{prelude::*, ThreadPool},
-    solana_clock::Slot,
-    solana_hash::Hash,
-    solana_pubkey::Pubkey,
+    gorbagana_clock::Slot,
+    gorbagana_hash::Hash,
+    gorbagana_pubkey::Pubkey,
     std::{
         cmp::Ordering,
         collections::{hash_map, BTreeMap, HashMap, VecDeque},
@@ -787,9 +787,9 @@ mod tests {
         rand::{thread_rng, Rng, SeedableRng},
         rand_chacha::ChaChaRng,
         rayon::ThreadPoolBuilder,
-        solana_keypair::Keypair,
-        solana_signer::Signer,
-        solana_time_utils::timestamp,
+        gorbagana_keypair::Keypair,
+        gorbagana_signer::Signer,
+        gorbagana_time_utils::timestamp,
         std::{collections::HashSet, iter::repeat_with, net::Ipv4Addr, time::Duration},
     };
 
@@ -1545,7 +1545,7 @@ mod tests {
     fn test_label_order() {
         let v1 = VersionedCrdsValue::new(
             CrdsValue::new_unsigned(CrdsData::from(ContactInfo::new_localhost(
-                &solana_pubkey::new_rand(),
+                &gorbagana_pubkey::new_rand(),
                 0,
             ))),
             Cursor::default(),
@@ -1554,7 +1554,7 @@ mod tests {
         );
         let v2 = VersionedCrdsValue::new(
             CrdsValue::new_unsigned(CrdsData::from(ContactInfo::new_localhost(
-                &solana_pubkey::new_rand(),
+                &gorbagana_pubkey::new_rand(),
                 0,
             ))),
             Cursor::default(),

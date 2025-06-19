@@ -1,10 +1,10 @@
 use {
     clap::ArgMatches,
-    solana_clap_utils::keypair::{pubkey_from_path, signer_from_path},
-    solana_clock::{Epoch, UnixTimestamp},
-    solana_pubkey::Pubkey,
-    solana_remote_wallet::remote_wallet::RemoteWalletManager,
-    solana_signer::Signer,
+    gorbagana_clap_utils::keypair::{pubkey_from_path, signer_from_path},
+    gorbagana_clock::{Epoch, UnixTimestamp},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_remote_wallet::remote_wallet::RemoteWalletManager,
+    gorbagana_signer::Signer,
     std::{error::Error, rc::Rc},
 };
 

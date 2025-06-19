@@ -1,13 +1,13 @@
-//! Implementation of `SVMRentCollector` for `RentCollector` from the Solana
+//! Implementation of `SVMRentCollector` for `RentCollector` from the Gorbagana
 //! SDK.
 
 use {
     crate::svm_rent_collector::SVMRentCollector,
-    solana_account::AccountSharedData,
-    solana_clock::Epoch,
-    solana_pubkey::Pubkey,
-    solana_rent::{Rent, RentDue},
-    solana_rent_collector::{CollectedInfo, RentCollector},
+    gorbagana_account::AccountSharedData,
+    gorbagana_clock::Epoch,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent::{Rent, RentDue},
+    gorbagana_rent_collector::{CollectedInfo, RentCollector},
 };
 
 impl SVMRentCollector for RentCollector {
@@ -29,12 +29,12 @@ mod tests {
     use {
         super::*,
         crate::rent_state::RentState,
-        solana_account::ReadableAccount,
-        solana_clock::Epoch,
-        solana_epoch_schedule::EpochSchedule,
-        solana_pubkey::Pubkey,
-        solana_transaction_context::{IndexOfAccount, TransactionContext},
-        solana_transaction_error::TransactionError,
+        gorbagana_account::ReadableAccount,
+        gorbagana_clock::Epoch,
+        gorbagana_epoch_schedule::EpochSchedule,
+        gorbagana_pubkey::Pubkey,
+        gorbagana_transaction_context::{IndexOfAccount, TransactionContext},
+        gorbagana_transaction_error::TransactionError,
     };
 
     #[test]
@@ -206,7 +206,7 @@ mod tests {
         let result = rent_collector.check_rent_state_with_account(
             &pre_rent_state,
             &post_rent_state,
-            &solana_sdk_ids::incinerator::id(),
+            &gorbagana_sdk_ids::incinerator::id(),
             &AccountSharedData::default(),
             account_index,
         );

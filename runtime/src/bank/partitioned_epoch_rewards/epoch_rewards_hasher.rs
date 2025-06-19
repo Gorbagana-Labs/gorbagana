@@ -1,6 +1,6 @@
 use {
     crate::bank::partitioned_epoch_rewards::PartitionedStakeReward, itertools::enumerate,
-    solana_epoch_rewards_hasher::EpochRewardsHasher, solana_hash::Hash,
+    gorbagana_epoch_rewards_hasher::EpochRewardsHasher, gorbagana_hash::Hash,
 };
 
 pub(in crate::bank::partitioned_epoch_rewards) fn hash_rewards_into_partitions(
@@ -32,8 +32,8 @@ mod tests {
             tests::create_genesis_config,
             Bank,
         },
-        solana_epoch_schedule::EpochSchedule,
-        solana_native_token::LAMPORTS_PER_SOL,
+        gorbagana_epoch_schedule::EpochSchedule,
+        gorbagana_native_token::LAMPORTS_PER_SOL,
         std::sync::Arc,
     };
 

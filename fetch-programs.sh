@@ -1,6 +1,6 @@
 # Source this file.
 #
-# Fetches on-chain programs and produces the solana-genesis command-line
+# Fetches on-chain programs and produces the gorbagana-genesis command-line
 # arguments needed to install them
 #
 
@@ -26,8 +26,8 @@ fetch_program() {
     return
   fi
 
-  if [[ -r ~/.cache/solana-$prefix/$so ]]; then
-    cp ~/.cache/solana-"$prefix"/"$so" "$so"
+  if [[ -r ~/.cache/gorbagana-$prefix/$so ]]; then
+    cp ~/.cache/gorbagana-"$prefix"/"$so" "$so"
   else
     echo "Downloading $name $version"
     (
@@ -35,8 +35,8 @@ fetch_program() {
       curl -L --retry 5 --retry-delay 2 --retry-connrefused -o "$so" "$download_url"
     )
 
-    mkdir -p ~/.cache/solana-"$prefix"
-    cp "$so" ~/.cache/solana-"$prefix"/"$so"
+    mkdir -p ~/.cache/gorbagana-"$prefix"
+    cp "$so" ~/.cache/gorbagana-"$prefix"/"$so"
   fi
 
 }
@@ -59,6 +59,6 @@ fetch_programs() {
   ls -l "$prefix"-*.so
 
   echo
-  echo "solana-genesis command-line arguments ($prefix-genesis-args.sh):"
+  echo "gorbagana-genesis command-line arguments ($prefix-genesis-args.sh):"
   cat "$prefix"-genesis-args.sh
 }

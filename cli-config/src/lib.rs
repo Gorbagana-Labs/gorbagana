@@ -1,15 +1,15 @@
-//! Loading and saving the Solana CLI configuration file.
+//! Loading and saving the Gorbagana CLI configuration file.
 //!
-//! The configuration file used by the Solana CLI includes information about the
+//! The configuration file used by the Gorbagana CLI includes information about the
 //! RPC node to connect to, the path to the user's signing source, and more.
-//! Other software than the Solana CLI may wish to access the same configuration
+//! Other software than the Gorbagana CLI may wish to access the same configuration
 //! and signer.
 //!
 //! The default path to the configuration file can be retrieved from
 //! [`CONFIG_FILE`], which is a [LazyLock] of `Option<String>`, the value of
 //! which is
 //!
-//! > `~/.config/solana/cli/config.yml`
+//! > `~/.config/gorbagana/cli/config.yml`
 //!
 //! [`CONFIG_FILE`]: struct@CONFIG_FILE
 //!
@@ -22,10 +22,10 @@
 //! Two important fields of `Config` are
 //!
 //! - [`json_rpc_url`], the URL to pass to
-//!   `solana_rpc_client::rpc_client::RpcClient`.
+//!   `gorbagana_rpc_client::rpc_client::RpcClient`.
 //! - [`keypair_path`], a signing source, which may be a keypair file, but
 //!   may also represent several other types of signers, as described in
-//!   the documentation for `solana_clap_utils::keypair::signer_from_path`.
+//!   the documentation for `gorbagana_clap_utils::keypair::signer_from_path`.
 //!
 //! [`json_rpc_url`]: Config::json_rpc_url
 //! [`keypair_path`]: Config::keypair_path
@@ -39,13 +39,13 @@
 //!
 //! ```no_run
 //! use anyhow::anyhow;
-//! use solana_cli_config::{CONFIG_FILE, Config};
+//! use gorbagana_cli_config::{CONFIG_FILE, Config};
 //!
-//! let config_file = solana_cli_config::CONFIG_FILE.as_ref()
+//! let config_file = gorbagana_cli_config::CONFIG_FILE.as_ref()
 //!     .ok_or_else(|| anyhow!("unable to get config file path"))?;
 //! let mut cli_config = Config::load(&config_file)?;
 //! // Set the RPC URL to devnet
-//! cli_config.json_rpc_url = "https://api.devnet.solana.com".to_string();
+//! cli_config.json_rpc_url = "https://api.devnet.gorbagana.com".to_string();
 //! cli_config.save(&config_file)?;
 //! # Ok::<(), anyhow::Error>(())
 //! ```

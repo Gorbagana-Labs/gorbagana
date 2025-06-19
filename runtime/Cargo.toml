@@ -1,7 +1,7 @@
 [package]
-name = "solana-runtime"
-description = "Solana runtime"
-documentation = "https://docs.rs/solana-runtime"
+name = "gorbagana-runtime"
+description = "Gorbagana runtime"
+documentation = "https://docs.rs/gorbagana-runtime"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -14,36 +14,36 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [lib]
 crate-type = ["lib"]
-name = "solana_runtime"
+name = "gorbagana_runtime"
 
 [features]
 dev-context-only-utils = [
-    "dep:solana-system-program",
-    "solana-svm/dev-context-only-utils",
-    "solana-runtime-transaction/dev-context-only-utils",
-    "solana-vote/dev-context-only-utils",
+    "dep:gorbagana-system-program",
+    "gorbagana-svm/dev-context-only-utils",
+    "gorbagana-runtime-transaction/dev-context-only-utils",
+    "gorbagana-vote/dev-context-only-utils",
 ]
 frozen-abi = [
-    "dep:solana-frozen-abi",
-    "dep:solana-frozen-abi-macro",
-    "solana-account/frozen-abi",
-    "solana-accounts-db/frozen-abi",
-    "solana-compute-budget/frozen-abi",
-    "solana-cost-model/frozen-abi",
-    "solana-epoch-schedule/frozen-abi",
-    "solana-hard-forks/frozen-abi",
-    "solana-inflation/frozen-abi",
-    "solana-instruction/frozen-abi",
-    "solana-perf/frozen-abi",
-    "solana-program-runtime/frozen-abi",
-    "solana-rent/frozen-abi",
-    "solana-rent-collector/frozen-abi",
-    "solana-stake-interface/frozen-abi",
-    "solana-svm/frozen-abi",
-    "solana-transaction-error/frozen-abi",
-    "solana-version/frozen-abi",
-    "solana-vote/frozen-abi",
-    "solana-vote-program/frozen-abi",
+    "dep:gorbagana-frozen-abi",
+    "dep:gorbagana-frozen-abi-macro",
+    "gorbagana-account/frozen-abi",
+    "gorbagana-accounts-db/frozen-abi",
+    "gorbagana-compute-budget/frozen-abi",
+    "gorbagana-cost-model/frozen-abi",
+    "gorbagana-epoch-schedule/frozen-abi",
+    "gorbagana-hard-forks/frozen-abi",
+    "gorbagana-inflation/frozen-abi",
+    "gorbagana-instruction/frozen-abi",
+    "gorbagana-perf/frozen-abi",
+    "gorbagana-program-runtime/frozen-abi",
+    "gorbagana-rent/frozen-abi",
+    "gorbagana-rent-collector/frozen-abi",
+    "gorbagana-stake-interface/frozen-abi",
+    "gorbagana-svm/frozen-abi",
+    "gorbagana-transaction-error/frozen-abi",
+    "gorbagana-version/frozen-abi",
+    "gorbagana-vote/frozen-abi",
+    "gorbagana-vote-program/frozen-abi",
 ]
 
 [dependencies]
@@ -84,94 +84,94 @@ serde = { workspace = true, features = ["rc"] }
 serde_derive = { workspace = true }
 serde_json = { workspace = true }
 serde_with = { workspace = true }
-solana-account = { workspace = true }
-solana-account-info = { workspace = true }
-solana-accounts-db = { workspace = true }
-solana-address-lookup-table-interface = { workspace = true }
-solana-bpf-loader-program = { workspace = true }
-solana-bucket-map = { workspace = true }
-solana-builtins = { workspace = true }
-solana-client-traits = { workspace = true }
-solana-clock = { workspace = true }
-solana-commitment-config = { workspace = true }
-solana-compute-budget = { workspace = true }
-solana-compute-budget-instruction = { workspace = true }
-solana-compute-budget-interface = { workspace = true }
-solana-cost-model = { workspace = true }
-solana-cpi = { workspace = true }
-solana-ed25519-program = { workspace = true }
-solana-epoch-info = { workspace = true }
-solana-epoch-rewards-hasher = { workspace = true }
-solana-epoch-schedule = { workspace = true }
-solana-feature-gate-interface = { workspace = true }
-solana-fee = { workspace = true }
-solana-fee-calculator = { workspace = true }
-solana-fee-structure = { workspace = true, features = ["serde"] }
-solana-frozen-abi = { workspace = true, optional = true, features = [
+gorbagana-account = { workspace = true }
+gorbagana-account-info = { workspace = true }
+gorbagana-accounts-db = { workspace = true }
+gorbagana-address-lookup-table-interface = { workspace = true }
+gorbagana-bpf-loader-program = { workspace = true }
+gorbagana-bucket-map = { workspace = true }
+gorbagana-builtins = { workspace = true }
+gorbagana-client-traits = { workspace = true }
+gorbagana-clock = { workspace = true }
+gorbagana-commitment-config = { workspace = true }
+gorbagana-compute-budget = { workspace = true }
+gorbagana-compute-budget-instruction = { workspace = true }
+gorbagana-compute-budget-interface = { workspace = true }
+gorbagana-cost-model = { workspace = true }
+gorbagana-cpi = { workspace = true }
+gorbagana-ed25519-program = { workspace = true }
+gorbagana-epoch-info = { workspace = true }
+gorbagana-epoch-rewards-hasher = { workspace = true }
+gorbagana-epoch-schedule = { workspace = true }
+gorbagana-feature-gate-interface = { workspace = true }
+gorbagana-fee = { workspace = true }
+gorbagana-fee-calculator = { workspace = true }
+gorbagana-fee-structure = { workspace = true, features = ["serde"] }
+gorbagana-frozen-abi = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
-solana-frozen-abi-macro = { workspace = true, optional = true, features = [
+gorbagana-frozen-abi-macro = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
-solana-genesis-config = { workspace = true }
-solana-hard-forks = { workspace = true, features = ["serde"] }
-solana-hash = { workspace = true }
-solana-inflation = { workspace = true }
-solana-instruction = { workspace = true }
-solana-keypair = { workspace = true, features = ["seed-derivable"] }
-solana-lattice-hash = { workspace = true }
-solana-loader-v3-interface = { workspace = true, features = ["bincode"] }
-solana-loader-v4-interface = { workspace = true, features = ["serde"] }
-solana-measure = { workspace = true }
-solana-message = { workspace = true }
-solana-metrics = { workspace = true }
-solana-native-token = { workspace = true }
-solana-nohash-hasher = { workspace = true }
-solana-nonce = { workspace = true }
-solana-nonce-account = { workspace = true }
-solana-packet = { workspace = true }
-solana-perf = { workspace = true }
-solana-poh-config = { workspace = true }
-solana-precompile-error = { workspace = true }
-solana-program-runtime = { workspace = true, features = ["metrics"] }
-solana-pubkey = { workspace = true, features = ["rand"] }
-solana-rayon-threadlimit = { workspace = true }
-solana-rent = { workspace = true }
-solana-rent-collector = { workspace = true, features = ["serde"] }
-solana-rent-debits = { workspace = true }
-solana-reward-info = { workspace = true }
-solana-runtime-transaction = { workspace = true }
-solana-sdk-ids = { workspace = true }
-solana-secp256k1-program = { workspace = true }
-solana-seed-derivable = { workspace = true }
-solana-serde = { workspace = true }
-solana-sha256-hasher = { workspace = true }
-solana-signature = { workspace = true }
-solana-signer = { workspace = true }
-solana-slot-hashes = { workspace = true }
-solana-slot-history = { workspace = true }
-solana-stake-interface = { workspace = true }
-solana-stake-program = { workspace = true }
-solana-svm = { workspace = true }
-solana-svm-callback = { workspace = true }
-solana-svm-rent-collector = { workspace = true }
-solana-svm-transaction = { workspace = true }
-solana-system-interface = { workspace = true }
-solana-system-program = { workspace = true, optional = true }
-solana-system-transaction = { workspace = true }
-solana-sysvar = { workspace = true }
-solana-sysvar-id = { workspace = true }
-solana-time-utils = { workspace = true }
-solana-timings = { workspace = true }
-solana-transaction = { workspace = true, features = ["verify"] }
-solana-transaction-context = { workspace = true }
-solana-transaction-error = { workspace = true }
-solana-transaction-status-client-types = { workspace = true }
-solana-unified-scheduler-logic = { workspace = true }
-solana-version = { workspace = true }
-solana-vote = { workspace = true }
-solana-vote-interface = { workspace = true }
-solana-vote-program = { workspace = true }
+gorbagana-genesis-config = { workspace = true }
+gorbagana-hard-forks = { workspace = true, features = ["serde"] }
+gorbagana-hash = { workspace = true }
+gorbagana-inflation = { workspace = true }
+gorbagana-instruction = { workspace = true }
+gorbagana-keypair = { workspace = true, features = ["seed-derivable"] }
+gorbagana-lattice-hash = { workspace = true }
+gorbagana-loader-v3-interface = { workspace = true, features = ["bincode"] }
+gorbagana-loader-v4-interface = { workspace = true, features = ["serde"] }
+gorbagana-measure = { workspace = true }
+gorbagana-message = { workspace = true }
+gorbagana-metrics = { workspace = true }
+gorbagana-native-token = { workspace = true }
+gorbagana-nohash-hasher = { workspace = true }
+gorbagana-nonce = { workspace = true }
+gorbagana-nonce-account = { workspace = true }
+gorbagana-packet = { workspace = true }
+gorbagana-perf = { workspace = true }
+gorbagana-poh-config = { workspace = true }
+gorbagana-precompile-error = { workspace = true }
+gorbagana-program-runtime = { workspace = true, features = ["metrics"] }
+gorbagana-pubkey = { workspace = true, features = ["rand"] }
+gorbagana-rayon-threadlimit = { workspace = true }
+gorbagana-rent = { workspace = true }
+gorbagana-rent-collector = { workspace = true, features = ["serde"] }
+gorbagana-rent-debits = { workspace = true }
+gorbagana-reward-info = { workspace = true }
+gorbagana-runtime-transaction = { workspace = true }
+gorbagana-sdk-ids = { workspace = true }
+gorbagana-secp256k1-program = { workspace = true }
+gorbagana-seed-derivable = { workspace = true }
+gorbagana-serde = { workspace = true }
+gorbagana-sha256-hasher = { workspace = true }
+gorbagana-signature = { workspace = true }
+gorbagana-signer = { workspace = true }
+gorbagana-slot-hashes = { workspace = true }
+gorbagana-slot-history = { workspace = true }
+gorbagana-stake-interface = { workspace = true }
+gorbagana-stake-program = { workspace = true }
+gorbagana-svm = { workspace = true }
+gorbagana-svm-callback = { workspace = true }
+gorbagana-svm-rent-collector = { workspace = true }
+gorbagana-svm-transaction = { workspace = true }
+gorbagana-system-interface = { workspace = true }
+gorbagana-system-program = { workspace = true, optional = true }
+gorbagana-system-transaction = { workspace = true }
+gorbagana-sysvar = { workspace = true }
+gorbagana-sysvar-id = { workspace = true }
+gorbagana-time-utils = { workspace = true }
+gorbagana-timings = { workspace = true }
+gorbagana-transaction = { workspace = true, features = ["verify"] }
+gorbagana-transaction-context = { workspace = true }
+gorbagana-transaction-error = { workspace = true }
+gorbagana-transaction-status-client-types = { workspace = true }
+gorbagana-unified-scheduler-logic = { workspace = true }
+gorbagana-version = { workspace = true }
+gorbagana-vote = { workspace = true }
+gorbagana-vote-interface = { workspace = true }
+gorbagana-vote-program = { workspace = true }
 spl-generic-token = { workspace = true }
 static_assertions = { workspace = true }
 strum = { workspace = true, features = ["derive"] }
@@ -189,19 +189,19 @@ libsecp256k1 = { workspace = true }
 memoffset = { workspace = true }
 rand0-7 = { package = "rand", version = "0.7" }
 rand_chacha = { workspace = true }
-solana-accounts-db = { workspace = true, features = ["dev-context-only-utils"] }
-solana-builtins = { workspace = true, features = ["dev-context-only-utils"] }
-solana-logger = { workspace = true }
-solana-rent-debits = { workspace = true, features = ["dev-context-only-utils"] }
+gorbagana-accounts-db = { workspace = true, features = ["dev-context-only-utils"] }
+gorbagana-builtins = { workspace = true, features = ["dev-context-only-utils"] }
+gorbagana-logger = { workspace = true }
+gorbagana-rent-debits = { workspace = true, features = ["dev-context-only-utils"] }
 # See order-crates-for-publishing.py for using this unusual `path = "."`
-solana-runtime = { path = ".", features = ["dev-context-only-utils"] }
-solana-runtime-transaction = { workspace = true, features = [
+gorbagana-runtime = { path = ".", features = ["dev-context-only-utils"] }
+gorbagana-runtime-transaction = { workspace = true, features = [
     "dev-context-only-utils",
 ] }
-solana-sdk-ids = { workspace = true }
-solana-signature = { workspace = true, features = ["std"] }
-solana-svm = { workspace = true, features = ["dev-context-only-utils"] }
-solana-transaction-context = { workspace = true, features = ["dev-context-only-utils"] }
+gorbagana-sdk-ids = { workspace = true }
+gorbagana-signature = { workspace = true, features = ["std"] }
+gorbagana-svm = { workspace = true, features = ["dev-context-only-utils"] }
+gorbagana-transaction-context = { workspace = true, features = ["dev-context-only-utils"] }
 static_assertions = { workspace = true }
 test-case = { workspace = true }
 

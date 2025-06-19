@@ -1,4 +1,4 @@
-# Solana Coding Guidelines
+# Gorbagana Coding Guidelines
 
 The goal of these guidelines is to improve developer productivity by allowing
 developers to jump into any file in the codebase and not need to adapt to
@@ -81,14 +81,14 @@ Don't mix refactoring changes and logical changes together.
 
 If there are no functional changes, PRs can be very large and that's no
 problem. If, however, your changes are making meaningful changes or additions,
-then about 1,000 lines of changes is about the most you should ask a Solana
+then about 1,000 lines of changes is about the most you should ask a Gorbagana
 maintainer to review.
 
 ### Should I send small PRs as I develop large, new components?
 
 Add only code to the codebase that is ready to be deployed. If you are building
 a large library, consider developing it in a separate git repository. When it
-is ready to be integrated, the Solana Labs Maintainers will work with you to decide
+is ready to be integrated, the Gorbagana Labs Maintainers will work with you to decide
 on a path forward. Smaller libraries may be copied in whereas very large ones
 may be pulled in with a package manager.
 
@@ -185,7 +185,7 @@ matches the logical flow in your PR description.
 ### The PR / Issue Labels
 
 Labels make it easier to manage and track PRs / issues.  Below some common labels
-that we use in Solana.  For the complete list of labels, please refer to the
+that we use in Gorbagana.  For the complete list of labels, please refer to the
 [label page](https://github.com/anza-xyz/agave/issues/labels):
 
 * "feature-gate": when you add a new feature gate or modify the behavior of
@@ -316,7 +316,7 @@ Inventing new terms is allowed, but should only be done when the term is widely
 used and understood. Avoid introducing new 3-letter terms, which can be
 confused with 3-letter acronyms.
 
-[Terms currently in use](https://solana.com/docs/terminology)
+[Terms currently in use](https://gorbagana.com/docs/terminology)
 
 
 ## Design Proposals

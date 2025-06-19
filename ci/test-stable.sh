@@ -57,7 +57,7 @@ source ci/common/shared-functions.sh
 echo "Executing $testName"
 case $testName in
 test-stable)
-  _ ci/intercept.sh cargo test --jobs "$JOBS" --all --tests --exclude solana-local-cluster ${V:+--verbose} -- --nocapture
+  _ ci/intercept.sh cargo test --jobs "$JOBS" --all --tests --exclude gorbagana-local-cluster ${V:+--verbose} -- --nocapture
   ;;
 test-stable-sbf)
   # Clear the C dependency files, if dependency moves these files are not regenerated
@@ -67,7 +67,7 @@ test-stable-sbf)
   # rustfilt required for dumping SBF assembly listings
   "$cargo" install rustfilt
 
-  # solana-keygen required when building C programs
+  # gorbagana-keygen required when building C programs
   _ "$cargo" build --manifest-path=keygen/Cargo.toml
 
   export PATH="$PWD/target/debug":$PATH
@@ -102,7 +102,7 @@ test-stable-sbf)
   exit 0
   ;;
 test-docs)
-  _ cargo test --jobs "$JOBS" --all --doc --exclude solana-local-cluster ${V:+--verbose} -- --nocapture
+  _ cargo test --jobs "$JOBS" --all --doc --exclude gorbagana-local-cluster ${V:+--verbose} -- --nocapture
   exit 0
   ;;
 *)
@@ -112,7 +112,7 @@ esac
 
 (
   export CARGO_TOOLCHAIN=+"$rust_stable"
-  export RUST_LOG="solana_metrics=warn,info,$RUST_LOG"
+  export RUST_LOG="gorbagana_metrics=warn,info,$RUST_LOG"
   echo --- ci/localnet-sanity.sh
   ci/localnet-sanity.sh -x
 

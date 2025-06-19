@@ -4,9 +4,9 @@
 
 #[cfg(feature = "metrics")]
 #[macro_use]
-extern crate solana_metrics;
+extern crate gorbagana_metrics;
 
-pub use solana_sbpf;
+pub use gorbagana_sbpf;
 pub mod execution_budget;
 pub mod invoke_context;
 pub mod loaded_programs;
@@ -18,8 +18,8 @@ pub mod sysvar_cache;
 // re-exports for macros
 pub mod __private {
     pub use {
-        solana_account::ReadableAccount, solana_hash::Hash,
-        solana_instruction::error::InstructionError, solana_rent::Rent,
-        solana_transaction_context::TransactionContext,
+        gorbagana_account::ReadableAccount, gorbagana_hash::Hash,
+        gorbagana_instruction::error::InstructionError, gorbagana_rent::Rent,
+        gorbagana_transaction_context::TransactionContext,
     };
 }

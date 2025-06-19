@@ -13,45 +13,45 @@ pub use self::{
 #[allow(deprecated)]
 use {
     crate::syscalls::mem_ops::is_nonoverlapping,
-    solana_account_info::AccountInfo,
-    solana_big_mod_exp::{big_mod_exp, BigModExpParams},
-    solana_blake3_hasher as blake3,
-    solana_bn254::prelude::{
+    gorbagana_account_info::AccountInfo,
+    gorbagana_big_mod_exp::{big_mod_exp, BigModExpParams},
+    gorbagana_blake3_hasher as blake3,
+    gorbagana_bn254::prelude::{
         alt_bn128_addition, alt_bn128_multiplication, alt_bn128_multiplication_128,
         alt_bn128_pairing, AltBn128Error, ALT_BN128_ADDITION_OUTPUT_LEN,
         ALT_BN128_MULTIPLICATION_OUTPUT_LEN, ALT_BN128_PAIRING_ELEMENT_LEN,
         ALT_BN128_PAIRING_OUTPUT_LEN,
     },
-    solana_cpi::MAX_RETURN_DATA,
-    solana_hash::Hash,
-    solana_instruction::{error::InstructionError, AccountMeta, ProcessedSiblingInstruction},
-    solana_keccak_hasher as keccak,
-    solana_log_collector::{ic_logger_msg, ic_msg},
-    solana_poseidon as poseidon,
-    solana_program_entrypoint::{BPF_ALIGN_OF_U128, MAX_PERMITTED_DATA_INCREASE, SUCCESS},
-    solana_program_runtime::{
+    gorbagana_cpi::MAX_RETURN_DATA,
+    gorbagana_hash::Hash,
+    gorbagana_instruction::{error::InstructionError, AccountMeta, ProcessedSiblingInstruction},
+    gorbagana_keccak_hasher as keccak,
+    gorbagana_log_collector::{ic_logger_msg, ic_msg},
+    gorbagana_poseidon as poseidon,
+    gorbagana_program_entrypoint::{BPF_ALIGN_OF_U128, MAX_PERMITTED_DATA_INCREASE, SUCCESS},
+    gorbagana_program_runtime::{
         execution_budget::{SVMTransactionExecutionBudget, SVMTransactionExecutionCost},
         invoke_context::InvokeContext,
         stable_log,
     },
-    solana_pubkey::{Pubkey, PubkeyError, MAX_SEEDS, MAX_SEED_LEN, PUBKEY_BYTES},
-    solana_sbpf::{
+    gorbagana_pubkey::{Pubkey, PubkeyError, MAX_SEEDS, MAX_SEED_LEN, PUBKEY_BYTES},
+    gorbagana_sbpf::{
         declare_builtin_function,
         memory_region::{AccessType, MemoryMapping},
         program::{BuiltinProgram, SBPFVersion},
         vm::Config,
     },
-    solana_sdk_ids::{bpf_loader, bpf_loader_deprecated, native_loader},
-    solana_secp256k1_recover::{
+    gorbagana_sdk_ids::{bpf_loader, bpf_loader_deprecated, native_loader},
+    gorbagana_secp256k1_recover::{
         Secp256k1RecoverError, SECP256K1_PUBLIC_KEY_LENGTH, SECP256K1_SIGNATURE_LENGTH,
     },
-    solana_sha256_hasher::Hasher,
-    solana_svm_feature_set::SVMFeatureSet,
-    solana_sysvar::Sysvar,
-    solana_sysvar_id::SysvarId,
-    solana_timings::ExecuteTimings,
-    solana_transaction_context::{IndexOfAccount, InstructionAccount},
-    solana_type_overrides::sync::Arc,
+    gorbagana_sha256_hasher::Hasher,
+    gorbagana_svm_feature_set::SVMFeatureSet,
+    gorbagana_sysvar::Sysvar,
+    gorbagana_sysvar_id::SysvarId,
+    gorbagana_timings::ExecuteTimings,
+    gorbagana_transaction_context::{IndexOfAccount, InstructionAccount},
+    gorbagana_type_overrides::sync::Arc,
     std::{
         alloc::Layout,
         marker::PhantomData,
@@ -1006,7 +1006,7 @@ declare_builtin_function!(
         _arg5: u64,
         memory_mapping: &mut MemoryMapping,
     ) -> Result<u64, Error> {
-        use solana_curve25519::{curve_syscall_traits::*, edwards, ristretto};
+        use gorbagana_curve25519::{curve_syscall_traits::*, edwards, ristretto};
         match curve_id {
             CURVE25519_EDWARDS => {
                 let cost = invoke_context
@@ -1069,7 +1069,7 @@ declare_builtin_function!(
         result_point_addr: u64,
         memory_mapping: &mut MemoryMapping,
     ) -> Result<u64, Error> {
-        use solana_curve25519::{
+        use gorbagana_curve25519::{
             curve_syscall_traits::*,
             edwards::{self, PodEdwardsPoint},
             ristretto::{self, PodRistrettoPoint},
@@ -1297,7 +1297,7 @@ declare_builtin_function!(
         result_point_addr: u64,
         memory_mapping: &mut MemoryMapping,
     ) -> Result<u64, Error> {
-        use solana_curve25519::{
+        use gorbagana_curve25519::{
             curve_syscall_traits::*,
             edwards::{self, PodEdwardsPoint},
             ristretto::{self, PodRistrettoPoint},
@@ -1623,7 +1623,7 @@ declare_builtin_function!(
         _arg5: u64,
         memory_mapping: &mut MemoryMapping,
     ) -> Result<u64, Error> {
-        use solana_bn254::prelude::{ALT_BN128_ADD, ALT_BN128_MUL, ALT_BN128_PAIRING};
+        use gorbagana_bn254::prelude::{ALT_BN128_ADD, ALT_BN128_MUL, ALT_BN128_PAIRING};
         let execution_cost = invoke_context.get_execution_cost();
         let (cost, output): (u64, usize) = match group_op {
             ALT_BN128_ADD => (
@@ -1873,7 +1873,7 @@ declare_builtin_function!(
         let execution_cost = invoke_context.get_execution_cost();
         consume_compute_meter(invoke_context, execution_cost.syscall_base_cost)?;
 
-        use solana_sbpf::vm::ContextObject;
+        use gorbagana_sbpf::vm::ContextObject;
         Ok(invoke_context.get_remaining())
     }
 );
@@ -1890,7 +1890,7 @@ declare_builtin_function!(
         _arg5: u64,
         memory_mapping: &mut MemoryMapping,
     ) -> Result<u64, Error> {
-        use solana_bn254::compression::prelude::{
+        use gorbagana_bn254::compression::prelude::{
             alt_bn128_g1_compress, alt_bn128_g1_decompress, alt_bn128_g2_compress,
             alt_bn128_g2_decompress, ALT_BN128_G1_COMPRESS, ALT_BN128_G1_DECOMPRESS,
             ALT_BN128_G2_COMPRESS, ALT_BN128_G2_DECOMPRESS, G1, G1_COMPRESSED, G2, G2_COMPRESSED,
@@ -2132,30 +2132,30 @@ declare_builtin_function!(
 #[allow(clippy::indexing_slicing)]
 mod tests {
     #[allow(deprecated)]
-    use solana_sysvar::fees::Fees;
+    use gorbagana_sysvar::fees::Fees;
     use {
         super::*,
         crate::mock_create_vm,
         assert_matches::assert_matches,
         core::slice,
-        solana_account::{create_account_shared_data_for_test, AccountSharedData},
-        solana_clock::Clock,
-        solana_epoch_rewards::EpochRewards,
-        solana_epoch_schedule::EpochSchedule,
-        solana_fee_calculator::FeeCalculator,
-        solana_hash::HASH_BYTES,
-        solana_instruction::Instruction,
-        solana_last_restart_slot::LastRestartSlot,
-        solana_program::program::check_type_assumptions,
-        solana_program_runtime::{invoke_context::InvokeContext, with_mock_invoke_context},
-        solana_sbpf::{
+        gorbagana_account::{create_account_shared_data_for_test, AccountSharedData},
+        gorbagana_clock::Clock,
+        gorbagana_epoch_rewards::EpochRewards,
+        gorbagana_epoch_schedule::EpochSchedule,
+        gorbagana_fee_calculator::FeeCalculator,
+        gorbagana_hash::HASH_BYTES,
+        gorbagana_instruction::Instruction,
+        gorbagana_last_restart_slot::LastRestartSlot,
+        gorbagana_program::program::check_type_assumptions,
+        gorbagana_program_runtime::{invoke_context::InvokeContext, with_mock_invoke_context},
+        gorbagana_sbpf::{
             error::EbpfError, memory_region::MemoryRegion, program::SBPFVersion, vm::Config,
         },
-        solana_sdk_ids::{bpf_loader, bpf_loader_upgradeable, sysvar},
-        solana_sha256_hasher::hashv,
-        solana_slot_hashes::{self as slot_hashes, SlotHashes},
-        solana_stable_layout::stable_instruction::StableInstruction,
-        solana_sysvar::stake_history::{self, StakeHistory, StakeHistoryEntry},
+        gorbagana_sdk_ids::{bpf_loader, bpf_loader_upgradeable, sysvar},
+        gorbagana_sha256_hasher::hashv,
+        gorbagana_slot_hashes::{self as slot_hashes, SlotHashes},
+        gorbagana_stable_layout::stable_instruction::StableInstruction,
+        gorbagana_sysvar::stake_history::{self, StakeHistory, StakeHistoryEntry},
         std::{
             hash::{DefaultHasher, Hash, Hasher},
             mem,
@@ -2250,7 +2250,7 @@ mod tests {
         let config = Config::default();
 
         // Pubkey
-        let pubkey = solana_pubkey::new_rand();
+        let pubkey = gorbagana_pubkey::new_rand();
         let memory_mapping = MemoryMapping::new(
             vec![MemoryRegion::new_readonly(bytes_of(&pubkey), 0x100000000)],
             &config,
@@ -2263,9 +2263,9 @@ mod tests {
 
         // Instruction
         let instruction = Instruction::new_with_bincode(
-            solana_pubkey::new_rand(),
+            gorbagana_pubkey::new_rand(),
             &"foobar",
-            vec![AccountMeta::new(solana_pubkey::new_rand(), false)],
+            vec![AccountMeta::new(gorbagana_pubkey::new_rand(), false)],
         );
         let instruction = StableInstruction::from(instruction);
         let memory_region = MemoryRegion::new_readonly(bytes_of(&instruction), 0x100000000);
@@ -2341,7 +2341,7 @@ mod tests {
         assert!(translate_slice::<u64>(&memory_mapping, 0x100000000, u64::MAX, true).is_err());
 
         // Pubkeys
-        let mut data = vec![solana_pubkey::new_rand(); 5];
+        let mut data = vec![gorbagana_pubkey::new_rand(); 5];
         let memory_mapping = MemoryMapping::new(
             vec![MemoryRegion::new_readonly(
                 unsafe {
@@ -2357,7 +2357,7 @@ mod tests {
             translate_slice::<Pubkey>(&memory_mapping, 0x100000000, data.len() as u64, true)
                 .unwrap();
         assert_eq!(data, translated_data);
-        *data.first_mut().unwrap() = solana_pubkey::new_rand(); // Both should point to same place
+        *data.first_mut().unwrap() = gorbagana_pubkey::new_rand(); // Both should point to same place
         assert_eq!(data, translated_data);
     }
 
@@ -2595,7 +2595,7 @@ mod tests {
             let memory_mapping = &mut vm.memory_mapping;
             let result = SyscallAllocFree::rust(
                 invoke_context,
-                solana_program_entrypoint::HEAP_LENGTH as u64,
+                gorbagana_program_entrypoint::HEAP_LENGTH as u64,
                 0,
                 0,
                 0,
@@ -2605,7 +2605,7 @@ mod tests {
             assert_ne!(result.unwrap(), 0);
             let result = SyscallAllocFree::rust(
                 invoke_context,
-                solana_program_entrypoint::HEAP_LENGTH as u64,
+                gorbagana_program_entrypoint::HEAP_LENGTH as u64,
                 0,
                 0,
                 0,
@@ -2631,7 +2631,7 @@ mod tests {
             }
             let result = SyscallAllocFree::rust(
                 invoke_context,
-                solana_program_entrypoint::HEAP_LENGTH as u64,
+                gorbagana_program_entrypoint::HEAP_LENGTH as u64,
                 0,
                 0,
                 0,
@@ -2654,7 +2654,7 @@ mod tests {
             }
             let result = SyscallAllocFree::rust(
                 invoke_context,
-                solana_program_entrypoint::HEAP_LENGTH as u64,
+                gorbagana_program_entrypoint::HEAP_LENGTH as u64,
                 0,
                 0,
                 0,
@@ -2796,7 +2796,7 @@ mod tests {
 
     #[test]
     fn test_syscall_edwards_curve_point_validation() {
-        use solana_curve25519::curve_syscall_traits::CURVE25519_EDWARDS;
+        use gorbagana_curve25519::curve_syscall_traits::CURVE25519_EDWARDS;
 
         let config = Config::default();
         prepare_mockup!(invoke_context, program_id, bpf_loader::id());
@@ -2869,7 +2869,7 @@ mod tests {
 
     #[test]
     fn test_syscall_ristretto_curve_point_validation() {
-        use solana_curve25519::curve_syscall_traits::CURVE25519_RISTRETTO;
+        use gorbagana_curve25519::curve_syscall_traits::CURVE25519_RISTRETTO;
 
         let config = Config::default();
         prepare_mockup!(invoke_context, program_id, bpf_loader::id());
@@ -2942,7 +2942,7 @@ mod tests {
 
     #[test]
     fn test_syscall_edwards_curve_group_ops() {
-        use solana_curve25519::curve_syscall_traits::{ADD, CURVE25519_EDWARDS, MUL, SUB};
+        use gorbagana_curve25519::curve_syscall_traits::{ADD, CURVE25519_EDWARDS, MUL, SUB};
 
         let config = Config::default();
         prepare_mockup!(invoke_context, program_id, bpf_loader::id());
@@ -3097,7 +3097,7 @@ mod tests {
 
     #[test]
     fn test_syscall_ristretto_curve_group_ops() {
-        use solana_curve25519::curve_syscall_traits::{ADD, CURVE25519_RISTRETTO, MUL, SUB};
+        use gorbagana_curve25519::curve_syscall_traits::{ADD, CURVE25519_RISTRETTO, MUL, SUB};
 
         let config = Config::default();
         prepare_mockup!(invoke_context, program_id, bpf_loader::id());
@@ -3254,7 +3254,7 @@ mod tests {
 
     #[test]
     fn test_syscall_multiscalar_multiplication() {
-        use solana_curve25519::curve_syscall_traits::{CURVE25519_EDWARDS, CURVE25519_RISTRETTO};
+        use gorbagana_curve25519::curve_syscall_traits::{CURVE25519_EDWARDS, CURVE25519_RISTRETTO};
 
         let config = Config::default();
         prepare_mockup!(invoke_context, program_id, bpf_loader::id());
@@ -3360,7 +3360,7 @@ mod tests {
 
     #[test]
     fn test_syscall_multiscalar_multiplication_maximum_length_exceeded() {
-        use solana_curve25519::curve_syscall_traits::{CURVE25519_EDWARDS, CURVE25519_RISTRETTO};
+        use gorbagana_curve25519::curve_syscall_traits::{CURVE25519_EDWARDS, CURVE25519_RISTRETTO};
 
         let config = Config::default();
         prepare_mockup!(invoke_context, program_id, bpf_loader::id());
@@ -4510,7 +4510,7 @@ mod tests {
 
     #[test]
     fn test_create_program_address() {
-        // These tests duplicate the direct tests in solana_pubkey
+        // These tests duplicate the direct tests in gorbagana_pubkey
 
         prepare_mockup!(invoke_context, program_id, bpf_loader::id());
         let address = bpf_loader_upgradeable::id();

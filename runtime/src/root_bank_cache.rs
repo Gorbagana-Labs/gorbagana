@@ -53,7 +53,7 @@ mod tests {
             bank_forks::BankForks,
             genesis_utils::{create_genesis_config, GenesisConfigInfo},
         },
-        solana_pubkey::Pubkey,
+        gorbagana_pubkey::Pubkey,
     };
 
     #[test]

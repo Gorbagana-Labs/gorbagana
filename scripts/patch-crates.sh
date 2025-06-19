@@ -1,180 +1,180 @@
 # source this file
 
-update_solana_dependencies() {
+update_gorbagana_dependencies() {
   declare project_root="$1"
-  declare solana_ver="$2"
+  declare gorbagana_ver="$2"
   declare tomls=()
   while IFS='' read -r line; do tomls+=("$line"); done < <(find "$project_root" -name Cargo.toml)
 
   crates=(
-    solana-account-decoder
-    solana-account-decoder-client-types
-    solana-banks-client
-    solana-banks-interface
-    solana-banks-server
-    solana-bloom
-    solana-bucket-map
-    solana-builtins-default-costs
-    solana-clap-utils
-    solana-clap-v3-utils
-    solana-cli-config
-    solana-cli-output
-    solana-client
-    solana-compute-budget
-    solana-connection-cache
-    solana-core
-    solana-entry
-    solana-faucet
-    solana-fee
+    gorbagana-account-decoder
+    gorbagana-account-decoder-client-types
+    gorbagana-banks-client
+    gorbagana-banks-interface
+    gorbagana-banks-server
+    gorbagana-bloom
+    gorbagana-bucket-map
+    gorbagana-builtins-default-costs
+    gorbagana-clap-utils
+    gorbagana-clap-v3-utils
+    gorbagana-cli-config
+    gorbagana-cli-output
+    gorbagana-client
+    gorbagana-compute-budget
+    gorbagana-connection-cache
+    gorbagana-core
+    gorbagana-entry
+    gorbagana-faucet
+    gorbagana-fee
     agave-geyser-plugin-interface
-    solana-geyser-plugin-manager
-    solana-gossip
-    solana-lattice-hash
-    solana-ledger
-    solana-log-collector
-    solana-measure
-    solana-merkle-tree
-    solana-metrics
-    solana-net-utils
-    solana-perf
-    solana-poh
-    solana-program-runtime
-    solana-program-test
-    solana-bpf-loader-program
-    solana-compute-budget-program
-    solana-stake-program
-    solana-system-program
-    solana-vote-program
-    solana-zk-elgamal-proof-program
-    solana-zk-token-proof-program
-    solana-pubsub-client
-    solana-quic-client
-    solana-rayon-threadlimit
-    solana-remote-wallet
-    solana-rpc
-    solana-rpc-client
-    solana-rpc-client-api
-    solana-rpc-client-nonce-utils
-    solana-runtime
-    solana-runtime-transaction
-    solana-send-transaction-service
-    solana-storage-bigtable
-    solana-storage-proto
-    solana-streamer
-    solana-svm-rent-collector
-    solana-svm-transaction
-    solana-test-validator
-    solana-thin-client
-    solana-tpu-client
-    solana-transaction-status
-    solana-transaction-status-client-types
-    solana-udp-client
-    solana-version
-    solana-zk-token-sdk
-    solana-zk-sdk
-    solana-curve25519
+    gorbagana-geyser-plugin-manager
+    gorbagana-gossip
+    gorbagana-lattice-hash
+    gorbagana-ledger
+    gorbagana-log-collector
+    gorbagana-measure
+    gorbagana-merkle-tree
+    gorbagana-metrics
+    gorbagana-net-utils
+    gorbagana-perf
+    gorbagana-poh
+    gorbagana-program-runtime
+    gorbagana-program-test
+    gorbagana-bpf-loader-program
+    gorbagana-compute-budget-program
+    gorbagana-stake-program
+    gorbagana-system-program
+    gorbagana-vote-program
+    gorbagana-zk-elgamal-proof-program
+    gorbagana-zk-token-proof-program
+    gorbagana-pubsub-client
+    gorbagana-quic-client
+    gorbagana-rayon-threadlimit
+    gorbagana-remote-wallet
+    gorbagana-rpc
+    gorbagana-rpc-client
+    gorbagana-rpc-client-api
+    gorbagana-rpc-client-nonce-utils
+    gorbagana-runtime
+    gorbagana-runtime-transaction
+    gorbagana-send-transaction-service
+    gorbagana-storage-bigtable
+    gorbagana-storage-proto
+    gorbagana-streamer
+    gorbagana-svm-rent-collector
+    gorbagana-svm-transaction
+    gorbagana-test-validator
+    gorbagana-thin-client
+    gorbagana-tpu-client
+    gorbagana-transaction-status
+    gorbagana-transaction-status-client-types
+    gorbagana-udp-client
+    gorbagana-version
+    gorbagana-zk-token-sdk
+    gorbagana-zk-sdk
+    gorbagana-curve25519
   )
 
   set -x
   for crate in "${crates[@]}"; do
-    sed -E -i'' -e "s:(${crate} = \")([=<>]*)[0-9.]+([^\"]*)\".*:\1\2${solana_ver}\3\":" "${tomls[@]}"
-    sed -E -i'' -e "s:(${crate} = \{ version = \")([=<>]*)[0-9.]+([^\"]*)(\".*):\1\2${solana_ver}\3\4:" "${tomls[@]}"
+    sed -E -i'' -e "s:(${crate} = \")([=<>]*)[0-9.]+([^\"]*)\".*:\1\2${gorbagana_ver}\3\":" "${tomls[@]}"
+    sed -E -i'' -e "s:(${crate} = \{ version = \")([=<>]*)[0-9.]+([^\"]*)(\".*):\1\2${gorbagana_ver}\3\4:" "${tomls[@]}"
   done
 }
 
-patch_crates_io_solana() {
+patch_crates_io_gorbagana() {
   declare Cargo_toml="$1"
-  declare solana_dir="$2"
+  declare gorbagana_dir="$2"
   cat >> "$Cargo_toml" <<EOF
 [patch.crates-io]
 EOF
-  patch_crates_io_solana_no_header "$Cargo_toml" "$solana_dir"
+  patch_crates_io_gorbagana_no_header "$Cargo_toml" "$gorbagana_dir"
 }
 
-patch_crates_io_solana_no_header() {
+patch_crates_io_gorbagana_no_header() {
   declare Cargo_toml="$1"
-  declare solana_dir="$2"
+  declare gorbagana_dir="$2"
 
   crates_map=()
-  crates_map+=("solana-account-decoder account-decoder")
-  crates_map+=("solana-account-decoder-client-types account-decoder-client-types")
-  crates_map+=("solana-banks-client banks-client")
-  crates_map+=("solana-banks-interface banks-interface")
-  crates_map+=("solana-banks-server banks-server")
-  crates_map+=("solana-bloom bloom")
-  crates_map+=("solana-bucket-map bucket_map")
-  crates_map+=("solana-builtins-default-costs builtins-default-costs")
-  crates_map+=("solana-clap-utils clap-utils")
-  crates_map+=("solana-clap-v3-utils clap-v3-utils")
-  crates_map+=("solana-cli-config cli-config")
-  crates_map+=("solana-cli-output cli-output")
-  crates_map+=("solana-client client")
-  crates_map+=("solana-compute-budget compute-budget")
-  crates_map+=("solana-connection-cache connection-cache")
-  crates_map+=("solana-core core")
-  crates_map+=("solana-entry entry")
-  crates_map+=("solana-faucet faucet")
-  crates_map+=("solana-fee fee")
+  crates_map+=("gorbagana-account-decoder account-decoder")
+  crates_map+=("gorbagana-account-decoder-client-types account-decoder-client-types")
+  crates_map+=("gorbagana-banks-client banks-client")
+  crates_map+=("gorbagana-banks-interface banks-interface")
+  crates_map+=("gorbagana-banks-server banks-server")
+  crates_map+=("gorbagana-bloom bloom")
+  crates_map+=("gorbagana-bucket-map bucket_map")
+  crates_map+=("gorbagana-builtins-default-costs builtins-default-costs")
+  crates_map+=("gorbagana-clap-utils clap-utils")
+  crates_map+=("gorbagana-clap-v3-utils clap-v3-utils")
+  crates_map+=("gorbagana-cli-config cli-config")
+  crates_map+=("gorbagana-cli-output cli-output")
+  crates_map+=("gorbagana-client client")
+  crates_map+=("gorbagana-compute-budget compute-budget")
+  crates_map+=("gorbagana-connection-cache connection-cache")
+  crates_map+=("gorbagana-core core")
+  crates_map+=("gorbagana-entry entry")
+  crates_map+=("gorbagana-faucet faucet")
+  crates_map+=("gorbagana-fee fee")
   crates_map+=("agave-geyser-plugin-interface geyser-plugin-interface")
-  crates_map+=("solana-geyser-plugin-manager geyser-plugin-manager")
-  crates_map+=("solana-gossip gossip")
-  crates_map+=("solana-lattice-hash lattice-hash")
-  crates_map+=("solana-ledger ledger")
-  crates_map+=("solana-log-collector log-collector")
-  crates_map+=("solana-measure measure")
-  crates_map+=("solana-merkle-tree merkle-tree")
-  crates_map+=("solana-metrics metrics")
-  crates_map+=("solana-net-utils net-utils")
-  crates_map+=("solana-perf perf")
-  crates_map+=("solana-poh poh")
-  crates_map+=("solana-program-runtime program-runtime")
-  crates_map+=("solana-program-test program-test")
-  crates_map+=("solana-bpf-loader-program programs/bpf_loader")
-  crates_map+=("solana-compute-budget-program programs/compute-budget")
-  crates_map+=("solana-stake-program programs/stake")
-  crates_map+=("solana-system-program programs/system")
-  crates_map+=("solana-vote-program programs/vote")
-  crates_map+=("solana-zk-elgamal-proof-program programs/zk-elgamal-proof")
-  crates_map+=("solana-zk-token-proof-program programs/zk-token-proof")
-  crates_map+=("solana-pubsub-client pubsub-client")
-  crates_map+=("solana-quic-client quic-client")
-  crates_map+=("solana-rayon-threadlimit rayon-threadlimit")
-  crates_map+=("solana-remote-wallet remote-wallet")
-  crates_map+=("solana-rpc rpc")
-  crates_map+=("solana-rpc-client rpc-client")
-  crates_map+=("solana-rpc-client-api rpc-client-api")
-  crates_map+=("solana-rpc-client-nonce-utils rpc-client-nonce-utils")
-  crates_map+=("solana-runtime runtime")
-  crates_map+=("solana-runtime-transaction runtime-transaction")
-  crates_map+=("solana-send-transaction-service send-transaction-service")
-  crates_map+=("solana-storage-bigtable storage-bigtable")
-  crates_map+=("solana-storage-proto storage-proto")
-  crates_map+=("solana-streamer streamer")
-  crates_map+=("solana-svm-rent-collector svm-rent-collector")
-  crates_map+=("solana-svm-transaction svm-transaction")
-  crates_map+=("solana-test-validator test-validator")
-  crates_map+=("solana-thin-client thin-client")
-  crates_map+=("solana-tpu-client tpu-client")
-  crates_map+=("solana-transaction-status transaction-status")
-  crates_map+=("solana-transaction-status-client-types transaction-status-client-types")
-  crates_map+=("solana-udp-client udp-client")
-  crates_map+=("solana-version version")
-  crates_map+=("solana-zk-token-sdk zk-token-sdk")
-  crates_map+=("solana-zk-sdk zk-sdk")
-  crates_map+=("solana-bn254 curves/bn254")
-  crates_map+=("solana-curve25519 curves/curve25519")
-  crates_map+=("solana-secp256k1-recover curves/secp256k1-recover")
+  crates_map+=("gorbagana-geyser-plugin-manager geyser-plugin-manager")
+  crates_map+=("gorbagana-gossip gossip")
+  crates_map+=("gorbagana-lattice-hash lattice-hash")
+  crates_map+=("gorbagana-ledger ledger")
+  crates_map+=("gorbagana-log-collector log-collector")
+  crates_map+=("gorbagana-measure measure")
+  crates_map+=("gorbagana-merkle-tree merkle-tree")
+  crates_map+=("gorbagana-metrics metrics")
+  crates_map+=("gorbagana-net-utils net-utils")
+  crates_map+=("gorbagana-perf perf")
+  crates_map+=("gorbagana-poh poh")
+  crates_map+=("gorbagana-program-runtime program-runtime")
+  crates_map+=("gorbagana-program-test program-test")
+  crates_map+=("gorbagana-bpf-loader-program programs/bpf_loader")
+  crates_map+=("gorbagana-compute-budget-program programs/compute-budget")
+  crates_map+=("gorbagana-stake-program programs/stake")
+  crates_map+=("gorbagana-system-program programs/system")
+  crates_map+=("gorbagana-vote-program programs/vote")
+  crates_map+=("gorbagana-zk-elgamal-proof-program programs/zk-elgamal-proof")
+  crates_map+=("gorbagana-zk-token-proof-program programs/zk-token-proof")
+  crates_map+=("gorbagana-pubsub-client pubsub-client")
+  crates_map+=("gorbagana-quic-client quic-client")
+  crates_map+=("gorbagana-rayon-threadlimit rayon-threadlimit")
+  crates_map+=("gorbagana-remote-wallet remote-wallet")
+  crates_map+=("gorbagana-rpc rpc")
+  crates_map+=("gorbagana-rpc-client rpc-client")
+  crates_map+=("gorbagana-rpc-client-api rpc-client-api")
+  crates_map+=("gorbagana-rpc-client-nonce-utils rpc-client-nonce-utils")
+  crates_map+=("gorbagana-runtime runtime")
+  crates_map+=("gorbagana-runtime-transaction runtime-transaction")
+  crates_map+=("gorbagana-send-transaction-service send-transaction-service")
+  crates_map+=("gorbagana-storage-bigtable storage-bigtable")
+  crates_map+=("gorbagana-storage-proto storage-proto")
+  crates_map+=("gorbagana-streamer streamer")
+  crates_map+=("gorbagana-svm-rent-collector svm-rent-collector")
+  crates_map+=("gorbagana-svm-transaction svm-transaction")
+  crates_map+=("gorbagana-test-validator test-validator")
+  crates_map+=("gorbagana-thin-client thin-client")
+  crates_map+=("gorbagana-tpu-client tpu-client")
+  crates_map+=("gorbagana-transaction-status transaction-status")
+  crates_map+=("gorbagana-transaction-status-client-types transaction-status-client-types")
+  crates_map+=("gorbagana-udp-client udp-client")
+  crates_map+=("gorbagana-version version")
+  crates_map+=("gorbagana-zk-token-sdk zk-token-sdk")
+  crates_map+=("gorbagana-zk-sdk zk-sdk")
+  crates_map+=("gorbagana-bn254 curves/bn254")
+  crates_map+=("gorbagana-curve25519 curves/curve25519")
+  crates_map+=("gorbagana-secp256k1-recover curves/secp256k1-recover")
 
   patch_crates=()
   for map_entry in "${crates_map[@]}"; do
     read -r crate_name crate_path <<<"$map_entry"
-    full_path="$solana_dir/$crate_path"
+    full_path="$gorbagana_dir/$crate_path"
     if [[ -r "$full_path/Cargo.toml" ]]; then
       patch_crates+=("$crate_name = { path = \"$full_path\" }")
     fi
   done
 
-  echo "Patching in $solana_ver from $solana_dir"
+  echo "Patching in $gorbagana_ver from $gorbagana_dir"
   echo
   if grep -q "# The following entries are auto-generated by $0" "$Cargo_toml"; then
     echo "$Cargo_toml is already patched"

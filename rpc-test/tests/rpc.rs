@@ -5,30 +5,30 @@ use {
     log::*,
     reqwest::{self, header::CONTENT_TYPE},
     serde_json::{json, Value},
-    solana_account_decoder::UiAccount,
-    solana_client::connection_cache::ConnectionCache,
-    solana_commitment_config::CommitmentConfig,
-    solana_hash::Hash,
-    solana_keypair::Keypair,
-    solana_net_utils::bind_to_unspecified,
-    solana_pubkey::Pubkey,
-    solana_pubsub_client::nonblocking::pubsub_client::PubsubClient,
-    solana_rent::Rent,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_api::{
+    gorbagana_account_decoder::UiAccount,
+    gorbagana_client::connection_cache::ConnectionCache,
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_hash::Hash,
+    gorbagana_keypair::Keypair,
+    gorbagana_net_utils::bind_to_unspecified,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_pubsub_client::nonblocking::pubsub_client::PubsubClient,
+    gorbagana_rent::Rent,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_rpc_client_api::{
         client_error::{ErrorKind as ClientErrorKind, Result as ClientResult},
         config::{RpcAccountInfoConfig, RpcSignatureSubscribeConfig, RpcSimulateTransactionConfig},
         request::RpcError,
         response::{Response as RpcResponse, RpcSignatureResult, SlotUpdate},
     },
-    solana_signature::Signature,
-    solana_signer::Signer,
-    solana_streamer::socket::SocketAddrSpace,
-    solana_system_transaction as system_transaction,
-    solana_test_validator::TestValidator,
-    solana_tpu_client::tpu_client::{TpuClient, TpuClientConfig, DEFAULT_TPU_CONNECTION_POOL_SIZE},
-    solana_transaction::Transaction,
-    solana_transaction_status::TransactionStatus,
+    gorbagana_signature::Signature,
+    gorbagana_signer::Signer,
+    gorbagana_streamer::socket::SocketAddrSpace,
+    gorbagana_system_transaction as system_transaction,
+    gorbagana_test_validator::TestValidator,
+    gorbagana_tpu_client::tpu_client::{TpuClient, TpuClientConfig, DEFAULT_TPU_CONNECTION_POOL_SIZE},
+    gorbagana_transaction::Transaction,
+    gorbagana_transaction_status::TransactionStatus,
     std::{
         collections::HashSet,
         sync::{
@@ -65,14 +65,14 @@ fn post_rpc(request: Value, rpc_url: &str) -> Value {
 
 #[test]
 fn test_rpc_send_tx() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let alice = Keypair::new();
     let test_validator =
         TestValidator::with_no_fees(alice.pubkey(), None, SocketAddrSpace::Unspecified);
     let rpc_url = test_validator.rpc_url();
 
-    let bob_pubkey = solana_pubkey::new_rand();
+    let bob_pubkey = gorbagana_pubkey::new_rand();
 
     let req = json_req!("getLatestBlockhash", json!([]));
     let json = post_rpc(req, &rpc_url);
@@ -101,7 +101,7 @@ fn test_rpc_send_tx() {
 
     let request = json_req!("getSignatureStatuses", [[signature]]);
 
-    for _ in 0..solana_clock::DEFAULT_TICKS_PER_SLOT {
+    for _ in 0..gorbagana_clock::DEFAULT_TICKS_PER_SLOT {
         let json = post_rpc(request.clone(), &rpc_url);
 
         let result: Option<TransactionStatus> =
@@ -119,8 +119,8 @@ fn test_rpc_send_tx() {
     assert!(confirmed_tx);
 
     use {
-        solana_account_decoder::UiAccountEncoding,
-        solana_rpc_client_api::config::RpcAccountInfoConfig,
+        gorbagana_account_decoder::UiAccountEncoding,
+        gorbagana_rpc_client_api::config::RpcAccountInfoConfig,
     };
     let config = RpcAccountInfoConfig {
         encoding: Some(UiAccountEncoding::Base64),
@@ -138,7 +138,7 @@ fn test_rpc_send_tx() {
 
 #[test]
 fn test_simulation_replaced_blockhash() -> ClientResult<()> {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let alice = Keypair::new();
     let validator = TestValidator::with_no_fees(alice.pubkey(), None, SocketAddrSpace::Unspecified);
@@ -183,14 +183,14 @@ fn test_simulation_replaced_blockhash() -> ClientResult<()> {
 
 #[test]
 fn test_rpc_invalid_requests() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let alice = Keypair::new();
     let test_validator =
         TestValidator::with_no_fees(alice.pubkey(), None, SocketAddrSpace::Unspecified);
     let rpc_url = test_validator.rpc_url();
 
-    let bob_pubkey = solana_pubkey::new_rand();
+    let bob_pubkey = gorbagana_pubkey::new_rand();
 
     // test invalid get_balance request
     let req = json_req!("getBalance", json!(["invalid9999"]));
@@ -216,7 +216,7 @@ fn test_rpc_invalid_requests() {
 
 #[test]
 fn test_rpc_slot_updates() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let test_validator =
         TestValidator::with_no_fees(Pubkey::new_unique(), None, SocketAddrSpace::Unspecified);
@@ -284,7 +284,7 @@ fn test_rpc_slot_updates() {
 
 #[test]
 fn test_rpc_subscriptions() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let alice = Keypair::new();
     let test_validator =
@@ -302,7 +302,7 @@ fn test_rpc_subscriptions() {
         .map(|_| {
             system_transaction::transfer(
                 &alice,
-                &solana_pubkey::new_rand(),
+                &gorbagana_pubkey::new_rand(),
                 transfer_amount,
                 recent_blockhash,
             )
@@ -553,7 +553,7 @@ fn test_tpu_send_transaction_with_quic() {
 
 #[test]
 fn deserialize_rpc_error() -> ClientResult<()> {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let alice = Keypair::new();
     let validator = TestValidator::with_no_fees(alice.pubkey(), None, SocketAddrSpace::Unspecified);

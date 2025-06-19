@@ -5,9 +5,9 @@ use {
         },
         parse_token_extension::parse_extension,
     },
-    solana_program_option::COption,
-    solana_program_pack::Pack,
-    solana_pubkey::Pubkey,
+    gorbagana_program_option::COption,
+    gorbagana_program_pack::Pack,
+    gorbagana_pubkey::Pubkey,
     spl_token_2022::{
         extension::{BaseStateWithExtensions, StateWithExtensions},
         generic_token_account::GenericTokenAccount,
@@ -16,7 +16,7 @@ use {
     std::str::FromStr,
 };
 pub use {
-    solana_account_decoder_client_types::token::{
+    gorbagana_account_decoder_client_types::token::{
         real_number_string, real_number_string_trimmed, TokenAccountType, UiAccountState, UiMint,
         UiMultisig, UiTokenAccount, UiTokenAmount,
     },
@@ -209,7 +209,7 @@ mod test {
     use {
         super::*,
         crate::parse_token_extension::{UiMemoTransfer, UiMintCloseAuthority},
-        solana_account_decoder_client_types::token::UiExtension,
+        gorbagana_account_decoder_client_types::token::UiExtension,
         spl_pod::optional_keys::OptionalNonZeroPubkey,
         spl_token_2022::extension::{
             immutable_owner::ImmutableOwner, interest_bearing_mint::InterestBearingConfig,

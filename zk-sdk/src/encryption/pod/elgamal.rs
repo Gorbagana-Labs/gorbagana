@@ -4,7 +4,7 @@
 use bytemuck::Zeroable;
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use {
     crate::{
         encryption::elgamal::{DecryptHandle, ElGamalCiphertext, ElGamalPubkey},
@@ -70,14 +70,14 @@ impl_from_bytes!(
     BYTES_LEN = ELGAMAL_CIPHERTEXT_LEN
 );
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<ElGamalCiphertext> for PodElGamalCiphertext {
     fn from(decoded_ciphertext: ElGamalCiphertext) -> Self {
         Self(decoded_ciphertext.to_bytes())
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TryFrom<PodElGamalCiphertext> for ElGamalCiphertext {
     type Error = ElGamalError;
 
@@ -114,14 +114,14 @@ impl_from_str!(
 
 impl_from_bytes!(TYPE = PodElGamalPubkey, BYTES_LEN = ELGAMAL_PUBKEY_LEN);
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<ElGamalPubkey> for PodElGamalPubkey {
     fn from(decoded_pubkey: ElGamalPubkey) -> Self {
         Self(decoded_pubkey.into())
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TryFrom<PodElGamalPubkey> for ElGamalPubkey {
     type Error = ElGamalError;
 
@@ -141,7 +141,7 @@ impl fmt::Debug for PodDecryptHandle {
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<DecryptHandle> for PodDecryptHandle {
     fn from(decoded_handle: DecryptHandle) -> Self {
         Self(decoded_handle.to_bytes())
@@ -149,14 +149,14 @@ impl From<DecryptHandle> for PodDecryptHandle {
 }
 
 // For proof verification, interpret pod::DecryptHandle as CompressedRistretto
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<PodDecryptHandle> for CompressedRistretto {
     fn from(pod_handle: PodDecryptHandle) -> Self {
         Self(pod_handle.0)
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TryFrom<PodDecryptHandle> for DecryptHandle {
     type Error = ElGamalError;
 

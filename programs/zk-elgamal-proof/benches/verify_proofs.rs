@@ -2,7 +2,7 @@
 use {
     criterion::{criterion_group, criterion_main, Criterion},
     curve25519_dalek::scalar::Scalar,
-    solana_zk_sdk::{
+    gorbagana_zk_sdk::{
         encryption::{
             elgamal::ElGamalKeypair,
             grouped_elgamal::GroupedElGamal,

@@ -1,28 +1,28 @@
-//! A helper to initialize Solana SVM API's `TransactionBatchProcessor`.
+//! A helper to initialize Gorbagana SVM API's `TransactionBatchProcessor`.
 
 use {
-    solana_bpf_loader_program::syscalls::create_program_runtime_environment_v1,
-    solana_clock::Slot,
-    solana_compute_budget::compute_budget_limits::ComputeBudgetLimits,
-    solana_fee_structure::FeeDetails,
-    solana_program_runtime::{
+    gorbagana_bpf_loader_program::syscalls::create_program_runtime_environment_v1,
+    gorbagana_clock::Slot,
+    gorbagana_compute_budget::compute_budget_limits::ComputeBudgetLimits,
+    gorbagana_fee_structure::FeeDetails,
+    gorbagana_program_runtime::{
         execution_budget::SVMTransactionExecutionBudget,
         loaded_programs::{BlockRelation, ForkGraph, ProgramCacheEntry},
     },
-    solana_svm::{
+    gorbagana_svm::{
         account_loader::CheckedTransactionDetails, transaction_processor::TransactionBatchProcessor,
     },
-    solana_svm_callback::TransactionProcessingCallback,
-    solana_svm_feature_set::SVMFeatureSet,
-    solana_system_program::system_processor,
+    gorbagana_svm_callback::TransactionProcessingCallback,
+    gorbagana_svm_feature_set::SVMFeatureSet,
+    gorbagana_system_program::system_processor,
     std::sync::{Arc, RwLock},
 };
 
 mod transaction {
-    pub use solana_transaction_error::TransactionResult as Result;
+    pub use gorbagana_transaction_error::TransactionResult as Result;
 }
 
-/// In order to use the `TransactionBatchProcessor`, another trait - Solana
+/// In order to use the `TransactionBatchProcessor`, another trait - Gorbagana
 /// Program Runtime's `ForkGraph` - must be implemented, to tell the batch
 /// processor how to work across forks.
 ///
@@ -53,7 +53,7 @@ pub(crate) fn create_transaction_batch_processor<CB: TransactionProcessingCallba
     // slot (1).
     // This includes programs owned by BPF Loader v2, which are automatically
     // marked as "depoyed" in slot 0.
-    // See `solana_svm::program_loader::load_program_with_pubkey` for more
+    // See `gorbagana_svm::program_loader::load_program_with_pubkey` for more
     // details.
     let processor = TransactionBatchProcessor::<PayTubeForkGraph>::new(
         /* slot */ 1,
@@ -69,7 +69,7 @@ pub(crate) fn create_transaction_batch_processor<CB: TransactionProcessingCallba
     // Add the system program builtin.
     processor.add_builtin(
         callbacks,
-        solana_system_program::id(),
+        gorbagana_system_program::id(),
         "system_program",
         ProgramCacheEntry::new_builtin(
             0,
@@ -81,12 +81,12 @@ pub(crate) fn create_transaction_batch_processor<CB: TransactionProcessingCallba
     // Add the BPF Loader v2 builtin, for the SPL Token program.
     processor.add_builtin(
         callbacks,
-        solana_sdk_ids::bpf_loader::id(),
-        "solana_bpf_loader_program",
+        gorbagana_sdk_ids::bpf_loader::id(),
+        "gorbagana_bpf_loader_program",
         ProgramCacheEntry::new_builtin(
             0,
-            b"solana_bpf_loader_program".len(),
-            solana_bpf_loader_program::Entrypoint::vm,
+            b"gorbagana_bpf_loader_program".len(),
+            gorbagana_bpf_loader_program::Entrypoint::vm,
         ),
     );
 

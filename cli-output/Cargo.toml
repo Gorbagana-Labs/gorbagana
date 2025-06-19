@@ -1,7 +1,7 @@
 [package]
-name = "solana-cli-output"
+name = "gorbagana-cli-output"
 description = "Blockchain, Rebuilt for Scale"
-documentation = "https://docs.rs/solana-cli-output"
+documentation = "https://docs.rs/gorbagana-cli-output"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -25,32 +25,32 @@ pretty-hex = { workspace = true }
 semver = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
-solana-account = { workspace = true }
-solana-account-decoder = { workspace = true }
-solana-bincode = { workspace = true }
-solana-clap-utils = { workspace = true }
-solana-cli-config = { workspace = true }
-solana-clock = { workspace = true }
-solana-epoch-info = { workspace = true, features = ["serde"] }
-solana-hash = { workspace = true }
-solana-message = { workspace = true }
-solana-native-token = { workspace = true }
-solana-packet = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-rpc-client-api = { workspace = true }
-solana-sdk-ids = { workspace = true }
-solana-signature = { workspace = true }
-solana-stake-interface = { workspace = true }
-solana-system-interface = { workspace = true }
-solana-sysvar = { workspace = true }
-solana-transaction = { workspace = true, features = ["verify"] }
-solana-transaction-error = { workspace = true }
-solana-transaction-status = { workspace = true }
-solana-vote-program = { workspace = true }
+gorbagana-account = { workspace = true }
+gorbagana-account-decoder = { workspace = true }
+gorbagana-bincode = { workspace = true }
+gorbagana-clap-utils = { workspace = true }
+gorbagana-cli-config = { workspace = true }
+gorbagana-clock = { workspace = true }
+gorbagana-epoch-info = { workspace = true, features = ["serde"] }
+gorbagana-hash = { workspace = true }
+gorbagana-message = { workspace = true }
+gorbagana-native-token = { workspace = true }
+gorbagana-packet = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-rpc-client-api = { workspace = true }
+gorbagana-sdk-ids = { workspace = true }
+gorbagana-signature = { workspace = true }
+gorbagana-stake-interface = { workspace = true }
+gorbagana-system-interface = { workspace = true }
+gorbagana-sysvar = { workspace = true }
+gorbagana-transaction = { workspace = true, features = ["verify"] }
+gorbagana-transaction-error = { workspace = true }
+gorbagana-transaction-status = { workspace = true }
+gorbagana-vote-program = { workspace = true }
 spl-memo = { workspace = true, features = ["no-entrypoint"] }
 
 [dev-dependencies]
 ed25519-dalek = { workspace = true }
-solana-keypair = { workspace = true }
-solana-signer = { workspace = true }
-solana-transaction-context = { workspace = true }
+gorbagana-keypair = { workspace = true }
+gorbagana-signer = { workspace = true }
+gorbagana-transaction-context = { workspace = true }

@@ -1,6 +1,6 @@
 use {
-    solana_account_decoder::parse_token::real_number_string_trimmed,
-    solana_native_token::lamports_to_sol,
+    gorbagana_account_decoder::parse_token::real_number_string_trimmed,
+    gorbagana_native_token::lamports_to_sol,
     std::{
         fmt::{Debug, Display, Formatter, Result},
         ops::Add,

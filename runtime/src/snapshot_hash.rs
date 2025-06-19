@@ -1,12 +1,12 @@
 //! Helper types and functions for handling and dealing with snapshot hashes.
 use {
-    solana_accounts_db::{
+    gorbagana_accounts_db::{
         accounts_hash::MerkleOrLatticeAccountsHash, epoch_accounts_hash::EpochAccountsHash,
     },
-    solana_clock::Slot,
-    solana_hash::Hash,
-    solana_lattice_hash::lt_hash::Checksum as AccountsLtHashChecksum,
-    solana_sha256_hasher::Hasher,
+    gorbagana_clock::Slot,
+    gorbagana_hash::Hash,
+    gorbagana_lattice_hash::lt_hash::Checksum as AccountsLtHashChecksum,
+    gorbagana_sha256_hasher::Hasher,
 };
 
 /// At startup, when loading from snapshots, the starting snapshot hashes need to be passed to

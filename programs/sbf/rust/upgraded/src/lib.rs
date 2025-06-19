@@ -1,11 +1,11 @@
 //! Example Rust-based SBF upgraded program
 
 use {
-    solana_account_info::AccountInfo, solana_msg::msg, solana_program_error::ProgramResult,
-    solana_pubkey::Pubkey, solana_sysvar::clock,
+    gorbagana_account_info::AccountInfo, gorbagana_msg::msg, gorbagana_program_error::ProgramResult,
+    gorbagana_pubkey::Pubkey, gorbagana_sysvar::clock,
 };
 
-solana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
+gorbagana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
 fn process_instruction(
     _program_id: &Pubkey,
     accounts: &[AccountInfo],

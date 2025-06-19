@@ -2,12 +2,12 @@
 extern crate test;
 
 use {
-    solana_entry::entry::{self, next_entry_mut, Entry, EntrySlice},
-    solana_hash::Hash,
-    solana_keypair::Keypair,
-    solana_sha256_hasher::hash,
-    solana_signer::Signer,
-    solana_system_transaction::transfer,
+    gorbagana_entry::entry::{self, next_entry_mut, Entry, EntrySlice},
+    gorbagana_hash::Hash,
+    gorbagana_keypair::Keypair,
+    gorbagana_sha256_hasher::hash,
+    gorbagana_signer::Signer,
+    gorbagana_system_transaction::transfer,
     test::Bencher,
 };
 
@@ -16,7 +16,7 @@ const NUM_ENTRIES: usize = 800;
 
 #[bench]
 fn bench_poh_verify_ticks(bencher: &mut Bencher) {
-    solana_logger::setup();
+    gorbagana_logger::setup();
     let thread_pool = entry::thread_pool_for_benches();
 
     let zero = Hash::default();

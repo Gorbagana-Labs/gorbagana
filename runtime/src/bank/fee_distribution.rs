@@ -2,15 +2,15 @@ use {
     super::Bank,
     crate::bank::CollectorFeeDetails,
     log::{debug, warn},
-    solana_account::{ReadableAccount, WritableAccount},
-    solana_fee::FeeFeatures,
-    solana_fee_structure::FeeBudgetLimits,
-    solana_pubkey::Pubkey,
-    solana_reward_info::{RewardInfo, RewardType},
-    solana_runtime_transaction::transaction_with_meta::TransactionWithMeta,
-    solana_svm_rent_collector::svm_rent_collector::SVMRentCollector,
-    solana_system_interface::program as system_program,
-    solana_vote::vote_account::VoteAccountsHashMap,
+    gorbagana_account::{ReadableAccount, WritableAccount},
+    gorbagana_fee::FeeFeatures,
+    gorbagana_fee_structure::FeeBudgetLimits,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_reward_info::{RewardInfo, RewardType},
+    gorbagana_runtime_transaction::transaction_with_meta::TransactionWithMeta,
+    gorbagana_svm_rent_collector::svm_rent_collector::SVMRentCollector,
+    gorbagana_system_interface::program as system_program,
+    gorbagana_vote::vote_account::VoteAccountsHashMap,
     std::{result::Result, sync::atomic::Ordering::Relaxed},
     thiserror::Error,
 };
@@ -73,7 +73,7 @@ impl Bank {
     ) -> u64 {
         let (_last_hash, last_lamports_per_signature) =
             self.last_blockhash_and_lamports_per_signature();
-        let fee_details = solana_fee::calculate_fee_details(
+        let fee_details = gorbagana_fee::calculate_fee_details(
             transaction,
             last_lamports_per_signature == 0,
             self.fee_structure().lamports_per_signature,
@@ -106,9 +106,9 @@ impl Bank {
         // NOTE: burn percent is statically 50%, in case it needs to change in the future,
         // burn_percent can be bank property that being passed down from bank to bank, without
         // needing fee-rate-governor
-        static_assertions::const_assert!(solana_fee_calculator::DEFAULT_BURN_PERCENT <= 100);
+        static_assertions::const_assert!(gorbagana_fee_calculator::DEFAULT_BURN_PERCENT <= 100);
 
-        solana_fee_calculator::DEFAULT_BURN_PERCENT as u64
+        gorbagana_fee_calculator::DEFAULT_BURN_PERCENT as u64
     }
 
     /// Attempts to deposit the given `deposit` amount into the fee collector account.
@@ -340,12 +340,12 @@ pub mod tests {
             create_genesis_config, create_genesis_config_with_leader,
             create_genesis_config_with_vote_accounts, ValidatorVoteKeypairs,
         },
-        solana_account::AccountSharedData,
-        solana_native_token::sol_to_lamports,
-        solana_pubkey as pubkey,
-        solana_rent::Rent,
-        solana_signer::Signer,
-        solana_svm_rent_collector::rent_state::RentState,
+        gorbagana_account::AccountSharedData,
+        gorbagana_native_token::sol_to_lamports,
+        gorbagana_pubkey as pubkey,
+        gorbagana_rent::Rent,
+        gorbagana_signer::Signer,
+        gorbagana_svm_rent_collector::rent_state::RentState,
         std::sync::RwLock,
     };
 
@@ -515,7 +515,7 @@ pub mod tests {
 
     #[test]
     fn test_distribute_rent_to_validators_rent_paying() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         const RENT_PER_VALIDATOR: u64 = 55;
         const TOTAL_RENT: u64 = RENT_PER_VALIDATOR * 4;

@@ -2,32 +2,32 @@
 
 use {
     agave_feature_set::disable_fees_sysvar,
-    solana_instruction::{AccountMeta, Instruction},
-    solana_keypair::Keypair,
-    solana_message::Message,
-    solana_pubkey::Pubkey,
-    solana_runtime::{
+    gorbagana_instruction::{AccountMeta, Instruction},
+    gorbagana_keypair::Keypair,
+    gorbagana_message::Message,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_runtime::{
         bank::Bank,
         bank_client::BankClient,
         genesis_utils::{create_genesis_config, GenesisConfigInfo},
         loader_utils::load_program_of_loader_v4,
     },
-    solana_runtime_transaction::runtime_transaction::RuntimeTransaction,
-    solana_sdk_ids::sysvar::{
+    gorbagana_runtime_transaction::runtime_transaction::RuntimeTransaction,
+    gorbagana_sdk_ids::sysvar::{
         clock, epoch_schedule, instructions, recent_blockhashes, rent, slot_hashes, slot_history,
         stake_history,
     },
-    solana_signer::Signer,
-    solana_sysvar::{
+    gorbagana_signer::Signer,
+    gorbagana_sysvar::{
         epoch_rewards,
         stake_history::{StakeHistory, StakeHistoryEntry},
     },
-    solana_transaction::Transaction,
+    gorbagana_transaction::Transaction,
 };
 
 #[test]
 fn test_sysvar_syscalls() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         mut genesis_config,
@@ -69,7 +69,7 @@ fn test_sysvar_syscalls() {
         bank_forks.as_ref(),
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_sysvar",
+        "gorbagana_sbf_rust_sysvar",
     );
     bank.freeze();
 

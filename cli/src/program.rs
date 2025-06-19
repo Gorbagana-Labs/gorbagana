@@ -15,10 +15,10 @@ use {
     bip39::{Language, Mnemonic, MnemonicType, Seed},
     clap::{App, AppSettings, Arg, ArgMatches, SubCommand},
     log::*,
-    solana_account::{state_traits::StateMut, Account},
-    solana_account_decoder::{UiAccountEncoding, UiDataSliceConfig},
-    solana_bpf_loader_program::syscalls::create_program_runtime_environment_v1,
-    solana_clap_utils::{
+    gorbagana_account::{state_traits::StateMut, Account},
+    gorbagana_account_decoder::{UiAccountEncoding, UiDataSliceConfig},
+    gorbagana_bpf_loader_program::syscalls::create_program_runtime_environment_v1,
+    gorbagana_clap_utils::{
         self,
         compute_budget::{compute_unit_price_arg, ComputeUnitLimit},
         fee_payer::{fee_payer_arg, FEE_PAYER_ARG},
@@ -28,48 +28,48 @@ use {
         keypair::*,
         offline::{OfflineArgs, DUMP_TRANSACTION_MESSAGE, SIGN_ONLY_ARG},
     },
-    solana_cli_output::{
+    gorbagana_cli_output::{
         return_signers_with_config, CliProgram, CliProgramAccountType, CliProgramAuthority,
         CliProgramBuffer, CliProgramId, CliUpgradeableBuffer, CliUpgradeableBuffers,
         CliUpgradeableProgram, CliUpgradeableProgramClosed, CliUpgradeableProgramExtended,
         CliUpgradeableProgramMigrated, CliUpgradeablePrograms, ReturnSignersConfig,
     },
-    solana_client::{
+    gorbagana_client::{
         connection_cache::ConnectionCache,
         send_and_confirm_transactions_in_parallel::{
             send_and_confirm_transactions_in_parallel_blocking_v2, SendAndConfirmConfigV2,
         },
         tpu_client::{TpuClient, TpuClientConfig},
     },
-    solana_commitment_config::CommitmentConfig,
-    solana_instruction::{error::InstructionError, Instruction},
-    solana_keypair::{keypair_from_seed, read_keypair_file, Keypair},
-    solana_loader_v3_interface::{
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_instruction::{error::InstructionError, Instruction},
+    gorbagana_keypair::{keypair_from_seed, read_keypair_file, Keypair},
+    gorbagana_loader_v3_interface::{
         get_program_data_address, instruction as loader_v3_instruction,
         state::UpgradeableLoaderState,
     },
-    solana_message::Message,
-    solana_packet::PACKET_DATA_SIZE,
-    solana_program_runtime::{
+    gorbagana_message::Message,
+    gorbagana_packet::PACKET_DATA_SIZE,
+    gorbagana_program_runtime::{
         execution_budget::SVMTransactionExecutionBudget, invoke_context::InvokeContext,
     },
-    solana_pubkey::Pubkey,
-    solana_remote_wallet::remote_wallet::RemoteWalletManager,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_api::{
+    gorbagana_pubkey::Pubkey,
+    gorbagana_remote_wallet::remote_wallet::RemoteWalletManager,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_rpc_client_api::{
         client_error::ErrorKind as ClientErrorKind,
         config::{RpcAccountInfoConfig, RpcProgramAccountsConfig},
         filter::{Memcmp, RpcFilterType},
         request::MAX_MULTIPLE_ACCOUNTS,
     },
-    solana_rpc_client_nonce_utils::blockhash_query::BlockhashQuery,
-    solana_sbpf::{elf::Executable, verifier::RequisiteVerifier},
-    solana_sdk_ids::{bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable, compute_budget},
-    solana_signature::Signature,
-    solana_signer::Signer,
-    solana_system_interface::{error::SystemError, MAX_PERMITTED_DATA_LENGTH},
-    solana_transaction::Transaction,
-    solana_transaction_error::TransactionError,
+    gorbagana_rpc_client_nonce_utils::blockhash_query::BlockhashQuery,
+    gorbagana_sbpf::{elf::Executable, verifier::RequisiteVerifier},
+    gorbagana_sdk_ids::{bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable, compute_budget},
+    gorbagana_signature::Signature,
+    gorbagana_signer::Signer,
+    gorbagana_system_interface::{error::SystemError, MAX_PERMITTED_DATA_LENGTH},
+    gorbagana_transaction::Transaction,
+    gorbagana_transaction_error::TransactionError,
     std::{
         fs::File,
         io::{Read, Write},
@@ -672,7 +672,7 @@ impl ProgramSubCommands for App<'_, '_> {
         .subcommand(
             SubCommand::with_name("deploy")
                 .about(
-                    "Deploy has been removed. Use `solana program deploy` instead to deploy \
+                    "Deploy has been removed. Use `gorbagana program deploy` instead to deploy \
                      upgradeable programs",
                 )
                 .setting(AppSettings::Hidden),
@@ -3216,10 +3216,10 @@ fn send_deploy_messages(
                     &[fee_payer_signer, write_signer],
                 ),
                 ConnectionCache::Quic(cache) => {
-                    let tpu_client_fut = solana_client::nonblocking::tpu_client::TpuClient::new_with_connection_cache(
+                    let tpu_client_fut = gorbagana_client::nonblocking::tpu_client::TpuClient::new_with_connection_cache(
                         rpc_client.get_inner_client().clone(),
                         config.websocket_url.as_str(),
-                        solana_client::tpu_client::TpuClientConfig::default(),
+                        gorbagana_client::tpu_client::TpuClientConfig::default(),
                         cache,
                     );
                     let tpu_client = (!use_rpc).then(|| rpc_client
@@ -3296,12 +3296,12 @@ fn report_ephemeral_mnemonic(words: usize, mnemonic: bip39::Mnemonic, ephemeral_
     let phrase: &str = mnemonic.phrase();
     let divider = String::from_utf8(vec![b'='; phrase.len()]).unwrap();
     eprintln!("{divider}\nRecover the intermediate account's ephemeral keypair file with");
-    eprintln!("`solana-keygen recover` and the following {words}-word seed phrase:");
+    eprintln!("`gorbagana-keygen recover` and the following {words}-word seed phrase:");
     eprintln!("{divider}\n{phrase}\n{divider}");
     eprintln!("To resume a deploy, pass the recovered keypair as the");
-    eprintln!("[BUFFER_SIGNER] to `solana program deploy` or `solana program write-buffer'.");
+    eprintln!("[BUFFER_SIGNER] to `gorbagana program deploy` or `gorbagana program write-buffer'.");
     eprintln!("Or to recover the account's lamports, use:");
-    eprintln!("{divider}\nsolana program close {ephemeral_pubkey}\n{divider}");
+    eprintln!("{divider}\ngorbagana program close {ephemeral_pubkey}\n{divider}");
 }
 
 fn fetch_feature_set(rpc_client: &RpcClient) -> Result<FeatureSet, Box<dyn std::error::Error>> {
@@ -3337,9 +3337,9 @@ mod tests {
             cli::{parse_command, process_command},
         },
         serde_json::Value,
-        solana_cli_output::OutputFormat,
-        solana_hash::Hash,
-        solana_keypair::write_keypair_file,
+        gorbagana_cli_output::OutputFormat,
+        gorbagana_hash::Hash,
+        gorbagana_keypair::write_keypair_file,
     };
 
     fn make_tmp_path(name: &str) -> String {
@@ -4514,7 +4514,7 @@ mod tests {
 
     #[test]
     fn test_cli_keypair_file() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let default_keypair = Keypair::new();
         let program_pubkey = Keypair::new();

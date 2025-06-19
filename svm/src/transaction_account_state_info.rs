@@ -1,10 +1,10 @@
 use {
-    solana_account::ReadableAccount,
-    solana_sdk_ids::native_loader,
-    solana_svm_rent_collector::{rent_state::RentState, svm_rent_collector::SVMRentCollector},
-    solana_svm_transaction::svm_message::SVMMessage,
-    solana_transaction_context::{IndexOfAccount, TransactionContext},
-    solana_transaction_error::TransactionResult as Result,
+    gorbagana_account::ReadableAccount,
+    gorbagana_sdk_ids::native_loader,
+    gorbagana_svm_rent_collector::{rent_state::RentState, svm_rent_collector::SVMRentCollector},
+    gorbagana_svm_transaction::svm_message::SVMMessage,
+    gorbagana_transaction_context::{IndexOfAccount, TransactionContext},
+    gorbagana_transaction_error::TransactionResult as Result,
 };
 
 #[derive(PartialEq, Debug)]
@@ -71,18 +71,18 @@ mod test {
     use {
         super::*,
         agave_reserved_account_keys::ReservedAccountKeys,
-        solana_account::AccountSharedData,
-        solana_hash::Hash,
-        solana_keypair::Keypair,
-        solana_message::{
+        gorbagana_account::AccountSharedData,
+        gorbagana_hash::Hash,
+        gorbagana_keypair::Keypair,
+        gorbagana_message::{
             compiled_instruction::CompiledInstruction, LegacyMessage, Message, MessageHeader,
             SanitizedMessage,
         },
-        solana_rent::Rent,
-        solana_rent_collector::RentCollector,
-        solana_signer::Signer,
-        solana_transaction_context::TransactionContext,
-        solana_transaction_error::TransactionError,
+        gorbagana_rent::Rent,
+        gorbagana_rent_collector::RentCollector,
+        gorbagana_signer::Signer,
+        gorbagana_transaction_context::TransactionContext,
+        gorbagana_transaction_error::TransactionError,
     };
 
     #[test]

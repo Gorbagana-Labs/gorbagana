@@ -5,7 +5,7 @@ extern crate log;
 use {
     clap::{crate_description, crate_name, value_t, App, Arg},
     rayon::prelude::*,
-    solana_accounts_db::{
+    gorbagana_accounts_db::{
         accounts::Accounts,
         accounts_db::{
             test_utils::{create_test_accounts, update_accounts_bench},
@@ -13,19 +13,19 @@ use {
         },
         ancestors::Ancestors,
     },
-    solana_epoch_schedule::EpochSchedule,
-    solana_measure::measure::Measure,
-    solana_pubkey::Pubkey,
-    solana_rent_collector::RentCollector,
+    gorbagana_epoch_schedule::EpochSchedule,
+    gorbagana_measure::measure::Measure,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent_collector::RentCollector,
     std::{env, fs, path::PathBuf, sync::Arc},
 };
 
 fn main() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let matches = App::new(crate_name!())
         .about(crate_description!())
-        .version(solana_version::version!())
+        .version(gorbagana_version::version!())
         .arg(
             Arg::with_name("num_slots")
                 .long("num_slots")
@@ -127,7 +127,7 @@ fn main() {
             let results_store = accounts.accounts_db.update_accounts_hash_with_verify_from(
                 CalcAccountsHashDataSource::Storages,
                 false,
-                solana_clock::Slot::default(),
+                gorbagana_clock::Slot::default(),
                 &ancestors,
                 None,
                 &EpochSchedule::default(),

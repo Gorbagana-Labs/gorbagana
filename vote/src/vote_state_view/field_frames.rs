@@ -1,7 +1,7 @@
 use {
     super::{list_view::ListView, Result, VoteStateViewError},
-    solana_clock::{Epoch, Slot},
-    solana_pubkey::Pubkey,
+    gorbagana_clock::{Epoch, Slot},
+    gorbagana_pubkey::Pubkey,
     std::io::BufRead,
 };
 
@@ -97,7 +97,7 @@ pub(super) struct LockoutListFrame {
 
 impl LockoutListFrame {
     pub(super) fn read(cursor: &mut std::io::Cursor<&[u8]>) -> Result<Self> {
-        let len = solana_serialize_utils::cursor::read_u64(cursor)
+        let len = gorbagana_serialize_utils::cursor::read_u64(cursor)
             .map_err(|_err| VoteStateViewError::AccountDataTooSmall)? as usize;
         let len = u8::try_from(len).map_err(|_| VoteStateViewError::InvalidVotesLength)?;
         let frame = Self { len };
@@ -127,7 +127,7 @@ pub(super) struct LandedVotesListFrame {
 
 impl LandedVotesListFrame {
     pub(super) fn read(cursor: &mut std::io::Cursor<&[u8]>) -> Result<Self> {
-        let len = solana_serialize_utils::cursor::read_u64(cursor)
+        let len = gorbagana_serialize_utils::cursor::read_u64(cursor)
             .map_err(|_err| VoteStateViewError::AccountDataTooSmall)? as usize;
         let len = u8::try_from(len).map_err(|_| VoteStateViewError::InvalidVotesLength)?;
         let frame = Self { len };
@@ -172,7 +172,7 @@ pub(super) struct AuthorizedVotersListFrame {
 
 impl AuthorizedVotersListFrame {
     pub(super) fn read(cursor: &mut std::io::Cursor<&[u8]>) -> Result<Self> {
-        let len = solana_serialize_utils::cursor::read_u64(cursor)
+        let len = gorbagana_serialize_utils::cursor::read_u64(cursor)
             .map_err(|_err| VoteStateViewError::AccountDataTooSmall)? as usize;
         let len =
             u8::try_from(len).map_err(|_| VoteStateViewError::InvalidAuthorizedVotersLength)?;
@@ -229,7 +229,7 @@ pub(super) struct EpochCreditsListFrame {
 
 impl EpochCreditsListFrame {
     pub(super) fn read(cursor: &mut std::io::Cursor<&[u8]>) -> Result<Self> {
-        let len = solana_serialize_utils::cursor::read_u64(cursor)
+        let len = gorbagana_serialize_utils::cursor::read_u64(cursor)
             .map_err(|_err| VoteStateViewError::AccountDataTooSmall)? as usize;
         let len = u8::try_from(len).map_err(|_| VoteStateViewError::InvalidEpochCreditsLength)?;
         let frame = Self { len };
@@ -291,7 +291,7 @@ impl RootSlotView<'_> {
             let root_slot = {
                 let mut cursor = std::io::Cursor::new(self.buffer);
                 cursor.consume(1);
-                solana_serialize_utils::cursor::read_u64(&mut cursor).unwrap()
+                gorbagana_serialize_utils::cursor::read_u64(&mut cursor).unwrap()
             };
             Some(root_slot)
         }
@@ -318,7 +318,7 @@ impl RootSlotFrame {
     }
 
     pub(super) fn read(cursor: &mut std::io::Cursor<&[u8]>) -> Result<Self> {
-        let byte = solana_serialize_utils::cursor::read_u8(cursor)
+        let byte = gorbagana_serialize_utils::cursor::read_u8(cursor)
             .map_err(|_err| VoteStateViewError::AccountDataTooSmall)?;
         let has_root_slot = match byte {
             0 => Ok(false),
@@ -345,7 +345,7 @@ impl PriorVotersFrame {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, solana_vote_interface::state::CircBuf};
+    use {super::*, gorbagana_vote_interface::state::CircBuf};
 
     #[test]
     fn test_prior_voters_total_size() {

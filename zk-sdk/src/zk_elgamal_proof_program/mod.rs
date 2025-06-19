@@ -5,7 +5,7 @@
 //! the program as well as the technical details of some of the proof instructions can be found in
 //! the [`ZK ElGamal proof`] documentation.
 //!
-//! [`ZK ElGamal proof`]: https://docs.solanalabs.com/runtime/zk-token-proof
+//! [`ZK ElGamal proof`]: https://docs.gorbaganalabs.com/runtime/zk-token-proof
 
 pub mod errors;
 pub mod instruction;
@@ -13,4 +13,4 @@ pub mod proof_data;
 pub mod state;
 
 // Program Id of the ZK ElGamal Proof program
-pub use solana_sdk_ids::zk_elgamal_proof_program::{check_id, id, ID};
+pub use gorbagana_sdk_ids::zk_elgamal_proof_program::{check_id, id, ID};

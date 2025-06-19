@@ -1,6 +1,6 @@
 [package]
 name = "json-rpc-server"
-description = "Reference example using Solana SVM API for RPC API"
+description = "Reference example using Gorbagana SVM API for RPC API"
 version = { workspace = true }
 edition = { workspace = true }
 publish = false
@@ -25,34 +25,34 @@ jsonrpc-http-server = { workspace = true }
 log = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
-solana-account = { workspace = true }
-solana-account-decoder = { workspace = true }
-solana-bpf-loader-program = { workspace = true }
-solana-clock = { workspace = true }
-solana-commitment-config = { workspace = true }
-solana-compute-budget = { workspace = true }
-solana-compute-budget-interface = { workspace = true }
-solana-hash = { workspace = true }
-solana-message = { workspace = true }
-solana-nonce = { workspace = true }
-solana-perf = { workspace = true }
-solana-program-runtime = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-rpc-client-api = { workspace = true }
-solana-sdk-ids = { workspace = true }
-solana-signature = { workspace = true }
-solana-svm = { workspace = true }
-solana-svm-callback = { workspace = true }
-solana-system-interface = { workspace = true }
-solana-system-program = { workspace = true }
-solana-sysvar = { workspace = true }
-solana-sysvar-id = { workspace = true }
-solana-transaction = { workspace = true }
-solana-transaction-context = { workspace = true }
-solana-transaction-error = { workspace = true }
-solana-transaction-status = { workspace = true }
-solana-validator-exit = { workspace = true }
-solana-version = { workspace = true }
+gorbagana-account = { workspace = true }
+gorbagana-account-decoder = { workspace = true }
+gorbagana-bpf-loader-program = { workspace = true }
+gorbagana-clock = { workspace = true }
+gorbagana-commitment-config = { workspace = true }
+gorbagana-compute-budget = { workspace = true }
+gorbagana-compute-budget-interface = { workspace = true }
+gorbagana-hash = { workspace = true }
+gorbagana-message = { workspace = true }
+gorbagana-nonce = { workspace = true }
+gorbagana-perf = { workspace = true }
+gorbagana-program-runtime = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-rpc-client-api = { workspace = true }
+gorbagana-sdk-ids = { workspace = true }
+gorbagana-signature = { workspace = true }
+gorbagana-svm = { workspace = true }
+gorbagana-svm-callback = { workspace = true }
+gorbagana-system-interface = { workspace = true }
+gorbagana-system-program = { workspace = true }
+gorbagana-sysvar = { workspace = true }
+gorbagana-sysvar-id = { workspace = true }
+gorbagana-transaction = { workspace = true }
+gorbagana-transaction-context = { workspace = true }
+gorbagana-transaction-error = { workspace = true }
+gorbagana-transaction-status = { workspace = true }
+gorbagana-validator-exit = { workspace = true }
+gorbagana-version = { workspace = true }
 spl-token-2022 = { workspace = true, features = ["no-entrypoint"] }
 tokio = { workspace = true, features = ["full"] }
 tokio-util = { workspace = true, features = ["codec", "compat"] }

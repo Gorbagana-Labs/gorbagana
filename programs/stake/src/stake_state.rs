@@ -5,29 +5,29 @@
 
 #[deprecated(
     since = "1.8.0",
-    note = "Please use `solana_stake_interface::state` instead"
+    note = "Please use `gorbagana_stake_interface::state` instead"
 )]
-pub use solana_stake_interface::state::*;
+pub use gorbagana_stake_interface::state::*;
 use {
-    solana_account::{state_traits::StateMut, AccountSharedData, ReadableAccount},
-    solana_clock::{Clock, Epoch},
-    solana_instruction::error::InstructionError,
-    solana_log_collector::ic_msg,
-    solana_program_runtime::invoke_context::InvokeContext,
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
-    solana_sdk_ids::stake::id,
-    solana_stake_interface::{
+    gorbagana_account::{state_traits::StateMut, AccountSharedData, ReadableAccount},
+    gorbagana_clock::{Clock, Epoch},
+    gorbagana_instruction::error::InstructionError,
+    gorbagana_log_collector::ic_msg,
+    gorbagana_program_runtime::invoke_context::InvokeContext,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent::Rent,
+    gorbagana_sdk_ids::stake::id,
+    gorbagana_stake_interface::{
         error::StakeError,
         instruction::LockupArgs,
         stake_flags::StakeFlags,
         tools::{acceptable_reference_epoch_credits, eligible_for_deactivate_delinquent},
     },
-    solana_sysvar::stake_history::{StakeHistory, StakeHistoryEntry},
-    solana_transaction_context::{
+    gorbagana_sysvar::stake_history::{StakeHistory, StakeHistoryEntry},
+    gorbagana_transaction_context::{
         BorrowedAccount, IndexOfAccount, InstructionContext, TransactionContext,
     },
-    solana_vote_interface::state::{VoteState, VoteStateVersions},
+    gorbagana_vote_interface::state::{VoteState, VoteStateVersions},
     std::{collections::HashSet, convert::TryFrom},
 };
 
@@ -321,7 +321,7 @@ pub fn delegate(
 ) -> Result<(), InstructionError> {
     let vote_account = instruction_context
         .try_borrow_instruction_account(transaction_context, vote_account_index)?;
-    if *vote_account.get_owner() != solana_sdk_ids::vote::id() {
+    if *vote_account.get_owner() != gorbagana_sdk_ids::vote::id() {
         return Err(InstructionError::IncorrectProgramId);
     }
     let vote_pubkey = *vote_account.get_key();
@@ -912,7 +912,7 @@ pub(crate) fn deactivate_delinquent(
     )?;
     let delinquent_vote_account = instruction_context
         .try_borrow_instruction_account(transaction_context, delinquent_vote_account_index)?;
-    if *delinquent_vote_account.get_owner() != solana_sdk_ids::vote::id() {
+    if *delinquent_vote_account.get_owner() != gorbagana_sdk_ids::vote::id() {
         return Err(InstructionError::IncorrectProgramId);
     }
     let delinquent_vote_state = delinquent_vote_account
@@ -921,7 +921,7 @@ pub(crate) fn deactivate_delinquent(
 
     let reference_vote_account = instruction_context
         .try_borrow_instruction_account(transaction_context, reference_vote_account_index)?;
-    if *reference_vote_account.get_owner() != solana_sdk_ids::vote::id() {
+    if *reference_vote_account.get_owner() != gorbagana_sdk_ids::vote::id() {
         return Err(InstructionError::IncorrectProgramId);
     }
     let reference_vote_state = reference_vote_account
@@ -1449,19 +1449,19 @@ mod tests {
     use {
         super::*,
         proptest::prelude::*,
-        solana_account::{create_account_shared_data_for_test, AccountSharedData},
-        solana_epoch_schedule::EpochSchedule,
-        solana_program_runtime::with_mock_invoke_context,
-        solana_pubkey::Pubkey,
-        solana_sdk_ids::sysvar::epoch_schedule,
-        solana_stake_interface::state::warmup_cooldown_rate,
-        solana_sysvar_id::SysvarId,
+        gorbagana_account::{create_account_shared_data_for_test, AccountSharedData},
+        gorbagana_epoch_schedule::EpochSchedule,
+        gorbagana_program_runtime::with_mock_invoke_context,
+        gorbagana_pubkey::Pubkey,
+        gorbagana_sdk_ids::sysvar::epoch_schedule,
+        gorbagana_stake_interface::state::warmup_cooldown_rate,
+        gorbagana_sysvar_id::SysvarId,
         test_case::test_case,
     };
 
     #[test]
     fn test_authorized_authorize() {
-        let staker = solana_pubkey::new_rand();
+        let staker = gorbagana_pubkey::new_rand();
         let mut authorized = Authorized::auto(&staker);
         let mut signers = HashSet::new();
         assert_eq!(
@@ -1477,9 +1477,9 @@ mod tests {
 
     #[test]
     fn test_authorized_authorize_with_custodian() {
-        let staker = solana_pubkey::new_rand();
-        let custodian = solana_pubkey::new_rand();
-        let invalid_custodian = solana_pubkey::new_rand();
+        let staker = gorbagana_pubkey::new_rand();
+        let custodian = gorbagana_pubkey::new_rand();
+        let invalid_custodian = gorbagana_pubkey::new_rand();
         let mut authorized = Authorized::auto(&staker);
         let mut signers = HashSet::new();
         signers.insert(staker);
@@ -2175,7 +2175,7 @@ mod tests {
 
     #[test]
     fn test_lockup_is_expired() {
-        let custodian = solana_pubkey::new_rand();
+        let custodian = gorbagana_pubkey::new_rand();
         let lockup = Lockup {
             epoch: 1,
             unix_timestamp: 1,
@@ -2236,7 +2236,7 @@ mod tests {
         panic!(
             "stake minimum_balance: {} lamports, {} SOL",
             minimum_balance,
-            minimum_balance as f64 / solana_native_token::LAMPORTS_PER_SOL as f64
+            minimum_balance as f64 / gorbagana_native_token::LAMPORTS_PER_SOL as f64
         );
     }
 

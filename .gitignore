@@ -1,9 +1,9 @@
 farf/
 target/
-/solana-release/
-/solana-release.tar.bz2
-/solana-metrics/
-/solana-metrics.tar.bz2
+/gorbagana-release/
+/gorbagana-release.tar.bz2
+/gorbagana-metrics/
+/gorbagana-metrics.tar.bz2
 /test-ledger/
 
 **/*.rs.bk
@@ -23,7 +23,7 @@ log-*/
 
 # intellij files
 .idea/
-/solana.iml
+/gorbagana.iml
 /.vscode/
 
 # fetch-core-bpf.sh artifacts

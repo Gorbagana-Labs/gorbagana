@@ -1,7 +1,7 @@
 [package]
-name = "solana-transaction-metrics-tracker"
-description = "Solana transaction metrics tracker"
-documentation = "https://docs.rs/solana-transaction-metrics-tracker"
+name = "gorbagana-transaction-metrics-tracker"
+description = "Gorbagana transaction metrics tracker"
+documentation = "https://docs.rs/gorbagana-transaction-metrics-tracker"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -18,15 +18,15 @@ bincode = { workspace = true }
 # Update this borsh dependency to the workspace version once
 log = { workspace = true }
 rand = { workspace = true }
-solana-packet = { workspace = true }
-solana-perf = { workspace = true }
-solana-short-vec = { workspace = true }
-solana-signature = { workspace = true }
+gorbagana-packet = { workspace = true }
+gorbagana-perf = { workspace = true }
+gorbagana-short-vec = { workspace = true }
+gorbagana-signature = { workspace = true }
 
 [dev-dependencies]
-solana-hash = { workspace = true }
-solana-keypair = { workspace = true }
-solana-packet = { workspace = true, features = ["dev-context-only-utils"] }
-solana-perf = { workspace = true, features = ["dev-context-only-utils"] }
-solana-pubkey = { workspace = true, features = ["rand"] }
-solana-system-transaction = { workspace = true }
+gorbagana-hash = { workspace = true }
+gorbagana-keypair = { workspace = true }
+gorbagana-packet = { workspace = true, features = ["dev-context-only-utils"] }
+gorbagana-perf = { workspace = true, features = ["dev-context-only-utils"] }
+gorbagana-pubkey = { workspace = true, features = ["rand"] }
+gorbagana-system-transaction = { workspace = true }

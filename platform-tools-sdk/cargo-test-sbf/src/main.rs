@@ -111,7 +111,7 @@ pub fn is_version_string(arg: &str) -> Result<(), String> {
     Err("a version string may start with 'v' and contains major and minor version numbers separated by a dot, e.g. v1.32 or 1.32".to_string())
 }
 
-fn test_solana_package(
+fn test_gorbagana_package(
     config: &Config,
     target_directory: &Path,
     package: &cargo_metadata::Package,
@@ -169,7 +169,7 @@ fn test_solana_package(
         config.generate_child_script_on_failure,
     );
 
-    // Pass --sbf-out-dir along to the solana-program-test crate
+    // Pass --sbf-out-dir along to the gorbagana-program-test crate
     env::set_var("SBF_OUT_DIR", sbf_out_dir);
 
     cargo_args.insert(0, "test");
@@ -209,7 +209,7 @@ fn test_solana_package(
     );
 }
 
-fn test_solana(config: Config, manifest_path: Option<PathBuf>) {
+fn test_gorbagana(config: Config, manifest_path: Option<PathBuf>) {
     let mut metadata_command = cargo_metadata::MetadataCommand::new();
     if let Some(manifest_path) = manifest_path.as_ref() {
         metadata_command.manifest_path(manifest_path);
@@ -232,7 +232,7 @@ fn test_solana(config: Config, manifest_path: Option<PathBuf>) {
                     .any(|p| root_package.id.repr.contains(p)))
         {
             debug!("test root package {:?}", root_package.id);
-            test_solana_package(&config, metadata.target_directory.as_ref(), root_package);
+            test_gorbagana_package(&config, metadata.target_directory.as_ref(), root_package);
             return;
         }
     }
@@ -256,13 +256,13 @@ fn test_solana(config: Config, manifest_path: Option<PathBuf>) {
         if config.packages.is_empty() || config.packages.iter().any(|p| package.id.repr.contains(p))
         {
             debug!("test package {:?}", package.id);
-            test_solana_package(&config, metadata.target_directory.as_ref(), package);
+            test_gorbagana_package(&config, metadata.target_directory.as_ref(), package);
         }
     }
 }
 
 fn main() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
     let mut args = env::args().collect::<Vec<_>>();
     // When run as a cargo subcommand, the first program argument is the subcommand name.
     // Remove it
@@ -284,7 +284,7 @@ fn main() {
                 .long("sbf-sdk")
                 .value_name("PATH")
                 .takes_value(true)
-                .help("Path to the Solana SBF SDK"),
+                .help("Path to the Gorbagana SBF SDK"),
         )
         .arg(
             Arg::new("features")
@@ -362,7 +362,7 @@ fn main() {
                 .long("workspace")
                 .takes_value(false)
                 .alias("all")
-                .help("Test all Solana packages in the workspace"),
+                .help("Test all Gorbagana packages in the workspace"),
         )
         .arg(
             Arg::new("jobs")
@@ -445,5 +445,5 @@ fn main() {
     }
 
     let manifest_path: Option<PathBuf> = matches.value_of_t("manifest_path").ok();
-    test_solana(config, manifest_path);
+    test_gorbagana(config, manifest_path);
 }

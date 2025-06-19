@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Fetches the latest SPL programs and produces the solana-genesis command-line
+# Fetches the latest SPL programs and produces the gorbagana-genesis command-line
 # arguments needed to install them
 #
 
@@ -21,7 +21,7 @@ add_spl_program_to_fetch() {
   declare loader=$4
 
   so_name="${PREFIX}_${name//-/_}.so"
-  download_url="https://github.com/solana-program/$name/releases/download/program@v$version/$so_name"
+  download_url="https://github.com/gorbagana-program/$name/releases/download/program@v$version/$so_name"
 
   programs+=("$name $version $address $loader $download_url")
 }

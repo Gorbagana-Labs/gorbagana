@@ -1,5 +1,5 @@
 [package]
-name = "solana-sbf-rust-param-passing-dep"
+name = "gorbagana-sbf-rust-param-passing-dep"
 version = { workspace = true }
 description = { workspace = true }
 authors = { workspace = true }

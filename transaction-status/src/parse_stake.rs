@@ -4,8 +4,8 @@ use {
     },
     bincode::deserialize,
     serde_json::{json, Map, Value},
-    solana_message::{compiled_instruction::CompiledInstruction, AccountKeys},
-    solana_stake_interface::instruction::StakeInstruction,
+    gorbagana_message::{compiled_instruction::CompiledInstruction, AccountKeys},
+    gorbagana_stake_interface::instruction::StakeInstruction,
 };
 
 pub fn parse_stake(
@@ -331,11 +331,11 @@ fn check_num_stake_accounts(accounts: &[u8], num: usize) -> Result<(), ParseInst
 mod test {
     use {
         super::*,
-        solana_instruction::Instruction,
-        solana_message::Message,
-        solana_pubkey::Pubkey,
-        solana_sdk_ids::sysvar,
-        solana_stake_interface::{
+        gorbagana_instruction::Instruction,
+        gorbagana_message::Message,
+        gorbagana_pubkey::Pubkey,
+        gorbagana_sdk_ids::sysvar,
+        gorbagana_stake_interface::{
             config,
             instruction::{self, LockupArgs},
             state::{Authorized, Lockup, StakeAuthorize},

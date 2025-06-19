@@ -1,14 +1,14 @@
-//! Plugin trait for rent collection within the Solana SVM.
+//! Plugin trait for rent collection within the Gorbagana SVM.
 
 use {
     crate::rent_state::RentState,
-    solana_account::{AccountSharedData, ReadableAccount},
-    solana_clock::Epoch,
-    solana_pubkey::Pubkey,
-    solana_rent::{Rent, RentDue},
-    solana_rent_collector::CollectedInfo,
-    solana_transaction_context::{IndexOfAccount, TransactionContext},
-    solana_transaction_error::{TransactionError, TransactionResult},
+    gorbagana_account::{AccountSharedData, ReadableAccount},
+    gorbagana_clock::Epoch,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent::{Rent, RentDue},
+    gorbagana_rent_collector::CollectedInfo,
+    gorbagana_transaction_context::{IndexOfAccount, TransactionContext},
+    gorbagana_transaction_error::{TransactionError, TransactionResult},
 };
 
 mod rent_collector;
@@ -64,7 +64,7 @@ pub trait SVMRentCollector {
         _account_state: &AccountSharedData,
         account_index: IndexOfAccount,
     ) -> TransactionResult<()> {
-        if !solana_sdk_ids::incinerator::check_id(address)
+        if !gorbagana_sdk_ids::incinerator::check_id(address)
             && !self.transition_allowed(pre_rent_state, post_rent_state)
         {
             let account_index = account_index as u8;

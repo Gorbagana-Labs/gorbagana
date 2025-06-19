@@ -6,8 +6,8 @@ use {
     agave_precompiles::ed25519::verify,
     ed25519_dalek::ed25519::signature::Signer,
     rand0_7::{thread_rng, Rng},
-    solana_ed25519_program::new_ed25519_instruction_with_signature,
-    solana_instruction::Instruction,
+    gorbagana_ed25519_program::new_ed25519_instruction_with_signature,
+    gorbagana_instruction::Instruction,
     test::Bencher,
 };
 

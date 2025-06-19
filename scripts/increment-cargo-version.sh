@@ -152,7 +152,7 @@ scripts/cargo-for-all-lock-files.sh tree >/dev/null
 (
   shopt -s globstar
   git diff --unified=0 ./**/Cargo.lock >cargo-lock-patch
-  grep -E '^(diff|index|---|\+\+\+|@@.*@@ name = .*|-version|\+version|@@.*@@ dependencies.*|- "agave-|\+ "agave-|- "solana-|\+ "solana-)' cargo-lock-patch >filtered-cargo-lock-patch
+  grep -E '^(diff|index|---|\+\+\+|@@.*@@ name = .*|-version|\+version|@@.*@@ dependencies.*|- "agave-|\+ "agave-|- "gorbagana-|\+ "gorbagana-)' cargo-lock-patch >filtered-cargo-lock-patch
 
   # there might some orphaned dependency lines in the filtered file
   # this is a workaround to filter them out

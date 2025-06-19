@@ -1,16 +1,16 @@
 use {
-    solana_instruction::error::InstructionError,
-    solana_log_collector::ic_msg,
-    solana_nonce::{
+    gorbagana_instruction::error::InstructionError,
+    gorbagana_log_collector::ic_msg,
+    gorbagana_nonce::{
         self as nonce,
         state::{DurableNonce, State},
         versions::{AuthorizeNonceError, Versions},
     },
-    solana_program_runtime::invoke_context::InvokeContext,
-    solana_pubkey::Pubkey,
-    solana_system_interface::error::SystemError,
-    solana_sysvar::rent::Rent,
-    solana_transaction_context::{
+    gorbagana_program_runtime::invoke_context::InvokeContext,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_system_interface::error::SystemError,
+    gorbagana_sysvar::rent::Rent,
+    gorbagana_transaction_context::{
         BorrowedAccount, IndexOfAccount, InstructionContext, TransactionContext,
     },
     std::collections::HashSet,
@@ -251,13 +251,13 @@ mod test {
     use {
         super::*,
         assert_matches::assert_matches,
-        solana_account::AccountSharedData,
-        solana_nonce::{self as nonce, state::State},
-        solana_nonce_account::{create_account, verify_nonce_account},
-        solana_program_runtime::with_mock_invoke_context,
-        solana_sdk_ids::system_program,
-        solana_sha256_hasher::hash,
-        solana_transaction_context::InstructionAccount,
+        gorbagana_account::AccountSharedData,
+        gorbagana_nonce::{self as nonce, state::State},
+        gorbagana_nonce_account::{create_account, verify_nonce_account},
+        gorbagana_program_runtime::with_mock_invoke_context,
+        gorbagana_sdk_ids::system_program,
+        gorbagana_sha256_hasher::hash,
+        gorbagana_transaction_context::InstructionAccount,
     };
 
     pub const NONCE_ACCOUNT_INDEX: IndexOfAccount = 0;

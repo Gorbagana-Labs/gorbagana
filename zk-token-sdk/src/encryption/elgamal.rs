@@ -33,16 +33,16 @@ use {
         traits::Identity,
     },
     serde::{Deserialize, Serialize},
-    solana_derivation_path::DerivationPath,
-    solana_seed_derivable::SeedDerivable,
-    solana_seed_phrase::generate_seed_from_seed_phrase_and_passphrase,
-    solana_signature::Signature,
-    solana_signer::{EncodableKey, EncodableKeypair, Signer, SignerError},
+    gorbagana_derivation_path::DerivationPath,
+    gorbagana_seed_derivable::SeedDerivable,
+    gorbagana_seed_phrase::generate_seed_from_seed_phrase_and_passphrase,
+    gorbagana_signature::Signature,
+    gorbagana_signer::{EncodableKey, EncodableKeypair, Signer, SignerError},
     std::convert::TryInto,
     subtle::{Choice, ConstantTimeEq},
     zeroize::Zeroize,
 };
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use {
     rand::rngs::OsRng,
     sha3::{Digest, Sha3_512},
@@ -74,7 +74,7 @@ impl ElGamal {
     /// Generates an ElGamal keypair.
     ///
     /// This function is randomized. It internally samples a scalar element using `OsRng`.
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     #[allow(non_snake_case)]
     fn keygen() -> ElGamalKeypair {
         // secret scalar should be non-zero except with negligible probability
@@ -88,7 +88,7 @@ impl ElGamal {
     /// Generates an ElGamal keypair from a scalar input that determines the ElGamal private key.
     ///
     /// This function panics if the input scalar is zero, which is not a valid key.
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     #[allow(non_snake_case)]
     fn keygen_with_scalar(s: &Scalar) -> ElGamalKeypair {
         let secret = ElGamalSecretKey(*s);
@@ -101,7 +101,7 @@ impl ElGamal {
     /// corresponding ElGamal ciphertext.
     ///
     /// This function is randomized. It internally samples a scalar element using `OsRng`.
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     fn encrypt<T: Into<Scalar>>(public: &ElGamalPubkey, amount: T) -> ElGamalCiphertext {
         let (commitment, opening) = Pedersen::new(amount);
         let handle = public.decrypt_handle(&opening);
@@ -111,7 +111,7 @@ impl ElGamal {
 
     /// On input a public key, amount, and Pedersen opening, the function returns the corresponding
     /// ElGamal ciphertext.
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     fn encrypt_with<T: Into<Scalar>>(
         amount: T,
         public: &ElGamalPubkey,
@@ -126,7 +126,7 @@ impl ElGamal {
     /// On input an amount, the function returns a twisted ElGamal ciphertext where the associated
     /// Pedersen opening is always zero. Since the opening is zero, any twisted ElGamal ciphertext
     /// of this form is a valid ciphertext under any ElGamal public key.
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn encode<T: Into<Scalar>>(amount: T) -> ElGamalCiphertext {
         let commitment = Pedersen::encode(amount);
         let handle = DecryptHandle(RistrettoPoint::identity());
@@ -139,7 +139,7 @@ impl ElGamal {
     ///
     /// The output of this function is of type `DiscreteLog`. To recover, the originally encrypted
     /// amount, use `DiscreteLog::decode`.
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     fn decrypt(secret: &ElGamalSecretKey, ciphertext: &ElGamalCiphertext) -> DiscreteLog {
         DiscreteLog::new(
             G,
@@ -152,7 +152,7 @@ impl ElGamal {
     ///
     /// If the originally encrypted amount is not a positive 32-bit number, then the function
     /// returns `None`.
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     fn decrypt_u32(secret: &ElGamalSecretKey, ciphertext: &ElGamalCiphertext) -> Option<u64> {
         let discrete_log_instance = Self::decrypt(secret, ciphertext);
         discrete_log_instance.decode_u32()
@@ -180,19 +180,19 @@ impl ElGamalKeypair {
         Self { public, secret }
     }
 
-    /// Deterministically derives an ElGamal keypair from a Solana signer and a public seed.
+    /// Deterministically derives an ElGamal keypair from a Gorbagana signer and a public seed.
     ///
-    /// This function exists for applications where a user may not wish to maintain a Solana signer
+    /// This function exists for applications where a user may not wish to maintain a Gorbagana signer
     /// and an ElGamal keypair separately. Instead, a user can derive the ElGamal keypair
     /// on-the-fly whenever encryption/decryption is needed.
     ///
     /// For the spl-token-2022 confidential extension, the ElGamal public key is specified in a
     /// token account. A natural way to derive an ElGamal keypair is to define it from the hash of
-    /// a Solana keypair and a Solana address as the public seed. However, for general hardware
+    /// a Gorbagana keypair and a Gorbagana address as the public seed. However, for general hardware
     /// wallets, the signing key is not exposed in the API. Therefore, this function uses a signer
     /// to sign a public seed and the resulting signature is then hashed to derive an ElGamal
     /// keypair.
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     #[allow(non_snake_case)]
     pub fn new_from_signer(
         signer: &dyn Signer,
@@ -206,7 +206,7 @@ impl ElGamalKeypair {
     /// Generates the public and secret keys for ElGamal encryption.
     ///
     /// This function is randomized. It internally samples a scalar element using `OsRng`.
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn new_rand() -> Self {
         ElGamal::keygen()
     }
@@ -385,7 +385,7 @@ impl ElGamalPubkey {
     /// Encrypts an amount under the public key.
     ///
     /// This function is randomized. It internally samples a scalar element using `OsRng`.
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     pub fn encrypt<T: Into<Scalar>>(&self, amount: T) -> ElGamalCiphertext {
         ElGamal::encrypt(self, amount)
     }
@@ -470,7 +470,7 @@ impl From<&ElGamalPubkey> for [u8; ELGAMAL_PUBKEY_LEN] {
 #[zeroize(drop)]
 pub struct ElGamalSecretKey(Scalar);
 impl ElGamalSecretKey {
-    /// Deterministically derives an ElGamal secret key from a Solana signer and a public seed.
+    /// Deterministically derives an ElGamal secret key from a Gorbagana signer and a public seed.
     ///
     /// See `ElGamalKeypair::new_from_signer` for more context on the key derivation.
     pub fn new_from_signer(
@@ -482,7 +482,7 @@ impl ElGamalSecretKey {
         Ok(key)
     }
 
-    /// Derive a seed from a Solana signer used to generate an ElGamal secret key.
+    /// Derive a seed from a Gorbagana signer used to generate an ElGamal secret key.
     ///
     /// The seed is derived as the hash of the signature of a public seed.
     pub fn seed_from_signer(
@@ -867,9 +867,9 @@ mod tests {
         super::*,
         crate::encryption::pedersen::Pedersen,
         bip39::{Language, Mnemonic, MnemonicType, Seed},
-        solana_keypair::Keypair,
-        solana_pubkey::Pubkey,
-        solana_signer::null_signer::NullSigner,
+        gorbagana_keypair::Keypair,
+        gorbagana_pubkey::Pubkey,
+        gorbagana_signer::null_signer::NullSigner,
         std::fs::{self, File},
     };
 

@@ -1,20 +1,20 @@
 //! Vote state, vote program
 //! Receive and processes votes from validators
-pub use solana_vote_interface::state::{vote_state_versions::*, *};
+pub use gorbagana_vote_interface::state::{vote_state_versions::*, *};
 use {
     log::*,
-    solana_account::{AccountSharedData, ReadableAccount, WritableAccount},
-    solana_clock::{Clock, Epoch, Slot},
-    solana_epoch_schedule::EpochSchedule,
-    solana_hash::Hash,
-    solana_instruction::error::InstructionError,
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
-    solana_slot_hashes::SlotHash,
-    solana_transaction_context::{
+    gorbagana_account::{AccountSharedData, ReadableAccount, WritableAccount},
+    gorbagana_clock::{Clock, Epoch, Slot},
+    gorbagana_epoch_schedule::EpochSchedule,
+    gorbagana_hash::Hash,
+    gorbagana_instruction::error::InstructionError,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent::Rent,
+    gorbagana_slot_hashes::SlotHash,
+    gorbagana_transaction_context::{
         BorrowedAccount, IndexOfAccount, InstructionContext, TransactionContext,
     },
-    solana_vote_interface::{error::VoteError, program::id},
+    gorbagana_vote_interface::{error::VoteError, program::id},
     std::{
         cmp::Ordering,
         collections::{HashSet, VecDeque},
@@ -462,9 +462,9 @@ pub fn process_new_vote_state(
             if vote.slot() <= new_root
                 &&
                 // This check is necessary because
-                // https://github.com/ryoqun/solana/blob/df55bfb46af039cbc597cd60042d49b9d90b5961/core/src/consensus.rs#L120
+                // https://github.com/ryoqun/gorbagana/blob/df55bfb46af039cbc597cd60042d49b9d90b5961/core/src/consensus.rs#L120
                 // always sets a root for even empty towers, which is then hard unwrapped here
-                // https://github.com/ryoqun/solana/blob/df55bfb46af039cbc597cd60042d49b9d90b5961/core/src/consensus.rs#L776
+                // https://github.com/ryoqun/gorbagana/blob/df55bfb46af039cbc597cd60042d49b9d90b5961/core/src/consensus.rs#L776
                 new_root != Slot::default()
             {
                 return Err(VoteError::SlotSmallerThanRoot);
@@ -1060,10 +1060,10 @@ mod tests {
         super::*,
         crate::vote_state,
         assert_matches::assert_matches,
-        solana_account::{state_traits::StateMut, AccountSharedData},
-        solana_clock::DEFAULT_SLOTS_PER_EPOCH,
-        solana_sha256_hasher::hash,
-        solana_transaction_context::InstructionAccount,
+        gorbagana_account::{state_traits::StateMut, AccountSharedData},
+        gorbagana_clock::DEFAULT_SLOTS_PER_EPOCH,
+        gorbagana_sha256_hasher::hash,
+        gorbagana_transaction_context::InstructionAccount,
         std::cell::RefCell,
         test_case::test_case,
     };
@@ -1073,7 +1073,7 @@ mod tests {
     fn vote_state_new_for_test(auth_pubkey: &Pubkey) -> VoteState {
         VoteState::new(
             &VoteInit {
-                node_pubkey: solana_pubkey::new_rand(),
+                node_pubkey: gorbagana_pubkey::new_rand(),
                 authorized_voter: *auth_pubkey,
                 authorized_withdrawer: *auth_pubkey,
                 commission: 0,
@@ -1085,12 +1085,12 @@ mod tests {
     fn create_test_account() -> (Pubkey, RefCell<AccountSharedData>) {
         let rent = Rent::default();
         let balance = VoteState::get_rent_exempt_reserve(&rent);
-        let vote_pubkey = solana_pubkey::new_rand();
+        let vote_pubkey = gorbagana_pubkey::new_rand();
         (
             vote_pubkey,
             RefCell::new(vote_state::create_account(
                 &vote_pubkey,
-                &solana_pubkey::new_rand(),
+                &gorbagana_pubkey::new_rand(),
                 0,
                 balance,
             )),
@@ -1101,8 +1101,8 @@ mod tests {
     fn test_vote_state_upgrade_from_1_14_11() {
         // Create an initial vote account that is sized for the 1_14_11 version of vote state, and has only the
         // required lamports for rent exempt minimum at that size
-        let node_pubkey = solana_pubkey::new_rand();
-        let withdrawer_pubkey = solana_pubkey::new_rand();
+        let node_pubkey = gorbagana_pubkey::new_rand();
+        let withdrawer_pubkey = gorbagana_pubkey::new_rand();
         let mut vote_state = VoteState::new(
             &VoteInit {
                 node_pubkey,
@@ -1115,17 +1115,17 @@ mod tests {
         // Simulate prior epochs completed with credits and each setting a new authorized voter
         vote_state.increment_credits(0, 100);
         assert_eq!(
-            vote_state.set_new_authorized_voter(&solana_pubkey::new_rand(), 0, 1, |_pubkey| Ok(())),
+            vote_state.set_new_authorized_voter(&gorbagana_pubkey::new_rand(), 0, 1, |_pubkey| Ok(())),
             Ok(())
         );
         vote_state.increment_credits(1, 200);
         assert_eq!(
-            vote_state.set_new_authorized_voter(&solana_pubkey::new_rand(), 1, 2, |_pubkey| Ok(())),
+            vote_state.set_new_authorized_voter(&gorbagana_pubkey::new_rand(), 1, 2, |_pubkey| Ok(())),
             Ok(())
         );
         vote_state.increment_credits(2, 300);
         assert_eq!(
-            vote_state.set_new_authorized_voter(&solana_pubkey::new_rand(), 2, 3, |_pubkey| Ok(())),
+            vote_state.set_new_authorized_voter(&gorbagana_pubkey::new_rand(), 2, 3, |_pubkey| Ok(())),
             Ok(())
         );
         // Simulate votes having occurred
@@ -1150,7 +1150,7 @@ mod tests {
 
         // Create a fake TransactionContext with a fake InstructionContext with a single account which is the
         // vote account that was just created
-        let processor_account = AccountSharedData::new(0, 0, &solana_sdk_ids::native_loader::id());
+        let processor_account = AccountSharedData::new(0, 0, &gorbagana_sdk_ids::native_loader::id());
         let transaction_context = TransactionContext::new(
             vec![(id(), processor_account), (node_pubkey, vote_account)],
             rent.clone(),
@@ -1305,7 +1305,7 @@ mod tests {
 
         // Create a fake TransactionContext with a fake InstructionContext with a single account which is the
         // vote account that was just created
-        let processor_account = AccountSharedData::new(0, 0, &solana_sdk_ids::native_loader::id());
+        let processor_account = AccountSharedData::new(0, 0, &gorbagana_sdk_ids::native_loader::id());
         let transaction_context = TransactionContext::new(
             vec![(id(), processor_account), (node_pubkey, vote_account)],
             rent,
@@ -1444,7 +1444,7 @@ mod tests {
 
     #[test]
     fn test_vote_double_lockout_after_expiration() {
-        let voter_pubkey = solana_pubkey::new_rand();
+        let voter_pubkey = gorbagana_pubkey::new_rand();
         let mut vote_state = vote_state_new_for_test(&voter_pubkey);
 
         for i in 0..3 {
@@ -1472,7 +1472,7 @@ mod tests {
 
     #[test]
     fn test_expire_multiple_votes() {
-        let voter_pubkey = solana_pubkey::new_rand();
+        let voter_pubkey = gorbagana_pubkey::new_rand();
         let mut vote_state = vote_state_new_for_test(&voter_pubkey);
 
         for i in 0..3 {
@@ -1503,7 +1503,7 @@ mod tests {
 
     #[test]
     fn test_vote_credits() {
-        let voter_pubkey = solana_pubkey::new_rand();
+        let voter_pubkey = gorbagana_pubkey::new_rand();
         let mut vote_state = vote_state_new_for_test(&voter_pubkey);
 
         for i in 0..MAX_LOCKOUT_HISTORY {
@@ -1522,7 +1522,7 @@ mod tests {
 
     #[test]
     fn test_duplicate_vote() {
-        let voter_pubkey = solana_pubkey::new_rand();
+        let voter_pubkey = gorbagana_pubkey::new_rand();
         let mut vote_state = vote_state_new_for_test(&voter_pubkey);
         process_slot_vote_unchecked(&mut vote_state, 0);
         process_slot_vote_unchecked(&mut vote_state, 1);
@@ -1534,7 +1534,7 @@ mod tests {
 
     #[test]
     fn test_nth_recent_lockout() {
-        let voter_pubkey = solana_pubkey::new_rand();
+        let voter_pubkey = gorbagana_pubkey::new_rand();
         let mut vote_state = vote_state_new_for_test(&voter_pubkey);
         for i in 0..MAX_LOCKOUT_HISTORY {
             process_slot_vote_unchecked(&mut vote_state, i as u64);
@@ -1577,9 +1577,9 @@ mod tests {
     /// check that two accounts with different data can be brought to the same state with one vote submission
     #[test]
     fn test_process_missed_votes() {
-        let account_a = solana_pubkey::new_rand();
+        let account_a = gorbagana_pubkey::new_rand();
         let mut vote_state_a = vote_state_new_for_test(&account_a);
-        let account_b = solana_pubkey::new_rand();
+        let account_b = gorbagana_pubkey::new_rand();
         let mut vote_state_b = vote_state_new_for_test(&account_b);
 
         // process some votes on account a

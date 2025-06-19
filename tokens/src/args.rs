@@ -1,4 +1,4 @@
-use {solana_pubkey::Pubkey, solana_signer::Signer};
+use {gorbagana_pubkey::Pubkey, gorbagana_signer::Signer};
 
 pub struct SenderStakeArgs {
     pub stake_account_address: Pubkey,

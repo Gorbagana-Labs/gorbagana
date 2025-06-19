@@ -3,7 +3,7 @@
 #[cfg(test)]
 use {
     crate::repair::duplicate_repair_status::DuplicateSlotRepairStatus,
-    solana_clock::DEFAULT_MS_PER_SLOT, solana_keypair::Keypair,
+    gorbagana_clock::DEFAULT_MS_PER_SLOT, gorbagana_keypair::Keypair,
 };
 use {
     crate::{
@@ -26,20 +26,20 @@ use {
     crossbeam_channel::{Receiver as CrossbeamReceiver, Sender as CrossbeamSender},
     lru::LruCache,
     rand::seq::SliceRandom,
-    solana_client::connection_cache::Protocol,
-    solana_clock::{Slot, DEFAULT_TICKS_PER_SECOND, MS_PER_TICK},
-    solana_epoch_schedule::EpochSchedule,
-    solana_gossip::cluster_info::ClusterInfo,
-    solana_hash::Hash,
-    solana_ledger::{
+    gorbagana_client::connection_cache::Protocol,
+    gorbagana_clock::{Slot, DEFAULT_TICKS_PER_SECOND, MS_PER_TICK},
+    gorbagana_epoch_schedule::EpochSchedule,
+    gorbagana_gossip::cluster_info::ClusterInfo,
+    gorbagana_hash::Hash,
+    gorbagana_ledger::{
         blockstore::{Blockstore, SlotMeta},
         shred,
     },
-    solana_measure::measure::Measure,
-    solana_pubkey::Pubkey,
-    solana_runtime::{bank::Bank, bank_forks::BankForks, root_bank_cache::RootBankCache},
-    solana_streamer::sendmmsg::{batch_send, SendPktsError},
-    solana_time_utils::timestamp,
+    gorbagana_measure::measure::Measure,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_runtime::{bank::Bank, bank_forks::BankForks, root_bank_cache::RootBankCache},
+    gorbagana_streamer::sendmmsg::{batch_send, SendPktsError},
+    gorbagana_time_utils::timestamp,
     std::{
         collections::{hash_map::Entry, HashMap, HashSet},
         iter::Iterator,
@@ -957,7 +957,7 @@ impl RepairService {
                     Some((
                         *pubkey,
                         peer_repair_addr,
-                        (stake / solana_native_token::LAMPORTS_PER_SOL) as u32,
+                        (stake / gorbagana_native_token::LAMPORTS_PER_SOL) as u32,
                     ))
                 } else {
                     None
@@ -1262,9 +1262,9 @@ mod test {
     use {
         super::*,
         crate::repair::quic_endpoint::RemoteRequest,
-        solana_gossip::{cluster_info::Node, contact_info::ContactInfo},
-        solana_keypair::Keypair,
-        solana_ledger::{
+        gorbagana_gossip::{cluster_info::Node, contact_info::ContactInfo},
+        gorbagana_keypair::Keypair,
+        gorbagana_ledger::{
             blockstore::{
                 make_chaining_slot_entries, make_many_slot_entries, make_slot_entries, Blockstore,
             },
@@ -1272,11 +1272,11 @@ mod test {
             get_tmp_ledger_path_auto_delete,
             shred::max_ticks_per_n_shreds,
         },
-        solana_net_utils::{bind_to_localhost, bind_to_unspecified},
-        solana_runtime::bank::Bank,
-        solana_signer::Signer,
-        solana_streamer::socket::SocketAddrSpace,
-        solana_time_utils::timestamp,
+        gorbagana_net_utils::{bind_to_localhost, bind_to_unspecified},
+        gorbagana_runtime::bank::Bank,
+        gorbagana_signer::Signer,
+        gorbagana_streamer::socket::SocketAddrSpace,
+        gorbagana_time_utils::timestamp,
         std::collections::HashSet,
     };
 
@@ -1310,8 +1310,8 @@ mod test {
         );
 
         // Receive and translate repair packet
-        let mut packets = vec![solana_packet::Packet::default(); 1];
-        let _recv_count = solana_streamer::recvmmsg::recv_mmsg(&reader, &mut packets[..]).unwrap();
+        let mut packets = vec![gorbagana_packet::Packet::default(); 1];
+        let _recv_count = gorbagana_streamer::recvmmsg::recv_mmsg(&reader, &mut packets[..]).unwrap();
         let packet = &packets[0];
         let Some(bytes) = packet.data(..).map(Vec::from) else {
             panic!("packet data not found");
@@ -1804,7 +1804,7 @@ mod test {
 
     #[test]
     fn test_generate_repairs_for_wen_restart() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let ledger_path = get_tmp_ledger_path_auto_delete!();
         let blockstore = Blockstore::open(ledger_path.path()).unwrap();
         let max_repairs = 3;

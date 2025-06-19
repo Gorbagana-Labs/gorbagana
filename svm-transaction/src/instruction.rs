@@ -1,4 +1,4 @@
-use solana_message::compiled_instruction::CompiledInstruction;
+use gorbagana_message::compiled_instruction::CompiledInstruction;
 
 /// A non-owning version of [`CompiledInstruction`] that references
 /// slices of account indexes and data.

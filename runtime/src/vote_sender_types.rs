@@ -1,6 +1,6 @@
 use {
     crossbeam_channel::{Receiver, Sender},
-    solana_vote::vote_parser::ParsedVote,
+    gorbagana_vote::vote_parser::ParsedVote,
 };
 
 pub type ReplayVoteSender = Sender<ParsedVote>;

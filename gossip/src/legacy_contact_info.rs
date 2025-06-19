@@ -2,9 +2,9 @@
 use crate::contact_info::{sanitize_socket, ContactInfo, Error, Protocol, SOCKET_ADDR_UNSPECIFIED};
 use {
     crate::crds_data::MAX_WALLCLOCK,
-    solana_pubkey::Pubkey,
-    solana_sanitize::{Sanitize, SanitizeError},
-    solana_streamer::socket::SocketAddrSpace,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sanitize::{Sanitize, SanitizeError},
+    gorbagana_streamer::socket::SocketAddrSpace,
     std::net::{IpAddr, SocketAddr},
 };
 

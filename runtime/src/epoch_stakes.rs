@@ -1,9 +1,9 @@
 use {
     crate::stakes::SerdeStakesToStakeFormat,
     serde::{Deserialize, Serialize},
-    solana_clock::Epoch,
-    solana_pubkey::Pubkey,
-    solana_vote::vote_account::VoteAccountsHashMap,
+    gorbagana_clock::Epoch,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_vote::vote_account::VoteAccountsHashMap,
     std::{collections::HashMap, sync::Arc},
 };
 
@@ -50,7 +50,7 @@ impl VersionedEpochStakes {
         Self::new(
             SerdeStakesToStakeFormat::Account(crate::stakes::Stakes::new_for_tests(
                 0,
-                solana_vote::vote_account::VoteAccounts::from(Arc::new(vote_accounts_hash_map)),
+                gorbagana_vote::vote_account::VoteAccounts::from(Arc::new(vote_accounts_hash_map)),
                 im::HashMap::default(),
             )),
             leader_schedule_epoch,
@@ -156,8 +156,8 @@ impl VersionedEpochStakes {
 #[cfg(test)]
 pub(crate) mod tests {
     use {
-        super::*, solana_account::AccountSharedData, solana_vote::vote_account::VoteAccount,
-        solana_vote_program::vote_state::create_account_with_authorized, std::iter,
+        super::*, gorbagana_account::AccountSharedData, gorbagana_vote::vote_account::VoteAccount,
+        gorbagana_vote_program::vote_state::create_account_with_authorized, std::iter,
     };
 
     struct VoteAccountInfo {
@@ -173,13 +173,13 @@ pub(crate) mod tests {
         // Create some vote accounts for each pubkey
         (0..num_nodes)
             .map(|_| {
-                let node_id = solana_pubkey::new_rand();
+                let node_id = gorbagana_pubkey::new_rand();
                 (
                     node_id,
                     iter::repeat_with(|| {
-                        let authorized_voter = solana_pubkey::new_rand();
+                        let authorized_voter = gorbagana_pubkey::new_rand();
                         VoteAccountInfo {
-                            vote_account: solana_pubkey::new_rand(),
+                            vote_account: gorbagana_pubkey::new_rand(),
                             account: create_account_with_authorized(
                                 &node_id,
                                 &authorized_voter,

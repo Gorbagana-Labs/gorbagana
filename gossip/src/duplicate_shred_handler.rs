@@ -5,10 +5,10 @@ use {
     },
     crossbeam_channel::Sender,
     log::error,
-    solana_clock::{Epoch, Slot},
-    solana_ledger::{blockstore::Blockstore, leader_schedule_cache::LeaderScheduleCache},
-    solana_pubkey::Pubkey,
-    solana_runtime::bank_forks::BankForks,
+    gorbagana_clock::{Epoch, Slot},
+    gorbagana_ledger::{blockstore::Blockstore, leader_schedule_cache::LeaderScheduleCache},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_runtime::bank_forks::BankForks,
     std::{
         cmp::Reverse,
         collections::HashMap,
@@ -230,15 +230,15 @@ mod tests {
         },
         crossbeam_channel::unbounded,
         itertools::Itertools,
-        solana_keypair::Keypair,
-        solana_ledger::{
+        gorbagana_keypair::Keypair,
+        gorbagana_ledger::{
             genesis_utils::{create_genesis_config_with_leader, GenesisConfigInfo},
             get_tmp_ledger_path_auto_delete,
             shred::Shredder,
         },
-        solana_runtime::bank::Bank,
-        solana_signer::Signer,
-        solana_time_utils::timestamp,
+        gorbagana_runtime::bank::Bank,
+        gorbagana_signer::Signer,
+        gorbagana_time_utils::timestamp,
     };
 
     fn create_duplicate_proof(
@@ -283,7 +283,7 @@ mod tests {
 
     #[test]
     fn test_handle_mixed_entries() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let ledger_path = get_tmp_ledger_path_auto_delete!();
         let blockstore = Arc::new(Blockstore::open(ledger_path.path()).unwrap());
@@ -374,7 +374,7 @@ mod tests {
 
     #[test]
     fn test_reject_abuses() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let ledger_path = get_tmp_ledger_path_auto_delete!();
         let blockstore = Arc::new(Blockstore::open(ledger_path.path()).unwrap());

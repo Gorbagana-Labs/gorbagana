@@ -1,7 +1,7 @@
 use {
     crossbeam_channel::Receiver,
-    solana_measure::measure::Measure,
-    solana_runtime::installed_scheduler_pool::BankWithScheduler,
+    gorbagana_measure::measure::Measure,
+    gorbagana_runtime::installed_scheduler_pool::BankWithScheduler,
     std::thread::{self, Builder, JoinHandle},
 };
 

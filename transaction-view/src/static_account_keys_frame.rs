@@ -3,8 +3,8 @@ use {
         bytes::{advance_offset_for_array, read_byte},
         result::{Result, TransactionViewError},
     },
-    solana_packet::PACKET_DATA_SIZE,
-    solana_pubkey::Pubkey,
+    gorbagana_packet::PACKET_DATA_SIZE,
+    gorbagana_pubkey::Pubkey,
 };
 
 // The packet has a maximum length of 1232 bytes.
@@ -50,7 +50,7 @@ impl StaticAccountKeysFrame {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, solana_short_vec::ShortVec};
+    use {super::*, gorbagana_short_vec::ShortVec};
 
     #[test]
     fn test_zero_accounts() {

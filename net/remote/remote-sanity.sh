@@ -63,9 +63,9 @@ case $deployMethod in
 local|tar|skip)
   PATH="$HOME"/.cargo/bin:"$PATH"
   export USE_INSTALL=1
-  solana_cli=solana
-  solana_gossip=solana-gossip
-  solana_install=agave-install
+  gorbagana_cli=gorbagana
+  gorbagana_gossip=gorbagana-gossip
+  gorbagana_install=agave-install
   ;;
 *)
   echo "Unknown deployment method: $deployMethod"
@@ -85,7 +85,7 @@ fi
 echo "--- $sanityTargetIp: validators"
 (
   set -x
-  $solana_cli --url http://"$sanityTargetIp":8899 validators
+  $gorbagana_cli --url http://"$sanityTargetIp":8899 validators
 )
 
 echo "--- $sanityTargetIp: node count ($numSanityNodes expected)"
@@ -97,7 +97,7 @@ echo "--- $sanityTargetIp: node count ($numSanityNodes expected)"
     nodeArg="num-nodes-exactly"
   fi
 
-  $solana_gossip --allow-private-addr spy --entrypoint "$sanityTargetIp:8001" \
+  $gorbagana_gossip --allow-private-addr spy --entrypoint "$sanityTargetIp:8001" \
     --$nodeArg "$numSanityNodes" --timeout 60 \
 )
 
@@ -127,12 +127,12 @@ if $installCheck && [[ -r update_manifest_keypair.json ]]; then
   (
     set -x
     rm -rf install-data-dir
-    $solana_install init \
+    $gorbagana_install init \
       --no-modify-path \
       --data-dir install-data-dir \
       --url http://"$sanityTargetIp":8899 \
 
-    $solana_install info
+    $gorbagana_install info
   )
 fi
 

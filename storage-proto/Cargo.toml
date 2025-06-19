@@ -1,7 +1,7 @@
 [package]
-name = "solana-storage-proto"
-description = "Solana Storage Protobuf Definitions"
-documentation = "https://docs.rs/solana-storage-proto"
+name = "gorbagana-storage-proto"
+description = "Gorbagana Storage Protobuf Definitions"
+documentation = "https://docs.rs/gorbagana-storage-proto"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -14,24 +14,24 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [lib]
 crate-type = ["lib"]
-name = "solana_storage_proto"
+name = "gorbagana_storage_proto"
 
 [dependencies]
 bincode = { workspace = true }
 bs58 = { workspace = true }
 prost = { workspace = true }
 serde = { workspace = true }
-solana-account-decoder = { workspace = true }
-solana-hash = { workspace = true }
-solana-instruction = { workspace = true }
-solana-message = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-serde = { workspace = true }
-solana-signature = { workspace = true, features = ["std"] }
-solana-transaction = { workspace = true }
-solana-transaction-context = { workspace = true, features = ["serde"] }
-solana-transaction-error = { workspace = true }
-solana-transaction-status = { workspace = true }
+gorbagana-account-decoder = { workspace = true }
+gorbagana-hash = { workspace = true }
+gorbagana-instruction = { workspace = true }
+gorbagana-message = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-serde = { workspace = true }
+gorbagana-signature = { workspace = true, features = ["std"] }
+gorbagana-transaction = { workspace = true }
+gorbagana-transaction-context = { workspace = true, features = ["serde"] }
+gorbagana-transaction-error = { workspace = true }
+gorbagana-transaction-status = { workspace = true }
 
 [build-dependencies]
 tonic-build = { workspace = true }

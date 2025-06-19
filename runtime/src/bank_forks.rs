@@ -12,11 +12,11 @@ use {
     },
     crossbeam_channel::SendError,
     log::*,
-    solana_clock::{BankId, Slot},
-    solana_hash::Hash,
-    solana_measure::measure::Measure,
-    solana_program_runtime::loaded_programs::{BlockRelation, ForkGraph},
-    solana_unified_scheduler_logic::SchedulingMode,
+    gorbagana_clock::{BankId, Slot},
+    gorbagana_hash::Hash,
+    gorbagana_measure::measure::Measure,
+    gorbagana_program_runtime::loaded_programs::{BlockRelation, ForkGraph},
+    gorbagana_unified_scheduler_logic::SchedulingMode,
     std::{
         collections::{hash_map::Entry, HashMap, HashSet},
         ops::Index,
@@ -667,14 +667,14 @@ mod tests {
             snapshot_config::SnapshotConfig,
         },
         assert_matches::assert_matches,
-        solana_accounts_db::epoch_accounts_hash::EpochAccountsHash,
-        solana_clock::UnixTimestamp,
-        solana_epoch_schedule::EpochSchedule,
-        solana_hash::Hash,
-        solana_keypair::Keypair,
-        solana_pubkey::Pubkey,
-        solana_signer::Signer,
-        solana_vote_program::vote_state::BlockTimestamp,
+        gorbagana_accounts_db::epoch_accounts_hash::EpochAccountsHash,
+        gorbagana_clock::UnixTimestamp,
+        gorbagana_epoch_schedule::EpochSchedule,
+        gorbagana_hash::Hash,
+        gorbagana_keypair::Keypair,
+        gorbagana_pubkey::Pubkey,
+        gorbagana_signer::Signer,
+        gorbagana_vote_program::vote_state::BlockTimestamp,
         std::{sync::atomic::Ordering::Relaxed, time::Duration},
     };
 
@@ -768,7 +768,7 @@ mod tests {
 
     #[test]
     fn test_bank_forks_different_set_root() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let leader_keypair = Keypair::new();
         let GenesisConfigInfo {
             mut genesis_config,

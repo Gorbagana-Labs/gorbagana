@@ -4,15 +4,15 @@
 //! Mostly for demonstration purposes, to show how projects may use completely
 //! different transactions in their protocol, then convert the resulting state
 //! transitions into the necessary transactions for the base chain - in this
-//! case Solana.
+//! case Gorbagana.
 
 use {
-    solana_instruction::Instruction as SolanaInstruction,
-    solana_pubkey::Pubkey,
-    solana_system_interface::instruction as system_instruction,
-    solana_transaction::{
-        sanitized::SanitizedTransaction as SolanaSanitizedTransaction,
-        Transaction as SolanaTransaction,
+    gorbagana_instruction::Instruction as GorbaganaInstruction,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_system_interface::instruction as system_instruction,
+    gorbagana_transaction::{
+        sanitized::SanitizedTransaction as GorbaganaSanitizedTransaction,
+        Transaction as GorbaganaTransaction,
     },
     spl_associated_token_account::get_associated_token_address,
     std::collections::HashSet,
@@ -29,7 +29,7 @@ pub struct PayTubeTransaction {
     pub amount: u64,
 }
 
-impl From<&PayTubeTransaction> for SolanaInstruction {
+impl From<&PayTubeTransaction> for GorbaganaInstruction {
     fn from(value: &PayTubeTransaction) -> Self {
         let PayTubeTransaction {
             mint,
@@ -54,29 +54,29 @@ impl From<&PayTubeTransaction> for SolanaInstruction {
     }
 }
 
-impl From<&PayTubeTransaction> for SolanaTransaction {
+impl From<&PayTubeTransaction> for GorbaganaTransaction {
     fn from(value: &PayTubeTransaction) -> Self {
-        SolanaTransaction::new_with_payer(&[SolanaInstruction::from(value)], Some(&value.from))
+        GorbaganaTransaction::new_with_payer(&[GorbaganaInstruction::from(value)], Some(&value.from))
     }
 }
 
-impl From<&PayTubeTransaction> for SolanaSanitizedTransaction {
+impl From<&PayTubeTransaction> for GorbaganaSanitizedTransaction {
     fn from(value: &PayTubeTransaction) -> Self {
-        SolanaSanitizedTransaction::try_from_legacy_transaction(
-            SolanaTransaction::from(value),
+        GorbaganaSanitizedTransaction::try_from_legacy_transaction(
+            GorbaganaTransaction::from(value),
             &HashSet::new(),
         )
         .unwrap()
     }
 }
 
-/// Create a batch of Solana transactions, for the Solana SVM's transaction
+/// Create a batch of Gorbagana transactions, for the Gorbagana SVM's transaction
 /// processor, from a batch of PayTube instructions.
 pub fn create_svm_transactions(
     paytube_transactions: &[PayTubeTransaction],
-) -> Vec<SolanaSanitizedTransaction> {
+) -> Vec<GorbaganaSanitizedTransaction> {
     paytube_transactions
         .iter()
-        .map(SolanaSanitizedTransaction::from)
+        .map(GorbaganaSanitizedTransaction::from)
         .collect()
 }

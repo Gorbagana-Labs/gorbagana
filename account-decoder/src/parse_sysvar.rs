@@ -1,5 +1,5 @@
 #[allow(deprecated)]
-use solana_sysvar::{fees::Fees, recent_blockhashes::RecentBlockhashes};
+use gorbagana_sysvar::{fees::Fees, recent_blockhashes::RecentBlockhashes};
 use {
     crate::{
         parse_account_data::{ParsableAccount, ParseAccountError},
@@ -7,14 +7,14 @@ use {
     },
     bincode::deserialize,
     bv::BitVec,
-    solana_clock::{Clock, Epoch, Slot, UnixTimestamp},
-    solana_epoch_schedule::EpochSchedule,
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
-    solana_sdk_ids::sysvar,
-    solana_slot_hashes::SlotHashes,
-    solana_slot_history::{self as slot_history, SlotHistory},
-    solana_sysvar::{
+    gorbagana_clock::{Clock, Epoch, Slot, UnixTimestamp},
+    gorbagana_epoch_schedule::EpochSchedule,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent::Rent,
+    gorbagana_sdk_ids::sysvar,
+    gorbagana_slot_hashes::SlotHashes,
+    gorbagana_slot_history::{self as slot_history, SlotHistory},
+    gorbagana_sysvar::{
         epoch_rewards::EpochRewards,
         last_restart_slot::LastRestartSlot,
         rewards::Rewards,
@@ -269,10 +269,10 @@ impl From<EpochRewards> for UiEpochRewards {
 #[cfg(test)]
 mod test {
     #[allow(deprecated)]
-    use solana_sysvar::recent_blockhashes::IterItem;
+    use gorbagana_sysvar::recent_blockhashes::IterItem;
     use {
-        super::*, solana_account::create_account_for_test, solana_fee_calculator::FeeCalculator,
-        solana_hash::Hash,
+        super::*, gorbagana_account::create_account_for_test, gorbagana_fee_calculator::FeeCalculator,
+        gorbagana_hash::Hash,
     };
 
     #[test]
@@ -377,7 +377,7 @@ mod test {
             }]),
         );
 
-        let bad_pubkey = solana_pubkey::new_rand();
+        let bad_pubkey = gorbagana_pubkey::new_rand();
         assert!(parse_sysvar(&stake_history_sysvar.data, &bad_pubkey).is_err());
 
         let bad_data = vec![0; 4];

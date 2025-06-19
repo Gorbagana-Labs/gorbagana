@@ -7,7 +7,7 @@ pagination_label: Requirements to Operate a Validator
 
 ## Minimum SOL requirements
 
-There is no strict minimum amount of SOL required to run an Agave validator on Solana.
+There is no strict minimum amount of SOL required to run an Agave validator on Gorbagana.
 
 However in order to participate in consensus, a vote account is required which
 has a rent-exempt reserve of 0.02685864 SOL. Voting also requires sending a vote
@@ -23,11 +23,11 @@ The hardware recommendations below are provided as a guide.  Operators are encou
 | **CPU**   | - 2.8GHz base clock speed, or faster<br />- SHA extensions instruction support<br />- AMD Gen 3 or newer<br />- Intel Ice Lake or newer<br />- Higher clock speed is preferable over more cores<br />- AVX2 instruction support (to use official release binaries, self-compile otherwise)<br />- Support for AVX512f is helpful<br />||
 | | 12 cores / 24 threads, or more  | 16 cores / 32 threads, or more |
 | **RAM**   | Error Correction Code (ECC) memory is suggested<br />Motherboard with 512GB capacity suggested ||
-| | 256GB or more| 512 GB or more for **all [account indexes](https://docs.solanalabs.com/operations/setup-an-rpc-node#account-indexing)** |
+| | 256GB or more| 512 GB or more for **all [account indexes](https://docs.gorbaganalabs.com/operations/setup-an-rpc-node#account-indexing)** |
 | **Disk**  | PCIe Gen3 x4 NVME SSD, or better, on each of: <br />- **Accounts**: 1TB, or larger. High TBW (Total Bytes Written)<br />- **Ledger**: 1TB or larger. High TBW suggested<br />- **Snapshots**: 500GB or larger. High TBW suggested<br />- **OS**: (Optional) 500GB, or larger. SATA OK<br /><br />The OS may be installed on the ledger disk, though testing has shown better performance with the ledger on its own disk<br /><br />Accounts and ledger *can* be stored on the same disk, however due to high IOPS, this is not recommended<br /><br />The Samsung 970 and 980 Pro series SSDs are popular with the validator community | Consider a larger ledger disk if longer transaction history is required<br /><br />Accounts and ledger **should not** be stored on the same disk |
 | **GPUs**  | Not necessary at this time<br />Operators in the validator community do not use GPUs currently | |
 
-A community maintained list of currently optimal hardware can be found here: [solanahcl.org](https://solanahcl.org/). It is updated automatically from the [solanahcl/solanahcl Github repo](https://github.com/solanahcl/solanahcl).
+A community maintained list of currently optimal hardware can be found here: [gorbaganahcl.org](https://gorbaganahcl.org/). It is updated automatically from the [gorbaganahcl/gorbaganahcl Github repo](https://github.com/gorbaganahcl/gorbaganahcl).
 
 ## Virtual machines on Cloud Platforms
 
@@ -46,7 +46,7 @@ specially configured. We use Docker only for development purposes.
 ## Software
 
 - We build and run on Ubuntu 24.04.
-- See [Installing Solana CLI](../cli/install.md) for the current Solana CLI software release.
+- See [Installing Gorbagana CLI](../cli/install.md) for the current Gorbagana CLI software release.
 
 Prebuilt binaries are currently available targeting x86_64 with AVX2 support on Ubuntu 20.04. We
 will stop publishing these in the near future (as of May 2025).

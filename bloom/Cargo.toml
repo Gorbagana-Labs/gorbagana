@@ -1,7 +1,7 @@
 [package]
-name = "solana-bloom"
-description = "Solana bloom filter"
-documentation = "https://docs.rs/solana-bloom"
+name = "gorbagana-bloom"
+description = "Gorbagana bloom filter"
+documentation = "https://docs.rs/gorbagana-bloom"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -14,13 +14,13 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [lib]
 crate-type = ["lib"]
-name = "solana_bloom"
+name = "gorbagana_bloom"
 
 [features]
 frozen-abi = [
-    "dep:solana-frozen-abi",
-    "dep:solana-frozen-abi-macro",
-    "solana-hash/frozen-abi",
+    "dep:gorbagana-frozen-abi",
+    "dep:gorbagana-frozen-abi-macro",
+    "gorbagana-hash/frozen-abi",
 ]
 
 [dependencies]
@@ -29,20 +29,20 @@ fnv = { workspace = true }
 rand = { workspace = true }
 serde = { workspace = true, features = ["rc"] }
 serde_derive = { workspace = true }
-solana-frozen-abi = { workspace = true, optional = true, features = [
+gorbagana-frozen-abi = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
-solana-frozen-abi-macro = { workspace = true, optional = true, features = [
+gorbagana-frozen-abi-macro = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
-solana-sanitize = { workspace = true }
-solana-time-utils = { workspace = true }
+gorbagana-sanitize = { workspace = true }
+gorbagana-time-utils = { workspace = true }
 
 [dev-dependencies]
 rayon = { workspace = true }
-solana-hash = { workspace = true }
-solana-sha256-hasher = { workspace = true }
-solana-signature = { workspace = true, features = ["std"] }
+gorbagana-hash = { workspace = true }
+gorbagana-sha256-hasher = { workspace = true }
+gorbagana-signature = { workspace = true, features = ["std"] }
 
 [lints]
 workspace = true

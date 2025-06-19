@@ -240,8 +240,8 @@ mod tests {
     use {
         super::*,
         bincode::{serialize_into, DefaultOptions, Options},
-        solana_packet::PACKET_DATA_SIZE,
-        solana_short_vec::ShortU16,
+        gorbagana_packet::PACKET_DATA_SIZE,
+        gorbagana_short_vec::ShortU16,
     };
 
     #[test]

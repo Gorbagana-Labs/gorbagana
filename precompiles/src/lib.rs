@@ -1,9 +1,9 @@
 #![cfg_attr(docsrs, feature(doc_auto_cfg))]
 use {
     agave_feature_set::{enable_secp256r1_precompile, FeatureSet},
-    solana_message::compiled_instruction::CompiledInstruction,
-    solana_precompile_error::PrecompileError,
-    solana_pubkey::Pubkey,
+    gorbagana_message::compiled_instruction::CompiledInstruction,
+    gorbagana_precompile_error::PrecompileError,
+    gorbagana_pubkey::Pubkey,
     std::sync::LazyLock,
 };
 
@@ -56,17 +56,17 @@ impl Precompile {
 static PRECOMPILES: LazyLock<Vec<Precompile>> = LazyLock::new(|| {
     vec![
         Precompile::new(
-            solana_sdk_ids::secp256k1_program::id(),
+            gorbagana_sdk_ids::secp256k1_program::id(),
             None, // always enabled
             secp256k1::verify,
         ),
         Precompile::new(
-            solana_sdk_ids::ed25519_program::id(),
+            gorbagana_sdk_ids::ed25519_program::id(),
             None, // always enabled
             ed25519::verify,
         ),
         Precompile::new(
-            solana_sdk_ids::secp256r1_program::id(),
+            gorbagana_sdk_ids::secp256r1_program::id(),
             Some(enable_secp256r1_precompile::id()),
             secp256r1::verify,
         ),

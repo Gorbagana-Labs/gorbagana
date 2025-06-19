@@ -1,10 +1,10 @@
 use {
     log::*,
-    solana_accounts_db::hardened_unpack::unpack_genesis_archive,
-    solana_download_utils::download_genesis_if_missing,
-    solana_genesis_config::{GenesisConfig, DEFAULT_GENESIS_ARCHIVE},
-    solana_hash::Hash,
-    solana_rpc_client::rpc_client::RpcClient,
+    gorbagana_accounts_db::hardened_unpack::unpack_genesis_archive,
+    gorbagana_download_utils::download_genesis_if_missing,
+    gorbagana_genesis_config::{GenesisConfig, DEFAULT_GENESIS_ARCHIVE},
+    gorbagana_hash::Hash,
+    gorbagana_rpc_client::rpc_client::RpcClient,
     std::net::SocketAddr,
 };
 

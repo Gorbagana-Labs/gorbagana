@@ -1,8 +1,8 @@
 use {
     log::*,
-    solana_clock::{Slot, DEFAULT_MS_PER_SLOT},
-    solana_commitment_config::CommitmentConfig,
-    solana_tps_client::{TpsClient, TpsClientResult},
+    gorbagana_clock::{Slot, DEFAULT_MS_PER_SLOT},
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_tps_client::{TpsClient, TpsClientResult},
     std::{sync::Arc, thread::sleep, time::Duration},
 };
 

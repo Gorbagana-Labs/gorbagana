@@ -1,4 +1,4 @@
-use {solana_accounts_db::accounts_hash::AccountsLtHash, solana_lattice_hash::lt_hash::LtHash};
+use {gorbagana_accounts_db::accounts_hash::AccountsLtHash, gorbagana_lattice_hash::lt_hash::LtHash};
 
 /// Snapshot serde-safe AccountsLtHash
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]

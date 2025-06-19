@@ -9,15 +9,15 @@ use {
         },
         replay_stage::DUPLICATE_THRESHOLD,
     },
-    solana_clock::{Epoch, Slot},
-    solana_epoch_schedule::EpochSchedule,
-    solana_hash::Hash,
-    solana_ledger::{
+    gorbagana_clock::{Epoch, Slot},
+    gorbagana_epoch_schedule::EpochSchedule,
+    gorbagana_hash::Hash,
+    gorbagana_ledger::{
         ancestor_iterator::AncestorIterator, blockstore::Blockstore, blockstore_meta::SlotMeta,
     },
-    solana_measure::measure::Measure,
-    solana_pubkey::Pubkey,
-    solana_runtime::epoch_stakes::VersionedEpochStakes,
+    gorbagana_measure::measure::Measure,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_runtime::epoch_stakes::VersionedEpochStakes,
     std::{
         collections::{HashMap, HashSet, VecDeque},
         iter,
@@ -994,13 +994,13 @@ mod test {
     use {
         super::*,
         itertools::Itertools,
-        solana_accounts_db::contains::Contains,
-        solana_hash::Hash,
-        solana_ledger::{
+        gorbagana_accounts_db::contains::Contains,
+        gorbagana_hash::Hash,
+        gorbagana_ledger::{
             blockstore::{make_chaining_slot_entries, Blockstore},
             get_tmp_ledger_path,
         },
-        solana_runtime::{bank::Bank, bank_utils},
+        gorbagana_runtime::{bank::Bank, bank_utils},
         trees::tr,
     };
 

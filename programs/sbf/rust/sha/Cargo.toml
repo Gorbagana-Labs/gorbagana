@@ -1,5 +1,5 @@
 [package]
-name = "solana-sbf-rust-sha"
+name = "gorbagana-sbf-rust-sha"
 version = { workspace = true }
 description = { workspace = true }
 authors = { workspace = true }
@@ -13,11 +13,11 @@ crate-type = ["cdylib"]
 
 [dependencies]
 blake3 = { workspace = true }
-solana-blake3-hasher = { workspace = true }
-solana-keccak-hasher = { workspace = true }
-solana-msg = { workspace = true }
-solana-program-entrypoint = { workspace = true }
-solana-sha256-hasher = { workspace = true }
+gorbagana-blake3-hasher = { workspace = true }
+gorbagana-keccak-hasher = { workspace = true }
+gorbagana-msg = { workspace = true }
+gorbagana-program-entrypoint = { workspace = true }
+gorbagana-sha256-hasher = { workspace = true }
 
 [lints]
 workspace = true

@@ -5,8 +5,8 @@ use {
     fnv::FnvHasher,
     rand::{self, Rng},
     serde::{Deserialize, Serialize},
-    solana_sanitize::{Sanitize, SanitizeError},
-    solana_time_utils::AtomicInterval,
+    gorbagana_sanitize::{Sanitize, SanitizeError},
+    gorbagana_time_utils::AtomicInterval,
     std::{
         cmp, fmt,
         hash::Hasher,
@@ -268,7 +268,7 @@ impl<T: BloomHashIndex> ConcurrentBloomInterval<T> {
 
 #[cfg(test)]
 mod test {
-    use {super::*, rayon::prelude::*, solana_hash::Hash, solana_sha256_hasher::hash};
+    use {super::*, rayon::prelude::*, gorbagana_hash::Hash, gorbagana_sha256_hasher::hash};
 
     #[test]
     fn test_bloom_filter() {
@@ -352,7 +352,7 @@ mod test {
 
     fn generate_random_hash() -> Hash {
         let mut rng = rand::thread_rng();
-        let mut hash = [0u8; solana_hash::HASH_BYTES];
+        let mut hash = [0u8; gorbagana_hash::HASH_BYTES];
         rng.fill(&mut hash);
         Hash::new_from_array(hash)
     }

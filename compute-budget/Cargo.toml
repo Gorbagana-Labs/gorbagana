@@ -1,7 +1,7 @@
 [package]
-name = "solana-compute-budget"
-description = "Solana compute budget"
-documentation = "https://docs.rs/solana-compute-budget"
+name = "gorbagana-compute-budget"
+description = "Gorbagana compute budget"
+documentation = "https://docs.rs/gorbagana-compute-budget"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -11,15 +11,15 @@ edition = { workspace = true }
 
 [features]
 dev-context-only-utils = ["dep:qualifier_attr"]
-frozen-abi = ["dep:solana-frozen-abi", "solana-fee-structure/frozen-abi"]
+frozen-abi = ["dep:gorbagana-frozen-abi", "gorbagana-fee-structure/frozen-abi"]
 
 [dependencies]
 qualifier_attr = { workspace = true, optional = true }
-solana-fee-structure = { workspace = true }
-solana-frozen-abi = { workspace = true, optional = true, features = [
+gorbagana-fee-structure = { workspace = true }
+gorbagana-frozen-abi = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
-solana-program-runtime = { workspace = true }
+gorbagana-program-runtime = { workspace = true }
 
 [lints]
 workspace = true

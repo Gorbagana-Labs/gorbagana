@@ -1,12 +1,12 @@
 use {
     crate::utils,
-    solana_client::rpc_client::RpcClient,
-    solana_commitment_config::CommitmentConfig,
-    solana_instruction::{AccountMeta, Instruction},
-    solana_keypair::{read_keypair_file, Keypair},
-    solana_message::Message,
-    solana_signer::Signer,
-    solana_transaction::Transaction,
+    gorbagana_client::rpc_client::RpcClient,
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_instruction::{AccountMeta, Instruction},
+    gorbagana_keypair::{read_keypair_file, Keypair},
+    gorbagana_message::Message,
+    gorbagana_signer::Signer,
+    gorbagana_transaction::Transaction,
 };
 
 /// Establishes a RPC connection with the Simulation server.

@@ -11,11 +11,11 @@ use {
     },
     ahash::AHashSet,
     rayon::prelude::*,
-    solana_account::ReadableAccount as _,
-    solana_clock::Slot,
-    solana_hash::Hash,
-    solana_measure::{measure::Measure, measure_us},
-    solana_pubkey::Pubkey,
+    gorbagana_account::ReadableAccount as _,
+    gorbagana_clock::Slot,
+    gorbagana_hash::Hash,
+    gorbagana_measure::{measure::Measure, measure_us},
+    gorbagana_pubkey::Pubkey,
     std::{
         hash::{DefaultHasher, Hash as _, Hasher as _},
         ops::Range,
@@ -405,7 +405,7 @@ mod tests {
             append_vec::AppendVec,
             cache_hash_data::{CacheHashDataFile, DeletionPolicy as CacheHashDeletionPolicy},
         },
-        solana_account::AccountSharedData,
+        gorbagana_account::AccountSharedData,
         std::iter,
         tempfile::TempDir,
         test_case::test_case,
@@ -540,7 +540,7 @@ mod tests {
     #[test_case(AccountsFileProvider::AppendVec)]
     #[test_case(AccountsFileProvider::HotStorage)]
     fn test_accountsdb_scan_account_storage_no_bank(accounts_file_provider: AccountsFileProvider) {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let expected = 1;
         let tf = crate::append_vec::test_utils::get_append_vec_path(
@@ -560,7 +560,7 @@ mod tests {
         data.accounts = av;
 
         let storage = Arc::new(data);
-        let pubkey = solana_pubkey::new_rand();
+        let pubkey = gorbagana_pubkey::new_rand();
         let acc = AccountSharedData::new(1, 48, AccountSharedData::default().owner());
         let mark_alive = false;
         append_single_account_with_default_hash(&storage, &pubkey, &acc, mark_alive, None);
@@ -607,14 +607,14 @@ mod tests {
 
     #[test]
     fn test_accountsdb_scan_multiple_account_storage_no_bank_one_slot() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let slot_expected: Slot = 0;
         let tf = crate::append_vec::test_utils::get_append_vec_path(
             "test_accountsdb_scan_account_storage_no_bank",
         );
-        let pubkey1 = solana_pubkey::new_rand();
-        let pubkey2 = solana_pubkey::new_rand();
+        let pubkey1 = gorbagana_pubkey::new_rand();
+        let pubkey2 = gorbagana_pubkey::new_rand();
         let mark_alive = false;
         let storage = sample_storage_with_entries(&tf, slot_expected, &pubkey1, mark_alive);
         let lamports = storage
@@ -647,7 +647,7 @@ mod tests {
     define_accounts_db_test!(
         test_accountsdb_scan_account_storage_no_bank_one_slot,
         |db| {
-            solana_logger::setup();
+            gorbagana_logger::setup();
             let accounts_file_provider = db.accounts_file_provider;
 
             let expected = 1;
@@ -661,7 +661,7 @@ mod tests {
                 accounts_file_provider,
             );
             let storage = Arc::new(data);
-            let pubkey = solana_pubkey::new_rand();
+            let pubkey = gorbagana_pubkey::new_rand();
             let acc = AccountSharedData::new(1, 48, AccountSharedData::default().owner());
             let mark_alive = false;
             append_single_account_with_default_hash(&storage, &pubkey, &acc, mark_alive, None);
@@ -728,7 +728,7 @@ mod tests {
 
     #[test]
     fn test_accountsdb_scan_snapshot_stores_check_hash() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let accounts_db = AccountsDb::new_single_for_tests();
         let (storages, _raw_expected) = sample_storages_and_accounts(&accounts_db);
         let max_slot = storages.iter().map(|storage| storage.slot()).max().unwrap();
@@ -1089,7 +1089,7 @@ mod tests {
 
     #[test]
     fn test_accountsdb_scan_multiple_account_storage_with_obsolete_accounts() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let slot: Slot = 0;
         let num_accounts = 5;
@@ -1097,7 +1097,7 @@ mod tests {
             "test_accountsdb_scan_account_storage_with_obsolete_accounts",
         );
 
-        let pubkey = solana_pubkey::new_rand();
+        let pubkey = gorbagana_pubkey::new_rand();
         let mark_alive = false;
 
         let storage = sample_storage_with_entries(&tf, slot, &pubkey, mark_alive);

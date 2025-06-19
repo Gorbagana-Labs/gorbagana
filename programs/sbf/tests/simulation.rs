@@ -2,26 +2,26 @@
 
 use {
     agave_validator::test_validator::*,
-    solana_instruction::{AccountMeta, Instruction},
-    solana_keypair::Keypair,
-    solana_message::Message,
-    solana_pubkey::Pubkey,
-    solana_runtime::{
+    gorbagana_instruction::{AccountMeta, Instruction},
+    gorbagana_keypair::Keypair,
+    gorbagana_message::Message,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_runtime::{
         bank::Bank,
         bank_client::BankClient,
         genesis_utils::{create_genesis_config, GenesisConfigInfo},
         loader_utils::load_program_of_loader_v4,
     },
-    solana_runtime_transaction::runtime_transaction::RuntimeTransaction,
-    solana_signer::Signer,
-    solana_sysvar::{clock, slot_history},
-    solana_transaction::Transaction,
+    gorbagana_runtime_transaction::runtime_transaction::RuntimeTransaction,
+    gorbagana_signer::Signer,
+    gorbagana_sysvar::{clock, slot_history},
+    gorbagana_transaction::Transaction,
     std::{thread::sleep, time::Duration},
 };
 
 #[test]
 fn test_no_panic_banks_client() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -36,7 +36,7 @@ fn test_no_panic_banks_client() {
         bank_forks.as_ref(),
         &mint_keypair,
         &authority_keypair,
-        "solana_sbf_rust_simulation",
+        "gorbagana_sbf_rust_simulation",
     );
     bank.freeze();
 
@@ -58,11 +58,11 @@ fn test_no_panic_banks_client() {
 
 #[test]
 fn test_no_panic_rpc_client() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let program_id = Pubkey::new_unique();
     let (test_validator, payer) = TestValidatorGenesis::default()
-        .add_program("solana_sbf_rust_simulation", program_id)
+        .add_program("gorbagana_sbf_rust_simulation", program_id)
         .start();
     let rpc_client = test_validator.get_rpc_client();
     let blockhash = rpc_client.get_latest_blockhash().unwrap();

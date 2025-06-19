@@ -1,15 +1,15 @@
 use {
-    solana_account_info::{next_account_info, AccountInfo},
-    solana_instruction::{AccountMeta, Instruction},
-    solana_keypair::Keypair,
-    solana_program::program::invoke,
-    solana_program_error::ProgramResult,
-    solana_program_test::{processor, ProgramTest},
-    solana_pubkey::Pubkey,
-    solana_signer::Signer,
-    solana_system_interface::instruction as system_instruction,
-    solana_sysvar::rent,
-    solana_transaction::Transaction,
+    gorbagana_account_info::{next_account_info, AccountInfo},
+    gorbagana_instruction::{AccountMeta, Instruction},
+    gorbagana_keypair::Keypair,
+    gorbagana_program::program::invoke,
+    gorbagana_program_error::ProgramResult,
+    gorbagana_program_test::{processor, ProgramTest},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signer::Signer,
+    gorbagana_system_interface::instruction as system_instruction,
+    gorbagana_sysvar::rent,
+    gorbagana_transaction::Transaction,
 };
 
 fn process_instruction(

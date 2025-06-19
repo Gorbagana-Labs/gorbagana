@@ -1,22 +1,22 @@
-//! Core types for solana-transaction-status
+//! Core types for gorbagana-transaction-status
 use {
     crate::option_serializer::OptionSerializer,
     base64::{prelude::BASE64_STANDARD, Engine},
     core::fmt,
     serde_derive::{Deserialize, Serialize},
     serde_json::Value,
-    solana_account_decoder_client_types::token::UiTokenAmount,
-    solana_commitment_config::CommitmentConfig,
-    solana_message::{
+    gorbagana_account_decoder_client_types::token::UiTokenAmount,
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_message::{
         compiled_instruction::CompiledInstruction,
         v0::{LoadedAddresses, MessageAddressTableLookup},
         MessageHeader,
     },
-    solana_reward_info::RewardType,
-    solana_signature::Signature,
-    solana_transaction::versioned::{TransactionVersion, VersionedTransaction},
-    solana_transaction_context::TransactionReturnData,
-    solana_transaction_error::{TransactionError, TransactionResult},
+    gorbagana_reward_info::RewardType,
+    gorbagana_signature::Signature,
+    gorbagana_transaction::versioned::{TransactionVersion, VersionedTransaction},
+    gorbagana_transaction_context::TransactionReturnData,
+    gorbagana_transaction_error::{TransactionError, TransactionResult},
     thiserror::Error,
 };
 pub mod option_serializer;
@@ -231,7 +231,7 @@ impl From<&MessageAddressTableLookup> for UiAddressTableLookup {
 #[serde(rename_all = "camelCase")]
 pub struct UiTransactionStatusMeta {
     pub err: Option<TransactionError>,
-    pub status: TransactionResult<()>, // This field is deprecated.  See https://github.com/solana-labs/solana/issues/9302
+    pub status: TransactionResult<()>, // This field is deprecated.  See https://github.com/gorbagana-labs/gorbagana/issues/9302
     pub fee: u64,
     pub pre_balances: Vec<u64>,
     pub post_balances: Vec<u64>,

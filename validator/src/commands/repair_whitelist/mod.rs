@@ -5,9 +5,9 @@ use {
     },
     clap::{values_t, App, AppSettings, Arg, ArgMatches, SubCommand},
     itertools::Itertools,
-    solana_clap_utils::input_validators::is_pubkey,
-    solana_cli_output::OutputFormat,
-    solana_pubkey::Pubkey,
+    gorbagana_clap_utils::input_validators::is_pubkey,
+    gorbagana_cli_output::OutputFormat,
+    gorbagana_pubkey::Pubkey,
     std::path::Path,
 };
 

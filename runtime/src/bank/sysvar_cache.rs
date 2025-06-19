@@ -5,8 +5,8 @@ use super::Bank;
 mod tests {
     use {
         super::*, crate::inflation_rewards::points::PointValue,
-        solana_genesis_config::create_genesis_config, solana_pubkey::Pubkey,
-        solana_sysvar::epoch_rewards::EpochRewards, std::sync::Arc,
+        gorbagana_genesis_config::create_genesis_config, gorbagana_pubkey::Pubkey,
+        gorbagana_sysvar::epoch_rewards::EpochRewards, std::sync::Arc,
     };
 
     #[test]

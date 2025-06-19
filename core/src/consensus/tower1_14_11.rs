@@ -1,9 +1,9 @@
 use {
     crate::consensus::{BlockhashStatus, SwitchForkDecision},
-    solana_clock::Slot,
-    solana_pubkey::Pubkey,
-    solana_vote::vote_transaction::VoteTransaction,
-    solana_vote_program::vote_state::{vote_state_1_14_11::VoteState1_14_11, BlockTimestamp},
+    gorbagana_clock::Slot,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_vote::vote_transaction::VoteTransaction,
+    gorbagana_vote_program::vote_state::{vote_state_1_14_11::VoteState1_14_11, BlockTimestamp},
 };
 
 #[cfg_attr(

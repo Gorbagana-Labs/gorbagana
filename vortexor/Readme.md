@@ -14,7 +14,7 @@ Figure 1 describes the architecture diagram of the Vortexor and its
 relationship with the validator.
 
                      +---------------------+
-                     |   Solana            |
+                     |   Gorbagana            |
                      |   RPC / Web Socket  |
                      |   Service           |
                      +---------------------+
@@ -166,7 +166,7 @@ socket servers specified.
 Run the Vortexor using the following command:
 
 ```bash
-solana-vortexor --identity /path/to/id.json \
+gorbagana-vortexor --identity /path/to/id.json \
     --destination <validator_receiver_address> \
     --dynamic-port-range <port_range> \
     --rpc-server <rpc_server_address> \
@@ -186,7 +186,7 @@ In the example below, we are pairing the vortexor with the validator running on 
 the RPC node 10.138.0.137 for RPC and websocket service:
 
 ```bash
-solana-vortexor --identity /home/solana/.config/solana/id.json \
+gorbagana-vortexor --identity /home/gorbagana/.config/gorbagana/id.json \
     --destination 10.138.0.136:8100 \
     --dynamic-port-range 9200-9300 \
     --rpc-server http://10.138.0.137:8899 \
@@ -199,7 +199,7 @@ solana-vortexor --identity /home/solana/.config/solana/id.json \
 The Vortexor's TPU and forward addresses can be found in its log file. For example:
 
 ```
-[2025-04-24T17:40:13.098760226Z INFO  solana_vortexor] Creating the Vortexor. The tpu socket is: Ok(0.0.0.0:9200), tpu_fwd: Ok(0.0.0.0:9201)
+[2025-04-24T17:40:13.098760226Z INFO  gorbagana_vortexor] Creating the Vortexor. The tpu socket is: Ok(0.0.0.0:9200), tpu_fwd: Ok(0.0.0.0:9201)
 ```
 
 When configuring the validator, deduct the `QUIC_PORT_OFFSET` (which is 6) from

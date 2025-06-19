@@ -1,6 +1,6 @@
 use {
     super::*,
-    solana_account_decoder::parse_token::convert_account_state,
+    gorbagana_account_decoder::parse_token::convert_account_state,
     spl_token_2022::extension::default_account_state::instruction::{
         decode_instruction, DefaultAccountStateInstruction,
     },
@@ -54,8 +54,8 @@ pub(in crate::parse_token) fn parse_default_account_state_instruction(
 mod test {
     use {
         super::*,
-        solana_message::Message,
-        solana_pubkey::Pubkey,
+        gorbagana_message::Message,
+        gorbagana_pubkey::Pubkey,
         spl_token_2022::{
             extension::default_account_state::instruction::{
                 initialize_default_account_state, update_default_account_state,

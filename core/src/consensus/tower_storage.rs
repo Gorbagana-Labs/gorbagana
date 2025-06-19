@@ -3,9 +3,9 @@ use {
         tower1_14_11::Tower1_14_11, tower1_7_14::SavedTower1_7_14, Result, Tower, TowerError,
         TowerVersions,
     },
-    solana_pubkey::Pubkey,
-    solana_signature::Signature,
-    solana_signer::Signer,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signature::Signature,
+    gorbagana_signer::Signer,
     std::{
         fs::{self, File},
         io::{self, BufReader},
@@ -264,7 +264,7 @@ impl EtcdTowerStorage {
 
         Ok(Self {
             client: tokio::sync::Mutex::new(client),
-            instance_id: solana_time_utils::timestamp().to_le_bytes(),
+            instance_id: gorbagana_time_utils::timestamp().to_le_bytes(),
             runtime,
         })
     }
@@ -376,10 +376,10 @@ pub mod test {
             tower1_7_14::{SavedTower1_7_14, Tower1_7_14},
             BlockhashStatus, Tower,
         },
-        solana_hash::Hash,
-        solana_keypair::Keypair,
-        solana_vote::vote_transaction::VoteTransaction,
-        solana_vote_program::vote_state::{
+        gorbagana_hash::Hash,
+        gorbagana_keypair::Keypair,
+        gorbagana_vote::vote_transaction::VoteTransaction,
+        gorbagana_vote_program::vote_state::{
             BlockTimestamp, LandedVote, Vote, VoteState, VoteState1_14_11, MAX_LOCKOUT_HISTORY,
         },
         tempfile::TempDir,

@@ -34,6 +34,6 @@ EOF
 cat install/agave-install-init.sh >>release.anza.xyz-install
 
 echo --- GCS: "install"
-upload-gcs-artifact "/solana/release.anza.xyz-install" "gs://anza-release/$CHANNEL_OR_TAG/install"
+upload-gcs-artifact "/gorbagana/release.anza.xyz-install" "gs://anza-release/$CHANNEL_OR_TAG/install"
 echo Published to:
 ci/format-url.sh https://release.anza.xyz/"$CHANNEL_OR_TAG"/install

@@ -1,6 +1,6 @@
 This is an example application using SVM to implement a tiny subset of
-Solana RPC protocol for the purpose of simulating transaction
-execution without having to use the entire Solana Runtime.
+Gorbagana RPC protocol for the purpose of simulating transaction
+execution without having to use the entire Gorbagana Runtime.
 
 The example consists of two host applications
 - json-rpc-server -- the RPC server that accepts incoming RPC requests
@@ -14,7 +14,7 @@ and
   executed in a transaction sent by json-rpc-client.
 
 To run the example, compile the json-rpc-program with `cargo
-build-sbf` command. Using solana-test-validator create a ledger, or
+build-sbf` command. Using gorbagana-test-validator create a ledger, or
 use an existing one, and deploy the compiled program to store it in
 the ledger. Using agave-ledger-tool dump ledger accounts to a file,
 e.g. `accounts.out`. Now start the json-rpc-server, e.g.

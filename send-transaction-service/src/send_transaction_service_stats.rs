@@ -1,5 +1,5 @@
 use {
-    solana_time_utils::AtomicInterval,
+    gorbagana_time_utils::AtomicInterval,
     std::sync::atomic::{AtomicU64, Ordering},
 };
 

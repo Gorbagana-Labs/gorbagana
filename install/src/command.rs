@@ -9,16 +9,16 @@ use {
     crossbeam_channel::unbounded,
     indicatif::{ProgressBar, ProgressStyle},
     serde_derive::{Deserialize, Serialize},
-    solana_config_interface::instruction::{self as config_instruction},
-    solana_config_program_client::get_config_data,
-    solana_hash::Hash,
-    solana_keypair::{read_keypair_file, signable::Signable, Keypair},
-    solana_message::Message,
-    solana_pubkey::Pubkey,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_sha256_hasher::Hasher,
-    solana_signer::Signer,
-    solana_transaction::Transaction,
+    gorbagana_config_interface::instruction::{self as config_instruction},
+    gorbagana_config_program_client::get_config_data,
+    gorbagana_hash::Hash,
+    gorbagana_keypair::{read_keypair_file, signable::Signable, Keypair},
+    gorbagana_message::Message,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_sha256_hasher::Hasher,
+    gorbagana_signer::Signer,
+    gorbagana_transaction::Transaction,
     std::{
         fs::{self, File},
         io::{self, BufReader, Read},
@@ -198,7 +198,7 @@ fn load_release_version(version_yml: &Path) -> Result<ReleaseVersion, String> {
 /// Reads the supported TARGET triple for the given release
 fn load_release_target(release_dir: &Path) -> Result<String, String> {
     let mut version_yml = PathBuf::from(release_dir);
-    version_yml.push("solana-release");
+    version_yml.push("gorbagana-release");
     version_yml.push("version.yml");
 
     let version = load_release_version(&version_yml)?;
@@ -307,7 +307,7 @@ fn check_env_path_for_bin_dir(config: &Config) {
 
     if !found {
         println!(
-            "\nPlease update your PATH environment variable to include the solana programs:\n    PATH=\"{}:$PATH\"\n",
+            "\nPlease update your PATH environment variable to include the gorbagana programs:\n    PATH=\"{}:$PATH\"\n",
             config.active_release_bin_dir().to_str().unwrap()
         );
     }
@@ -570,7 +570,7 @@ pub fn init(
 
 fn github_release_download_url(release_semver: &str) -> String {
     format!(
-        "https://github.com/anza-xyz/agave/releases/download/v{}/solana-release-{}.tar.bz2",
+        "https://github.com/anza-xyz/agave/releases/download/v{}/gorbagana-release-{}.tar.bz2",
         release_semver,
         crate::build_env::TARGET
     )
@@ -578,7 +578,7 @@ fn github_release_download_url(release_semver: &str) -> String {
 
 fn release_channel_download_url(release_channel: &str) -> String {
     format!(
-        "https://release.anza.xyz/{}/solana-release-{}.tar.bz2",
+        "https://release.anza.xyz/{}/gorbagana-release-{}.tar.bz2",
         release_channel,
         crate::build_env::TARGET
     )
@@ -586,7 +586,7 @@ fn release_channel_download_url(release_channel: &str) -> String {
 
 fn release_channel_version_url(release_channel: &str) -> String {
     format!(
-        "https://release.anza.xyz/{}/solana-release-{}.yml",
+        "https://release.anza.xyz/{}/gorbagana-release-{}.yml",
         release_channel,
         crate::build_env::TARGET
     )
@@ -1036,7 +1036,7 @@ pub fn init_or_update(config_file: &str, is_init: bool, check_only: bool) -> Res
                 let release_id = format!("{}-{}", release_channel, update_release_version.commit);
                 let release_dir = config.release_dir(&release_id);
                 let current_release_version_yml =
-                    release_dir.join("solana-release").join("version.yml");
+                    release_dir.join("gorbagana-release").join("version.yml");
 
                 let download_url = release_channel_download_url(release_channel);
 
@@ -1169,7 +1169,7 @@ pub fn init_or_update(config_file: &str, is_init: bool, check_only: bool) -> Res
 
     let _ = fs::remove_dir_all(config.active_release_dir());
     symlink_dir(
-        release_dir.join("solana-release"),
+        release_dir.join("gorbagana-release"),
         config.active_release_dir(),
     )
     .map_err(|err| match err.raw_os_error() {

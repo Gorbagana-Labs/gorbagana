@@ -1,5 +1,5 @@
 [package]
-name = "solana-zk-elgamal-proof-program-tests"
+name = "gorbagana-zk-elgamal-proof-program-tests"
 publish = false
 version = { workspace = true }
 authors = { workspace = true }
@@ -9,15 +9,15 @@ edition = { workspace = true }
 
 [dev-dependencies]
 bytemuck = { workspace = true }
-solana-account = { workspace = true }
-solana-compute-budget = { workspace = true }
-solana-compute-budget-interface = { workspace = true }
-solana-instruction = { workspace = true }
-solana-keypair = { workspace = true }
-solana-program-test = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-signer = { workspace = true }
-solana-system-interface = { workspace = true }
-solana-transaction = { workspace = true }
-solana-transaction-error = { workspace = true }
-solana-zk-sdk = { workspace = true }
+gorbagana-account = { workspace = true }
+gorbagana-compute-budget = { workspace = true }
+gorbagana-compute-budget-interface = { workspace = true }
+gorbagana-instruction = { workspace = true }
+gorbagana-keypair = { workspace = true }
+gorbagana-program-test = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-signer = { workspace = true }
+gorbagana-system-interface = { workspace = true }
+gorbagana-transaction = { workspace = true }
+gorbagana-transaction-error = { workspace = true }
+gorbagana-zk-sdk = { workspace = true }

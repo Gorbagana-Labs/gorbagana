@@ -10,8 +10,8 @@ use {
         nid::Nid,
     },
     rand0_7::{thread_rng, Rng},
-    solana_instruction::Instruction,
-    solana_secp256r1_program::{new_secp256r1_instruction_with_signature, sign_message},
+    gorbagana_instruction::Instruction,
+    gorbagana_secp256r1_program::{new_secp256r1_instruction_with_signature, sign_message},
     test::Bencher,
 };
 

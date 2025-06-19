@@ -1,21 +1,21 @@
 use {
-    solana_client::{
+    gorbagana_client::{
         nonblocking::tpu_client::TpuClient,
         rpc_config::RpcSendTransactionConfig,
         send_and_confirm_transactions_in_parallel::{
             send_and_confirm_transactions_in_parallel_blocking_v2, SendAndConfirmConfigV2,
         },
     },
-    solana_commitment_config::CommitmentConfig,
-    solana_keypair::Keypair,
-    solana_message::Message,
-    solana_native_token::sol_to_lamports,
-    solana_pubkey::Pubkey,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_signer::Signer,
-    solana_streamer::socket::SocketAddrSpace,
-    solana_system_interface::instruction as system_instruction,
-    solana_test_validator::TestValidator,
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_keypair::Keypair,
+    gorbagana_message::Message,
+    gorbagana_native_token::sol_to_lamports,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_signer::Signer,
+    gorbagana_streamer::socket::SocketAddrSpace,
+    gorbagana_system_interface::instruction as system_instruction,
+    gorbagana_test_validator::TestValidator,
     std::sync::Arc,
 };
 
@@ -36,20 +36,20 @@ fn create_messages(from: Pubkey, to: Pubkey) -> (Vec<Message>, f64) {
 
 #[test]
 fn test_send_and_confirm_transactions_in_parallel_without_tpu_client() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let alice = Keypair::new();
     let test_validator =
         TestValidator::with_no_fees(alice.pubkey(), None, SocketAddrSpace::Unspecified);
 
-    let bob_pubkey = solana_pubkey::new_rand();
+    let bob_pubkey = gorbagana_pubkey::new_rand();
     let alice_pubkey = alice.pubkey();
 
     let rpc_client = Arc::new(RpcClient::new(test_validator.rpc_url()));
 
     assert_eq!(
-        rpc_client.get_version().unwrap().solana_core,
-        solana_version::semver!()
+        rpc_client.get_version().unwrap().gorbagana_core,
+        gorbagana_version::semver!()
     );
 
     let original_alice_balance = rpc_client.get_balance(&alice.pubkey()).unwrap();
@@ -93,20 +93,20 @@ fn test_send_and_confirm_transactions_in_parallel_without_tpu_client() {
 
 #[test]
 fn test_send_and_confirm_transactions_in_parallel_with_tpu_client() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let alice = Keypair::new();
     let test_validator =
         TestValidator::with_no_fees(alice.pubkey(), None, SocketAddrSpace::Unspecified);
 
-    let bob_pubkey = solana_pubkey::new_rand();
+    let bob_pubkey = gorbagana_pubkey::new_rand();
     let alice_pubkey = alice.pubkey();
 
     let rpc_client = Arc::new(RpcClient::new(test_validator.rpc_url()));
 
     assert_eq!(
-        rpc_client.get_version().unwrap().solana_core,
-        solana_version::semver!()
+        rpc_client.get_version().unwrap().gorbagana_core,
+        gorbagana_version::semver!()
     );
 
     let original_alice_balance = rpc_client.get_balance(&alice.pubkey()).unwrap();
@@ -116,7 +116,7 @@ fn test_send_and_confirm_transactions_in_parallel_with_tpu_client() {
         "temp",
         rpc_client.get_inner_client().clone(),
         ws_url.as_str(),
-        solana_client::tpu_client::TpuClientConfig::default(),
+        gorbagana_client::tpu_client::TpuClientConfig::default(),
     );
     let tpu_client = rpc_client.runtime().block_on(tpu_client_fut).unwrap();
 

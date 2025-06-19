@@ -1,3 +1,3 @@
-# PLEASE READ: This repo no longer contains the Solana SDK
+# PLEASE READ: This repo no longer contains the Gorbagana SDK
 
-The solana-sdk is currently developed at https://github.com/anza-xyz/solana-sdk
+The gorbagana-sdk is currently developed at https://github.com/anza-xyz/gorbagana-sdk

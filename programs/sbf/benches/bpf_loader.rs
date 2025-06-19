@@ -7,38 +7,38 @@
     allow(dead_code, unused_imports)
 )]
 
-use {solana_keypair::Keypair, std::slice};
+use {gorbagana_keypair::Keypair, std::slice};
 
 extern crate test;
 
 use {
     byteorder::{ByteOrder, LittleEndian, WriteBytesExt},
-    solana_account::AccountSharedData,
-    solana_bpf_loader_program::{create_vm, syscalls::create_program_runtime_environment_v1},
-    solana_client_traits::SyncClient,
-    solana_instruction::{AccountMeta, Instruction},
-    solana_measure::measure::Measure,
-    solana_message::Message,
-    solana_program_entrypoint::SUCCESS,
-    solana_program_runtime::{
+    gorbagana_account::AccountSharedData,
+    gorbagana_bpf_loader_program::{create_vm, syscalls::create_program_runtime_environment_v1},
+    gorbagana_client_traits::SyncClient,
+    gorbagana_instruction::{AccountMeta, Instruction},
+    gorbagana_measure::measure::Measure,
+    gorbagana_message::Message,
+    gorbagana_program_entrypoint::SUCCESS,
+    gorbagana_program_runtime::{
         execution_budget::SVMTransactionExecutionBudget, invoke_context::InvokeContext,
         serialization::serialize_parameters,
     },
-    solana_pubkey::Pubkey,
-    solana_runtime::{
+    gorbagana_pubkey::Pubkey,
+    gorbagana_runtime::{
         bank::Bank,
         bank_client::BankClient,
         genesis_utils::{create_genesis_config, GenesisConfigInfo},
         loader_utils::{load_program_from_file, load_program_of_loader_v4},
     },
-    solana_sbpf::{
+    gorbagana_sbpf::{
         ebpf::MM_INPUT_START, elf::Executable, memory_region::MemoryRegion,
         verifier::RequisiteVerifier, vm::ContextObject,
     },
-    solana_sdk_ids::{bpf_loader, native_loader},
-    solana_signer::Signer,
-    solana_svm_feature_set::SVMFeatureSet,
-    solana_transaction_context::InstructionAccount,
+    gorbagana_sdk_ids::{bpf_loader, native_loader},
+    gorbagana_signer::Signer,
+    gorbagana_svm_feature_set::SVMFeatureSet,
+    gorbagana_transaction_context::InstructionAccount,
     std::{mem, sync::Arc},
     test::Bencher,
 };
@@ -67,7 +67,7 @@ macro_rules! with_mock_invoke_context {
             is_signer: false,
             is_writable: true,
         }];
-        solana_program_runtime::with_mock_invoke_context!(
+        gorbagana_program_runtime::with_mock_invoke_context!(
             $invoke_context,
             transaction_context,
             transaction_accounts

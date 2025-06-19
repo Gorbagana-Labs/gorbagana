@@ -11,22 +11,22 @@ use {
         ConnectionError, Endpoint, EndpointConfig, IdleTimeout, TokioRuntime, TransportConfig,
         WriteError,
     },
-    solana_connection_cache::{
+    gorbagana_connection_cache::{
         client_connection::ClientStats, connection_cache_stats::ConnectionCacheStats,
         nonblocking::client_connection::ClientConnection,
     },
-    solana_keypair::Keypair,
-    solana_measure::measure::Measure,
-    solana_net_utils::{SocketConfig, VALIDATOR_PORT_RANGE},
-    solana_quic_definitions::{
+    gorbagana_keypair::Keypair,
+    gorbagana_measure::measure::Measure,
+    gorbagana_net_utils::{SocketConfig, VALIDATOR_PORT_RANGE},
+    gorbagana_quic_definitions::{
         QUIC_CONNECTION_HANDSHAKE_TIMEOUT, QUIC_KEEP_ALIVE, QUIC_MAX_TIMEOUT, QUIC_SEND_FAIRNESS,
     },
-    solana_rpc_client_api::client_error::ErrorKind as ClientErrorKind,
-    solana_streamer::nonblocking::quic::ALPN_TPU_PROTOCOL_ID,
-    solana_tls_utils::{
+    gorbagana_rpc_client_api::client_error::ErrorKind as ClientErrorKind,
+    gorbagana_streamer::nonblocking::quic::ALPN_TPU_PROTOCOL_ID,
+    gorbagana_tls_utils::{
         new_dummy_x509_certificate, tls_client_config_builder, QuicClientCertificate,
     },
-    solana_transaction_error::TransportResult,
+    gorbagana_transaction_error::TransportResult,
     std::{
         net::{IpAddr, Ipv4Addr, SocketAddr, UdpSocket},
         sync::{atomic::Ordering, Arc},
@@ -78,7 +78,7 @@ impl QuicLazyInitializedEndpoint {
             endpoint.clone()
         } else {
             let config = SocketConfig::default();
-            let client_socket = solana_net_utils::bind_in_range_with_config(
+            let client_socket = gorbagana_net_utils::bind_in_range_with_config(
                 IpAddr::V4(Ipv4Addr::UNSPECIFIED),
                 VALIDATOR_PORT_RANGE,
                 config,

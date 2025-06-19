@@ -1,4 +1,4 @@
-use {super::*, solana_program_option::COption, solana_pubkey::Pubkey};
+use {super::*, gorbagana_program_option::COption, gorbagana_pubkey::Pubkey};
 
 pub(in crate::parse_token) fn parse_initialize_mint_close_authority_instruction(
     close_authority: COption<Pubkey>,
@@ -18,7 +18,7 @@ pub(in crate::parse_token) fn parse_initialize_mint_close_authority_instruction(
 #[cfg(test)]
 mod test {
     use {
-        super::*, serde_json::Value, solana_message::Message, solana_pubkey::Pubkey,
+        super::*, serde_json::Value, gorbagana_message::Message, gorbagana_pubkey::Pubkey,
         spl_token_2022::instruction::*,
     };
 

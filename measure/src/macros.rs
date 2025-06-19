@@ -14,7 +14,7 @@
 ///
 /// ```
 /// // Measure functions
-/// # use solana_measure::{measure_time, measure_us, meas_dur};
+/// # use gorbagana_measure::{measure_time, measure_us, meas_dur};
 /// # fn foo() {}
 /// # fn bar(x: i32) {}
 /// # fn add(x: i32, y: i32) -> i32 {x + y}
@@ -28,7 +28,7 @@
 ///
 /// ```
 /// // Measure methods
-/// # use solana_measure::{measure_time, measure_us, meas_dur};
+/// # use gorbagana_measure::{measure_time, measure_us, meas_dur};
 /// # struct Foo {
 /// #     f: i32,
 /// # }
@@ -46,7 +46,7 @@
 ///
 /// ```
 /// // Measure expression blocks
-/// # use solana_measure::measure_time;
+/// # use gorbagana_measure::measure_time;
 /// # fn complex_calculation() -> i32 { 42 }
 /// # fn complex_transform(x: i32) -> i32 { x + 3 }
 /// # fn record_result(y: i32) {}
@@ -66,7 +66,7 @@
 ///
 /// ```
 /// // The `name` parameter is optional
-/// # use solana_measure::{measure_time, measure_us};
+/// # use gorbagana_measure::{measure_time, measure_us};
 /// # fn meow() {};
 /// let (result, measure) = measure_time!(meow());
 /// let (result, measure_us) = measure_us!(meow());
@@ -97,7 +97,7 @@ macro_rules! measure_us {
 /// # Examples
 ///
 /// ```
-/// # use solana_measure::meas_dur;
+/// # use gorbagana_measure::meas_dur;
 /// # fn meow(x: i32, y: i32) -> i32 {x + y}
 /// let (result, duration) = meas_dur!(meow(1, 2) + 3);
 /// # assert_eq!(result, 1 + 2 + 3);

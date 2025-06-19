@@ -1,22 +1,22 @@
 ---
-title: Available Solana Clusters
-sidebar_label: Solana Clusters
-pagination_label: Available Solana Clusters
+title: Available Gorbagana Clusters
+sidebar_label: Gorbagana Clusters
+pagination_label: Available Gorbagana Clusters
 ---
 
-Solana maintains several different clusters with different purposes.
+Gorbagana maintains several different clusters with different purposes.
 
 Before you begin make sure you have first
-[installed the Solana command line tools](../cli/install.md)
+[installed the Gorbagana command line tools](../cli/install.md)
 
 Explorers:
 
-- [http://explorer.solana.com/](https://explorer.solana.com/).
-- [http://solanabeach.io/](http://solanabeach.io/).
+- [http://explorer.gorbagana.com/](https://explorer.gorbagana.com/).
+- [http://gorbaganabeach.io/](http://gorbaganabeach.io/).
 
 ## Devnet
 
-- Devnet serves as a playground for anyone who wants to take Solana for a
+- Devnet serves as a playground for anyone who wants to take Gorbagana for a
   test drive, as a user, token holder, app developer, or validator.
 - Application developers should target Devnet.
 - Potential validators should first target Devnet.
@@ -26,19 +26,19 @@ Explorers:
   - Devnet may be subject to ledger resets
   - Devnet typically runs the same software release branch version as Mainnet Beta,
     but may run a newer minor release version than Mainnet Beta.
-- Gossip entrypoint for Devnet: `entrypoint.devnet.solana.com:8001`
+- Gossip entrypoint for Devnet: `entrypoint.devnet.gorbagana.com:8001`
 - Metrics environment variable for Devnet:
 
 ```bash
-export SOLANA_METRICS_CONFIG="host=https://metrics.solana.com:8086,db=devnet,u=scratch_writer,p=topsecret"
+export SOLANA_METRICS_CONFIG="host=https://metrics.gorbagana.com:8086,db=devnet,u=scratch_writer,p=topsecret"
 ```
 
-- RPC URL for Devnet: `https://api.devnet.solana.com`
+- RPC URL for Devnet: `https://api.devnet.gorbagana.com`
 
-##### Example `solana` command-line configuration
+##### Example `gorbagana` command-line configuration
 
 ```bash
-solana config set --url https://api.devnet.solana.com
+gorbagana config set --url https://api.devnet.gorbagana.com
 ```
 
 ##### Example `agave-validator` command-line
@@ -55,22 +55,22 @@ $ agave-validator \
     --ledger ledger \
     --rpc-port 8899 \
     --dynamic-port-range 8000-8020 \
-    --entrypoint entrypoint.devnet.solana.com:8001 \
-    --entrypoint entrypoint2.devnet.solana.com:8001 \
-    --entrypoint entrypoint3.devnet.solana.com:8001 \
-    --entrypoint entrypoint4.devnet.solana.com:8001 \
-    --entrypoint entrypoint5.devnet.solana.com:8001 \
+    --entrypoint entrypoint.devnet.gorbagana.com:8001 \
+    --entrypoint entrypoint2.devnet.gorbagana.com:8001 \
+    --entrypoint entrypoint3.devnet.gorbagana.com:8001 \
+    --entrypoint entrypoint4.devnet.gorbagana.com:8001 \
+    --entrypoint entrypoint5.devnet.gorbagana.com:8001 \
     --expected-genesis-hash EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG \
     --wal-recovery-mode skip_any_corrupted_record \
     --limit-ledger-size
 ```
 
 The [`--known-validator`s](../operations/guides/validator-start.md#known-validators)
-are operated by Solana Labs
+are operated by Gorbagana Labs
 
 ## Testnet
 
-- Testnet is where the Solana core contributors stress test recent release features on a live
+- Testnet is where the Gorbagana core contributors stress test recent release features on a live
   cluster, particularly focused on network performance, stability and validator
   behavior.
 - Testnet tokens are **not real**
@@ -78,19 +78,19 @@ are operated by Solana Labs
 - Testnet includes a token faucet for airdrops for application testing
 - Testnet typically runs a newer software release branch than both
   Devnet and Mainnet Beta
-- Gossip entrypoint for Testnet: `entrypoint.testnet.solana.com:8001`
+- Gossip entrypoint for Testnet: `entrypoint.testnet.gorbagana.com:8001`
 - Metrics environment variable for Testnet:
 
 ```bash
-export SOLANA_METRICS_CONFIG="host=https://metrics.solana.com:8086,db=tds,u=testnet_write,p=c4fa841aa918bf8274e3e2a44d77568d9861b3ea"
+export SOLANA_METRICS_CONFIG="host=https://metrics.gorbagana.com:8086,db=tds,u=testnet_write,p=c4fa841aa918bf8274e3e2a44d77568d9861b3ea"
 ```
 
-- RPC URL for Testnet: `https://api.testnet.solana.com`
+- RPC URL for Testnet: `https://api.testnet.gorbagana.com`
 
-##### Example `solana` command-line configuration
+##### Example `gorbagana` command-line configuration
 
 ```bash
-solana config set --url https://api.testnet.solana.com
+gorbagana config set --url https://api.testnet.gorbagana.com
 ```
 
 ##### Example `agave-validator` command-line
@@ -108,9 +108,9 @@ $ agave-validator \
     --ledger ledger \
     --rpc-port 8899 \
     --dynamic-port-range 8000-8020 \
-    --entrypoint entrypoint.testnet.solana.com:8001 \
-    --entrypoint entrypoint2.testnet.solana.com:8001 \
-    --entrypoint entrypoint3.testnet.solana.com:8001 \
+    --entrypoint entrypoint.testnet.gorbagana.com:8001 \
+    --entrypoint entrypoint2.testnet.gorbagana.com:8001 \
+    --entrypoint entrypoint3.testnet.gorbagana.com:8001 \
     --expected-genesis-hash 4uhcVJyU9pJkvQyS88uRDiswHXSCkY3zQawwpjk2NsNY \
     --wal-recovery-mode skip_any_corrupted_record \
     --limit-ledger-size
@@ -119,7 +119,7 @@ $ agave-validator \
 The identities of the
 [`--known-validator`s](../operations/guides/validator-start.md#known-validators) are:
 
-- `5D1fNXzvv5NjV1ysLjirC4WY92RNsVH18vjmcszZd8on` - Solana Labs
+- `5D1fNXzvv5NjV1ysLjirC4WY92RNsVH18vjmcszZd8on` - Gorbagana Labs
 - `dDzy5SR3AXdYWVqbDEkVFdvSPCtS9ihF5kJkHCtXoFs` - MonkeDAO
 - `Ft5fbkqNa76vnsjYNwjDZUXoTWpP7VYm3mtsaQckQADN` - Certus One
 - `eoKpUABi59aT4rR9HGS3LcMecfut9x7zJyodWWP43YQ` - SerGo
@@ -127,22 +127,22 @@ The identities of the
 
 ## Mainnet Beta
 
-A permissionless, persistent cluster for Solana users, builders, validators and token holders.
+A permissionless, persistent cluster for Gorbagana users, builders, validators and token holders.
 
 - Tokens that are issued on Mainnet Beta are **real** SOL
-- Gossip entrypoint for Mainnet Beta: `entrypoint.mainnet-beta.solana.com:8001`
+- Gossip entrypoint for Mainnet Beta: `entrypoint.mainnet-beta.gorbagana.com:8001`
 - Metrics environment variable for Mainnet Beta:
 
 ```bash
-export SOLANA_METRICS_CONFIG="host=https://metrics.solana.com:8086,db=mainnet-beta,u=mainnet-beta_write,p=password"
+export SOLANA_METRICS_CONFIG="host=https://metrics.gorbagana.com:8086,db=mainnet-beta,u=mainnet-beta_write,p=password"
 ```
 
-- RPC URL for Mainnet Beta: `https://api.mainnet-beta.solana.com`
+- RPC URL for Mainnet Beta: `https://api.mainnet-beta.gorbagana.com`
 
-##### Example `solana` command-line configuration
+##### Example `gorbagana` command-line configuration
 
 ```bash
-solana config set --url https://api.mainnet-beta.solana.com
+gorbagana config set --url https://api.mainnet-beta.gorbagana.com
 ```
 
 ##### Example `agave-validator` command-line
@@ -160,11 +160,11 @@ $ agave-validator \
     --rpc-port 8899 \
     --private-rpc \
     --dynamic-port-range 8000-8020 \
-    --entrypoint entrypoint.mainnet-beta.solana.com:8001 \
-    --entrypoint entrypoint2.mainnet-beta.solana.com:8001 \
-    --entrypoint entrypoint3.mainnet-beta.solana.com:8001 \
-    --entrypoint entrypoint4.mainnet-beta.solana.com:8001 \
-    --entrypoint entrypoint5.mainnet-beta.solana.com:8001 \
+    --entrypoint entrypoint.mainnet-beta.gorbagana.com:8001 \
+    --entrypoint entrypoint2.mainnet-beta.gorbagana.com:8001 \
+    --entrypoint entrypoint3.mainnet-beta.gorbagana.com:8001 \
+    --entrypoint entrypoint4.mainnet-beta.gorbagana.com:8001 \
+    --entrypoint entrypoint5.mainnet-beta.gorbagana.com:8001 \
     --expected-genesis-hash 5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d \
     --wal-recovery-mode skip_any_corrupted_record \
     --limit-ledger-size
@@ -172,5 +172,5 @@ $ agave-validator \
 
 :::info
 The above four [`--known-validator`s](../operations/guides/validator-start.md#known-validators)
-are operated by Solana Labs.
+are operated by Gorbagana Labs.
 :::

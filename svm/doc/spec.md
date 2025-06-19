@@ -1,15 +1,15 @@
-# Solana Virtual Machine specification
+# Gorbagana Virtual Machine specification
 
 # Introduction
 
-Several components of the Solana Validator are involved in processing
+Several components of the Gorbagana Validator are involved in processing
 a transaction (or a batch of transactions).  Collectively, the
 components responsible for transaction execution are designated as
-Solana Virtual Machine (SVM). SVM packaged as a stand-alone library
-can be used in applications outside the Solana Validator.
+Gorbagana Virtual Machine (SVM). SVM packaged as a stand-alone library
+can be used in applications outside the Gorbagana Validator.
 
 This document represents the SVM specification. It covers the API
-of using SVM in projects unrelated to Solana Validator and the
+of using SVM in projects unrelated to Gorbagana Validator and the
 internal workings of the SVM, including the descriptions of the inner
 data flow, data structures, and algorithms involved in the execution
 of transactions. The document’s target audience includes both external
@@ -19,16 +19,16 @@ users and the developers of the SVM.
 
 We envision the following applications for SVM
 
-- **Transaction execution in Solana Validator**
+- **Transaction execution in Gorbagana Validator**
 
     This is the primary use case for the SVM. It remains a major
     component of the Agave Validator, but with clear interface and
     isolated from dependencies on other components.
 
     The SVM is currently viewed as realizing two stages of the
-    Transaction Engine Execution pipeline as described in Solana
+    Transaction Engine Execution pipeline as described in Gorbagana
     Architecture documentation
-    [https://docs.solana.com/validator/runtime#execution](https://docs.solana.com/validator/runtime#execution),
+    [https://docs.gorbagana.com/validator/runtime#execution](https://docs.gorbagana.com/validator/runtime#execution),
     namely ‘load accounts’ and ‘execute’ stages.
 
 - **SVM Rollups**
@@ -65,9 +65,9 @@ We envision the following applications for SVM
 # System Context
 
 In this section, SVM is represented as a single entity. We describe its
-interfaces to the parts of the Solana Validator external to SVM.
+interfaces to the parts of the Gorbagana Validator external to SVM.
 
-In the context of Solana Validator, the main entity external to SVM is
+In the context of Gorbagana Validator, the main entity external to SVM is
 bank. It creates an SVM, submits transactions for execution and
 receives results of transaction execution from SVM.
 
@@ -75,7 +75,7 @@ receives results of transaction execution from SVM.
 
 ## Interfaces
 
-In this section, we describe the API of using the SVM both in Solana
+In this section, we describe the API of using the SVM both in Gorbagana
 Validator and in third-party applications.
 
 The interface to SVM is represented by the
@@ -88,7 +88,7 @@ a `TransactionBatchProcessor` object the client need to specify the
     are executed. This value is used to locate the on-chain program
     versions used in the transaction execution.
 - `epoch: Epoch` is a u64 value representing the ordinal number of
-    a Solana epoch, in which the slot was created. This is another
+    a Gorbagana epoch, in which the slot was created. This is another
     index used to locate the onchain programs used in the execution of
     transactions in the batch.
 - `program_cache: Arc<RwLock<ProgramCache<FG>>>` is a reference to
@@ -138,13 +138,13 @@ pub trait TransactionProcessingCallback {
 }
 ```
 
-Consumers can customize this plug-in to use their own Solana account source,
+Consumers can customize this plug-in to use their own Gorbagana account source,
 caching, and more.
 
 ### `SVMTransaction`
 
 An SVM transaction is a transaction that has undergone the
-various checks required to evaluate a transaction against the Solana protocol
+various checks required to evaluate a transaction against the Gorbagana protocol
 ruleset. Some of these rules include signature verification and validation
 of account indices (`num_readonly_signers`, etc.).
 
@@ -218,7 +218,7 @@ invocation context and invoking RBPF on programs implementing the
 instructions of a transaction. The SVM needs to have access to an account
 database, and a sysvar cache via traits implemented for the corresponding
 objects passed to it. The results of transaction execution are
-consumed by bank in Solana Validator use case. However, bank structure
+consumed by bank in Gorbagana Validator use case. However, bank structure
 should not be part of the SVM.
 
 In bank context `load_and_execute_sanitized_transactions` is called from
@@ -263,7 +263,7 @@ Steps of `load_and_execute_sanitized_transactions`
       execution. This is later used in verifying the account state
       changes (step #7).
    3. Create a new log_collector.  `LogCollector` is defined in
-      solana-program-runtime crate.
+      gorbagana-program-runtime crate.
    4. Obtain last blockhash and lamports per signature. This
       information is read from blockhash_queue maintained in Bank. The
       information is taken in parameters to
@@ -279,7 +279,7 @@ Steps of `load_and_execute_sanitized_transactions`
             `ProgramCacheEntry` data structure.
       6. Call `MessageProcessor::process_message` to execute the
       transaction. `MessageProcessor` is contained in
-      solana-program-runtime crate. The result of processing message
+      gorbagana-program-runtime crate. The result of processing message
       is either `ProcessedMessageInfo` which is an i64 wrapped in a
       struct meaning the change in accounts data length, or a
       `TransactionError`, if any of instructions failed to execute

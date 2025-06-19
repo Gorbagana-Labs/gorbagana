@@ -4,11 +4,11 @@
 // allow multiple connections for NAT and any open/close overlap
 #[deprecated(
     since = "2.2.0",
-    note = "Use solana_streamer::quic::DEFAULT_MAX_QUIC_CONNECTIONS_PER_PEER instead"
+    note = "Use gorbagana_streamer::quic::DEFAULT_MAX_QUIC_CONNECTIONS_PER_PEER instead"
 )]
-pub use solana_streamer::quic::DEFAULT_MAX_QUIC_CONNECTIONS_PER_PEER as MAX_QUIC_CONNECTIONS_PER_PEER;
+pub use gorbagana_streamer::quic::DEFAULT_MAX_QUIC_CONNECTIONS_PER_PEER as MAX_QUIC_CONNECTIONS_PER_PEER;
 pub use {
-    crate::forwarding_stage::ForwardingClientOption, solana_streamer::quic::DEFAULT_TPU_COALESCE,
+    crate::forwarding_stage::ForwardingClientOption, gorbagana_streamer::quic::DEFAULT_TPU_COALESCE,
 };
 use {
     crate::{
@@ -31,34 +31,34 @@ use {
     },
     bytes::Bytes,
     crossbeam_channel::{bounded, unbounded, Receiver},
-    solana_clock::Slot,
-    solana_gossip::cluster_info::ClusterInfo,
-    solana_keypair::Keypair,
-    solana_ledger::{
+    gorbagana_clock::Slot,
+    gorbagana_gossip::cluster_info::ClusterInfo,
+    gorbagana_keypair::Keypair,
+    gorbagana_ledger::{
         blockstore::Blockstore, blockstore_processor::TransactionStatusSender,
         entry_notifier_service::EntryNotifierSender,
     },
-    solana_perf::data_budget::DataBudget,
-    solana_poh::{
+    gorbagana_perf::data_budget::DataBudget,
+    gorbagana_poh::{
         poh_recorder::{PohRecorder, WorkingBankEntry},
         transaction_recorder::TransactionRecorder,
     },
-    solana_pubkey::Pubkey,
-    solana_rpc::{
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rpc::{
         optimistically_confirmed_bank_tracker::BankNotificationSender,
         rpc_subscriptions::RpcSubscriptions,
     },
-    solana_runtime::{
+    gorbagana_runtime::{
         bank_forks::BankForks,
         prioritization_fee_cache::PrioritizationFeeCache,
         root_bank_cache::RootBankCache,
         vote_sender_types::{ReplayVoteReceiver, ReplayVoteSender},
     },
-    solana_streamer::{
+    gorbagana_streamer::{
         quic::{spawn_server_multi, QuicServerParams, SpawnServerResult},
         streamer::StakedNodes,
     },
-    solana_turbine::broadcast_stage::{BroadcastStage, BroadcastStageType},
+    gorbagana_turbine::broadcast_stage::{BroadcastStage, BroadcastStageType},
     std::{
         collections::HashMap,
         net::{SocketAddr, UdpSocket},

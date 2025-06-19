@@ -1,6 +1,6 @@
 use {
     clap::{Arg, ArgMatches},
-    solana_derivation_path::DerivationPath,
+    gorbagana_derivation_path::DerivationPath,
     std::error,
 };
 

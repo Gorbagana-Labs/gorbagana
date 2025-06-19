@@ -2,17 +2,17 @@
 extern crate test;
 use {
     agave_reserved_account_keys::ReservedAccountKeys,
-    solana_entry::entry::{self, VerifyRecyclers},
-    solana_hash::Hash,
-    solana_message::SimpleAddressLoader,
-    solana_perf::test_tx::test_tx,
-    solana_runtime_transaction::runtime_transaction::RuntimeTransaction,
-    solana_transaction::{
+    gorbagana_entry::entry::{self, VerifyRecyclers},
+    gorbagana_hash::Hash,
+    gorbagana_message::SimpleAddressLoader,
+    gorbagana_perf::test_tx::test_tx,
+    gorbagana_runtime_transaction::runtime_transaction::RuntimeTransaction,
+    gorbagana_transaction::{
         sanitized::{MessageHash, SanitizedTransaction},
         versioned::VersionedTransaction,
         TransactionVerificationMode,
     },
-    solana_transaction_error::TransactionResult as Result,
+    gorbagana_transaction_error::TransactionResult as Result,
     std::sync::Arc,
     test::Bencher,
 };

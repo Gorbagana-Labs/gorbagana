@@ -1,7 +1,7 @@
 use {
-    solana_clock::{Epoch, DEFAULT_MS_PER_SLOT},
-    solana_commitment_config::CommitmentConfig,
-    solana_rpc_client::rpc_client::RpcClient,
+    gorbagana_clock::{Epoch, DEFAULT_MS_PER_SLOT},
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_rpc_client::rpc_client::RpcClient,
     std::{thread::sleep, time::Duration},
 };
 

@@ -1,7 +1,7 @@
 [package]
-name = "solana-builtins"
-description = "Solana builtin programs"
-documentation = "https://docs.rs/solana-builtins"
+name = "gorbagana-builtins"
+description = "Gorbagana builtin programs"
+documentation = "https://docs.rs/gorbagana-builtins"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -14,18 +14,18 @@ dev-context-only-utils = []
 
 [dependencies]
 agave-feature-set = { workspace = true }
-solana-bpf-loader-program = { workspace = true }
-solana-compute-budget-program = { workspace = true }
-solana-hash = { workspace = true }
-solana-loader-v4-program = { workspace = true }
-solana-program-runtime = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-sdk-ids = { workspace = true }
-solana-stake-program = { workspace = true }
-solana-system-program = { workspace = true }
-solana-vote-program = { workspace = true }
-solana-zk-elgamal-proof-program = { workspace = true }
-solana-zk-token-proof-program = { workspace = true }
+gorbagana-bpf-loader-program = { workspace = true }
+gorbagana-compute-budget-program = { workspace = true }
+gorbagana-hash = { workspace = true }
+gorbagana-loader-v4-program = { workspace = true }
+gorbagana-program-runtime = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-sdk-ids = { workspace = true }
+gorbagana-stake-program = { workspace = true }
+gorbagana-system-program = { workspace = true }
+gorbagana-vote-program = { workspace = true }
+gorbagana-zk-elgamal-proof-program = { workspace = true }
+gorbagana-zk-token-proof-program = { workspace = true }
 
 [lints]
 workspace = true

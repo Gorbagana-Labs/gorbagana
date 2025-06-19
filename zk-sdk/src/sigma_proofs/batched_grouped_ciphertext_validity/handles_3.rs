@@ -12,7 +12,7 @@
 //! The protocol guarantees computational soundness (by the hardness of discrete log) and perfect
 //! zero-knowledge in the random oracle model.
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use crate::encryption::{
     elgamal::{DecryptHandle, ElGamalPubkey},
     pedersen::{PedersenCommitment, PedersenOpening},
@@ -44,7 +44,7 @@ pub struct BatchedGroupedCiphertext3HandlesValidityProof(GroupedCiphertext3Handl
 
 #[allow(non_snake_case)]
 #[allow(dead_code)]
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl BatchedGroupedCiphertext3HandlesValidityProof {
     /// Creates a batched grouped ciphertext validity proof.
     ///

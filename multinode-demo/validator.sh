@@ -307,7 +307,7 @@ trap 'kill_node_and_exit' INT TERM ERR
 wallet() {
   (
     set -x
-    $solana_cli --keypair "$identity" --url "$rpc_url" "$@"
+    $gorbagana_cli --keypair "$identity" --url "$rpc_url" "$@"
   )
 }
 
@@ -323,7 +323,7 @@ setup_validator_accounts() {
       echo "Adding $node_sol to validator identity account:"
       (
         set -x
-        $solana_cli \
+        $gorbagana_cli \
           --keypair "$SOLANA_CONFIG_DIR/faucet.json" --url "$rpc_url" \
           transfer --allow-unfunded-recipient "$identity" "$node_sol"
       ) || return $?
@@ -341,11 +341,11 @@ setup_validator_accounts() {
 }
 
 # shellcheck disable=SC2086
-rpc_url=$($solana_gossip --allow-private-addr rpc-url --timeout 180 --entrypoint "$gossip_entrypoint")
+rpc_url=$($gorbagana_gossip --allow-private-addr rpc-url --timeout 180 --entrypoint "$gossip_entrypoint")
 
-[[ -r "$identity" ]] || $solana_keygen new --no-passphrase -so "$identity"
-[[ -r "$vote_account" ]] || $solana_keygen new --no-passphrase -so "$vote_account"
-[[ -r "$authorized_withdrawer" ]] || $solana_keygen new --no-passphrase -so "$authorized_withdrawer"
+[[ -r "$identity" ]] || $gorbagana_keygen new --no-passphrase -so "$identity"
+[[ -r "$vote_account" ]] || $gorbagana_keygen new --no-passphrase -so "$vote_account"
+[[ -r "$authorized_withdrawer" ]] || $gorbagana_keygen new --no-passphrase -so "$authorized_withdrawer"
 
 setup_validator_accounts "$node_sol"
 

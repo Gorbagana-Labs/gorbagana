@@ -12,7 +12,7 @@ pub mod xdp;
 extern crate log;
 
 #[macro_use]
-extern crate solana_metrics;
+extern crate gorbagana_metrics;
 
 #[cfg(test)]
 #[macro_use]

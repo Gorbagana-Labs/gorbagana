@@ -7,30 +7,30 @@ use {
     crossbeam_channel::unbounded,
     itertools::Itertools,
     log::*,
-    solana_account::AccountSharedData,
-    solana_accounts_db::accounts_index::{AccountIndex, AccountSecondaryIndexes},
-    solana_clap_utils::{
+    gorbagana_account::AccountSharedData,
+    gorbagana_accounts_db::accounts_index::{AccountIndex, AccountSecondaryIndexes},
+    gorbagana_clap_utils::{
         input_parsers::{pubkey_of, pubkeys_of, value_of},
         input_validators::normalize_to_url_if_moniker,
     },
-    solana_clock::Slot,
-    solana_core::consensus::tower_storage::FileTowerStorage,
-    solana_epoch_schedule::EpochSchedule,
-    solana_faucet::faucet::run_local_faucet_with_port,
-    solana_keypair::{read_keypair_file, write_keypair_file, Keypair},
-    solana_logger::redirect_stderr_to_file,
-    solana_native_token::sol_to_lamports,
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
-    solana_rpc::{
+    gorbagana_clock::Slot,
+    gorbagana_core::consensus::tower_storage::FileTowerStorage,
+    gorbagana_epoch_schedule::EpochSchedule,
+    gorbagana_faucet::faucet::run_local_faucet_with_port,
+    gorbagana_keypair::{read_keypair_file, write_keypair_file, Keypair},
+    gorbagana_logger::redirect_stderr_to_file,
+    gorbagana_native_token::sol_to_lamports,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent::Rent,
+    gorbagana_rpc::{
         rpc::{JsonRpcConfig, RpcBigtableConfig},
         rpc_pubsub_service::PubSubConfig,
     },
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_signer::Signer,
-    solana_streamer::socket::SocketAddrSpace,
-    solana_system_interface::program as system_program,
-    solana_test_validator::*,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_signer::Signer,
+    gorbagana_streamer::socket::SocketAddrSpace,
+    gorbagana_system_interface::program as system_program,
+    gorbagana_test_validator::*,
     std::{
         collections::{HashMap, HashSet},
         fs, io,
@@ -51,7 +51,7 @@ enum Output {
 
 fn main() {
     let default_args = cli::DefaultTestArgs::new();
-    let version = solana_version::version!();
+    let version = gorbagana_version::version!();
     let matches = cli::test_app(version, &default_args).get_matches();
 
     let output = if matches.is_present("quiet") {
@@ -100,7 +100,7 @@ fn main() {
             exit(1);
         })
     }
-    solana_runtime::snapshot_utils::remove_tmp_snapshot_archives(&ledger_path);
+    gorbagana_runtime::snapshot_utils::remove_tmp_snapshot_archives(&ledger_path);
 
     let validator_log_symlink = ledger_path.join("validator.log");
 
@@ -128,16 +128,16 @@ fn main() {
     };
     let _logger_thread = redirect_stderr_to_file(logfile);
 
-    info!("{} {}", crate_name!(), solana_version::version!());
+    info!("{} {}", crate_name!(), gorbagana_version::version!());
     info!("Starting validator with: {:#?}", std::env::args_os());
-    solana_core::validator::report_target_features();
+    gorbagana_core::validator::report_target_features();
 
     // TODO: Ideally test-validator should *only* allow private addresses.
     let socket_addr_space = SocketAddrSpace::new(/*allow_private_addr=*/ true);
     let cli_config = if let Some(config_file) = matches.value_of("config_file") {
-        solana_cli_config::Config::load(config_file).unwrap_or_default()
+        gorbagana_cli_config::Config::load(config_file).unwrap_or_default()
     } else {
-        solana_cli_config::Config::default()
+        gorbagana_cli_config::Config::default()
     };
 
     let cluster_rpc_client = value_t!(matches, "json_rpc_url", String)
@@ -160,19 +160,19 @@ fn main() {
     let slots_per_epoch = value_t!(matches, "slots_per_epoch", Slot).ok();
     let gossip_host = matches.value_of("gossip_host").map(|gossip_host| {
         warn!("--gossip-host is deprecated. Use --bind-address instead.");
-        solana_net_utils::parse_host(gossip_host).unwrap_or_else(|err| {
+        gorbagana_net_utils::parse_host(gossip_host).unwrap_or_else(|err| {
             eprintln!("Failed to parse --gossip-host: {err}");
             exit(1);
         })
     });
     let gossip_port = value_t!(matches, "gossip_port", u16).ok();
     let dynamic_port_range = matches.value_of("dynamic_port_range").map(|port_range| {
-        solana_net_utils::parse_port_range(port_range).unwrap_or_else(|| {
+        gorbagana_net_utils::parse_port_range(port_range).unwrap_or_else(|| {
             eprintln!("Failed to parse --dynamic-port-range");
             exit(1);
         })
     });
-    let bind_address = solana_net_utils::parse_host(
+    let bind_address = gorbagana_net_utils::parse_host(
         matches
             .value_of("bind_address")
             .expect("Bind address has default value"),
@@ -224,7 +224,7 @@ fn main() {
 
             upgradeable_programs_to_load.push(UpgradeableProgramInfo {
                 program_id: address,
-                loader: solana_sdk_ids::bpf_loader_upgradeable::id(),
+                loader: gorbagana_sdk_ids::bpf_loader_upgradeable::id(),
                 upgrade_authority: Pubkey::default(),
                 program_path,
             });
@@ -253,7 +253,7 @@ fn main() {
 
             upgradeable_programs_to_load.push(UpgradeableProgramInfo {
                 program_id: address,
-                loader: solana_sdk_ids::bpf_loader_upgradeable::id(),
+                loader: gorbagana_sdk_ids::bpf_loader_upgradeable::id(),
                 upgrade_authority: upgrade_authority_address,
                 program_path,
             });
@@ -390,7 +390,7 @@ fn main() {
     } else if random_mint {
         println_name_value(
             "\nNotice!",
-            "No wallet available. `solana airdrop` localnet SOL after creating one\n",
+            "No wallet available. `gorbagana airdrop` localnet SOL after creating one\n",
         );
     }
 

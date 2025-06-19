@@ -11,12 +11,12 @@ use {
         stake_account::StakeAccount,
     },
     log::error,
-    solana_account::{state_traits::StateMut, AccountSharedData, ReadableAccount, WritableAccount},
-    solana_accounts_db::stake_rewards::StakeReward,
-    solana_measure::measure_us,
-    solana_pubkey::Pubkey,
-    solana_reward_info::{RewardInfo, RewardType},
-    solana_stake_interface::state::{Delegation, StakeStateV2},
+    gorbagana_account::{state_traits::StateMut, AccountSharedData, ReadableAccount, WritableAccount},
+    gorbagana_accounts_db::stake_rewards::StakeReward,
+    gorbagana_measure::measure_us,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_reward_info::{RewardInfo, RewardType},
+    gorbagana_stake_interface::state::{Delegation, StakeStateV2},
     std::sync::{atomic::Ordering::Relaxed, Arc},
     thiserror::Error,
 };
@@ -313,20 +313,20 @@ mod tests {
             inflation_rewards::points::PointValue,
         },
         rand::Rng,
-        solana_account::from_account,
-        solana_accounts_db::stake_rewards::StakeReward,
-        solana_epoch_schedule::EpochSchedule,
-        solana_hash::Hash,
-        solana_native_token::LAMPORTS_PER_SOL,
-        solana_rent::Rent,
-        solana_reward_info::{RewardInfo, RewardType},
-        solana_stake_interface::{
+        gorbagana_account::from_account,
+        gorbagana_accounts_db::stake_rewards::StakeReward,
+        gorbagana_epoch_schedule::EpochSchedule,
+        gorbagana_hash::Hash,
+        gorbagana_native_token::LAMPORTS_PER_SOL,
+        gorbagana_rent::Rent,
+        gorbagana_reward_info::{RewardInfo, RewardType},
+        gorbagana_stake_interface::{
             stake_flags::StakeFlags,
             state::{Meta, Stake},
         },
-        solana_stake_program::stake_state,
-        solana_sysvar as sysvar,
-        solana_vote_program::vote_state,
+        gorbagana_stake_program::stake_state,
+        gorbagana_sysvar as sysvar,
+        gorbagana_vote_program::vote_state,
         std::sync::Arc,
     };
 
@@ -633,7 +633,7 @@ mod tests {
         let mut stake_account = AccountSharedData::new(
             u64::MAX - stake_reward + 1,
             StakeStateV2::size_of(),
-            &solana_stake_interface::program::id(),
+            &gorbagana_stake_interface::program::id(),
         );
         stake_account
             .set_state(&StakeStateV2::Stake(
@@ -664,7 +664,7 @@ mod tests {
         let mut stake_account = AccountSharedData::new(
             starting_lamports,
             StakeStateV2::size_of(),
-            &solana_stake_interface::program::id(),
+            &gorbagana_stake_interface::program::id(),
         );
         let other_stake = Stake {
             delegation: Delegation {
@@ -694,7 +694,7 @@ mod tests {
         let mut expected_stake_account = AccountSharedData::new(
             expected_lamports,
             StakeStateV2::size_of(),
-            &solana_stake_interface::program::id(),
+            &gorbagana_stake_interface::program::id(),
         );
         expected_stake_account
             .set_state(&StakeStateV2::Stake(

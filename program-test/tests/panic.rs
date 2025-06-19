@@ -1,12 +1,12 @@
 use {
-    solana_account_info::AccountInfo,
-    solana_instruction::{error::InstructionError, Instruction},
-    solana_program_error::ProgramResult,
-    solana_program_test::{processor, ProgramTest},
-    solana_pubkey::Pubkey,
-    solana_signer::Signer,
-    solana_transaction::Transaction,
-    solana_transaction_error::TransactionError,
+    gorbagana_account_info::AccountInfo,
+    gorbagana_instruction::{error::InstructionError, Instruction},
+    gorbagana_program_error::ProgramResult,
+    gorbagana_program_test::{processor, ProgramTest},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signer::Signer,
+    gorbagana_transaction::Transaction,
+    gorbagana_transaction_error::TransactionError,
 };
 
 fn panic(_program_id: &Pubkey, _accounts: &[AccountInfo], _input: &[u8]) -> ProgramResult {

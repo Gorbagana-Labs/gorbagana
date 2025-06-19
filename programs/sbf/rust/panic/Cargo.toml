@@ -1,5 +1,5 @@
 [package]
-name = "solana-sbf-rust-panic"
+name = "gorbagana-sbf-rust-panic"
 version = { workspace = true }
 description = { workspace = true }
 authors = { workspace = true }
@@ -16,11 +16,11 @@ default = ["custom-panic"]
 custom-panic = []
 
 [dependencies]
-solana-account-info = { workspace = true }
-solana-msg = { workspace = true }
-solana-program-entrypoint = { workspace = true }
-solana-program-error = { workspace = true }
-solana-pubkey = { workspace = true }
+gorbagana-account-info = { workspace = true }
+gorbagana-msg = { workspace = true }
+gorbagana-program-entrypoint = { workspace = true }
+gorbagana-program-error = { workspace = true }
+gorbagana-pubkey = { workspace = true }
 
 [lints]
 workspace = true

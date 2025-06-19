@@ -3,9 +3,9 @@ use {
         consensus::{heaviest_subtree_fork_choice::HeaviestSubtreeForkChoice, tree_diff::TreeDiff},
         repair::{repair_service::RepairService, serve_repair::ShredRepairType},
     },
-    solana_clock::Slot,
-    solana_hash::Hash,
-    solana_ledger::{blockstore::Blockstore, blockstore_meta::SlotMeta},
+    gorbagana_clock::Slot,
+    gorbagana_hash::Hash,
+    gorbagana_ledger::{blockstore::Blockstore, blockstore_meta::SlotMeta},
     std::collections::{HashMap, HashSet},
 };
 
@@ -215,8 +215,8 @@ pub mod test {
     use {
         super::*,
         crate::repair::repair_service::sleep_shred_deferment_period,
-        solana_hash::Hash,
-        solana_ledger::{blockstore::Blockstore, get_tmp_ledger_path},
+        gorbagana_hash::Hash,
+        gorbagana_ledger::{blockstore::Blockstore, get_tmp_ledger_path},
         trees::{tr, Tree, TreeWalk},
     };
 
@@ -354,14 +354,14 @@ pub mod test {
                     // `is_orphan == true`
                     .and_then(|parent| blockhashes.get(&parent))
                     .unwrap_or(&starting_hash);
-                let entries = solana_entry::entry::create_ticks(
+                let entries = gorbagana_entry::entry::create_ticks(
                     num_ticks * (std::cmp::max(1, slot - parent.unwrap_or(slot))),
                     0,
                     *parent_hash,
                 );
                 blockhashes.insert(slot, entries.last().unwrap().hash);
 
-                let mut shreds = solana_ledger::blockstore::entries_to_test_shreds(
+                let mut shreds = gorbagana_ledger::blockstore::entries_to_test_shreds(
                     &entries,
                     slot,
                     parent.unwrap_or(slot),

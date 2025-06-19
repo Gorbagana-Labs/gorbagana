@@ -1,4 +1,4 @@
-use {ahash::AHashSet, solana_pubkey::Pubkey, solana_svm_transaction::svm_message::SVMMessage};
+use {ahash::AHashSet, gorbagana_pubkey::Pubkey, gorbagana_svm_transaction::svm_message::SVMMessage};
 
 /// Wrapper struct to accumulate locks for a batch of transactions.
 #[derive(Debug, Default)]
@@ -80,22 +80,22 @@ impl ReadWriteAccountSet {
 mod tests {
     use {
         super::ReadWriteAccountSet,
-        solana_account::AccountSharedData,
-        solana_address_lookup_table_interface::{
+        gorbagana_account::AccountSharedData,
+        gorbagana_address_lookup_table_interface::{
             self as address_lookup_table,
             state::{AddressLookupTable, LookupTableMeta},
         },
-        solana_hash::Hash,
-        solana_keypair::Keypair,
-        solana_ledger::genesis_utils::GenesisConfigInfo,
-        solana_message::{
+        gorbagana_hash::Hash,
+        gorbagana_keypair::Keypair,
+        gorbagana_ledger::genesis_utils::GenesisConfigInfo,
+        gorbagana_message::{
             v0::{self, MessageAddressTableLookup},
             MessageHeader, VersionedMessage,
         },
-        solana_pubkey::Pubkey,
-        solana_runtime::{bank::Bank, bank_forks::BankForks, genesis_utils::create_genesis_config},
-        solana_signer::Signer,
-        solana_transaction::{
+        gorbagana_pubkey::Pubkey,
+        gorbagana_runtime::{bank::Bank, bank_forks::BankForks, genesis_utils::create_genesis_config},
+        gorbagana_signer::Signer,
+        gorbagana_transaction::{
             sanitized::{MessageHash, SanitizedTransaction},
             versioned::VersionedTransaction,
         },

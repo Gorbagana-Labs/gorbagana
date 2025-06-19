@@ -2,13 +2,13 @@ use {
     super::Bank,
     agave_feature_set as feature_set,
     rayon::prelude::*,
-    solana_account::{accounts_equal, AccountSharedData},
-    solana_accounts_db::accounts_db::AccountsDb,
-    solana_hash::Hash,
-    solana_lattice_hash::lt_hash::LtHash,
-    solana_measure::{meas_dur, measure::Measure},
-    solana_pubkey::Pubkey,
-    solana_svm_callback::AccountState,
+    gorbagana_account::{accounts_equal, AccountSharedData},
+    gorbagana_accounts_db::accounts_db::AccountsDb,
+    gorbagana_hash::Hash,
+    gorbagana_lattice_hash::lt_hash::LtHash,
+    gorbagana_measure::{meas_dur, measure::Measure},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_svm_callback::AccountState,
     std::{
         ops::AddAssign,
         sync::atomic::{AtomicU64, Ordering},
@@ -437,20 +437,20 @@ mod tests {
             snapshot_config::SnapshotConfig,
             snapshot_utils,
         },
-        solana_account::{ReadableAccount as _, WritableAccount as _},
-        solana_accounts_db::{
+        gorbagana_account::{ReadableAccount as _, WritableAccount as _},
+        gorbagana_accounts_db::{
             accounts_db::{AccountsDbConfig, DuplicatesLtHash, ACCOUNTS_DB_CONFIG_FOR_TESTING},
             accounts_index::{
                 AccountsIndexConfig, IndexLimitMb, ACCOUNTS_INDEX_CONFIG_FOR_TESTING,
             },
         },
-        solana_feature_gate_interface::{self as feature, Feature},
-        solana_fee_calculator::FeeRateGovernor,
-        solana_genesis_config::{self, GenesisConfig},
-        solana_keypair::Keypair,
-        solana_native_token::LAMPORTS_PER_SOL,
-        solana_pubkey::{self as pubkey, Pubkey},
-        solana_signer::Signer as _,
+        gorbagana_feature_gate_interface::{self as feature, Feature},
+        gorbagana_fee_calculator::FeeRateGovernor,
+        gorbagana_genesis_config::{self, GenesisConfig},
+        gorbagana_keypair::Keypair,
+        gorbagana_native_token::LAMPORTS_PER_SOL,
+        gorbagana_pubkey::{self as pubkey, Pubkey},
+        gorbagana_signer::Signer as _,
         std::{cmp, collections::HashMap, iter, ops::RangeFull, str::FromStr as _, sync::Arc},
         tempfile::TempDir,
         test_case::{test_case, test_matrix},
@@ -478,7 +478,7 @@ mod tests {
     fn genesis_config_with(features: Features) -> (GenesisConfig, Keypair) {
         let mint_lamports = 123_456_789 * LAMPORTS_PER_SOL;
         match features {
-            Features::None => solana_genesis_config::create_genesis_config(mint_lamports),
+            Features::None => gorbagana_genesis_config::create_genesis_config(mint_lamports),
             Features::All => {
                 let info = crate::genesis_utils::create_genesis_config(mint_lamports);
                 (info.genesis_config, info.mint_keypair)
@@ -505,7 +505,7 @@ mod tests {
         let keypair5 = Keypair::new();
 
         let (mut genesis_config, mint_keypair) =
-            solana_genesis_config::create_genesis_config(123_456_789 * LAMPORTS_PER_SOL);
+            gorbagana_genesis_config::create_genesis_config(123_456_789 * LAMPORTS_PER_SOL);
         genesis_config.fee_rate_governor = FeeRateGovernor::new(0, 0);
         let (bank, bank_forks) = Bank::new_with_bank_forks_for_tests(&genesis_config);
         bank.rc

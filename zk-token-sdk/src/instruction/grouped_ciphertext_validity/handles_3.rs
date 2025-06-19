@@ -10,7 +10,7 @@
 //! referred to as the "destination" handle, and the third decryption handle is referred to as the
 //! "auditor" handle.
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use {
     crate::{
         encryption::{
@@ -56,7 +56,7 @@ pub struct GroupedCiphertext3HandlesValidityProofContext {
     pub grouped_ciphertext: pod::GroupedElGamalCiphertext3Handles, // 128 bytes
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl GroupedCiphertext3HandlesValidityProofData {
     pub fn new(
         source_pubkey: &ElGamalPubkey,
@@ -103,7 +103,7 @@ impl ZkProofData<GroupedCiphertext3HandlesValidityProofContext>
         &self.context
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "gorbagana"))]
     fn verify_proof(&self) -> Result<(), ProofVerificationError> {
         let mut transcript = self.context.new_transcript();
 
@@ -134,7 +134,7 @@ impl ZkProofData<GroupedCiphertext3HandlesValidityProofContext>
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl GroupedCiphertext3HandlesValidityProofContext {
     fn new_transcript(&self) -> Transcript {
         let mut transcript = Transcript::new(b"GroupedCiphertext3HandlesValidityProof");

@@ -2,8 +2,8 @@ use {
     crate::blockstore::Blockstore,
     crossbeam_channel::{bounded, unbounded},
     log::*,
-    solana_clock::Slot,
-    solana_measure::measure::Measure,
+    gorbagana_clock::Slot,
+    gorbagana_measure::measure::Measure,
     std::{
         cmp::{max, min},
         collections::HashSet,
@@ -46,7 +46,7 @@ struct BlockstoreLoadStats {
 /// ending_slot]` are found in Blockstore, this value is equal to `ending_slot`.
 pub async fn upload_confirmed_blocks(
     blockstore: Arc<Blockstore>,
-    bigtable: solana_storage_bigtable::LedgerStorage,
+    bigtable: gorbagana_storage_bigtable::LedgerStorage,
     starting_slot: Slot,
     ending_slot: Slot,
     config: ConfirmedBlockUploadConfig,

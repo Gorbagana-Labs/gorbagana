@@ -1,5 +1,5 @@
 syntax = "proto3";
-package org.solana.sealevel.v1;
+package org.gorbagana.sealevel.v1;
 
 // A set of feature flags.
 message FeatureSet {
@@ -28,12 +28,12 @@ message AcctState {
 
   uint64 lamports = 2;
 
-  // Account data is limited to 10 MiB on Solana mainnet as of 2024-Feb.
+  // Account data is limited to 10 MiB on Gorbagana mainnet as of 2024-Feb.
   bytes data = 3;
 
   bool executable = 4;
 
-  // The rent epoch is deprecated on Solana mainnet as of 2024-Feb.
+  // The rent epoch is deprecated on Gorbagana mainnet as of 2024-Feb.
   // If ommitted, implies a value of UINT64_MAX.
   uint64 rent_epoch = 5;
 
@@ -43,7 +43,7 @@ message AcctState {
   // The account address, but derived as a seed address.  Overrides
   // `address` if present.
   // TODO: This is a solfuzz specific extension and is not compliant
-  // with the org.solana.sealevel.v1 API.
+  // with the org.gorbagana.sealevel.v1 API.
   SeedAddress seed_addr = 7;
 }
 

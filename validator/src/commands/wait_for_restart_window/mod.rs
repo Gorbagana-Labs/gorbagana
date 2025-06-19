@@ -6,15 +6,15 @@ use {
     },
     clap::{value_t_or_exit, App, Arg, ArgMatches, SubCommand},
     console::style,
-    solana_clap_utils::{
+    gorbagana_clap_utils::{
         input_parsers::pubkey_of,
         input_validators::{is_parsable, is_pubkey_or_keypair, is_valid_percentage},
     },
-    solana_clock::{Slot, DEFAULT_S_PER_SLOT},
-    solana_commitment_config::CommitmentConfig,
-    solana_pubkey::Pubkey,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_api::config::RpcLeaderScheduleConfig,
+    gorbagana_clock::{Slot, DEFAULT_S_PER_SLOT},
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rpc_client::rpc_client::RpcClient,
+    gorbagana_rpc_client_api::config::RpcLeaderScheduleConfig,
     std::{
         collections::VecDeque,
         path::Path,

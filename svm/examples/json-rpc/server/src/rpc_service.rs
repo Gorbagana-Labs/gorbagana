@@ -6,8 +6,8 @@ use {
         hyper, AccessControlAllowOrigin, CloseHandle, DomainsValidation, ServerBuilder,
     },
     log::*,
-    solana_perf::thread::renice_this_thread,
-    solana_validator_exit::Exit,
+    gorbagana_perf::thread::renice_this_thread,
+    gorbagana_validator_exit::Exit,
     std::{
         net::SocketAddr,
         sync::{atomic::AtomicBool, Arc, RwLock},

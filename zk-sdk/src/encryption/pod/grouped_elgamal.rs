@@ -1,6 +1,6 @@
 //! Plain Old Data types for the Grouped ElGamal encryption scheme.
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use crate::encryption::grouped_elgamal::GroupedElGamalCiphertext;
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
@@ -107,14 +107,14 @@ impl_from_bytes!(
     BYTES_LEN = GROUPED_ELGAMAL_CIPHERTEXT_2_HANDLES
 );
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<GroupedElGamalCiphertext<2>> for PodGroupedElGamalCiphertext2Handles {
     fn from(decoded_ciphertext: GroupedElGamalCiphertext<2>) -> Self {
         Self(decoded_ciphertext.to_bytes().try_into().unwrap())
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TryFrom<PodGroupedElGamalCiphertext2Handles> for GroupedElGamalCiphertext<2> {
     type Error = ElGamalError;
 
@@ -162,14 +162,14 @@ impl_from_bytes!(
     BYTES_LEN = GROUPED_ELGAMAL_CIPHERTEXT_3_HANDLES
 );
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<GroupedElGamalCiphertext<3>> for PodGroupedElGamalCiphertext3Handles {
     fn from(decoded_ciphertext: GroupedElGamalCiphertext<3>) -> Self {
         Self(decoded_ciphertext.to_bytes().try_into().unwrap())
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TryFrom<PodGroupedElGamalCiphertext3Handles> for GroupedElGamalCiphertext<3> {
     type Error = ElGamalError;
 

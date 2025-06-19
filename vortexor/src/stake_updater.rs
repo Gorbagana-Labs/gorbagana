@@ -4,9 +4,9 @@
 use {
     crate::rpc_load_balancer::RpcLoadBalancer,
     log::{info, warn},
-    solana_client::client_error,
-    solana_pubkey::Pubkey,
-    solana_streamer::streamer::StakedNodes,
+    gorbagana_client::client_error,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_streamer::streamer::StakedNodes,
     std::{
         collections::HashMap,
         str::FromStr,

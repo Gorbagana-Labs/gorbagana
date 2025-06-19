@@ -3,17 +3,17 @@
 #![allow(clippy::arithmetic_side_effects)]
 
 use {
-    solana_account_info::{AccountInfo, MAX_PERMITTED_DATA_INCREASE},
-    solana_msg::msg,
-    solana_program::program::invoke,
-    solana_program_error::ProgramResult,
-    solana_pubkey::Pubkey,
-    solana_sbf_rust_realloc_dep::*,
-    solana_system_interface::{instruction as system_instruction, program as system_program},
+    gorbagana_account_info::{AccountInfo, MAX_PERMITTED_DATA_INCREASE},
+    gorbagana_msg::msg,
+    gorbagana_program::program::invoke,
+    gorbagana_program_error::ProgramResult,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_sbf_rust_realloc_dep::*,
+    gorbagana_system_interface::{instruction as system_instruction, program as system_program},
     std::{convert::TryInto, mem},
 };
 
-solana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
+gorbagana_program_entrypoint::entrypoint_no_alloc!(process_instruction);
 fn process_instruction(
     program_id: &Pubkey,
     accounts: &[AccountInfo],

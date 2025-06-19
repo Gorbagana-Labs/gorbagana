@@ -3,17 +3,17 @@ mod tests {
     use {
         crossbeam_channel::{unbounded, Receiver},
         log::*,
-        solana_connection_cache::connection_cache_stats::ConnectionCacheStats,
-        solana_keypair::Keypair,
-        solana_net_utils::bind_to_localhost,
-        solana_packet::PACKET_DATA_SIZE,
-        solana_perf::packet::PacketBatch,
-        solana_quic_client::nonblocking::quic_client::QuicLazyInitializedEndpoint,
-        solana_streamer::{
+        gorbagana_connection_cache::connection_cache_stats::ConnectionCacheStats,
+        gorbagana_keypair::Keypair,
+        gorbagana_net_utils::bind_to_localhost,
+        gorbagana_packet::PACKET_DATA_SIZE,
+        gorbagana_perf::packet::PacketBatch,
+        gorbagana_quic_client::nonblocking::quic_client::QuicLazyInitializedEndpoint,
+        gorbagana_streamer::{
             quic::{QuicServerParams, SpawnServerResult},
             streamer::StakedNodes,
         },
-        solana_tls_utils::{new_dummy_x509_certificate, QuicClientCertificate},
+        gorbagana_tls_utils::{new_dummy_x509_certificate, QuicClientCertificate},
         std::{
             net::{SocketAddr, UdpSocket},
             sync::{
@@ -61,10 +61,10 @@ mod tests {
     #[test]
     fn test_quic_client_multiple_writes() {
         use {
-            solana_connection_cache::client_connection::ClientConnection,
-            solana_quic_client::quic_client::QuicClientConnection,
+            gorbagana_connection_cache::client_connection::ClientConnection,
+            gorbagana_quic_client::quic_client::QuicClientConnection,
         };
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let (sender, receiver) = unbounded();
         let staked_nodes = Arc::new(RwLock::new(StakedNodes::default()));
         let (s, exit, keypair) = server_args();
@@ -72,7 +72,7 @@ mod tests {
             endpoints: _,
             thread: t,
             key_updater: _,
-        } = solana_streamer::quic::spawn_server(
+        } = gorbagana_streamer::quic::spawn_server(
             "solQuicTest",
             "quic_streamer_test",
             s.try_clone().unwrap(),
@@ -141,19 +141,19 @@ mod tests {
     #[tokio::test]
     async fn test_nonblocking_quic_client_multiple_writes() {
         use {
-            solana_connection_cache::nonblocking::client_connection::ClientConnection,
-            solana_quic_client::nonblocking::quic_client::QuicClientConnection,
+            gorbagana_connection_cache::nonblocking::client_connection::ClientConnection,
+            gorbagana_quic_client::nonblocking::quic_client::QuicClientConnection,
         };
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let (sender, receiver) = unbounded();
         let staked_nodes = Arc::new(RwLock::new(StakedNodes::default()));
         let (s, exit, keypair) = server_args();
-        let solana_streamer::nonblocking::quic::SpawnNonBlockingServerResult {
+        let gorbagana_streamer::nonblocking::quic::SpawnNonBlockingServerResult {
             endpoints: _,
             stats: _,
             thread: t,
             max_concurrent_connections: _,
-        } = solana_streamer::nonblocking::quic::spawn_server(
+        } = gorbagana_streamer::nonblocking::quic::spawn_server(
             "quic_streamer_test",
             s.try_clone().unwrap(),
             &keypair,
@@ -197,10 +197,10 @@ mod tests {
         /// In this we demonstrate that the request sender and the response receiver use the
         /// same quic Endpoint, and the same UDP socket.
         use {
-            solana_connection_cache::client_connection::ClientConnection,
-            solana_quic_client::quic_client::QuicClientConnection,
+            gorbagana_connection_cache::client_connection::ClientConnection,
+            gorbagana_quic_client::quic_client::QuicClientConnection,
         };
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         // Request Receiver
         let (sender, receiver) = unbounded();
@@ -210,7 +210,7 @@ mod tests {
             endpoints: request_recv_endpoints,
             thread: request_recv_thread,
             key_updater: _,
-        } = solana_streamer::quic::spawn_server(
+        } = gorbagana_streamer::quic::spawn_server(
             "solQuicTest",
             "quic_streamer_test",
             request_recv_socket.try_clone().unwrap(),
@@ -234,7 +234,7 @@ mod tests {
             endpoints: mut response_recv_endpoints,
             thread: response_recv_thread,
             key_updater: _,
-        } = solana_streamer::quic::spawn_server(
+        } = gorbagana_streamer::quic::spawn_server(
             "solQuicTest",
             "quic_streamer_test",
             response_recv_socket,

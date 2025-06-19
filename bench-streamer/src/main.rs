@@ -3,8 +3,8 @@
 use {
     clap::{crate_description, crate_name, value_t_or_exit, Arg, Command},
     crossbeam_channel::unbounded,
-    solana_net_utils::{bind_to_unspecified, SocketConfig},
-    solana_streamer::{
+    gorbagana_net_utils::{bind_to_unspecified, SocketConfig},
+    gorbagana_streamer::{
         packet::{Packet, PacketBatchRecycler, PinnedPacketBatch, PACKET_DATA_SIZE},
         sendmmsg::batch_send,
         streamer::{receiver, PacketBatchReceiver, StreamerReceiveStats},
@@ -70,7 +70,7 @@ fn sink(exit: Arc<AtomicBool>, rvs: Arc<AtomicUsize>, r: PacketBatchReceiver) ->
 fn main() -> Result<()> {
     let matches = Command::new(crate_name!())
         .about(crate_description!())
-        .version(solana_version::version!())
+        .version(gorbagana_version::version!())
         .arg(
             Arg::new("num-recv-sockets")
                 .long("num-recv-sockets")
@@ -104,7 +104,7 @@ fn main() -> Result<()> {
 
     let port = 0;
     let ip_addr = IpAddr::V4(Ipv4Addr::UNSPECIFIED);
-    let (_port, read_sockets) = solana_net_utils::multi_bind_in_range_with_config(
+    let (_port, read_sockets) = gorbagana_net_utils::multi_bind_in_range_with_config(
         ip_addr,
         (port, port + num_sockets as u16),
         SocketConfig::default().reuseport(true),

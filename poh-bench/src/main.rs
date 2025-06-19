@@ -1,22 +1,22 @@
 #![allow(clippy::arithmetic_side_effects)]
 #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
-use solana_entry::entry::{self, create_ticks, init_poh, EntrySlice, VerifyRecyclers};
+use gorbagana_entry::entry::{self, create_ticks, init_poh, EntrySlice, VerifyRecyclers};
 #[cfg(not(any(target_arch = "x86", target_arch = "x86_64")))]
-use solana_entry::entry::{create_ticks, init_poh, EntrySlice, VerifyRecyclers};
+use gorbagana_entry::entry::{create_ticks, init_poh, EntrySlice, VerifyRecyclers};
 use {
     clap::{crate_description, crate_name, Arg, Command},
-    solana_measure::measure::Measure,
-    solana_perf::perf_libs,
-    solana_rayon_threadlimit::get_max_thread_count,
-    solana_sha256_hasher::hash,
+    gorbagana_measure::measure::Measure,
+    gorbagana_perf::perf_libs,
+    gorbagana_rayon_threadlimit::get_max_thread_count,
+    gorbagana_sha256_hasher::hash,
 };
 
 fn main() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
 
     let matches = Command::new(crate_name!())
         .about(crate_description!())
-        .version(solana_version::version!())
+        .version(gorbagana_version::version!())
         .arg(
             Arg::new("max_num_entries")
                 .long("max-num-entries")

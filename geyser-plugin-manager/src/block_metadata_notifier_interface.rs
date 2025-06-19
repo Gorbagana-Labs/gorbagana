@@ -1,5 +1,5 @@
 use {
-    solana_clock::UnixTimestamp, solana_runtime::bank::KeyedRewardsAndNumPartitions, std::sync::Arc,
+    gorbagana_clock::UnixTimestamp, gorbagana_runtime::bank::KeyedRewardsAndNumPartitions, std::sync::Arc,
 };
 
 /// Interface for notifying block metadata changes

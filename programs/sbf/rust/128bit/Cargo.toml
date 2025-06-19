@@ -1,5 +1,5 @@
 [package]
-name = "solana-sbf-rust-128bit"
+name = "gorbagana-sbf-rust-128bit"
 version = { workspace = true }
 description = { workspace = true }
 authors = { workspace = true }
@@ -12,8 +12,8 @@ edition = { workspace = true }
 crate-type = ["cdylib"]
 
 [dependencies]
-solana-program-entrypoint = { workspace = true }
-solana-sbf-rust-128bit-dep = { workspace = true }
+gorbagana-program-entrypoint = { workspace = true }
+gorbagana-sbf-rust-128bit-dep = { workspace = true }
 
 [lints]
 workspace = true

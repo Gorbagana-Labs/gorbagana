@@ -108,7 +108,7 @@ or
   example:
   scripts/reserve-cratesio-package-name.sh \
     --token <GRIMES_CRATESIO_TOKEN> \
-    lib solana-new-lib-crate
+    lib gorbagana-new-lib-crate
 
   see also: scripts/reserve-cratesio-package-name.sh --help
 "

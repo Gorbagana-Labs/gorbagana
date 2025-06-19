@@ -46,7 +46,7 @@ esac
 
 case $URL in
 stable)
-  URL=http://api.devnet.solana.com
+  URL=http://api.devnet.gorbagana.com
   ;;
 localhost)
   URL=http://localhost:8899
@@ -57,10 +57,10 @@ esac
 
 case $TAG in
 edge|beta)
-  DOWNLOAD_URL=https://release.anza.xyz/"$TAG"/solana-release-$TARGET.tar.bz2
+  DOWNLOAD_URL=https://release.anza.xyz/"$TAG"/gorbagana-release-$TARGET.tar.bz2
   ;;
 *)
-  DOWNLOAD_URL=https://github.com/anza-xyz/agave/releases/download/"$TAG"/solana-release-$TARGET.tar.bz2
+  DOWNLOAD_URL=https://github.com/anza-xyz/agave/releases/download/"$TAG"/gorbagana-release-$TARGET.tar.bz2
   ;;
 esac
 
@@ -69,10 +69,10 @@ PATH="$SOLANA_ROOT"/target/debug:$PATH
 
 set -x
 # shellcheck disable=SC2086 # Don't want to double quote $maybeKeypair
-balance=$(solana $maybeKeypair --url "$URL" balance --lamports)
+balance=$(gorbagana $maybeKeypair --url "$URL" balance --lamports)
 if [[ $balance = "0 lamports" ]]; then
   # shellcheck disable=SC2086 # Don't want to double quote $maybeKeypair
-  solana $maybeKeypair --url "$URL" airdrop 0.000000042
+  gorbagana $maybeKeypair --url "$URL" airdrop 0.000000042
 fi
 
 # shellcheck disable=SC2086 # Don't want to double quote $maybeKeypair

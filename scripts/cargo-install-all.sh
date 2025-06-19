@@ -92,33 +92,33 @@ if [[ $CI_OS_NAME = windows ]]; then
   BINS=(
     cargo-build-sbf
     cargo-test-sbf
-    solana
+    gorbagana
     agave-install
     agave-install-init
-    solana-keygen
-    solana-stake-accounts
-    solana-test-validator
-    solana-tokens
+    gorbagana-keygen
+    gorbagana-stake-accounts
+    gorbagana-test-validator
+    gorbagana-tokens
   )
   DCOU_BINS=()
 else
   ./fetch-perf-libs.sh
 
   BINS=(
-    solana
-    solana-faucet
-    solana-genesis
-    solana-gossip
+    gorbagana
+    gorbagana-faucet
+    gorbagana-genesis
+    gorbagana-gossip
     agave-install
-    solana-keygen
-    solana-log-analyzer
-    solana-net-shaper
+    gorbagana-keygen
+    gorbagana-log-analyzer
+    gorbagana-net-shaper
     agave-validator
     rbpf-cli
   )
   DCOU_BINS=(
     agave-ledger-tool
-    solana-bench-tps
+    gorbagana-bench-tps
   )
 
   # Speed up net.sh deploys by excluding unused binaries
@@ -127,13 +127,13 @@ else
       cargo-build-sbf
       cargo-test-sbf
       agave-install-init
-      solana-stake-accounts
-      solana-test-validator
-      solana-tokens
+      gorbagana-stake-accounts
+      gorbagana-test-validator
+      gorbagana-tokens
       agave-watchtower
     )
     DCOU_BINS+=(
-      solana-dos
+      gorbagana-dos
     )
   fi
 fi
@@ -231,7 +231,7 @@ fi
   set -x
   # deps dir can be empty
   shopt -s nullglob
-  for dep in target/"$buildProfile"/deps/libsolana*program.*; do
+  for dep in target/"$buildProfile"/deps/libgorbagana*program.*; do
     cp -fv "$dep" "$installDir/bin/deps"
   done
 )

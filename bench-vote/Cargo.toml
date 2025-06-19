@@ -1,5 +1,5 @@
 [package]
-name = "solana-bench-vote"
+name = "gorbagana-bench-vote"
 publish = false
 version = { workspace = true }
 authors = { workspace = true }
@@ -15,17 +15,17 @@ targets = ["x86_64-unknown-linux-gnu"]
 bincode = { workspace = true }
 clap = { workspace = true }
 crossbeam-channel = { workspace = true }
-solana-clap-utils = { workspace = true }
-solana-client = { workspace = true }
-solana-connection-cache = { workspace = true }
-solana-hash = { workspace = true }
-solana-keypair = { workspace = true }
-solana-logger = { workspace = true }
-solana-message = { workspace = true }
-solana-net-utils = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-signer = { workspace = true }
-solana-streamer = { workspace = true }
-solana-transaction = { workspace = true }
-solana-version = { workspace = true }
-solana-vote-program = { workspace = true }
+gorbagana-clap-utils = { workspace = true }
+gorbagana-client = { workspace = true }
+gorbagana-connection-cache = { workspace = true }
+gorbagana-hash = { workspace = true }
+gorbagana-keypair = { workspace = true }
+gorbagana-logger = { workspace = true }
+gorbagana-message = { workspace = true }
+gorbagana-net-utils = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-signer = { workspace = true }
+gorbagana-streamer = { workspace = true }
+gorbagana-transaction = { workspace = true }
+gorbagana-version = { workspace = true }
+gorbagana-vote-program = { workspace = true }

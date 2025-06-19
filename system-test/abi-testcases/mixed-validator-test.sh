@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # Basic empirical ABI system test - can validators on all supported versions of
-# Solana talk to each other?
+# Gorbagana talk to each other?
 #
 
 set -e
@@ -19,34 +19,34 @@ otherVersions=(
   edge
 )
 
-solanaInstallDataDir=$PWD/releases
-solanaInstallGlobalOpts=(
-  --data-dir "$solanaInstallDataDir"
-  --config "$solanaInstallDataDir"/config.yml
+gorbaganaInstallDataDir=$PWD/releases
+gorbaganaInstallGlobalOpts=(
+  --data-dir "$gorbaganaInstallDataDir"
+  --config "$gorbaganaInstallDataDir"/config.yml
   --no-modify-path
 )
 
-# Install all the solana versions
+# Install all the gorbagana versions
 bootstrapInstall() {
   declare v=$1
-  if [[ ! -h $solanaInstallDataDir/active_release ]]; then
-    sh "$SOLANA_ROOT"/install/agave-install-init.sh "$v" "${solanaInstallGlobalOpts[@]}"
+  if [[ ! -h $gorbaganaInstallDataDir/active_release ]]; then
+    sh "$SOLANA_ROOT"/install/agave-install-init.sh "$v" "${gorbaganaInstallGlobalOpts[@]}"
   fi
-  export PATH="$solanaInstallDataDir/active_release/bin/:$PATH"
+  export PATH="$gorbaganaInstallDataDir/active_release/bin/:$PATH"
 }
 
 bootstrapInstall "$baselineVersion"
 for v in "${otherVersions[@]}"; do
-  agave-install-init "${solanaInstallGlobalOpts[@]}" "$v"
-  solana -V
+  agave-install-init "${gorbaganaInstallGlobalOpts[@]}" "$v"
+  gorbagana -V
 done
 
 
 ORIGINAL_PATH=$PATH
-solanaInstallUse() {
+gorbaganaInstallUse() {
   declare version=$1
-  echo "--- Now using solana $version"
-  SOLANA_BIN="$solanaInstallDataDir/releases/$version/solana-release/bin"
+  echo "--- Now using gorbagana $version"
+  SOLANA_BIN="$gorbaganaInstallDataDir/releases/$version/gorbagana-release/bin"
   export PATH="$SOLANA_BIN:$ORIGINAL_PATH"
 }
 
@@ -57,14 +57,14 @@ killSession() {
 export RUST_BACKTRACE=1
 
 # Start up the bootstrap validator using the baseline version
-solanaInstallUse "$baselineVersion"
+gorbaganaInstallUse "$baselineVersion"
 echo "--- Starting $baselineVersion bootstrap validator"
 trap 'killSession' INT TERM ERR EXIT
 killSession
 (
   set -x
   if [[ ! -x baseline-run.sh ]]; then
-    curl https://raw.githubusercontent.com/solana-labs/solana/v"$baselineVersion"/run.sh -o baseline-run.sh
+    curl https://raw.githubusercontent.com/gorbagana-labs/gorbagana/v"$baselineVersion"/run.sh -o baseline-run.sh
     chmod +x baseline-run.sh
   fi
   tmux new -s abi -d " \
@@ -80,16 +80,16 @@ killSession
     fi
   done
 
-  solana --url http://127.0.0.1:8899 show-validators
+  gorbagana --url http://127.0.0.1:8899 show-validators
 )
 
 # Ensure all versions can see the bootstrap validator
 for v in "${otherVersions[@]}"; do
-  solanaInstallUse "$v"
+  gorbaganaInstallUse "$v"
   echo "--- Looking for bootstrap validator on gossip"
   (
     set -x
-    "$SOLANA_BIN"/solana-gossip spy \
+    "$SOLANA_BIN"/gorbagana-gossip spy \
       --entrypoint 127.0.0.1:8001 \
       --num-nodes-exactly 1 \
       --timeout 30
@@ -99,13 +99,13 @@ done
 
 # Start a validator for each version and look for it
 #
-# Once https://github.com/solana-labs/solana/issues/7738 is resolved, remove
+# Once https://github.com/gorbagana-labs/gorbagana/issues/7738 is resolved, remove
 # `--no-snapshot-fetch` when starting the validators
 #
 nodeCount=1
 for v in "${otherVersions[@]}"; do
   nodeCount=$((nodeCount + 1))
-  solanaInstallUse "$v"
+  gorbaganaInstallUse "$v"
   # start another validator
   ledger="$ledgerDir"/ledger-"$v"
   rm -rf "$ledger"
@@ -119,7 +119,7 @@ for v in "${otherVersions[@]}"; do
       --entrypoint 127.0.0.1:8001 \
       -o - 2>&1 | tee $logDir/$v.log \
     "
-    "$SOLANA_BIN"/solana-gossip spy \
+    "$SOLANA_BIN"/gorbagana-gossip spy \
       --entrypoint 127.0.0.1:8001 \
       --num-nodes-exactly $nodeCount \
       --timeout 30

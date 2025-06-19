@@ -1,14 +1,14 @@
 use {
-    solana_account_info::AccountInfo,
-    solana_clock::Slot,
-    solana_instruction::{AccountMeta, Instruction},
-    solana_msg::msg,
-    solana_program_error::ProgramResult,
-    solana_program_test::{processor, ProgramTest, ProgramTestContext},
-    solana_pubkey::Pubkey,
-    solana_signer::Signer,
-    solana_sysvar::{last_restart_slot, last_restart_slot::LastRestartSlot, Sysvar},
-    solana_transaction::Transaction,
+    gorbagana_account_info::AccountInfo,
+    gorbagana_clock::Slot,
+    gorbagana_instruction::{AccountMeta, Instruction},
+    gorbagana_msg::msg,
+    gorbagana_program_error::ProgramResult,
+    gorbagana_program_test::{processor, ProgramTest, ProgramTestContext},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signer::Signer,
+    gorbagana_sysvar::{last_restart_slot, last_restart_slot::LastRestartSlot, Sysvar},
+    gorbagana_transaction::Transaction,
 };
 
 // program to check both syscall and sysvar

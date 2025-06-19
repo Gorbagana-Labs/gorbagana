@@ -15,11 +15,11 @@
 //! The protocol guarantees computational soundness (by the hardness of discrete log) and perfect
 //! zero-knowledge in the random oracle model.
 //!
-//! [`ZK Token proof program`]: https://docs.solanalabs.com/runtime/zk-token-proof
+//! [`ZK Token proof program`]: https://docs.gorbaganalabs.com/runtime/zk-token-proof
 
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use {
     crate::{
         encryption::pedersen::{PedersenCommitment, PedersenOpening, G, H},
@@ -65,7 +65,7 @@ pub struct PercentageWithCapProof {
 }
 
 #[allow(non_snake_case, dead_code)]
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl PercentageWithCapProof {
     /// Creates a percentage-with-cap sigma proof.
     ///

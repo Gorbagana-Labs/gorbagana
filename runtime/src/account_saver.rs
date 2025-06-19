@@ -1,17 +1,17 @@
 use {
     core::borrow::Borrow,
-    solana_account::AccountSharedData,
-    solana_pubkey::Pubkey,
-    solana_svm::{
+    gorbagana_account::AccountSharedData,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_svm::{
         rollback_accounts::RollbackAccounts,
         transaction_processing_result::{
             ProcessedTransaction, TransactionProcessingResult,
             TransactionProcessingResultExtensions,
         },
     },
-    solana_svm_transaction::svm_message::SVMMessage,
-    solana_transaction::sanitized::SanitizedTransaction,
-    solana_transaction_context::TransactionAccount,
+    gorbagana_svm_transaction::svm_message::SVMMessage,
+    gorbagana_transaction::sanitized::SanitizedTransaction,
+    gorbagana_transaction_context::TransactionAccount,
 };
 
 // Used to approximate how many accounts will be calculated for storage so that
@@ -177,29 +177,29 @@ fn collect_accounts_for_failed_tx<'a, T: SVMMessage>(
 mod tests {
     use {
         super::*,
-        solana_account::{AccountSharedData, ReadableAccount},
-        solana_fee_structure::FeeDetails,
-        solana_hash::Hash,
-        solana_instruction::error::InstructionError,
-        solana_keypair::{keypair_from_seed, Keypair},
-        solana_message::{compiled_instruction::CompiledInstruction, Message},
-        solana_nonce::{
+        gorbagana_account::{AccountSharedData, ReadableAccount},
+        gorbagana_fee_structure::FeeDetails,
+        gorbagana_hash::Hash,
+        gorbagana_instruction::error::InstructionError,
+        gorbagana_keypair::{keypair_from_seed, Keypair},
+        gorbagana_message::{compiled_instruction::CompiledInstruction, Message},
+        gorbagana_nonce::{
             state::{Data as NonceData, DurableNonce, State as NonceState},
             versions::Versions as NonceVersions,
         },
-        solana_nonce_account as nonce_account,
-        solana_program_runtime::execution_budget::SVMTransactionExecutionBudget,
-        solana_rent_debits::RentDebits,
-        solana_sdk_ids::native_loader,
-        solana_signer::{signers::Signers, Signer},
-        solana_svm::{
+        gorbagana_nonce_account as nonce_account,
+        gorbagana_program_runtime::execution_budget::SVMTransactionExecutionBudget,
+        gorbagana_rent_debits::RentDebits,
+        gorbagana_sdk_ids::native_loader,
+        gorbagana_signer::{signers::Signers, Signer},
+        gorbagana_svm::{
             account_loader::{FeesOnlyTransaction, LoadedTransaction},
             nonce_info::NonceInfo,
             transaction_execution_result::{ExecutedTransaction, TransactionExecutionDetails},
         },
-        solana_system_interface::{instruction as system_instruction, program as system_program},
-        solana_transaction::{sanitized::SanitizedTransaction, Transaction},
-        solana_transaction_error::{TransactionError, TransactionResult as Result},
+        gorbagana_system_interface::{instruction as system_instruction, program as system_program},
+        gorbagana_transaction::{sanitized::SanitizedTransaction, Transaction},
+        gorbagana_transaction_error::{TransactionError, TransactionResult as Result},
         std::collections::HashMap,
     };
 
@@ -239,7 +239,7 @@ mod tests {
     fn test_collect_accounts_to_store() {
         let keypair0 = Keypair::new();
         let keypair1 = Keypair::new();
-        let pubkey = solana_pubkey::new_rand();
+        let pubkey = gorbagana_pubkey::new_rand();
         let account0 = AccountSharedData::new(1, 0, &Pubkey::default());
         let account1 = AccountSharedData::new(2, 0, &Pubkey::default());
         let account2 = AccountSharedData::new(3, 0, &Pubkey::default());

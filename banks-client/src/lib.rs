@@ -7,26 +7,26 @@
 
 pub use {
     crate::error::BanksClientError,
-    solana_banks_interface::{BanksClient as TarpcClient, TransactionStatus},
+    gorbagana_banks_interface::{BanksClient as TarpcClient, TransactionStatus},
 };
 use {
     borsh::BorshDeserialize,
     futures::future::join_all,
-    solana_account::{from_account, Account},
-    solana_banks_interface::{
+    gorbagana_account::{from_account, Account},
+    gorbagana_banks_interface::{
         BanksRequest, BanksResponse, BanksTransactionResultWithMetadata,
         BanksTransactionResultWithSimulation,
     },
-    solana_clock::Slot,
-    solana_commitment_config::CommitmentLevel,
-    solana_hash::Hash,
-    solana_message::Message,
-    solana_program_pack::Pack,
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
-    solana_signature::Signature,
-    solana_sysvar::Sysvar,
-    solana_transaction::versioned::VersionedTransaction,
+    gorbagana_clock::Slot,
+    gorbagana_commitment_config::CommitmentLevel,
+    gorbagana_hash::Hash,
+    gorbagana_message::Message,
+    gorbagana_program_pack::Pack,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent::Rent,
+    gorbagana_signature::Signature,
+    gorbagana_sysvar::Sysvar,
+    gorbagana_transaction::versioned::VersionedTransaction,
     tarpc::{
         client::{self, NewClient, RequestDispatch},
         context::{self, Context},
@@ -40,7 +40,7 @@ use {
 mod error;
 
 mod transaction {
-    pub use solana_transaction_error::TransactionResult as Result;
+    pub use gorbagana_transaction_error::TransactionResult as Result;
 }
 
 // This exists only for backward compatibility
@@ -532,14 +532,14 @@ pub async fn start_tcp_client<T: ToSocketAddrs>(addr: T) -> Result<BanksClient, 
 mod tests {
     use {
         super::*,
-        solana_banks_server::banks_server::start_local_server,
-        solana_runtime::{
+        gorbagana_banks_server::banks_server::start_local_server,
+        gorbagana_runtime::{
             bank::Bank, bank_forks::BankForks, commitment::BlockCommitmentCache,
             genesis_utils::create_genesis_config,
         },
-        solana_signer::Signer,
-        solana_system_interface::instruction as system_instruction,
-        solana_transaction::Transaction,
+        gorbagana_signer::Signer,
+        gorbagana_system_interface::instruction as system_instruction,
+        gorbagana_transaction::Transaction,
         std::sync::{Arc, RwLock},
         tarpc::transport,
         tokio::{
@@ -569,7 +569,7 @@ mod tests {
         ));
         let bank_forks = BankForks::new_rw_arc(bank);
 
-        let bob_pubkey = solana_pubkey::new_rand();
+        let bob_pubkey = gorbagana_pubkey::new_rand();
         let mint_pubkey = genesis.mint_keypair.pubkey();
         let instruction = system_instruction::transfer(&mint_pubkey, &bob_pubkey, 1);
         let message = Message::new(&[instruction], Some(&mint_pubkey));
@@ -609,7 +609,7 @@ mod tests {
         let bank_forks = BankForks::new_rw_arc(bank);
 
         let mint_pubkey = &genesis.mint_keypair.pubkey();
-        let bob_pubkey = solana_pubkey::new_rand();
+        let bob_pubkey = gorbagana_pubkey::new_rand();
         let instruction = system_instruction::transfer(mint_pubkey, &bob_pubkey, 1);
         let message = Message::new(&[instruction], Some(mint_pubkey));
 

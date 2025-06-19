@@ -8,9 +8,9 @@ use {
         DataShredHeader, Error, ShredCommonHeader, ShredFlags, ShredType, ShredVariant, SignedData,
         MAX_DATA_SHREDS_PER_SLOT,
     },
-    solana_clock::Slot,
-    solana_hash::Hash,
-    solana_signature::Signature,
+    gorbagana_clock::Slot,
+    gorbagana_hash::Hash,
+    gorbagana_signature::Signature,
 };
 
 #[derive(Clone, Debug, Eq, PartialEq)]

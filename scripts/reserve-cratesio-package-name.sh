@@ -12,7 +12,7 @@ USAGE:
 
 FLAGS:
         --help                Display this help message
-        --no-prefix           Do not require \`agave-\` or \`solana-\` prefix on PACKAGE_NAME
+        --no-prefix           Do not require \`agave-\` or \`gorbagana-\` prefix on PACKAGE_NAME
         --publish             Upload the reserved package. Without this flag, a
                               dry-run is performed
 
@@ -89,9 +89,9 @@ if ! [[ "${package_name}" =~ ^[a-zA-Z0-9_-]{1,64} ]]; then
   exit 1
 fi
 
-if ${require_prefix} && ! [[ "${package_name}" =~ ^(agave|solana)- ]]; then
+if ${require_prefix} && ! [[ "${package_name}" =~ ^(agave|gorbagana)- ]]; then
   # shellcheck disable=SC2016 # backticks are not a command here
-  echo 'error: PACKAGE_NAME MUST start with `agave-` or `solana-`' 1>&2
+  echo 'error: PACKAGE_NAME MUST start with `agave-` or `gorbagana-`' 1>&2
   display_help
   exit 1
 fi

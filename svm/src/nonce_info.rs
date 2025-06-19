@@ -1,14 +1,14 @@
 #[cfg(feature = "dev-context-only-utils")]
 use {
     qualifier_attr::qualifiers,
-    solana_account::state_traits::StateMut,
-    solana_nonce::{
+    gorbagana_account::state_traits::StateMut,
+    gorbagana_nonce::{
         state::{DurableNonce, State as NonceState},
         versions::Versions as NonceVersions,
     },
     thiserror::Error,
 };
-use {solana_account::AccountSharedData, solana_pubkey::Pubkey};
+use {gorbagana_account::AccountSharedData, gorbagana_pubkey::Pubkey};
 
 /// Holds limited nonce info available during transaction checks
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
@@ -68,12 +68,12 @@ impl NonceInfo {
 mod tests {
     use {
         super::*,
-        solana_hash::Hash,
-        solana_nonce::{
+        gorbagana_hash::Hash,
+        gorbagana_nonce::{
             state::{Data as NonceData, DurableNonce, State as NonceState},
             versions::Versions as NonceVersions,
         },
-        solana_sdk_ids::system_program,
+        gorbagana_sdk_ids::system_program,
     };
 
     fn create_nonce_account(state: NonceState) -> AccountSharedData {

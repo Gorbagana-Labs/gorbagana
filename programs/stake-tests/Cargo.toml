@@ -1,8 +1,8 @@
 # This package only exists to avoid circular dependencies during cargo publish:
-# solana-program-test <--> solana-stake-program
+# gorbagana-program-test <--> gorbagana-stake-program
 
 [package]
-name = "solana-stake-program-tests"
+name = "gorbagana-stake-program-tests"
 publish = false
 version = { workspace = true }
 authors = { workspace = true }
@@ -18,17 +18,17 @@ targets = ["x86_64-unknown-linux-gnu"]
 agave-feature-set = { workspace = true }
 assert_matches = { workspace = true }
 bincode = { workspace = true }
-solana-account = { workspace = true }
-solana-instruction = { workspace = true }
-solana-keypair = { workspace = true }
-solana-program-error = { workspace = true }
-solana-program-test = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-signer = { workspace = true }
-solana-stake-interface = { workspace = true }
-solana-system-interface = { workspace = true }
-solana-sysvar = { workspace = true }
-solana-transaction = { workspace = true }
-solana-transaction-error = { workspace = true }
-solana-vote-program = { workspace = true }
+gorbagana-account = { workspace = true }
+gorbagana-instruction = { workspace = true }
+gorbagana-keypair = { workspace = true }
+gorbagana-program-error = { workspace = true }
+gorbagana-program-test = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-signer = { workspace = true }
+gorbagana-stake-interface = { workspace = true }
+gorbagana-system-interface = { workspace = true }
+gorbagana-sysvar = { workspace = true }
+gorbagana-transaction = { workspace = true }
+gorbagana-transaction-error = { workspace = true }
+gorbagana-vote-program = { workspace = true }
 test-case = { workspace = true }

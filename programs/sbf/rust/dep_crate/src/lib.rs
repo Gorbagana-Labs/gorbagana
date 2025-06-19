@@ -2,7 +2,7 @@
 
 use {
     byteorder::{ByteOrder, LittleEndian},
-    solana_program_entrypoint::SUCCESS,
+    gorbagana_program_entrypoint::SUCCESS,
 };
 
 #[no_mangle]

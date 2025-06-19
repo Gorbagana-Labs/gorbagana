@@ -1,9 +1,9 @@
 use {
-    solana_clock::Slot,
-    solana_hash::Hash,
-    solana_ledger::blockstore::Blockstore,
-    solana_pubkey::Pubkey,
-    solana_time_utils::timestamp,
+    gorbagana_clock::Slot,
+    gorbagana_hash::Hash,
+    gorbagana_ledger::blockstore::Blockstore,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_time_utils::timestamp,
     std::{
         collections::HashMap,
         net::SocketAddr,
@@ -532,7 +532,7 @@ pub mod tests {
     use {
         super::*,
         rand::{self, seq::SliceRandom, thread_rng},
-        solana_ledger::get_tmp_ledger_path_auto_delete,
+        gorbagana_ledger::get_tmp_ledger_path_auto_delete,
         std::{collections::BTreeMap, net::IpAddr},
         tempfile::TempDir,
         trees::tr,

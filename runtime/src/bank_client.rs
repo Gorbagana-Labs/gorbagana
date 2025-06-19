@@ -1,22 +1,22 @@
 use {
     crate::bank::Bank,
     crossbeam_channel::{unbounded, Receiver, Sender},
-    solana_account::Account,
-    solana_client_traits::{AsyncClient, Client, SyncClient},
-    solana_commitment_config::CommitmentConfig,
-    solana_epoch_info::EpochInfo,
-    solana_hash::Hash,
-    solana_instruction::Instruction,
-    solana_keypair::Keypair,
-    solana_message::{Message, SanitizedMessage},
-    solana_pubkey::Pubkey,
-    solana_signature::Signature,
-    solana_signer::{signers::Signers, Signer},
-    solana_system_interface::instruction as system_instruction,
-    solana_sysvar::Sysvar,
-    solana_sysvar_id::SysvarId,
-    solana_transaction::{versioned::VersionedTransaction, Transaction},
-    solana_transaction_error::{TransportError, TransportResult as Result},
+    gorbagana_account::Account,
+    gorbagana_client_traits::{AsyncClient, Client, SyncClient},
+    gorbagana_commitment_config::CommitmentConfig,
+    gorbagana_epoch_info::EpochInfo,
+    gorbagana_hash::Hash,
+    gorbagana_instruction::Instruction,
+    gorbagana_keypair::Keypair,
+    gorbagana_message::{Message, SanitizedMessage},
+    gorbagana_pubkey::Pubkey,
+    gorbagana_signature::Signature,
+    gorbagana_signer::{signers::Signers, Signer},
+    gorbagana_system_interface::instruction as system_instruction,
+    gorbagana_sysvar::Sysvar,
+    gorbagana_sysvar_id::SysvarId,
+    gorbagana_transaction::{versioned::VersionedTransaction, Transaction},
+    gorbagana_transaction_error::{TransportError, TransportResult as Result},
     std::{
         io,
         sync::Arc,
@@ -25,10 +25,10 @@ use {
     },
 };
 mod transaction {
-    pub use solana_transaction_error::TransactionResult as Result;
+    pub use gorbagana_transaction_error::TransactionResult as Result;
 }
 #[cfg(feature = "dev-context-only-utils")]
-use {crate::bank_forks::BankForks, solana_clock as clock, std::sync::RwLock};
+use {crate::bank_forks::BankForks, gorbagana_clock as clock, std::sync::RwLock};
 
 pub struct BankClient {
     bank: Arc<Bank>,
@@ -161,7 +161,7 @@ impl SyncClient for BankClient {
         signature: &Signature,
         min_confirmed_blocks: usize,
     ) -> Result<usize> {
-        // https://github.com/solana-labs/solana/issues/7199
+        // https://github.com/gorbagana-labs/gorbagana/issues/7199
         assert_eq!(min_confirmed_blocks, 1, "BankClient cannot observe the passage of multiple blocks, so min_confirmed_blocks must be 1");
         let now = Instant::now();
         let confirmed_blocks;
@@ -301,8 +301,8 @@ impl BankClient {
 #[cfg(test)]
 mod tests {
     use {
-        super::*, solana_genesis_config::create_genesis_config, solana_instruction::AccountMeta,
-        solana_native_token::sol_to_lamports,
+        super::*, gorbagana_genesis_config::create_genesis_config, gorbagana_instruction::AccountMeta,
+        gorbagana_native_token::sol_to_lamports,
     };
 
     #[test]
@@ -317,7 +317,7 @@ mod tests {
         let amount = genesis_config.rent.minimum_balance(0);
 
         // Create 2-2 Multisig Transfer instruction.
-        let bob_pubkey = solana_pubkey::new_rand();
+        let bob_pubkey = gorbagana_pubkey::new_rand();
         let mut transfer_instruction =
             system_instruction::transfer(&john_pubkey, &bob_pubkey, amount);
         transfer_instruction

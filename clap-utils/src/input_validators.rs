@@ -4,11 +4,11 @@ use {
         keypair::{parse_signer_source, SignerSourceKind, ASK_KEYWORD},
     },
     chrono::DateTime,
-    solana_clock::{Epoch, Slot},
-    solana_hash::Hash,
-    solana_keypair::read_keypair_file,
-    solana_pubkey::{Pubkey, MAX_SEED_LEN},
-    solana_signature::Signature,
+    gorbagana_clock::{Epoch, Slot},
+    gorbagana_hash::Hash,
+    gorbagana_keypair::read_keypair_file,
+    gorbagana_pubkey::{Pubkey, MAX_SEED_LEN},
+    gorbagana_signature::Signature,
     std::{fmt::Display, ops::RangeBounds, str::FromStr},
 };
 
@@ -211,9 +211,9 @@ where
 
 pub fn normalize_to_url_if_moniker<T: AsRef<str>>(url_or_moniker: T) -> String {
     match url_or_moniker.as_ref() {
-        "m" | "mainnet-beta" => "https://api.mainnet-beta.solana.com",
-        "t" | "testnet" => "https://api.testnet.solana.com",
-        "d" | "devnet" => "https://api.devnet.solana.com",
+        "m" | "mainnet-beta" => "https://api.mainnet-beta.gorbagana.com",
+        "t" | "testnet" => "https://api.testnet.gorbagana.com",
+        "d" | "devnet" => "https://api.devnet.gorbagana.com",
         "l" | "localhost" => "http://localhost:8899",
         url => url,
     }

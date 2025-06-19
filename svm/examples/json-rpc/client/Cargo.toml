@@ -1,6 +1,6 @@
 [package]
 name = "json-rpc-client"
-description = "Reference example using Solana SVM API for RPC API"
+description = "Reference example using Gorbagana SVM API for RPC API"
 version = { workspace = true }
 edition = { workspace = true }
 publish = false
@@ -13,13 +13,13 @@ frozen-abi = []
 borsh = { workspace = true }
 clap = { workspace = true }
 home = { workspace = true }
-solana-client = { workspace = true }
-solana-commitment-config = { workspace = true }
-solana-instruction = { workspace = true }
-solana-keypair = { workspace = true }
-solana-message = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-signer = { workspace = true }
-solana-transaction = { workspace = true }
+gorbagana-client = { workspace = true }
+gorbagana-commitment-config = { workspace = true }
+gorbagana-instruction = { workspace = true }
+gorbagana-keypair = { workspace = true }
+gorbagana-message = { workspace = true }
+gorbagana-pubkey = { workspace = true }
+gorbagana-signer = { workspace = true }
+gorbagana-transaction = { workspace = true }
 thiserror = { workspace = true }
 yaml-rust = { workspace = true }

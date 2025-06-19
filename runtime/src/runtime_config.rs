@@ -1,7 +1,7 @@
-use solana_compute_budget::compute_budget::ComputeBudget;
+use gorbagana_compute_budget::compute_budget::ComputeBudget;
 
 #[cfg(feature = "frozen-abi")]
-impl ::solana_frozen_abi::abi_example::AbiExample for RuntimeConfig {
+impl ::gorbagana_frozen_abi::abi_example::AbiExample for RuntimeConfig {
     fn example() -> Self {
         // RuntimeConfig is not Serialize so just rely on Default.
         RuntimeConfig::default()

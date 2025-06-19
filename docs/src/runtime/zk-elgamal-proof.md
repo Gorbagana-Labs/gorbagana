@@ -1,9 +1,9 @@
 ---
-title: Solana ZK ElGamal Proof Program
+title: Gorbagana ZK ElGamal Proof Program
 pagination_label: Native ZK ElGamal Proof Program
 sidebar_label: ZK ElGamal Proof Program
 ---
-The native Solana ZK ElGamal Proof program verifies a number of zero-knowledge
+The native Gorbagana ZK ElGamal Proof program verifies a number of zero-knowledge
 proofs that are tailored to work with Pedersen commitments and ElGamal
 encryption over the elliptic curve
 [curve25519](https://www.rfc-editor.org/rfc/rfc7748#section-4.1). The proof
@@ -38,10 +38,10 @@ cannot change the original value that is contained in a commitment.
 Interested readers can refer to the following resources for a more in-depth
 treatment of Pedersen commitment and the (twisted) ElGamal encryption schemes.
 
-- [Notes](https://github.com/solana-labs/solana/blob/master/docs/src/runtime/zk-docs/twisted_elgamal.pdf)
+- [Notes](https://github.com/gorbagana-labs/gorbagana/blob/master/docs/src/runtime/zk-docs/twisted_elgamal.pdf)
   on the twisted ElGamal encryption
 - A technical
-  [overview](https://github.com/solana-program/token-2022/blob/main/zk-token-protocol-paper/part1.pdf)
+  [overview](https://github.com/gorbagana-program/token-2022/blob/main/zk-token-protocol-paper/part1.pdf)
   of the SPL Token 2022 confidential extension
 - Pretty Good Confidentiality [research paper](https://eprint.iacr.org/2019/319)
 
@@ -75,7 +75,7 @@ The ZK Token proof program processes a proof instruction in two steps:
 
 The simplest way to use a proof instruction is to execute it without producing a
 context state account. In this case, the proof instruction can be included as
-part of a larger Solana transaction that contains instructions of other Solana
+part of a larger Gorbagana transaction that contains instructions of other Gorbagana
 programs. Programs should directly access the context data from the proof
 instruction data and use it in its program logic.
 

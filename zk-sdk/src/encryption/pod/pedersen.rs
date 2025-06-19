@@ -2,7 +2,7 @@
 
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 use {
     crate::{encryption::pedersen::PedersenCommitment, errors::ElGamalError},
     curve25519_dalek::ristretto::CompressedRistretto,
@@ -32,7 +32,7 @@ impl fmt::Debug for PodPedersenCommitment {
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<PedersenCommitment> for PodPedersenCommitment {
     fn from(decoded_commitment: PedersenCommitment) -> Self {
         Self(decoded_commitment.to_bytes())
@@ -57,14 +57,14 @@ impl_from_bytes!(
 );
 
 // For proof verification, interpret pod::PedersenCommitment directly as CompressedRistretto
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl From<PodPedersenCommitment> for CompressedRistretto {
     fn from(pod_commitment: PodPedersenCommitment) -> Self {
         Self(pod_commitment.0)
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "gorbagana"))]
 impl TryFrom<PodPedersenCommitment> for PedersenCommitment {
     type Error = ElGamalError;
 

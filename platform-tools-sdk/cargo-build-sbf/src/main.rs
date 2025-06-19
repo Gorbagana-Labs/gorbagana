@@ -11,7 +11,7 @@ use {
     clap::{crate_description, crate_name, crate_version, Arg},
     log::*,
     regex::Regex,
-    solana_file_download::download_file,
+    gorbagana_file_download::download_file,
     std::{
         borrow::Cow,
         env,
@@ -116,10 +116,10 @@ fn home_dir() -> PathBuf {
 }
 
 fn find_installed_platform_tools() -> Vec<String> {
-    let solana = home_dir().join(".cache").join("solana");
+    let gorbagana = home_dir().join(".cache").join("gorbagana");
     let package = "platform-tools";
 
-    if let Ok(dir) = std::fs::read_dir(solana) {
+    if let Ok(dir) = std::fs::read_dir(gorbagana) {
         dir.filter_map(|e| match e {
             Err(_) => None,
             Ok(e) => {
@@ -223,7 +223,7 @@ fn validate_platform_tools_version(requested_version: &str, builtin_version: &st
 fn make_platform_tools_path_for_version(package: &str, version: &str) -> PathBuf {
     home_dir()
         .join(".cache")
-        .join("solana")
+        .join("gorbagana")
         .join(version)
         .join(package)
 }
@@ -266,7 +266,7 @@ fn install_if_missing(
         fs::remove_dir(target_path).map_err(|err| err.to_string())?;
     }
 
-    // Check whether the package is already in ~/.cache/solana.
+    // Check whether the package is already in ~/.cache/gorbagana.
     // Download it and place in the proper location if not found.
     if !target_path.is_dir()
         && !target_path
@@ -340,8 +340,8 @@ fn corrupted_toolchain(config: &Config) -> bool {
         || !binaries.join("cargo").try_exists().unwrap_or(false)
 }
 
-// check whether custom solana toolchain is linked, and link it if it is not.
-fn link_solana_toolchain(config: &Config) {
+// check whether custom gorbagana toolchain is linked, and link it if it is not.
+fn link_gorbagana_toolchain(config: &Config) {
     let toolchain_path = config
         .sbf_sdk
         .join("dependencies")
@@ -359,12 +359,12 @@ fn link_solana_toolchain(config: &Config) {
     }
     let mut do_link = true;
     for line in rustup_output.lines() {
-        if line.starts_with("solana") {
+        if line.starts_with("gorbagana") {
             let mut it = line.split_whitespace();
             let _ = it.next();
             let path = it.next();
             if path.unwrap() != toolchain_path.to_str().unwrap() {
-                let rustup_args = vec!["toolchain", "uninstall", "solana"];
+                let rustup_args = vec!["toolchain", "uninstall", "gorbagana"];
                 let output = spawn(
                     &rustup,
                     rustup_args,
@@ -383,7 +383,7 @@ fn link_solana_toolchain(config: &Config) {
         let rustup_args = vec![
             "toolchain",
             "link",
-            "solana",
+            "gorbagana",
             toolchain_path.to_str().unwrap(),
         ];
         let output = spawn(
@@ -403,8 +403,8 @@ fn install_tools(
     metadata: &cargo_metadata::Metadata,
 ) {
     let platform_tools_version = config.platform_tools_version.unwrap_or_else(|| {
-        let workspace_tools_version = metadata.workspace_metadata.get("solana").and_then(|v| v.get("tools-version")).and_then(|v| v.as_str());
-        let package_tools_version = package.map(|p| p.metadata.get("solana").and_then(|v| v.get("tools-version")).and_then(|v| v.as_str())).unwrap_or(None);
+        let workspace_tools_version = metadata.workspace_metadata.get("gorbagana").and_then(|v| v.get("tools-version")).and_then(|v| v.as_str());
+        let package_tools_version = package.map(|p| p.metadata.get("gorbagana").and_then(|v| v.get("tools-version")).and_then(|v| v.as_str())).unwrap_or(None);
         match (workspace_tools_version, package_tools_version) {
             (Some(workspace_version), Some(package_version)) => {
                 if workspace_version != package_version {
@@ -466,16 +466,16 @@ fn install_tools(
 
     if config.no_rustup_override {
         let target_triple = rust_target_triple(config);
-        check_solana_target_installed(&target_triple);
+        check_gorbagana_target_installed(&target_triple);
     } else {
-        link_solana_toolchain(config);
+        link_gorbagana_toolchain(config);
         // RUSTC variable overrides cargo +<toolchain> mechanism of
         // selecting the rust compiler and makes cargo run a rust compiler
-        // other than the one linked in Solana toolchain. We have to prevent
+        // other than the one linked in Gorbagana toolchain. We have to prevent
         // this by removing RUSTC from the child process environment.
         if env::var("RUSTC").is_ok() {
             warn!(
-                "Removed RUSTC from cargo environment, because it overrides +solana cargo command line option."
+                "Removed RUSTC from cargo environment, because it overrides +gorbagana cargo command line option."
             );
             env::remove_var("RUSTC")
         }
@@ -507,7 +507,7 @@ fn prepare_environment(
 fn invoke_cargo(config: &Config) {
     let target_triple = rust_target_triple(config);
 
-    info!("Solana SDK: {}", config.sbf_sdk.display());
+    info!("Gorbagana SDK: {}", config.sbf_sdk.display());
     if config.no_default_features {
         info!("No default features");
     }
@@ -517,7 +517,7 @@ fn invoke_cargo(config: &Config) {
 
     if corrupted_toolchain(config) {
         error!(
-            "The Solana toolchain is corrupted. Please, run cargo-build-sbf with the \
+            "The Gorbagana toolchain is corrupted. Please, run cargo-build-sbf with the \
         --force-tools-install argument to fix it."
         );
         exit(1);
@@ -579,7 +579,7 @@ fn invoke_cargo(config: &Config) {
     let cargo_build = PathBuf::from("cargo");
     let mut cargo_build_args = vec![];
     if !config.no_rustup_override {
-        cargo_build_args.push("+solana");
+        cargo_build_args.push("+gorbagana");
     };
 
     cargo_build_args.append(&mut vec!["build", "--release", "--target", &target_triple]);
@@ -613,12 +613,12 @@ fn invoke_cargo(config: &Config) {
 }
 
 // allow user to set proper `rustc` into RUSTC or into PATH
-fn check_solana_target_installed(target: &str) {
+fn check_gorbagana_target_installed(target: &str) {
     let rustc = env::var("RUSTC").unwrap_or("rustc".to_owned());
     let rustc = PathBuf::from(rustc);
     let output = spawn(&rustc, ["--print", "target-list"], false);
     if !output.contains(target) {
-        error!("Provided {:?} does not have {} target. The Solana rustc must be available in $PATH or the $RUSTC environment variable for the build to succeed.", rustc, target);
+        error!("Provided {:?} does not have {} target. The Gorbagana rustc must be available in $PATH or the $RUSTC environment variable for the build to succeed.", rustc, target);
         exit(1);
     }
 }
@@ -664,7 +664,7 @@ fn generate_program_name(package: &cargo_metadata::Package) -> Option<String> {
     }
 }
 
-fn build_solana(config: Config, manifest_path: Option<PathBuf>) {
+fn build_gorbagana(config: Config, manifest_path: Option<PathBuf>) {
     let mut metadata_command = cargo_metadata::MetadataCommand::new();
     if let Some(manifest_path) = manifest_path {
         metadata_command.manifest_path(manifest_path);
@@ -718,7 +718,7 @@ fn build_solana(config: Config, manifest_path: Option<PathBuf>) {
 }
 
 fn main() {
-    solana_logger::setup();
+    gorbagana_logger::setup();
     let default_config = Config::default();
     let default_sbf_sdk = format!("{}", default_config.sbf_sdk.display());
 
@@ -758,7 +758,7 @@ fn main() {
                 .value_name("PATH")
                 .takes_value(true)
                 .default_value(&default_sbf_sdk)
-                .help("Path to the Solana SBF SDK"),
+                .help("Path to the Gorbagana SBF SDK"),
         )
         .arg(
             Arg::new("cargo_args")
@@ -813,7 +813,7 @@ fn main() {
                 .long("no-rustup-override")
                 .takes_value(false)
                 .conflicts_with("force_tools_install")
-                .help("Do not use rustup to manage the toolchain. By default, cargo-build-sbf invokes rustup to find the Solana rustc using a `+solana` toolchain override. This flag disables that behavior."),
+                .help("Do not use rustup to manage the toolchain. By default, cargo-build-sbf invokes rustup to find the Gorbagana rustc using a `+gorbagana` toolchain override. This flag disables that behavior."),
         )
         .arg(
             Arg::new("generate_child_script_on_failure")
@@ -862,7 +862,7 @@ fn main() {
                 .long("workspace")
                 .takes_value(false)
                 .alias("all")
-                .help("Build all Solana packages in the workspace"),
+                .help("Build all Gorbagana packages in the workspace"),
         )
         .arg(
             Arg::new("jobs")
@@ -933,7 +933,7 @@ fn main() {
         target_directory,
         sbf_sdk: fs::canonicalize(&sbf_sdk).unwrap_or_else(|err| {
             error!(
-                "Solana SDK path does not exist: {}: {}",
+                "Gorbagana SDK path does not exist: {}: {}",
                 sbf_sdk.display(),
                 err
             );
@@ -971,5 +971,5 @@ fn main() {
         debug!("{:?}", config);
         debug!("manifest_path: {:?}", manifest_path);
     }
-    build_solana(config, manifest_path);
+    build_gorbagana(config, manifest_path);
 }

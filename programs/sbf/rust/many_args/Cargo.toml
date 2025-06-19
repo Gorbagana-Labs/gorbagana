@@ -1,5 +1,5 @@
 [package]
-name = "solana-sbf-rust-many-args"
+name = "gorbagana-sbf-rust-many-args"
 version = { workspace = true }
 description = { workspace = true }
 authors = { workspace = true }
@@ -12,10 +12,10 @@ edition = { workspace = true }
 crate-type = ["cdylib"]
 
 [dependencies]
-solana-msg = { workspace = true }
-solana-program = { workspace = true }
-solana-program-entrypoint = { workspace = true }
-solana-sbf-rust-many-args-dep = { workspace = true }
+gorbagana-msg = { workspace = true }
+gorbagana-program = { workspace = true }
+gorbagana-program-entrypoint = { workspace = true }
+gorbagana-sbf-rust-many-args-dep = { workspace = true }
 
 [lints]
 workspace = true

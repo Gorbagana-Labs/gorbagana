@@ -19,18 +19,18 @@ use {
     },
     crossbeam_channel::{unbounded, Receiver, SendError, Sender, TrySendError},
     log::*,
-    solana_clock::{Slot, NUM_CONSECUTIVE_LEADER_SLOTS},
-    solana_entry::{
+    gorbagana_clock::{Slot, NUM_CONSECUTIVE_LEADER_SLOTS},
+    gorbagana_entry::{
         entry::Entry,
         poh::{Poh, PohEntry},
     },
-    solana_hash::Hash,
-    solana_ledger::{blockstore::Blockstore, leader_schedule_cache::LeaderScheduleCache},
-    solana_measure::measure_us,
-    solana_poh_config::PohConfig,
-    solana_pubkey::Pubkey,
-    solana_runtime::{bank::Bank, installed_scheduler_pool::BankWithScheduler},
-    solana_transaction::versioned::VersionedTransaction,
+    gorbagana_hash::Hash,
+    gorbagana_ledger::{blockstore::Blockstore, leader_schedule_cache::LeaderScheduleCache},
+    gorbagana_measure::measure_us,
+    gorbagana_poh_config::PohConfig,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_runtime::{bank::Bank, installed_scheduler_pool::BankWithScheduler},
+    gorbagana_transaction::versioned::VersionedTransaction,
     std::{
         cmp,
         sync::{atomic::AtomicBool, Arc, Mutex, RwLock},
@@ -976,15 +976,15 @@ mod tests {
     use {
         super::*,
         crossbeam_channel::bounded,
-        solana_clock::DEFAULT_TICKS_PER_SLOT,
-        solana_ledger::{
+        gorbagana_clock::DEFAULT_TICKS_PER_SLOT,
+        gorbagana_ledger::{
             blockstore::Blockstore,
             blockstore_meta::SlotMeta,
             genesis_utils::{create_genesis_config, GenesisConfigInfo},
             get_tmp_ledger_path_auto_delete,
         },
-        solana_perf::test_tx::test_tx,
-        solana_sha256_hasher::hash,
+        gorbagana_perf::test_tx::test_tx,
+        gorbagana_sha256_hasher::hash,
     };
 
     #[test]
@@ -1531,7 +1531,7 @@ mod tests {
 
     #[test]
     fn test_reset_to_new_value() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let ledger_path = get_tmp_ledger_path_auto_delete!();
         let blockstore = Blockstore::open(ledger_path.path())
@@ -1614,7 +1614,7 @@ mod tests {
 
     #[test]
     fn test_poh_recorder_record_sets_start_slot() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
         let ledger_path = get_tmp_ledger_path_auto_delete!();
         let blockstore = Blockstore::open(ledger_path.path())
             .expect("Expected to be able to open database ledger");
@@ -1702,7 +1702,7 @@ mod tests {
 
     #[test]
     fn test_reached_leader_tick() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         // Setup genesis.
         let GenesisConfigInfo {
@@ -1739,9 +1739,9 @@ mod tests {
             consecutive_leader_slots,
         ));
         let mut leader_schedule_cache = LeaderScheduleCache::new_from_bank(&bank);
-        let fixed_schedule = solana_ledger::leader_schedule::FixedSchedule {
+        let fixed_schedule = gorbagana_ledger::leader_schedule::FixedSchedule {
             leader_schedule: Arc::new(Box::new(
-                solana_ledger::leader_schedule::IdentityKeyedLeaderSchedule::new_from_schedule(
+                gorbagana_ledger::leader_schedule::IdentityKeyedLeaderSchedule::new_from_schedule(
                     slot_leaders,
                 ),
             )),
@@ -1880,7 +1880,7 @@ mod tests {
 
     #[test]
     fn test_reached_leader_slot() {
-        solana_logger::setup();
+        gorbagana_logger::setup();
 
         let ledger_path = get_tmp_ledger_path_auto_delete!();
         let blockstore = Blockstore::open(ledger_path.path())

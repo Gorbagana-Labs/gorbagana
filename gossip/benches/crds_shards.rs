@@ -4,12 +4,12 @@ extern crate test;
 
 use {
     rand::{thread_rng, Rng},
-    solana_gossip::{
+    gorbagana_gossip::{
         crds::{Crds, GossipRoute, VersionedCrdsValue},
         crds_shards::CrdsShards,
         crds_value::CrdsValue,
     },
-    solana_time_utils::timestamp,
+    gorbagana_time_utils::timestamp,
     std::iter::repeat_with,
     test::Bencher,
 };

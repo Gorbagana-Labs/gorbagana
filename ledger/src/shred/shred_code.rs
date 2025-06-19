@@ -7,10 +7,10 @@ use {
         CodingShredHeader, Error, ShredCommonHeader, ShredType, SignedData,
         DATA_SHREDS_PER_FEC_BLOCK, MAX_DATA_SHREDS_PER_SLOT, SIZE_OF_NONCE,
     },
-    solana_clock::Slot,
-    solana_hash::Hash,
-    solana_packet::PACKET_DATA_SIZE,
-    solana_signature::Signature,
+    gorbagana_clock::Slot,
+    gorbagana_hash::Hash,
+    gorbagana_packet::PACKET_DATA_SIZE,
+    gorbagana_signature::Signature,
     static_assertions::const_assert_eq,
 };
 

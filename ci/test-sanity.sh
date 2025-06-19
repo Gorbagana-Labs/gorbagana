@@ -71,12 +71,12 @@ EOF
 )
 fi
 
-# Disallow (re)introduction of solana sdk dependencies
+# Disallow (re)introduction of gorbagana sdk dependencies
 (
-  if git diff "$target" | grep -v '+++' | grep '^+.*solana[-_]sdk[: =]'; then
+  if git diff "$target" | grep -v '+++' | grep '^+.*gorbagana[-_]sdk[: =]'; then
     cat <<'EOF' 1>&2
 
-Error: solana sdk crate dependencies (re)introduced.
+Error: gorbagana sdk crate dependencies (re)introduced.
 This crate is DEPRECATED. Please use the standalone crates for the corresponding modules
 EOF
     exit 1

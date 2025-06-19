@@ -5,9 +5,9 @@ use {
         accounts_db::{AccountFromStorage, AccountStorageEntry, AccountsDb},
         is_zero_lamport::IsZeroLamport,
     },
-    solana_account::{AccountSharedData, ReadableAccount},
-    solana_clock::{Epoch, Slot},
-    solana_pubkey::Pubkey,
+    gorbagana_account::{AccountSharedData, ReadableAccount},
+    gorbagana_clock::{Epoch, Slot},
+    gorbagana_pubkey::Pubkey,
     std::{
         cmp::Ordering,
         sync::{Arc, RwLock},
@@ -366,8 +366,8 @@ pub mod tests {
             append_vec::{AccountMeta, StoredAccountMeta, StoredMeta},
         },
         rand::Rng,
-        solana_account::{accounts_equal, AccountSharedData, WritableAccount},
-        solana_hash::Hash,
+        gorbagana_account::{accounts_equal, AccountSharedData, WritableAccount},
+        gorbagana_hash::Hash,
         std::sync::Arc,
     };
 

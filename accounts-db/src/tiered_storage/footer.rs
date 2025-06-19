@@ -10,8 +10,8 @@ use {
     bytemuck::Zeroable,
     memmap2::Mmap,
     num_enum::TryFromPrimitiveError,
-    solana_hash::Hash,
-    solana_pubkey::Pubkey,
+    gorbagana_hash::Hash,
+    gorbagana_pubkey::Pubkey,
     std::{mem, path::Path, ptr},
     thiserror::Error,
 };
@@ -316,7 +316,7 @@ mod tests {
             append_vec::test_utils::get_append_vec_path, tiered_storage::file::TieredWritableFile,
         },
         memoffset::offset_of,
-        solana_hash::Hash,
+        gorbagana_hash::Hash,
     };
 
     #[test]

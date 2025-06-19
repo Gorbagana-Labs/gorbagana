@@ -9,20 +9,20 @@ use {
         resolved_transaction_view::ResolvedTransactionView, transaction_data::TransactionData,
         transaction_version::TransactionVersion, transaction_view::SanitizedTransactionView,
     },
-    solana_message::{
+    gorbagana_message::{
         compiled_instruction::CompiledInstruction,
         v0::{LoadedAddresses, LoadedMessage, MessageAddressTableLookup},
         LegacyMessage, MessageHeader, SanitizedMessage, TransactionSignatureDetails,
         VersionedMessage,
     },
-    solana_pubkey::Pubkey,
-    solana_svm_transaction::svm_message::SVMMessage,
-    solana_transaction::{
+    gorbagana_pubkey::Pubkey,
+    gorbagana_svm_transaction::svm_message::SVMMessage,
+    gorbagana_transaction::{
         sanitized::{MessageHash, SanitizedTransaction},
         simple_vote_transaction_checker::is_simple_vote_transaction_impl,
         versioned::VersionedTransaction,
     },
-    solana_transaction_error::{TransactionError, TransactionResult as Result},
+    gorbagana_transaction_error::{TransactionError, TransactionResult as Result},
     std::{borrow::Cow, collections::HashSet},
 };
 
@@ -162,14 +162,14 @@ impl<D: TransactionData> TransactionWithMeta for RuntimeTransaction<ResolvedTran
 
         let message = match self.version() {
             TransactionVersion::Legacy => {
-                VersionedMessage::Legacy(solana_message::legacy::Message {
+                VersionedMessage::Legacy(gorbagana_message::legacy::Message {
                     header,
                     account_keys: static_account_keys,
                     recent_blockhash,
                     instructions,
                 })
             }
-            TransactionVersion::V0 => VersionedMessage::V0(solana_message::v0::Message {
+            TransactionVersion::V0 => VersionedMessage::V0(gorbagana_message::v0::Message {
                 header,
                 account_keys: static_account_keys,
                 recent_blockhash,
@@ -197,12 +197,12 @@ mod tests {
     use {
         super::*,
         agave_reserved_account_keys::ReservedAccountKeys,
-        solana_hash::Hash,
-        solana_keypair::Keypair,
-        solana_message::{v0, AddressLookupTableAccount, SimpleAddressLoader},
-        solana_signature::Signature,
-        solana_system_interface::instruction as system_instruction,
-        solana_system_transaction as system_transaction,
+        gorbagana_hash::Hash,
+        gorbagana_keypair::Keypair,
+        gorbagana_message::{v0, AddressLookupTableAccount, SimpleAddressLoader},
+        gorbagana_signature::Signature,
+        gorbagana_system_interface::instruction as system_instruction,
+        gorbagana_system_transaction as system_transaction,
     };
 
     #[test]

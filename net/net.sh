@@ -248,29 +248,29 @@ startCommon() {
   declare ipAddress=$1
   declare remoteHome
   remoteHome=$(remoteHomeDir "$ipAddress")
-  local remoteSolanaHome="${remoteHome}/solana"
+  local remoteGorbaganaHome="${remoteHome}/gorbagana"
   local remoteCargoBin="${remoteHome}/.cargo/bin"
   test -d "$SOLANA_ROOT"
   if $skipSetup; then
     # shellcheck disable=SC2029
     ssh "${sshOptions[@]}" "$ipAddress" "
       set -x;
-      mkdir -p $remoteSolanaHome/config;
+      mkdir -p $remoteGorbaganaHome/config;
       rm -rf ~/config;
-      mv $remoteSolanaHome/config ~;
-      rm -rf $remoteSolanaHome;
-      mkdir -p $remoteSolanaHome $remoteCargoBin;
-      mv ~/config $remoteSolanaHome/
+      mv $remoteGorbaganaHome/config ~;
+      rm -rf $remoteGorbaganaHome;
+      mkdir -p $remoteGorbaganaHome $remoteCargoBin;
+      mv ~/config $remoteGorbaganaHome/
     "
   else
     # shellcheck disable=SC2029
     ssh "${sshOptions[@]}" "$ipAddress" "
       set -x;
-      rm -rf $remoteSolanaHome;
+      rm -rf $remoteGorbaganaHome;
       mkdir -p $remoteCargoBin
     "
   fi
-  [[ -z "$externalNodeSshKey" ]] || ssh-copy-id -f -i "$externalNodeSshKey" "${sshOptions[@]}" "solana@$ipAddress"
+  [[ -z "$externalNodeSshKey" ]] || ssh-copy-id -f -i "$externalNodeSshKey" "${sshOptions[@]}" "gorbagana@$ipAddress"
   syncScripts "$ipAddress"
 }
 
@@ -279,11 +279,11 @@ syncScripts() {
   declare ipAddress=$1
   declare remoteHome
   remoteHome=$(remoteHomeDir "$ipAddress")
-  local remoteSolanaHome="${remoteHome}/solana"
+  local remoteGorbaganaHome="${remoteHome}/gorbagana"
   rsync -vPrc -e "ssh ${sshOptions[*]}" \
     --exclude 'net/log*' \
     "$SOLANA_ROOT"/{fetch-perf-libs.sh,fetch-programs.sh,fetch-core-bpf.sh,fetch-spl.sh,scripts,net,multinode-demo} \
-    "$ipAddress":"$remoteSolanaHome"/ > /dev/null
+    "$ipAddress":"$remoteGorbaganaHome"/ > /dev/null
 }
 
 # Deploy local binaries to bootstrap validator.  Other validators and clients later fetch the
@@ -298,8 +298,8 @@ deployBootstrapValidator() {
   echo "Deploying software to bootstrap validator ($ipAddress)"
   case $deployMethod in
   tar)
-    rsync -vPrc -e "ssh ${sshOptions[*]}" "$SOLANA_ROOT"/solana-release/bin/* "$ipAddress:$remoteCargoBin/"
-    rsync -vPrc -e "ssh ${sshOptions[*]}" "$SOLANA_ROOT"/solana-release/version.yml "$ipAddress:~/"
+    rsync -vPrc -e "ssh ${sshOptions[*]}" "$SOLANA_ROOT"/gorbagana-release/bin/* "$ipAddress:$remoteCargoBin/"
+    rsync -vPrc -e "ssh ${sshOptions[*]}" "$SOLANA_ROOT"/gorbagana-release/version.yml "$ipAddress:~/"
     ;;
   local)
     rsync -vPrc -e "ssh ${sshOptions[*]}" "$SOLANA_ROOT"/farf/bin/* "$ipAddress:$remoteCargoBin/"
@@ -329,7 +329,7 @@ startBootstrapLeader() {
     deployBootstrapValidator "$ipAddress"
 
     ssh "${sshOptions[@]}" -n "$ipAddress" \
-      "./solana/net/remote/remote-node.sh \
+      "./gorbagana/net/remote/remote-node.sh \
          $deployMethod \
          bootstrap-validator \
          $entrypointIp \
@@ -396,7 +396,7 @@ startNode() {
         timeout 30s scp "${sshOptions[@]}" "$localArchive" "$ipAddress:letsencrypt.tgz"
       fi
       ssh "${sshOptions[@]}" -n "$ipAddress" \
-        "sudo -H /certbot-restore.sh $letsEncryptDomainName maintainers@solanalabs.com"
+        "sudo -H /certbot-restore.sh $letsEncryptDomainName maintainers@gorbaganalabs.com"
       rm -f letsencrypt.tgz
       timeout 30s scp "${sshOptions[@]}" "$ipAddress:/letsencrypt.tgz" letsencrypt.tgz
       test -s letsencrypt.tgz # Ensure non-empty before overwriting $localArchive
@@ -404,7 +404,7 @@ startNode() {
     fi
 
     ssh "${sshOptions[@]}" -n "$ipAddress" \
-      "./solana/net/remote/remote-node.sh \
+      "./gorbagana/net/remote/remote-node.sh \
          $deployMethod \
          $nodeType \
          $entrypointIp \
@@ -450,7 +450,7 @@ startClient() {
     set -x
     startCommon "$ipAddress"
     ssh "${sshOptions[@]}" -f "$ipAddress" \
-      "./solana/net/remote/remote-client.sh $deployMethod $entrypointIp \
+      "./gorbagana/net/remote/remote-client.sh $deployMethod $entrypointIp \
       $clientToRun \"$RUST_LOG\" \"$benchTpsExtraArgs\" $clientIndex $clientType \
       $maybeUseUnstakedConnection"
   ) >> "$logFile" 2>&1 || {
@@ -463,7 +463,7 @@ startClient() {
 startClients() {
   for ((i=0; i < "$numClients" && i < "$numClientsRequested"; i++)) do
     if [[ $i -lt "$numBenchTpsClients" ]]; then
-      startClient "${clientIpList[$i]}" "solana-bench-tps" "$i"
+      startClient "${clientIpList[$i]}" "gorbagana-bench-tps" "$i"
     else
       startClient "${clientIpList[$i]}" "idle"
     fi
@@ -486,7 +486,7 @@ sanity() {
     set -x
     # shellcheck disable=SC2029 # remote-client.sh args are expanded on client side intentionally
     ssh "${sshOptions[@]}" "$bootstrapLeader" \
-      "./solana/net/remote/remote-sanity.sh $bootstrapLeader $sanityExtraArgs \"$RUST_LOG\""
+      "./gorbagana/net/remote/remote-sanity.sh $bootstrapLeader $sanityExtraArgs \"$RUST_LOG\""
   ) || ok=false
   $ok || exit 1
 
@@ -497,7 +497,7 @@ sanity() {
       set -x
       # shellcheck disable=SC2029 # remote-client.sh args are expanded on client side intentionally
       ssh "${sshOptions[@]}" "$blockstreamer" \
-        "./solana/net/remote/remote-sanity.sh $blockstreamer $sanityExtraArgs \"$RUST_LOG\""
+        "./gorbagana/net/remote/remote-sanity.sh $blockstreamer $sanityExtraArgs \"$RUST_LOG\""
     ) || ok=false
     $ok || exit 1
   fi
@@ -526,11 +526,11 @@ deployUpdate() {
       scripts/agave-install-update-manifest-keypair.sh "$updatePlatform"
 
       timeout 30s scp "${sshOptions[@]}" \
-        update_manifest_keypair.json "$bootstrapLeader:solana/update_manifest_keypair.json"
+        update_manifest_keypair.json "$bootstrapLeader:gorbagana/update_manifest_keypair.json"
 
       # shellcheck disable=SC2029 # remote-deploy-update.sh args are expanded on client side intentionally
       ssh "${sshOptions[@]}" "$bootstrapLeader" \
-        "./solana/net/remote/remote-deploy-update.sh $releaseChannel $updatePlatform"
+        "./gorbagana/net/remote/remote-deploy-update.sh $releaseChannel $updatePlatform"
     ) || ok=false
     $ok || exit 1
   done
@@ -567,21 +567,21 @@ prepareDeploy() {
   tar)
     if [[ -n $releaseChannel ]]; then
       echo "Downloading release from channel: $releaseChannel"
-      rm -f "$SOLANA_ROOT"/solana-release.tar.bz2
-      declare updateDownloadUrl=https://release.anza.xyz/"$releaseChannel"/solana-release-x86_64-unknown-linux-gnu.tar.bz2
+      rm -f "$SOLANA_ROOT"/gorbagana-release.tar.bz2
+      declare updateDownloadUrl=https://release.anza.xyz/"$releaseChannel"/gorbagana-release-x86_64-unknown-linux-gnu.tar.bz2
       (
         set -x
         curl -L -I "$updateDownloadUrl"
         curl -L --retry 5 --retry-delay 2 --retry-connrefused \
-          -o "$SOLANA_ROOT"/solana-release.tar.bz2 "$updateDownloadUrl"
+          -o "$SOLANA_ROOT"/gorbagana-release.tar.bz2 "$updateDownloadUrl"
       )
-      tarballFilename="$SOLANA_ROOT"/solana-release.tar.bz2
+      tarballFilename="$SOLANA_ROOT"/gorbagana-release.tar.bz2
     fi
     (
       set -x
-      rm -rf "$SOLANA_ROOT"/solana-release
+      rm -rf "$SOLANA_ROOT"/gorbagana-release
       cd "$SOLANA_ROOT"; tar jfxv "$tarballFilename"
-      cat "$SOLANA_ROOT"/solana-release/version.yml
+      cat "$SOLANA_ROOT"/gorbagana-release/version.yml
     )
     ;;
   local)
@@ -610,7 +610,7 @@ prepareDeploy() {
       rsync -vPrc -e "ssh ${sshOptions[*]}" "${validatorIpList[0]}":~/version.yml current-version.yml
     )
     cat current-version.yml
-    if ! diff -q current-version.yml "$SOLANA_ROOT"/solana-release/version.yml; then
+    if ! diff -q current-version.yml "$SOLANA_ROOT"/gorbagana-release/version.yml; then
       echo "Cluster software version is old.  Update required"
     else
       echo "Cluster software version is current.  No update required"
@@ -674,7 +674,7 @@ deploy() {
         break
       fi
       ssh "${sshOptions[@]}" -n "$ipAddress" \
-        "./solana/net/remote/remote-node-wait-init.sh $((600 - timeWaited))"
+        "./gorbagana/net/remote/remote-node-wait-init.sh $((600 - timeWaited))"
     done
   fi
 
@@ -701,7 +701,7 @@ deploy() {
     networkVersion="$(
       (
         set -o pipefail
-        grep "^commit: " "$SOLANA_ROOT"/solana-release/version.yml | head -n1 | cut -d\  -f2
+        grep "^commit: " "$SOLANA_ROOT"/gorbagana-release/version.yml | head -n1 | cut -d\  -f2
       ) || echo "tar-unknown"
     )"
     ;;
@@ -740,7 +740,7 @@ stopNode() {
     # the script itself will match the pkill pattern
     set -x
     # shellcheck disable=SC2029 # It's desired that PS4 be expanded on the client side
-    ssh "${sshOptions[@]}" "$ipAddress" "PS4=\"$PS4\" ./solana/net/remote/cleanup.sh"
+    ssh "${sshOptions[@]}" "$ipAddress" "PS4=\"$PS4\" ./gorbagana/net/remote/cleanup.sh"
   ) >> "$logFile" 2>&1 &
 
   declare pid=$!
@@ -1194,7 +1194,7 @@ logs)
     (
       set -x
       timeout 30s scp "${sshOptions[@]}" \
-        "$ipAddress":solana/"$log".log "$netLogDir"/remote-"$log"-"$ipAddress".log
+        "$ipAddress":gorbagana/"$log".log "$netLogDir"/remote-"$log"-"$ipAddress".log
     ) || echo "failed to fetch log"
   }
   fetchRemoteLog "${validatorIpList[0]}" faucet
@@ -1214,13 +1214,13 @@ netem)
     if [[ $netemCommand = "add" ]]; then
       for ipAddress in "${validatorIpList[@]}"; do
         remoteHome=$(remoteHomeDir "$ipAddress")
-        remoteSolanaHome="${remoteHome}/solana"
-        "$here"/scp.sh "$netemConfigFile" solana@"$ipAddress":"$remoteSolanaHome"
+        remoteGorbaganaHome="${remoteHome}/gorbagana"
+        "$here"/scp.sh "$netemConfigFile" gorbagana@"$ipAddress":"$remoteGorbaganaHome"
       done
     fi
     for i in "${!validatorIpList[@]}"; do
-      "$here"/ssh.sh solana@"${validatorIpList[$i]}" 'solana/scripts/net-shaper.sh' \
-      "$netemCommand" ~solana/solana/"$remoteNetemConfigFile" "${#validatorIpList[@]}" "$i"
+      "$here"/ssh.sh gorbagana@"${validatorIpList[$i]}" 'gorbagana/scripts/net-shaper.sh' \
+      "$netemCommand" ~gorbagana/gorbagana/"$remoteNetemConfigFile" "${#validatorIpList[@]}" "$i"
     done
   else
     num_nodes=$((${#validatorIpList[@]}*netemPartition/100))
@@ -1233,12 +1233,12 @@ netem)
 
     # Stop netem on all nodes
     for ipAddress in "${validatorIpList[@]}"; do
-      "$here"/ssh.sh solana@"$ipAddress" 'solana/scripts/netem.sh delete < solana/netem.cfg || true'
+      "$here"/ssh.sh gorbagana@"$ipAddress" 'gorbagana/scripts/netem.sh delete < gorbagana/netem.cfg || true'
     done
 
     # Start netem on required nodes
     for ((i=0; i<num_nodes; i++ )); do :
-      "$here"/ssh.sh solana@"${validatorIpList[$i]}" "echo $netemConfig > solana/netem.cfg; solana/scripts/netem.sh add \"$netemConfig\""
+      "$here"/ssh.sh gorbagana@"${validatorIpList[$i]}" "echo $netemConfig > gorbagana/netem.cfg; gorbagana/scripts/netem.sh add \"$netemConfig\""
     done
   fi
   ;;

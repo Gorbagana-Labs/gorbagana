@@ -1,6 +1,6 @@
 use {
-    solana_transaction_context::TransactionReturnData,
-    solana_transaction_error::{TransactionError, TransportError},
+    gorbagana_transaction_context::TransactionReturnData,
+    gorbagana_transaction_error::{TransactionError, TransportError},
     std::io,
     tarpc::client::RpcError,
     thiserror::Error,

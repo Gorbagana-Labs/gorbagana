@@ -1,6 +1,6 @@
 use {
-    solana_account::AccountSharedData, solana_precompile_error::PrecompileError,
-    solana_pubkey::Pubkey,
+    gorbagana_account::AccountSharedData, gorbagana_precompile_error::PrecompileError,
+    gorbagana_pubkey::Pubkey,
 };
 
 /// Callback used by InvokeContext in SVM

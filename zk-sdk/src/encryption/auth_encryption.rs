@@ -26,11 +26,11 @@ use {
 use {
     sha3::Digest,
     sha3::Sha3_512,
-    solana_derivation_path::DerivationPath,
-    solana_seed_derivable::SeedDerivable,
-    solana_seed_phrase::generate_seed_from_seed_phrase_and_passphrase,
-    solana_signature::Signature,
-    solana_signer::{EncodableKey, Signer, SignerError},
+    gorbagana_derivation_path::DerivationPath,
+    gorbagana_seed_derivable::SeedDerivable,
+    gorbagana_seed_phrase::generate_seed_from_seed_phrase_and_passphrase,
+    gorbagana_signature::Signature,
+    gorbagana_signer::{EncodableKey, Signer, SignerError},
     std::{
         error,
         io::{Read, Write},
@@ -112,10 +112,10 @@ impl AeKey {
 
 #[cfg(not(target_arch = "wasm32"))]
 impl AeKey {
-    /// Deterministically derives an authenticated encryption key from a Solana signer and a public
+    /// Deterministically derives an authenticated encryption key from a Gorbagana signer and a public
     /// seed.
     ///
-    /// This function exists for applications where a user may not wish to maintain a Solana signer
+    /// This function exists for applications where a user may not wish to maintain a Gorbagana signer
     /// and an authenticated encryption key separately. Instead, a user can derive the ElGamal
     /// keypair on-the-fly whenever encrytion/decryption is needed.
     pub fn new_from_signer(
@@ -126,7 +126,7 @@ impl AeKey {
         Self::from_seed(&seed)
     }
 
-    /// Derive a seed from a Solana signer used to generate an authenticated encryption key.
+    /// Derive a seed from a Gorbagana signer used to generate an authenticated encryption key.
     ///
     /// The seed is derived as the hash of the signature of a public seed.
     pub fn seed_from_signer(
@@ -284,8 +284,8 @@ impl fmt::Display for AeCiphertext {
 #[cfg(test)]
 mod tests {
     use {
-        super::*, solana_keypair::Keypair, solana_pubkey::Pubkey,
-        solana_signer::null_signer::NullSigner,
+        super::*, gorbagana_keypair::Keypair, gorbagana_pubkey::Pubkey,
+        gorbagana_signer::null_signer::NullSigner,
     };
 
     #[test]

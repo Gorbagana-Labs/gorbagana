@@ -1,20 +1,20 @@
 use {
     agave_feature_set::{FeatureSet, FEATURE_NAMES},
     log::*,
-    solana_account::{Account, AccountSharedData},
-    solana_feature_gate_interface::{self as feature, Feature},
-    solana_fee_calculator::FeeRateGovernor,
-    solana_genesis_config::{ClusterType, GenesisConfig},
-    solana_keypair::Keypair,
-    solana_native_token::sol_to_lamports,
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
-    solana_seed_derivable::SeedDerivable,
-    solana_signer::Signer,
-    solana_stake_interface::state::StakeStateV2,
-    solana_stake_program::stake_state,
-    solana_system_interface::program as system_program,
-    solana_vote_program::vote_state,
+    gorbagana_account::{Account, AccountSharedData},
+    gorbagana_feature_gate_interface::{self as feature, Feature},
+    gorbagana_fee_calculator::FeeRateGovernor,
+    gorbagana_genesis_config::{ClusterType, GenesisConfig},
+    gorbagana_keypair::Keypair,
+    gorbagana_native_token::sol_to_lamports,
+    gorbagana_pubkey::Pubkey,
+    gorbagana_rent::Rent,
+    gorbagana_seed_derivable::SeedDerivable,
+    gorbagana_signer::Signer,
+    gorbagana_stake_interface::state::StakeStateV2,
+    gorbagana_stake_program::stake_state,
+    gorbagana_system_interface::program as system_program,
+    gorbagana_vote_program::vote_state,
     std::borrow::Borrow,
 };
 
@@ -83,7 +83,7 @@ pub fn create_genesis_config(mint_lamports: u64) -> GenesisConfigInfo {
     // accounts-db which in particular will break snapshots test.
     create_genesis_config_with_leader(
         mint_lamports,
-        &solana_pubkey::new_rand(), // validator_pubkey
+        &gorbagana_pubkey::new_rand(), // validator_pubkey
         0,                          // validator_stake_lamports
     )
 }
@@ -305,7 +305,7 @@ pub fn create_genesis_config_with_leader_ex_no_features(
     initial_accounts.push((*validator_vote_account_pubkey, validator_vote_account));
     initial_accounts.push((*validator_stake_account_pubkey, validator_stake_account));
 
-    let native_mint_account = solana_account::AccountSharedData::from(Account {
+    let native_mint_account = gorbagana_account::AccountSharedData::from(Account {
         owner: spl_generic_token::token::id(),
         data: spl_generic_token::token::native_mint::ACCOUNT_DATA.to_vec(),
         lamports: sol_to_lamports(1.),
@@ -329,7 +329,7 @@ pub fn create_genesis_config_with_leader_ex_no_features(
         ..GenesisConfig::default()
     };
 
-    solana_stake_program::add_genesis_accounts(&mut genesis_config);
+    gorbagana_stake_program::add_genesis_accounts(&mut genesis_config);
 
     genesis_config
 }

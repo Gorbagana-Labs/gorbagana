@@ -12,4 +12,4 @@ pub use {
 };
 
 #[macro_use]
-extern crate solana_metrics;
+extern crate gorbagana_metrics;

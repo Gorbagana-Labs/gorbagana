@@ -3,7 +3,7 @@
 use {
     crate::snapshot_packager_service::PendingSnapshotPackages,
     crossbeam_channel::{Receiver, Sender},
-    solana_accounts_db::{
+    gorbagana_accounts_db::{
         accounts_db::CalcAccountsHashKind,
         accounts_hash::{
             AccountsHash, AccountsHashKind, CalcAccountsHashConfig, HashStats,
@@ -11,9 +11,9 @@ use {
         },
         sorted_storages::SortedStorages,
     },
-    solana_clock::{Slot, DEFAULT_MS_PER_SLOT},
-    solana_measure::measure_us,
-    solana_runtime::{
+    gorbagana_clock::{Slot, DEFAULT_MS_PER_SLOT},
+    gorbagana_measure::measure_us,
+    gorbagana_runtime::{
         serde_snapshot::BankIncrementalSnapshotPersistence,
         snapshot_config::SnapshotConfig,
         snapshot_controller::SnapshotController,
@@ -517,7 +517,7 @@ impl AccountsHashVerifier {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, rand::seq::SliceRandom, solana_runtime::snapshot_package::SnapshotKind};
+    use {super::*, rand::seq::SliceRandom, gorbagana_runtime::snapshot_package::SnapshotKind};
 
     fn new(package_kind: AccountsPackageKind, slot: Slot) -> AccountsPackage {
         AccountsPackage {
